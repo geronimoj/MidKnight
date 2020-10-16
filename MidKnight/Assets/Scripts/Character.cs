@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
         }
     }
     /// <summary>
-    /// A Set/Get for health. Automatically clamps for maxHealth
+    /// A Get for health. Automatically clamps for maxHealth
     /// </summary>
     public int Health
     {
@@ -36,7 +36,9 @@ public class Character : MonoBehaviour
             return health;
         }
     }
-
+    /// <summary>
+    /// A private Set for health to make things cleaner
+    /// </summary>
     private int SetHealth
     {
         set
