@@ -14,7 +14,8 @@ public class Character : MonoBehaviour
     /// It is stored as a float to make it easier to increment
     /// </summary>
     [SerializeField]
-    private float maxHealth;
+    [Range(1, 200)]
+    private float maxHealth = 1;
     /// <summary>
     /// A get for maxHealth
     /// </summary>
@@ -28,16 +29,20 @@ public class Character : MonoBehaviour
     /// <summary>
     /// A Set/Get for health. Automatically clamps for maxHealth
     /// </summary>
-    private int Health
+    public int Health
     {
         get
         {
             return health;
         }
+    }
+
+    private int SetHealth
+    {
         set
         {
             health = value;
-
+            //Clamp the health
             if (health > MaxHealth)
                 health = MaxHealth;
         }
@@ -59,7 +64,7 @@ public class Character : MonoBehaviour
     /// <param name="damage">The damage to take</param>
     public virtual void TakeDamage(int damage)
     {
-        Health -= damage;
+        SetHealth = Health - damage;
     }
     /// <summary>
     /// Moves the character or object
