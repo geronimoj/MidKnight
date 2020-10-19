@@ -59,7 +59,12 @@ public class Character : MonoBehaviour
     public void Awake()
     {
         cc = GetComponent<CharacterController>();
+        AwakeExtra();
     }
+    /// <summary>
+    /// Any additional awake calls because the awake function in here requires to do its own stuff
+    /// </summary>
+    protected virtual void AwakeExtra() { }
     /// <summary>
     /// An overridable take damage function
     /// </summary>
