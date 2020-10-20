@@ -4,7 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(StateManager))]
 public class PlayerController : Character
 {
-    StateManager manager;
+    private StateManager manager;
+    /// <summary>
+    /// The storage location for the players movement infromation
+    /// </summary>
+    [HideInInspector]
+    public Movement movement;
 
     protected override void AwakeExtra()
     {
