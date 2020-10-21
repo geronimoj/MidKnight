@@ -25,4 +25,9 @@ public class PlayerController : Character
     {
         manager.DoState(this);
     }
+
+    public override void Move(Vector3 moveVec)
+    {
+        cc.Move(moveVec);
+    }
 }
