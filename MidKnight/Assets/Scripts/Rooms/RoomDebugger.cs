@@ -6,12 +6,14 @@ public class RoomDebugger : MonoBehaviour
 {
     public Room roomToDisplay;
 
-    void Start()
+    private void Start()
     {
-
+#if !UNITY_EDITOR
+        Destroy(this);
+#endif
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         
     }
