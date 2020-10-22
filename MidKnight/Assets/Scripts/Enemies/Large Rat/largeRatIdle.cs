@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingRatIdle : StateMachineBehaviour
+public class largeRatIdle : StateMachineBehaviour
 {
     Transform ratTrans;
     Vector3 destination;
