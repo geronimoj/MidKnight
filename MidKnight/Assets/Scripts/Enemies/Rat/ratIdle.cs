@@ -7,15 +7,15 @@ public class ratIdle : StateMachineBehaviour
     Transform ratTrans;
     Vector3 destination;
     public int speed;
-    int leftOrRight = 500;
     bool floorCheck;
     bool wallCheck;
+    bool isMovingRight = true;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ratTrans = animator.GetComponent<Transform>();
-        destination = new Vector3(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
+        destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -26,9 +26,18 @@ public class ratIdle : StateMachineBehaviour
 
         if (wallCheck || !floorCheck)
         {
-            ratTrans.Rotate(0, 180, 0);
-            leftOrRight *= -1;
-            destination.Set(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
+            if(isMovingRight)
+            {
+                ratTrans.eulerAngles = new Vector3(0, 180, 0);
+                destination.Set(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
+                isMovingRight = false;
+            }
+            else
+            {
+                ratTrans.eulerAngles = new Vector3(0, 0, 0);
+                destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+                isMovingRight = true;
+            }
         }
 
         ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);   

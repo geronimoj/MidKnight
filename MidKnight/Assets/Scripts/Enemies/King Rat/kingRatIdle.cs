@@ -2,60 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class batAttack : StateMachineBehaviour
+public class kingRatIdle : StateMachineBehaviour
 {
+    Transform ratTrans;
+    Vector3 destination;
     public int speed;
-    Transform sleepRadius;
-    public float sleepRadiusSize;
+    int leftOrRight = 500;
+    bool floorCheck;
+    bool wallCheck;
     bool playerCheck;
-    Transform batTrans;
+    Transform chaseRadius;
+    public float chaseRadiusSize;
     Transform playerTrans;
-    Vector3 startingPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        batTrans = animator.GetComponent<Transform>();
+        ratTrans = animator.GetComponent<Transform>();
+        destination = new Vector3(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
+        chaseRadius = animator.gameObject.transform.GetChild(3);
+        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        sleepRadius = animator.gameObject.transform.GetChild(1);
-        sleepRadius.localScale = new Vector3(sleepRadiusSize, sleepRadiusSize, sleepRadiusSize);
-        startingPos = new Vector3(batTrans.position.x, batTrans.position.y, batTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
+        wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
-        if (playerCheck)
+        if (wallCheck || !floorCheck)
         {
-            batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
-
-            if(playerTrans.position.x > batTrans.position.x)
+            ratTrans.Rotate(0, 180, 0);
+            leftOrRight *= -1;
+            destination.Set(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
+        }
+        else if (playerCheck)
+        {
+            if(playerTrans.position.x > ratTrans.position.x)
             {
-                batTrans.localEulerAngles = new Vector3(0, 180, 0);
+                ratTrans.Rotate(0, 180, 0);
+                leftOrRight *= -1;
+                destination.Set(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
             }
             else
             {
-                batTrans.localEulerAngles = new Vector3(0, 0, 0);
+                ratTrans.Rotate(0, 0, 0);
+                leftOrRight *= -1;
+                destination.Set(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
             }
         }
-        else
-        {
-            batTrans.position = Vector3.MoveTowards(batTrans.position, startingPos, speed * Time.deltaTime);
 
-            if (batTrans.position == startingPos)
-            {
-                animator.SetTrigger("idle");
-            }
-        }
+        ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
