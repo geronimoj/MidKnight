@@ -303,6 +303,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1955492133597421029, guid: 8153fa7d18308f84396d0ff2cb96e681,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5977575863047322992, guid: 8153fa7d18308f84396d0ff2cb96e681,
         type: 3}
       propertyPath: m_Enabled
@@ -312,6 +317,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bat
+      objectReference: {fileID: 0}
+    - target: {fileID: 7685143320511444902, guid: 8153fa7d18308f84396d0ff2cb96e681,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8176450963593802660, guid: 8153fa7d18308f84396d0ff2cb96e681,
         type: 3}
@@ -368,6 +378,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8514145924915769408, guid: 8153fa7d18308f84396d0ff2cb96e681,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9060894825145875154, guid: 8153fa7d18308f84396d0ff2cb96e681,
         type: 3}
       propertyPath: m_Controller
@@ -387,6 +402,7 @@ GameObject:
   - component: {fileID: 1904886456}
   - component: {fileID: 1904886455}
   - component: {fileID: 1904886454}
+  - component: {fileID: 1904886458}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -468,3 +484,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1904886458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904886453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c02547af9e26c44d86f82e2b43fedf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.1

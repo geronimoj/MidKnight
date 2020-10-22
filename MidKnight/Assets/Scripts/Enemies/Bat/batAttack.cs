@@ -10,7 +10,7 @@ public class batAttack : StateMachineBehaviour
     bool playerCheck;
     Transform batTrans;
     Transform playerTrans;
-    Vector3 destination;
+    Vector3 startingPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -21,7 +21,7 @@ public class batAttack : StateMachineBehaviour
         sleepRadius = animator.gameObject.transform.GetChild(1);
         sleepRadius.localScale = new Vector3(sleepRadiusSize, sleepRadiusSize, sleepRadiusSize);
 
-        destination = new Vector3(batTrans.position.x, batTrans.position.y, batTrans.position.z);
+        startingPos = new Vector3(batTrans.position.x, batTrans.position.y, batTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -35,9 +35,9 @@ public class batAttack : StateMachineBehaviour
         }
         else
         {
-            batTrans.position = Vector3.MoveTowards(batTrans.position, destination, speed * Time.deltaTime);
+            batTrans.position = Vector3.MoveTowards(batTrans.position, startingPos, speed * Time.deltaTime);
 
-            if (batTrans.position == destination)
+            if (batTrans.position == startingPos)
             {
                 animator.SetTrigger("idle");
             }
