@@ -49,7 +49,39 @@ public class largeRatIdle : StateMachineBehaviour
         wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
-        //If there's a wall or no floor in front of the rat, it changes directions
+        //If the player is nearby, it changes direction to run into the player
+        if (playerCheck)
+        {
+            if (playerTrans.position.x > ratTrans.position.x)
+            {
+                ratTrans.eulerAngles = new Vector3(0, 0, 0);
+                destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+                isMovingRight = true;
+
+                WallAndFloorCheck();
+            }
+            else
+            {
+                ratTrans.eulerAngles = new Vector3(0, 180, 0);
+                destination.Set(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
+                isMovingRight = false;
+
+                WallAndFloorCheck();
+            }
+        }
+        else
+        {
+            //If there's a wall or no floor in front of the rat, it changes directions
+            WallAndFloorCheck();
+        }
+
+        //Move to it's destination
+        ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);
+    }
+
+    //If there's a wall or no floor in front of the rat, it changes directions
+    void WallAndFloorCheck()
+    {
         if (wallCheck || !floorCheck)
         {
             if (isMovingRight)
@@ -66,25 +98,6 @@ public class largeRatIdle : StateMachineBehaviour
             }
 
         }
-        //If the player is nearby, it changes direction to run into the player
-        else if (playerCheck)
-        {
-            if (playerTrans.position.x > ratTrans.position.x)
-            {
-                ratTrans.eulerAngles = new Vector3(0, 0, 0);
-                destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
-                isMovingRight = true;
-            }
-            else
-            {
-                ratTrans.eulerAngles = new Vector3(0, 180, 0);
-                destination.Set(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
-                isMovingRight = false;
-            }
-        }
-
-        //Move to it's destination
-        ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
