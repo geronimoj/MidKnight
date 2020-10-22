@@ -47,17 +47,13 @@ public class AirborneMove : State
         float x = Input.GetAxisRaw("Horizontal");
 
         if (holdingJump && (Input.GetAxisRaw("Jump") <= 0 || jumpTimer < 0))
-        {
             holdingJump = false;
-            Debug.Log("Jump released");
-        }
         else if (holdingJump)
             jumpTimer -= Time.deltaTime;
 
         if (!holdingJump && jumpTimer > 0)
         {
             earlyJumpRelease = true;
-            Debug.Log("Jump early release");
             jumpTimer = 0;
         }
 
