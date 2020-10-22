@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public struct Movement
 {
+    [SerializeField]
     private Vector3 movement;
     private Vector3 direction;
     /// <summary>
@@ -16,7 +18,6 @@ public struct Movement
         set
         {
             movement.y = value;
-            Direction = movement.normalized;
         }
     }
     /// <summary>
@@ -60,7 +61,7 @@ public struct Movement
         set
         {
             direction = value.normalized;
-            movement = direction * movement.magnitude;
+            movement = new Vector3(direction.x * HozSpeed, VertSpeed, direction.z * HozSpeed);
         }
     }
     /// <summary>

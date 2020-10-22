@@ -10,7 +10,6 @@ public class PlayerController : Character
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
-    [HideInInspector]
     public Movement movement;
     /// <summary>
     /// The speed of the player
@@ -20,6 +19,9 @@ public class PlayerController : Character
 
     [SerializeField]
     private float gravity = 1f;
+
+    [SerializeField]
+    private float onJumpForce = 1f;
 
     public float MoveSpeed
     {
@@ -42,6 +44,22 @@ public class PlayerController : Character
         get
         {
             return cc.height;
+        }
+    }
+
+    public float PlayerRadius
+    {
+        get
+        {
+            return cc.radius;
+        }
+    }
+
+    public float OnJumpForce
+    {
+        get
+        {
+            return onJumpForce;
         }
     }
 
