@@ -7,17 +7,34 @@ public class ratIdle : StateMachineBehaviour
     Transform ratTrans;
     Vector3 destination;
     public int speed;
+    int leftOrRight = 500;
+
+    Transform wallCheckTrans;
+    Transform floorCheckTrans;
+
+    bool wallCheck = false;
+    bool floorCheck = true;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ratTrans = animator.GetComponent<Transform>();
-        destination = new Vector3(ratTrans.position.x + 1000, ratTrans.position.y, ratTrans.position.z);
+        destination = new Vector3(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
+
+        wallCheckTrans = animator.gameObject.transform.GetChild(0);
+        floorCheckTrans = animator.gameObject.transform.GetChild(1);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (wallCheck || !floorCheck)
+        {
+            ratTrans.Rotate(0, 180, 0);
+            leftOrRight *= -1;
+            destination.Set(ratTrans.position.x + leftOrRight, ratTrans.position.y, ratTrans.position.z);
+        }
+
         ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);   
     }
 
