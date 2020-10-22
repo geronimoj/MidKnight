@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class meleeSkeletonIdle : StateMachineBehaviour
 {
+    /// <summary>
+    /// Melee AND ranged skeleton idle 
+    /// </summary>
+    
     public float minStartTimeTillMove;
     public float maxStartTimeTillMove;
     float timeTillMove;
@@ -26,28 +30,34 @@ public class meleeSkeletonIdle : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //initialise stuff
         hasChosenDir = false;
         timeTillMove = Random.Range(minStartTimeTillMove, maxStartTimeTillMove);
         skeleTrans = animator.GetComponent<Transform>();
         destination = new Vector3(skeleTrans.position.x, skeleTrans.position.y, skeleTrans.position.z);
+        playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        //Set it's vision range in the inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
-        playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //check if floor wall or player is nearby
         floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
         wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
+        //move every x seconds
         if (timeTillMove > 0)
         {
             timeTillMove -= Time.deltaTime;
         }
         else if(timeTillMove < 0 && !hasChosenDir)
         {
+            //choose the direction and distance of skeleton movement
             hasChosenDir = true;
             dirToWalk = Random.Range(1, 4);
             distToMove = Random.Range(minDistToMove, maxDistToMove);
@@ -56,6 +66,8 @@ public class meleeSkeletonIdle : StateMachineBehaviour
 
         if(dirToWalk == 1)
         {
+            //walk right, stop if theres a wall or no floor
+
             skeleTrans.eulerAngles = new Vector3(0, 180, 0);
 
             destination.Set(skeleTrans.position.x + distToMove, skeleTrans.position.y, skeleTrans.position.z);
@@ -67,6 +79,8 @@ public class meleeSkeletonIdle : StateMachineBehaviour
         }
         else if(dirToWalk == 2)
         {
+            //walk left, stop if theres a wall or no floor
+
             skeleTrans.eulerAngles = new Vector3(0, 0, 0);
 
             destination.Set(skeleTrans.position.x - distToMove, skeleTrans.position.y, skeleTrans.position.z);
@@ -77,13 +91,16 @@ public class meleeSkeletonIdle : StateMachineBehaviour
             }
         }
 
+        //move to its destination
         skeleTrans.position = Vector3.MoveTowards(skeleTrans.position, destination, speed * Time.deltaTime);
 
+
+        //if player is nearby move to player and attack, if not restart the timer
         if (playerCheck)
         {
             if(playerTrans.position.x > skeleTrans.position.x)
             {
-                destination.Set(playerTrans.position.x - atkRange, skeleTrans.position.y, skeleTrans.position.z);
+                destination.Set(playerTrans.position.x + atkRange, skeleTrans.position.y, skeleTrans.position.z);
 
                 if (wallCheck || !floorCheck)
                 {
@@ -92,7 +109,7 @@ public class meleeSkeletonIdle : StateMachineBehaviour
             }
             else
             {
-                destination.Set(playerTrans.position.x + atkRange, skeleTrans.position.y, skeleTrans.position.z);
+                destination.Set(playerTrans.position.x - atkRange, skeleTrans.position.y, skeleTrans.position.z);
 
                 if (wallCheck || !floorCheck)
                 {

@@ -22,6 +22,7 @@ public class largeRatIdle : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //initialise stuff
         ratTrans = animator.GetComponent<Transform>();
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
@@ -43,6 +44,7 @@ public class largeRatIdle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //check if wall floor or player nearby
         floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
         wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;

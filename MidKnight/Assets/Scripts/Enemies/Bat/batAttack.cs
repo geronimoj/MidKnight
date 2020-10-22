@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class batAttack : StateMachineBehaviour
 {
+    /// <summary>
+    /// the bat's attack
+    /// </summary>
+    
     public int speed;
     Transform sleepRadius;
     public float sleepRadiusSize;
@@ -14,6 +18,7 @@ public class batAttack : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //initialise stuff
         batTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
@@ -25,11 +30,13 @@ public class batAttack : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Check if the player is nearby
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
         //if the player is nearby, chase the player
         if (playerCheck)
         {
+            //Always move to destination
             batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
 
             //Always face the player while awake

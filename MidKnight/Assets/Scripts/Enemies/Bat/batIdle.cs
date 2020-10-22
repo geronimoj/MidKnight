@@ -23,6 +23,7 @@ public class batIdle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //check if the player is nearby
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
         //Change to attack animation if the player is nearby
