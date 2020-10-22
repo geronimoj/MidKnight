@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : Character
 {
     private StateManager manager;
+    [SerializeField]
+    private GameManager gm;
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
@@ -28,6 +30,13 @@ public class PlayerController : Character
 
     public override void Move(Vector3 moveVec)
     {
-        cc.Move(moveVec);
+        if (gm == null)
+        {
+            moveVec.z = 0;
+            cc.Move(moveVec);
+            return;
+        }
+
+        Vector2[] path = gm.GetPath();
     }
 }

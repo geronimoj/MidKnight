@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Room room;
     /// <summary>
     /// Snaps the position given onto the path
     /// INCOMPLETE
@@ -12,6 +13,12 @@ public class GameManager : MonoBehaviour
     /// <returns>The new position of the object</returns>
     public Vector3 SnapToPath(Vector3 position)
     {
+        if (room == null || room.pathNodes.Length < 2)
+        {
+            position.z = 0;
+            return position;
+        }
+        //Temporary
         return position;
     }
     /// <summary>
@@ -22,10 +29,15 @@ public class GameManager : MonoBehaviour
     /// <returns>Returns a unit vector along the path. Does not account for veritcal movement</returns>
     public Vector3 GetPathDirection(bool lookingRight)
     {
-        if (lookingRight)
-            return Vector3.right;
-        else
-            return Vector3.left;
+        if (room == null || room.pathNodes.Length < 2)
+        {
+            if (lookingRight)
+                return Vector3.right;
+            else
+                return Vector3.left;
+        }
+        //FILL OUT
+        return Vector3.zero;
     }
     /// <summary>
     /// Gets the path for readonly purposes
@@ -33,6 +45,8 @@ public class GameManager : MonoBehaviour
     /// <returns>An array of the nodes of the path</returns>
     public Vector2[] GetPath()
     {
+        if (room != null && room.pathNodes != null)
+            return room.pathNodes;
         return null;
     }
 }
