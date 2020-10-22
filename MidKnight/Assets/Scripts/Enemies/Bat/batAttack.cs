@@ -32,6 +32,15 @@ public class batAttack : StateMachineBehaviour
         if (playerCheck)
         {
             batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
+
+            if(playerTrans.position.x > batTrans.position.x)
+            {
+                batTrans.localEulerAngles = new Vector3(0, 180, 0);
+            }
+            else
+            {
+                batTrans.localEulerAngles = new Vector3(0, 0, 0);
+            }
         }
         else
         {
