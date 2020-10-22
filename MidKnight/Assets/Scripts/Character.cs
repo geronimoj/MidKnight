@@ -76,9 +76,9 @@ public class Character : MonoBehaviour
     /// <summary>
     /// Moves the character or object
     /// </summary>
-    /// <param name="moveVec"></param>
-    public void Move(Vector3 moveVec)
+    /// <param name="moveVec">The movement vector</param>
+    public virtual void Move(Vector3 moveVec)
     {
-
+        cc.Move(moveVec);
     }
 }
