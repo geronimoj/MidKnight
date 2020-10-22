@@ -8,7 +8,6 @@ public class ratIdle : StateMachineBehaviour
     Vector3 destination;
     public int speed;
     int leftOrRight = 500;
-
     bool floorCheck;
     bool wallCheck;
 

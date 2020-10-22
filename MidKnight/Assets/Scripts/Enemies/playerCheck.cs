@@ -2,35 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class floorCheck : MonoBehaviour
+public class playerCheck : MonoBehaviour
 {
-    public bool isThereFloor;
+    public bool isTherePlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        isThereFloor = true;
+        isTherePlayer = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Boundary")
+        if(other.gameObject.tag == "Player")
         {
-            isThereFloor = true;
+            isTherePlayer = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Boundary")
+        if (other.gameObject.tag == "Player")
         {
-            isThereFloor = false;
+            isTherePlayer = false;
         }
     }
 }
+

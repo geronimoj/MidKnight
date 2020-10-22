@@ -25,6 +25,20 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -6319251350944834556}
+--- !u!114 &-7181311749471711379
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d0d236d585c2a48bc6b93a3d55a1d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  sleepRadiusSize: 1
 --- !u!1102 &-6319251350944834556
 AnimatorState:
   serializedVersion: 5
@@ -60,7 +74,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: attack
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5681713263549111215}
   m_Solo: 0
@@ -83,7 +100,19 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Bat
   serializedVersion: 5
-  m_AnimatorParameters: []
+  m_AnimatorParameters:
+  - m_Name: idle
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: attack
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -104,7 +133,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: idle
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6319251350944834556}
   m_Solo: 0
@@ -131,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165786d1232a2304d829d8354b89ad12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wakeRadiusSize: 5
 --- !u!1102 &5681713263549111215
 AnimatorState:
   serializedVersion: 5
@@ -144,7 +177,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 2004083050894305312}
   m_StateMachineBehaviours:
-  - {fileID: 8019376511619259977}
+  - {fileID: -7181311749471711379}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class wallCheck : MonoBehaviour
 {
-    public bool isThereAWall = false;
+    public bool isThereAWall;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        isThereAWall = false;
     }
 
     // Update is called once per frame
@@ -20,11 +20,17 @@ public class wallCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isThereAWall = true;
+        if (other.gameObject.tag == "Boundary")
+        {
+            isThereAWall = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isThereAWall = false;
+        if (other.gameObject.tag == "Boundary")
+        {
+            isThereAWall = false;
+        }
     }
 }
