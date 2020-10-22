@@ -6,13 +6,11 @@ using UnityEngine;
 public class OnGround_Else_Airborne : If_ElseTransition
 {
     public override bool IfTransition(ref PlayerController c)
-    {       //Check if we are moving down to see if there is any purpose in actually doing the raycast
-        if (c.movement.VertSpeed < 0 
-            //Raycast down to check for ground
-            && Physics.SphereCast(c.transform.position, c.PlayerRadius, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f))
+    {   //Raycast down to check for ground
+        if (Physics.SphereCast(c.transform.position, c.PlayerRadius, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f))
         {   //Since we aren't accounting for the players radius in the previous raycast, we make sure the player is close enough now
             //This is so the capsual will float over ledges like its a cylinder with a flat bottom
-            if (c.transform.position.y - hit.point.y > (c.Height / 2) + 0.01f)
+            if (c.transform.position.y - hit.point.y > (c.Height / 2) + 0.02f)
                 return false;
             //Store the players position so we don't have to read the x and z values later
             Vector3 pos = c.transform.position;
