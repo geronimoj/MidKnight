@@ -5,20 +5,43 @@ using UnityEngine;
 public class PlayerController : Character
 {
     private StateManager manager;
-    [SerializeField]
-    private GameManager gm;
+
+    public GameManager gm;
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
     [HideInInspector]
     public Movement movement;
-    private bool moveRight;
+    /// <summary>
+    /// The speed of the player
+    /// </summary>
+    [SerializeField]
+    private float moveSpeed = 1f;
 
-    public bool MoveRight
+    [SerializeField]
+    private float gravity = 1f;
+
+    public float MoveSpeed
     {
-        set
+        get
         {
-            moveRight = value;
+            return moveSpeed;
+        }
+    }
+
+    public float Gravity
+    {
+        get
+        {
+            return gravity;
+        }
+    }
+
+    public float Height
+    {
+        get
+        {
+            return cc.height;
         }
     }
 
@@ -53,7 +76,5 @@ public class PlayerController : Character
         //Set moveVec to be the difference between our current position and the final position
 
         cc.Move(moveVec);
-        //Update the direction of movement after we move
-        movement.Direction = gm.GetPathDirection(transform.position, moveRight);
     }
 }

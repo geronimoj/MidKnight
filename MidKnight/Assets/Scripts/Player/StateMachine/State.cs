@@ -18,15 +18,15 @@ public class State : ScriptableObject
     /// Called when the state is entered
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public virtual void StateStart(ref PlayerController c)
-    {
-        Debug.LogWarning("Transitioned into empty state");
-    }
+    public virtual void StateStart(ref PlayerController c) { }
     /// <summary>
     /// Called while the state is active
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public virtual void StateUpdate(ref PlayerController c){}
+    public virtual void StateUpdate(ref PlayerController c)
+    {
+        Debug.LogWarning("Transitioned into empty state");
+    }
     /// <summary>
     /// Called when the state is exited
     /// </summary>
