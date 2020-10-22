@@ -17,14 +17,14 @@ public class GroundMove : State
         if (x == 0)
             return;
 
-        //Set the players move speed
-        c.movement.HozSpeed = c.MoveSpeed;
         //Set the direction
         c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
         //Invert the direction if we are walking left
         if (x < 0)
             c.movement.Direction = -c.movement.Direction;
 
+        //Set the players move speed
+        c.movement.HozSpeed = c.MoveSpeed;
         //Move the character
         c.Move(c.movement.MoveVec * Time.deltaTime);
     }

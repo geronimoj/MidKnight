@@ -38,6 +38,8 @@ public class StateManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     private void SwapState(ref PlayerController c)
     {
+        if (target == current)
+            return;
         current.StateEnd(ref c);
 
         current = target;
@@ -51,8 +53,10 @@ public class StateManager : MonoBehaviour
         {
             if (transitions[i].ShouldTransition(ref c))
             {
-                if (ignore != null && ignore.Length < i && ignore[i])
-                    continue;
+                if (ignore != null && i < ignore.Length)
+                        if (ignore[i])
+                            continue;
+                
 
                 target = transitions[i].target;
                 return true;

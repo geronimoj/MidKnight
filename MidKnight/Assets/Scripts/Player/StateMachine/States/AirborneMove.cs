@@ -6,20 +6,24 @@ using UnityEngine;
 public class AirborneMove : State
 {
     public override void StateUpdate(ref PlayerController c)
-    {   //Gravity
-        c.movement.VertSpeed -= c.Gravity * Time.deltaTime;
-        //Get the input
+    {   //Get the input
         float x = Input.GetAxisRaw("Horizontal");
-        //Check if the player should move horiztonally
-        if (x == 0)
-            c.movement.HozSpeed = 0;
-        else
-            c.movement.HozSpeed = c.MoveSpeed;
-        //Update the movement direction
-        c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
-        //If we are moving left, invert the direction
+        float speed = 0;
+
+        if (x != 0)
+            speed = c.MoveSpeed;
+        //Get the direction to the right
+        Vector3 right = c.gm.GetPathDirection(c.transform.position);
+        //Invert the vector if we are trying to go left
         if (x < 0)
-            c.movement.Direction = -c.movement.Direction;
+            right = -right;
+        //Set the horizontal direction of the player to that direction
+        right *= speed;
+
+        c.movement.Direction = right;
+        //Set the players speed
+        c.movement.HozSpeed = speed;
+        c.movement.VertSpeed -= c.Gravity * Time.deltaTime;
         //Move the character
         c.Move(c.movement.MoveVec * Time.deltaTime);
     }
