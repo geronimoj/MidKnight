@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class batIdle : StateMachineBehaviour
 {
+    /// <summary>
+    /// The bat's idle animation
+    /// </summary>
+    
     Transform wakeRadius;
     public float wakeRadiusSize;
     bool playerCheck;
@@ -11,6 +15,7 @@ public class batIdle : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Change the radius for the bat to wake up in the inspector
         wakeRadius = animator.gameObject.transform.GetChild(0);
         wakeRadius.localScale = new Vector3(wakeRadiusSize, wakeRadiusSize, wakeRadiusSize);
     }
@@ -20,6 +25,7 @@ public class batIdle : StateMachineBehaviour
     {
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
+        //Change to attack animation if the player is nearby
         if(playerCheck)
         {
             animator.SetTrigger("attack");

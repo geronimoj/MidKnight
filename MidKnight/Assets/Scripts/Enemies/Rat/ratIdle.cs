@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ratIdle : StateMachineBehaviour
 {
+    /// <summary>
+    /// Baby rat's idle script
+    /// </summary>
+
     Transform ratTrans;
     Vector3 destination;
     public int speed;
@@ -15,7 +19,18 @@ public class ratIdle : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         ratTrans = animator.GetComponent<Transform>();
-        destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+
+        //The rat moves the way its facing
+        if (ratTrans.eulerAngles == new Vector3(0, 0, 0))
+        {
+            destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+            isMovingRight = true;
+        }
+        else
+        {
+            destination = new Vector3(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
+            isMovingRight = false;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,6 +39,7 @@ public class ratIdle : StateMachineBehaviour
         floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
         wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
 
+        //If there's a wall or no floor in front of the rat, it changes directions
         if (wallCheck || !floorCheck)
         {
             if(isMovingRight)
@@ -40,6 +56,7 @@ public class ratIdle : StateMachineBehaviour
             }
         }
 
+        //Move to it's destination
         ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);   
     }
 

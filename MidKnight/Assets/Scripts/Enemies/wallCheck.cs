@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class wallCheck : MonoBehaviour
 {
+    /// <summary>
+    /// Check if this object is colliding with a wall 
+    /// </summary>
+
     public bool isThereAWall;
 
     // Start is called before the first frame update

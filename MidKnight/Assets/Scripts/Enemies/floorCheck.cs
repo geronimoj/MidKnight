@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class floorCheck : MonoBehaviour
 {
+    /// <summary>
+    /// Check if this object is colliding with the floor 
+    /// </summary> 
+    
     public bool isThereFloor;
 
     // Start is called before the first frame update

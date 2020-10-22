@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TestPlayerMovement : MonoBehaviour
 {
+    /// <summary>
+    /// Player test script.
+    /// Simple prototype for checking if enemy scripts work
+    /// </summary> 
+
     Transform playerTrans;
     public float speed;
 

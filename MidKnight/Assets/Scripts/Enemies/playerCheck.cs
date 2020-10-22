@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class playerCheck : MonoBehaviour
 {
+    /// <summary>
+    /// Check if this object is colliding with the player 
+    /// </summary>
+     
     public bool isTherePlayer;
 
     // Start is called before the first frame update

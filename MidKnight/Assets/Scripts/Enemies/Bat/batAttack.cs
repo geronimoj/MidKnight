@@ -16,6 +16,8 @@ public class batAttack : StateMachineBehaviour
     {
         batTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        //Change the radius for the bat to sleep in the inspector
         sleepRadius = animator.gameObject.transform.GetChild(1);
         sleepRadius.localScale = new Vector3(sleepRadiusSize, sleepRadiusSize, sleepRadiusSize);
     }
@@ -25,10 +27,12 @@ public class batAttack : StateMachineBehaviour
     {
         playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
 
+        //if the player is nearby, chase the player
         if (playerCheck)
         {
             batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
 
+            //Always face the player while awake
             if (playerTrans.position.x > batTrans.position.x)
             {
                 batTrans.localEulerAngles = new Vector3(0, 180, 0);
