@@ -12,10 +12,20 @@ public class PlayerController : Character
     /// </summary>
     [HideInInspector]
     public Movement movement;
+    private bool moveRight;
+
+    public bool MoveRight
+    {
+        set
+        {
+            moveRight = value;
+        }
+    }
 
     protected override void AwakeExtra()
     {
         manager = GetComponent<StateManager>();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     private void Start()
@@ -31,12 +41,19 @@ public class PlayerController : Character
     public override void Move(Vector3 moveVec)
     {
         if (gm == null)
-        {
+        {   //If we don't have a gameManager, move along the x axis only
             moveVec.z = 0;
             cc.Move(moveVec);
             return;
         }
+        //Find our distance along the path
 
-        Vector2[] path = gm.GetPath();
+        //Move moveVec along the path and store its final position
+
+        //Set moveVec to be the difference between our current position and the final position
+
+        cc.Move(moveVec);
+        //Update the direction of movement after we move
+        movement.Direction = gm.GetPathDirection(transform.position, moveRight);
     }
 }

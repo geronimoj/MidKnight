@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="lookingRight">Do you want the direction of the path to the left or right</param>
     /// <returns>Returns a unit vector along the path. Does not account for veritcal movement</returns>
-    public Vector3 GetPathDirection(bool lookingRight)
+    public Vector3 GetPathDirection(Vector3 position, bool lookingRight)
     {
         if (room == null || room.pathNodes.Length < 2)
         {
