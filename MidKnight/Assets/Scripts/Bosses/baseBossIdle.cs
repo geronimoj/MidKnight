@@ -6,7 +6,7 @@ public class baseBossIdle : StateMachineBehaviour
 {
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
-    int noOfMoves;
+    int noOfMoves = 0;
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
     float timeTillAtk;

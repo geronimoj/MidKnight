@@ -11,6 +11,12 @@ public class meleeSkeletonIdle : baseEnemyIdle
     public int atkRange;
     Transform chaseRadius;
     public float chaseRadiusSize;
+    public float minStartTimeTillWalk;
+    public float maxStartTimeTillWalk;
+    float timeTillWalk;
+    bool hasChosenWalk;
+    public float maxDistToWalk;
+    float distToWalk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -18,28 +24,23 @@ public class meleeSkeletonIdle : baseEnemyIdle
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
 
+        //initialise stuff
+        hasChosenWalk = false;
+
         //custom stuff for skele
         //atk as soon as skele is in range and player is above skeleton
-        if (Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange && playerTrans.position.y >= enemyTrans.position.y)
-        {
-            animator.SetTrigger("atk");
-        }
+        AttackPlayer(animator);
 
         //change the radius of skele vision in inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
-        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
         //atk as soon as skele is in range 
-        if(Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange)
-        {
-            animator.SetTrigger("atk");
-        }
+        AttackPlayer(animator);
 
         //walk to the player if there is one, but stop if there is a wall or no floor
         if(PlayerCheck())
@@ -56,12 +57,58 @@ public class meleeSkeletonIdle : baseEnemyIdle
             {
                 destination.Set(playerTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
             }
-        }
 
-        //skele always walks to destination
-        MoveToDestination(destination);
+            MoveToDestination(destination);
+        }
+        else if(!hasChosenWalk)
+        {
+            timeTillWalk = Random.Range(minStartTimeTillWalk, maxStartTimeTillWalk);
+            distToWalk = Random.Range(-maxDistToWalk, maxDistToWalk);
+            destination.Set(enemyTrans.position.x + distToWalk, enemyTrans.position.y, enemyTrans.position.z);
+            hasChosenWalk = true;
+        }
+        else if(timeTillWalk > 0)
+        {
+            timeTillWalk -= Time.deltaTime;
+        }
+        else
+        {
+            MoveToDestination(destination);
+
+            //stop moving if theres a wall or no floor
+            if(WallAndFloorCheck())
+            {
+                destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+            }
+
+            //face the way its walking
+            if(distToWalk > 0)
+            {
+                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+            }
+
+            if (enemyTrans.position == destination)
+            {
+                hasChosenWalk = false;
+            }
+        }
     }
 
+    /// <summary>
+    /// attack the player if skele is in range
+    /// </summary>
+    /// <param name="animator"></param>
+    void AttackPlayer(Animator animator)
+    {
+        if (Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange)
+        {
+            animator.SetTrigger("atk");
+        }
+    }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
