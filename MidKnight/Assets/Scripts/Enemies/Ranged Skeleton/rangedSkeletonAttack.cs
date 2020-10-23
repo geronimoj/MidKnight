@@ -11,6 +11,8 @@ public class rangedSkeletonAttack : StateMachineBehaviour
     public float startTimeTillAtk;
     float timeTillAtk;
     bool hasUsedAtk;
+    public GameObject atk;
+    Transform skeleTrans;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -18,6 +20,7 @@ public class rangedSkeletonAttack : StateMachineBehaviour
         //initialise stuff
         timeTillAtk = startTimeTillAtk;
         hasUsedAtk = false;
+        skeleTrans = animator.GetComponent<Transform>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -31,6 +34,8 @@ public class rangedSkeletonAttack : StateMachineBehaviour
         else if (!hasUsedAtk)
         {
             hasUsedAtk = true;
+
+            Instantiate(atk, skeleTrans.position, skeleTrans.rotation);
         }
     }
 

@@ -8,8 +8,6 @@ public class meleeSkeletonIdle : StateMachineBehaviour
     /// Melee AND ranged skeleton idle 
     /// </summary>
     
-    public float minStartTimeTillMove;
-    public float maxStartTimeTillMove;
     Transform skeleTrans;
     public int speed;
     Transform chaseRadius;
@@ -37,6 +35,12 @@ public class meleeSkeletonIdle : StateMachineBehaviour
         //Set it's vision range in the inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
+
+        //atk as soon as skele is in range and player is above skeleton
+        if (Vector3.Distance(playerTrans.position, skeleTrans.position) < atkRange && playerTrans.position.y >= skeleTrans.position.y)
+        {
+            animator.SetTrigger("atk");
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
