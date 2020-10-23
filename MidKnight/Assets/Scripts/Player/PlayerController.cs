@@ -143,6 +143,7 @@ public class PlayerController : Character
     private void Start()
     {
         manager.CallStart(this);
+        cc.stepOffset = 0;
     }
     /// <summary>
     /// Decrements the timer and calls update on the state

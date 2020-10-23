@@ -40,4 +40,14 @@ public class GameManager : MonoBehaviour
             return room.pathNodes;
         return null;
     }
+    /// <summary>
+    /// Takes the position and movement vector and returns a new movement vector that will end the character along the path
+    /// </summary>
+    /// <param name="position">The position of the character</param>
+    /// <param name="moveVector">The movement vector of the character</param>
+    /// <returns>The new movement vector</returns>
+    public Vector3 MoveAlongPath(Vector3 position, Vector3 moveVector)
+    {
+        return moveVector;
+    }
 }

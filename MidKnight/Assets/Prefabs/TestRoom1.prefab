@@ -261,7 +261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentRoom: {fileID: 8386195754305330114}
   nextRoom: {fileID: 11400000, guid: c0bf890f4b98c914bbaa365a0716facb, type: 2}
-  EM: {fileID: 4933067514324667077, guid: d5d897b3c3241ac47bde29f887786228, type: 3}
+  GM: {fileID: 0}
+  EM: {fileID: 0}
+  entranceIndex: 0
 --- !u!1 &4201424620908026627
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +513,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Platform (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1966793984708011054, guid: 9bfd6d32099c7614fb72dc89857c8886,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bfd6d32099c7614fb72dc89857c8886, type: 3}
