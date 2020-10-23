@@ -10,6 +10,9 @@ public class baseBossIdle : StateMachineBehaviour
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
     float timeTillAtk;
+    int moveToUse;
+    int secondLastMove = 0;
+    int lastMove = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,40 +20,52 @@ public class baseBossIdle : StateMachineBehaviour
         //initialise stuff
         enemyTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
         timeTillAtk = Random.Range(minStartTimeTillAtk, maxStartTimeTillAtk);
+        moveToUse = Random.Range(1, noOfMoves + 1);
+
+        //ensures no boss will use the same move three times in a row
+        while(moveToUse == lastMove && moveToUse == secondLastMove)
+        {
+            moveToUse = Random.Range(1, noOfMoves + 1);
+            lastMove = moveToUse;
+            lastMove = secondLastMove;
+        }
+
+        lastMove = moveToUse;
+        secondLastMove = lastMove;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //counter till its time to attack
         if (timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;
         }
         else
         {
-            int moveToUse = Random.Range(1, noOfMoves + 1);
+            switch (moveToUse)
+            {
+                case 1:
+                    animator.SetTrigger("atk1");
+                    break;
 
-            if(moveToUse == 1)
-            {
-                animator.SetTrigger("atk1");
-            }
-            if (moveToUse == 2)
-            {
-                animator.SetTrigger("atk2");
-            }
-            if (moveToUse == 3)
-            {
-                animator.SetTrigger("atk3");
-            }
-            if (moveToUse == 4)
-            {
-                animator.SetTrigger("atk4");
-            }
-            if (moveToUse == 5)
-            {
-                animator.SetTrigger("atk5");
+                case 2:
+                    animator.SetTrigger("atk2");
+                    break;
+
+                case 3:
+                    animator.SetTrigger("atk3");
+                    break;
+
+                case 4:
+                    animator.SetTrigger("atk4");
+                    break;
+
+                case 5:
+                    animator.SetTrigger("atk5");
+                    break;
             }
         }
     }

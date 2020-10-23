@@ -60,6 +60,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
 
             MoveToDestination(destination);
         }
+        //if the player isnt in vision, walk randomly
         else if(!hasChosenWalk)
         {
             timeTillWalk = Random.Range(minStartTimeTillWalk, maxStartTimeTillWalk);
@@ -91,7 +92,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
                 destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
             }
 
-
+            //choose somewhere else to walk after reaching its destination
             if (enemyTrans.position == destination)
             {
                 hasChosenWalk = false;
