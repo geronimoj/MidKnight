@@ -12,9 +12,6 @@ public class rangedSkeletonAttack : StateMachineBehaviour
     float timeTillAtk;
     bool hasUsedAtk;
 
-    public float startTimeTillIdle;
-    float timeTillIdle;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -34,16 +31,6 @@ public class rangedSkeletonAttack : StateMachineBehaviour
         else if (!hasUsedAtk)
         {
             hasUsedAtk = true;
-        }
-
-        //return to idle after x seconds
-        if(timeTillIdle > 0)
-        {
-            timeTillIdle -= Time.deltaTime;
-        }
-        else
-        {
-            animator.SetTrigger("idle");
         }
     }
 

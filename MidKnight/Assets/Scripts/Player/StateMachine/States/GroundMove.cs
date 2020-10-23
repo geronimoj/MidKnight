@@ -19,9 +19,14 @@ public class GroundMove : State
 
         //Set the direction
         c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
+        if (x > 0)
+            c.FacingRight = true;
         //Invert the direction if we are walking left
         if (x < 0)
+        {
+            c.FacingRight = false;
             c.movement.Direction = -c.movement.Direction;
+        }
 
         //Set the players move speed
         c.movement.HozSpeed = c.MoveSpeed;

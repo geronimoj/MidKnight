@@ -5,9 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "OnGround_Else_Airborne", menuName = "Transitions/OnGround_Else_Airborne", order = 1)]
 public class OnGround_Else_Airborne : If_ElseTransition
 {
+    public LayerMask ground;
     public override bool IfTransition(ref PlayerController c)
     {   //Raycast down to check for ground
-        if (Physics.SphereCast(c.transform.position, c.PlayerRadius, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f))
+        if (Physics.SphereCast(c.transform.position, c.PlayerRadius - 0.01f, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f, ground))
         {   //Since we aren't accounting for the players radius in the previous raycast, we make sure the player is close enough now
             //This is so the capsual will float over ledges like its a cylinder with a flat bottom
             if (c.transform.position.y - hit.point.y > (c.Height / 2) + 0.02f)
