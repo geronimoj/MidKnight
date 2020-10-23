@@ -3,8 +3,14 @@
 [System.Serializable]
 public struct Movement
 {
+    /// <summary>
+    /// The storage location for the players movement
+    /// </summary>
     [SerializeField]
     private Vector3 movement;
+    /// <summary>
+    /// The direction of the players movement
+    /// </summary>
     private Vector3 direction;
     /// <summary>
     /// Sets or Gets the vertical speed

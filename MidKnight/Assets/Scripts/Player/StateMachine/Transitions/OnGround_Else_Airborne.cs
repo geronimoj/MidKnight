@@ -5,7 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "OnGround_Else_Airborne", menuName = "Transitions/OnGround_Else_Airborne", order = 1)]
 public class OnGround_Else_Airborne : If_ElseTransition
 {
+    /// <summary>
+    /// The layermask that we can stand on
+    /// </summary>
     public LayerMask ground;
+    /// <summary>
+    /// Checks if we are standing on top of something
+    /// </summary>
+    /// <param name="c">A reference to the player controller</param>
+    /// <returns>Returns true if we land on the ground</returns>
     public override bool IfTransition(ref PlayerController c)
     {   //Raycast down to check for ground
         if (Physics.SphereCast(c.transform.position, c.PlayerRadius - 0.01f, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f, ground))
