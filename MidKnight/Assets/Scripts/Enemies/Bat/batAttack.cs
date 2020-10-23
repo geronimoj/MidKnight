@@ -2,75 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class batAttack : StateMachineBehaviour
+public class batAttack : baseEnemyIdle
 {
     /// <summary>
     /// the bat's attack
     /// </summary>
     
-    public int speed;
-    Transform sleepRadius;
-    public float sleepRadiusSize;
-    playerCheck playerCheck;
-    Transform batTrans;
-    Transform playerTrans;
+        
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //initialise stuff
-        batTrans = animator.GetComponent<Transform>();
-        playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerCheck = animator.GetComponentInChildren<playerCheck>();
-
-        //Change the radius for the bat to sleep in the inspector
-        sleepRadius = animator.gameObject.transform.GetChild(0);
-        sleepRadius.localScale = new Vector3(sleepRadiusSize, sleepRadiusSize, sleepRadiusSize);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Check if the player is nearby
-        bool isThereAPlayer = playerCheck.isTherePlayer;
 
         //if the player is nearby, chase the player
-        if (isThereAPlayer)
+        if (PlayerCheck())
         {
             //Always move to destination
-            batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
-
+            destination.Set(playerTrans.position.x, playerTrans.position.y, playerTrans.position.z);
+            MoveToDestination(destination);
             FacePlayer();
         }
     }
 
-    //face the player
-    void FacePlayer()
-    {
-        bool playerOnRight = PlayerOnRight();
-
-        if (playerOnRight)
-        {
-            batTrans.eulerAngles = new Vector3(0, 0, 0);
-        }
-        else
-        {
-            batTrans.eulerAngles = new Vector3(0, 180, 0);
-        }
-    }
-
-    //which side is the player on
-    bool PlayerOnRight()
-    {
-        if (playerTrans.position.x > batTrans.position.x)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

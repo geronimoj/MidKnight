@@ -2,35 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class batIdle : StateMachineBehaviour
+public class batIdle : baseEnemyIdle
 {
     /// <summary>
     /// The bat's idle animation
     /// </summary>
     
-    Transform wakeRadius;
-    public float wakeRadiusSize;
-    playerCheck playerCheck;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Change the radius for the bat to wake up in the inspector
-        wakeRadius = animator.gameObject.transform.GetChild(0);
-        wakeRadius.localScale = new Vector3(wakeRadiusSize, wakeRadiusSize, wakeRadiusSize);
-
-        //initialise stuff
-        playerCheck = animator.GetComponentInChildren<playerCheck>();
+        base.OnStateEnter(animator, stateInfo, layerIndex);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //check if the player is nearby
-        bool isThereAPlayer = playerCheck.isTherePlayer;
 
         //Change to attack animation if the player is nearby
-        if(isThereAPlayer)
+        if(PlayerCheck())
         {
             animator.SetTrigger("attack");
         }

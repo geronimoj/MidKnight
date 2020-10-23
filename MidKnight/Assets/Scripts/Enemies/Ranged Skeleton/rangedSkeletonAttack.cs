@@ -35,7 +35,10 @@ public class rangedSkeletonAttack : StateMachineBehaviour
         {
             hasUsedAtk = true;
 
-            Instantiate(atk, skeleTrans.position, skeleTrans.rotation);
+            GameObject arrow = Instantiate(atk, skeleTrans.position, skeleTrans.rotation);
+            //characterOwner co = arrow.GetComponent<characterOwner>();
+            //Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
+            //co.Owner = animator.gameObject;
         }
     }
 

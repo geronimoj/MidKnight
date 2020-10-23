@@ -2,72 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ratIdle : StateMachineBehaviour
+public class ratIdle : baseEnemyIdle
 {
     /// <summary>
     /// Baby rat's idle script
     /// </summary>
 
-    Transform ratTrans;
-    Vector3 destination;
-    public int speed;
-    floorCheck floorCheck;
-    wallCheck wallCheck;
     bool isMovingRight = true;
-    bool isThereFloor;
-    bool isThereAWall;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        base.OnStateEnter(animator, stateInfo, layerIndex);
+        
         //initialise stuff
-        ratTrans = animator.GetComponent<Transform>();
-        floorCheck = animator.GetComponentInChildren<floorCheck>();
-        wallCheck = animator.GetComponentInChildren<wallCheck>();
-        destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+        destination = new Vector3(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //check if wall and floor nearby
-        isThereFloor = floorCheck.isThereFloor;
-        isThereAWall = wallCheck.isThereAWall;
-
         //If there's a wall or no floor in front of the rat, it changes directions
-        bool wallAndFloorCheck = WallAndFloorCheck();
-
-        if(wallAndFloorCheck)
+        if(WallAndFloorCheck())
         {
             if (isMovingRight)
             {
-                ratTrans.eulerAngles = new Vector3(0, 180, 0);
-                destination.Set(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
+                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+                destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                ratTrans.eulerAngles = new Vector3(0, 0, 0);
-                destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+                destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }
         }
 
         //Move to it's destination
-        ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);   
-    }
-
-    //check for walls and floor
-    bool WallAndFloorCheck()
-    {
-        if (isThereAWall || !isThereFloor)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        MoveToDestination(destination);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
