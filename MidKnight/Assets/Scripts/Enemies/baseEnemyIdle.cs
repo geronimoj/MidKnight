@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class baseEnemyIdle : StateMachineBehaviour
 {
-    public Transform enemyTrans;
-    public Transform playerTrans;
+    [HideInInspector] public Transform enemyTrans;
+    [HideInInspector] public Transform playerTrans;
     floorCheck floorCheck;
     wallCheck wallCheck;
     playerCheck playerCheck;
     public int speed = 1;
-    public Vector3 destination;
+    [HideInInspector] public Vector3 destination;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,14 +19,14 @@ public class baseEnemyIdle : StateMachineBehaviour
         enemyTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
-
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
         playerCheck = animator.GetComponentInChildren<playerCheck>();
     }
 
-
-    //face the player
+    /// <summary>
+    /// Make the enemy face the player
+    /// </summary>
     public void FacePlayer()
     {
         if (PlayerOnRight())
@@ -39,7 +39,10 @@ public class baseEnemyIdle : StateMachineBehaviour
         }
     }
 
-    //which side is the player on
+    /// <summary>
+    ///check which side of the enemy the player is on
+    /// </summary>
+    /// <returns></returns>
     public bool PlayerOnRight()
     {
         if (playerTrans.position.x > enemyTrans.position.x)
@@ -52,7 +55,10 @@ public class baseEnemyIdle : StateMachineBehaviour
         }
     }
 
-    //check for walls and floor
+    /// <summary>
+    /// Check if there is a wall or no floor stopping the enemy from moving
+    /// </summary>
+    /// <returns></returns>
     public bool WallAndFloorCheck()
     {
         if (wallCheck.isThereAWall || !floorCheck.isThereFloor)
@@ -65,6 +71,10 @@ public class baseEnemyIdle : StateMachineBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if the player is in range
+    /// </summary>
+    /// <returns></returns>
     public bool PlayerCheck()
     {
         if(playerCheck.isTherePlayer)
@@ -77,6 +87,10 @@ public class baseEnemyIdle : StateMachineBehaviour
         }
     }
 
+    /// <summary>
+    /// Make the enemy move to this destination
+    /// </summary>
+    /// <param name="destination"></param>
     public void MoveToDestination(Vector3 destination)
     {
         enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
