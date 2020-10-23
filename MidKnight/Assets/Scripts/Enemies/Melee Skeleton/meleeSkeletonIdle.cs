@@ -75,12 +75,6 @@ public class meleeSkeletonIdle : baseEnemyIdle
         {
             MoveToDestination(destination);
 
-            //stop moving if theres a wall or no floor
-            if(WallAndFloorCheck())
-            {
-                destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
-            }
-
             //face the way its walking
             if(distToWalk > 0)
             {
@@ -90,6 +84,13 @@ public class meleeSkeletonIdle : baseEnemyIdle
             {
                 enemyTrans.eulerAngles = new Vector3(0, 180, 0);
             }
+
+            //stop moving if theres a wall or no floor
+            if (WallAndFloorCheck())
+            {
+                destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+            }
+
 
             if (enemyTrans.position == destination)
             {
