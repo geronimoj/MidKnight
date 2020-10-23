@@ -23,6 +23,9 @@ public class PlayerController : Character
     [SerializeField]
     private float onJumpForce = 1f;
 
+    [SerializeField]
+    private float dashCooldown = 0;
+
     public float MoveSpeed
     {
         get
@@ -63,6 +66,30 @@ public class PlayerController : Character
         }
     }
 
+    public bool CanDash
+    {
+        get
+        {
+            return dashTimer <= 0;
+        }
+    }
+
+    private bool facingRight = false;
+
+    public bool FacingRight
+    {
+        get
+        {
+            return facingRight;
+        }
+        set
+        {
+            facingRight = value;
+        }
+    }
+
+    private float dashTimer = 0;
+
     protected override void AwakeExtra()
     {
         manager = GetComponent<StateManager>();
@@ -76,6 +103,7 @@ public class PlayerController : Character
 
     private void Update()
     {
+        dashTimer -= Time.deltaTime;
         manager.DoState(this);
     }
 
@@ -94,5 +122,13 @@ public class PlayerController : Character
         //Set moveVec to be the difference between our current position and the final position
 
         cc.Move(moveVec);
+    }
+
+    /// <summary>
+    /// Called when the dash is performed
+    /// </summary>
+    public void DoDash()
+    {
+        dashTimer = dashCooldown;
     }
 }
