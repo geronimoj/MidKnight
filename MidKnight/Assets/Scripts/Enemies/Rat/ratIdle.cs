@@ -11,40 +11,35 @@ public class ratIdle : StateMachineBehaviour
     Transform ratTrans;
     Vector3 destination;
     public int speed;
-    bool floorCheck;
-    bool wallCheck;
+    floorCheck floorCheck;
+    wallCheck wallCheck;
     bool isMovingRight = true;
+    bool isThereFloor;
+    bool isThereAWall;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //initialise stuff
         ratTrans = animator.GetComponent<Transform>();
-
-        //The rat moves the way its facing
-        if (ratTrans.eulerAngles == new Vector3(0, 0, 0))
-        {
-            destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
-            isMovingRight = true;
-        }
-        else
-        {
-            destination = new Vector3(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
-            isMovingRight = false;
-        }
+        floorCheck = animator.GetComponentInChildren<floorCheck>();
+        wallCheck = animator.GetComponentInChildren<wallCheck>();
+        destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //check if wall and floor nearby
-        floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
-        wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
+        isThereFloor = floorCheck.isThereFloor;
+        isThereAWall = wallCheck.isThereAWall;
 
         //If there's a wall or no floor in front of the rat, it changes directions
-        if (wallCheck || !floorCheck)
+        bool wallAndFloorCheck = WallAndFloorCheck();
+
+        if(wallAndFloorCheck)
         {
-            if(isMovingRight)
+            if (isMovingRight)
             {
                 ratTrans.eulerAngles = new Vector3(0, 180, 0);
                 destination.Set(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
@@ -60,6 +55,19 @@ public class ratIdle : StateMachineBehaviour
 
         //Move to it's destination
         ratTrans.position = Vector3.MoveTowards(ratTrans.position, destination, speed * Time.deltaTime);   
+    }
+
+    //check for walls and floor
+    bool WallAndFloorCheck()
+    {
+        if (isThereAWall || !isThereFloor)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

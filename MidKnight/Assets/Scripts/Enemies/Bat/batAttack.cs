@@ -11,7 +11,7 @@ public class batAttack : StateMachineBehaviour
     public int speed;
     Transform sleepRadius;
     public float sleepRadiusSize;
-    bool playerCheck;
+    playerCheck playerCheck;
     Transform batTrans;
     Transform playerTrans;
 
@@ -21,9 +21,10 @@ public class batAttack : StateMachineBehaviour
         //initialise stuff
         batTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerCheck = animator.GetComponentInChildren<playerCheck>();
 
         //Change the radius for the bat to sleep in the inspector
-        sleepRadius = animator.gameObject.transform.GetChild(1);
+        sleepRadius = animator.gameObject.transform.GetChild(0);
         sleepRadius.localScale = new Vector3(sleepRadiusSize, sleepRadiusSize, sleepRadiusSize);
     }
 
@@ -31,23 +32,43 @@ public class batAttack : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Check if the player is nearby
-        playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
+        bool isThereAPlayer = playerCheck.isTherePlayer;
 
         //if the player is nearby, chase the player
-        if (playerCheck)
+        if (isThereAPlayer)
         {
             //Always move to destination
             batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
 
-            //Always face the player while awake
-            if (playerTrans.position.x > batTrans.position.x)
-            {
-                batTrans.localEulerAngles = new Vector3(0, 180, 0);
-            }
-            else
-            {
-                batTrans.localEulerAngles = new Vector3(0, 0, 0);
-            }
+            FacePlayer();
+        }
+    }
+
+    //face the player
+    void FacePlayer()
+    {
+        bool playerOnRight = PlayerOnRight();
+
+        if (playerOnRight)
+        {
+            batTrans.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            batTrans.eulerAngles = new Vector3(0, 180, 0);
+        }
+    }
+
+    //which side is the player on
+    bool PlayerOnRight()
+    {
+        if (playerTrans.position.x > batTrans.position.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
