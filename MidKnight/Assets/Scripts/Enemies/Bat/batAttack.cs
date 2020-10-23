@@ -40,15 +40,20 @@ public class batAttack : StateMachineBehaviour
             //Always move to destination
             batTrans.position = Vector3.MoveTowards(batTrans.position, playerTrans.position, speed * Time.deltaTime);
 
-            //Always face the player while awake
-            if (playerTrans.position.x > batTrans.position.x)
-            {
-                batTrans.localEulerAngles = new Vector3(0, 180, 0);
-            }
-            else
-            {
-                batTrans.localEulerAngles = new Vector3(0, 0, 0);
-            }
+            FacePlayer();
+        }
+    }
+
+    //face the player
+    void FacePlayer()
+    {
+        if (playerTrans.position.x > batTrans.position.x)
+        {
+            batTrans.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            batTrans.eulerAngles = new Vector3(0, 180, 0);
         }
     }
 

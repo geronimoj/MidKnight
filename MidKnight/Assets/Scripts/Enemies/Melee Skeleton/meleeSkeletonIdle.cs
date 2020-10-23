@@ -56,14 +56,7 @@ public class meleeSkeletonIdle : StateMachineBehaviour
         //walk to the player if there is one, but stop if there is a wall or no floor
         if(isThereAPlayer)
         {
-            if (playerTrans.position.x > skeleTrans.position.x)
-            {
-                skeleTrans.eulerAngles = new Vector3(0, 0, 0);
-            }
-            else
-            {
-                skeleTrans.eulerAngles = new Vector3(0, 180, 0);
-            }
+            FacePlayer();
 
             bool wallAndFloorCheck = WallAndFloorCheck();
 
@@ -81,6 +74,7 @@ public class meleeSkeletonIdle : StateMachineBehaviour
         skeleTrans.position = Vector3.MoveTowards(skeleTrans.position, destination, speed * Time.deltaTime);
     }
 
+    //check for walls and floor
     bool WallAndFloorCheck()
     {
         if (isThereAWall || !isThereFloor)
@@ -90,6 +84,19 @@ public class meleeSkeletonIdle : StateMachineBehaviour
         else
         {
             return false;
+        }
+    }
+
+    //face the player
+    void FacePlayer()
+    {
+        if (playerTrans.position.x > skeleTrans.position.x)
+        {
+            skeleTrans.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            skeleTrans.eulerAngles = new Vector3(0, 180, 0);
         }
     }
 

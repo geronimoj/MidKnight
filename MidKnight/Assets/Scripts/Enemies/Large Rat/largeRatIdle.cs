@@ -28,13 +28,15 @@ public class largeRatIdle : StateMachineBehaviour
     {
         //initialise stuff
         ratTrans = animator.GetComponent<Transform>();
-        chaseRadius = animator.gameObject.transform.GetChild(2);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
         playerCheck = animator.GetComponentInChildren<playerCheck>();
         destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
+
+        //change the radius of rats vision in inspector
+        chaseRadius = animator.gameObject.transform.GetChild(2);
+        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -48,29 +50,30 @@ public class largeRatIdle : StateMachineBehaviour
         //If the player is nearby, it changes direction to run into the player
         if (isThereAPlayer)
         {
+            FacePlayer();
+
             if (playerTrans.position.x > ratTrans.position.x)
             {
-                ratTrans.eulerAngles = new Vector3(0, 0, 0);
                 destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
                 isMovingRight = true;
-
-                WallAndFloorCheck();
-                SwapDirections();
             }
             else
             {
-                ratTrans.eulerAngles = new Vector3(0, 180, 0);
                 destination.Set(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
                 isMovingRight = false;
-
-                WallAndFloorCheck();
-                SwapDirections();
             }
+
+            bool wallAndFloorCheck = WallAndFloorCheck();
+
+            if(wallAndFloorCheck)
+            {
+                destination.Set(ratTrans.position.x, ratTrans.position.y, ratTrans.position.z);
+            }
+
         }
         else
         {
             //If there's a wall or no floor in front of the rat, it changes directions
-            WallAndFloorCheck();
             SwapDirections();
         }
 
@@ -91,6 +94,7 @@ public class largeRatIdle : StateMachineBehaviour
         }
     }
 
+    //swap the direction its facing
     void SwapDirections()
     {
         bool wallAndFloorCheck = WallAndFloorCheck();
@@ -112,6 +116,18 @@ public class largeRatIdle : StateMachineBehaviour
         }
     }
 
+    //face the player
+    void FacePlayer()
+    {
+        if (playerTrans.position.x > ratTrans.position.x)
+        {
+            ratTrans.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            ratTrans.eulerAngles = new Vector3(0, 180, 0);
+        }
+    }
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
