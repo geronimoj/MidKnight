@@ -122,6 +122,8 @@ public class PlayerController : Character
         //Set moveVec to be the difference between our current position and the final position
 
         cc.Move(moveVec);
+
+        transform.position = gm.SnapToPath(transform.position);
     }
 
     /// <summary>
