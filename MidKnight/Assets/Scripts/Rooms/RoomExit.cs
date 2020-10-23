@@ -5,6 +5,7 @@ using UnityEngine;
 public class RoomExit : MonoBehaviour
 {
     public Room nextRoom;
+    public EnemyManager EM;
     private uint entranceIndex;
 
     public void LoadRoom()
