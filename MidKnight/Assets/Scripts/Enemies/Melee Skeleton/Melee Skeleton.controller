@@ -51,11 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f330f7b1dc737f14088f9825a202b8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStartTimeTillMove: 2
-  maxStartTimeTillMove: 3
+  enemyTrans: {fileID: 0}
+  playerTrans: {fileID: 0}
   speed: 5
+  destination: {x: 0, y: 0, z: 0}
+  atkRange: 3
   chaseRadiusSize: 10
-  atkRange: 5
 --- !u!1102 &-2531968061985823907
 AnimatorState:
   serializedVersion: 5

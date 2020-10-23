@@ -9,25 +9,34 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// </summary>
     
     public int atkRange;
+    Transform chaseRadius;
+    public float chaseRadiusSize;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+
+        //custom stuff for skele
         //atk as soon as skele is in range and player is above skeleton
         if (Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange && playerTrans.position.y >= enemyTrans.position.y)
         {
             animator.SetTrigger("atk");
         }
+
+        //change the radius of skele vision in inspector
+        chaseRadius = animator.gameObject.transform.GetChild(2);
+        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
+        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         
-        //atk as soon as skele is in range and player is above skeleton
-        if(Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange && playerTrans.position.y >= enemyTrans.position.y)
+        //atk as soon as skele is in range 
+        if(Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange)
         {
             animator.SetTrigger("atk");
         }
@@ -36,6 +45,8 @@ public class meleeSkeletonIdle : baseEnemyIdle
         if(PlayerCheck())
         {
             FacePlayer();
+
+            destination.Set(playerTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
 
             if (WallAndFloorCheck())
             {

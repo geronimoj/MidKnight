@@ -37,8 +37,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d0d236d585c2a48bc6b93a3d55a1d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTrans: {fileID: 0}
+  playerTrans: {fileID: 0}
   speed: 3
-  sleepRadiusSize: 10
+  destination: {x: 0, y: 0, z: 0}
+  chaseRadiusSize: 10
 --- !u!1102 &-6319251350944834556
 AnimatorState:
   serializedVersion: 5
@@ -106,7 +109,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -132,7 +135,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165786d1232a2304d829d8354b89ad12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wakeRadiusSize: 8
+  enemyTrans: {fileID: 0}
+  playerTrans: {fileID: 0}
+  speed: 0
+  destination: {x: 0, y: 0, z: 0}
+  chaseRadiusSize: 10
 --- !u!1102 &5681713263549111215
 AnimatorState:
   serializedVersion: 5

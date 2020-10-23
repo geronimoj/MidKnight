@@ -9,6 +9,8 @@ public class largeRatIdle : baseEnemyIdle
     /// </summary>
      
     bool isMovingRight;
+    Transform chaseRadius;
+    public float chaseRadiusSize;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,6 +19,10 @@ public class largeRatIdle : baseEnemyIdle
 
         // Do custom stuff for the rat
         destination = new Vector3(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
+
+        //change the radius of rats vision in inspector
+        chaseRadius = animator.gameObject.transform.GetChild(2);
+        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

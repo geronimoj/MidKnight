@@ -9,8 +9,6 @@ public class baseEnemyIdle : StateMachineBehaviour
     floorCheck floorCheck;
     wallCheck wallCheck;
     playerCheck playerCheck;
-    Transform chaseRadius;
-    public float chaseRadiusSize;
     public int speed = 1;
     public Vector3 destination;
 
@@ -20,14 +18,11 @@ public class baseEnemyIdle : StateMachineBehaviour
         //initialise stuff
         enemyTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
         playerCheck = animator.GetComponentInChildren<playerCheck>();
-        destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
-
-        //change the radius of rats vision in inspector
-        chaseRadius = animator.gameObject.transform.GetChild(2);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
     }
 
 
