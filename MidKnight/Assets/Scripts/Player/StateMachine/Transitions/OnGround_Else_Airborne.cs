@@ -6,17 +6,13 @@ using UnityEngine;
 public class OnGround_Else_Airborne : If_ElseTransition
 {
     /// <summary>
-    /// The layermask that we can stand on
-    /// </summary>
-    public LayerMask ground;
-    /// <summary>
     /// Checks if we are standing on top of something
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
     /// <returns>Returns true if we land on the ground</returns>
     public override bool IfTransition(ref PlayerController c)
     {   //Raycast down to check for ground
-        if (Physics.SphereCast(c.transform.position, c.PlayerRadius - 0.01f, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f, ground))
+        if (Physics.SphereCast(c.transform.position, c.PlayerRadius - 0.01f, Vector3.down, out RaycastHit hit, (c.Height / 2) + 0.01f, c.Ground))
         {   //Since we aren't accounting for the players radius in the previous raycast, we make sure the player is close enough now
             //This is so the capsual will float over ledges like its a cylinder with a flat bottom
             if (c.transform.position.y - hit.point.y > (c.Height / 2) + 0.02f)

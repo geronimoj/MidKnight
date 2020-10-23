@@ -7,6 +7,11 @@ public class PlayerController : Character
     private StateManager manager;
 
     public GameManager gm;
+
+    /// <summary>
+    /// The layermask that we can stand on
+    /// </summary>
+    public LayerMask ground;
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
@@ -112,6 +117,16 @@ public class PlayerController : Character
         set
         {
             facingRight = value;
+        }
+    }
+    /// <summary>
+    /// A Get for ground
+    /// </summary>
+    public LayerMask Ground
+    {
+        get
+        {
+            return ground;
         }
     }
     /// <summary>

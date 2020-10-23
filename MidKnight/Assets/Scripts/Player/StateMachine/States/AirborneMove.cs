@@ -73,6 +73,19 @@ public class AirborneMove : State
     public override void StateUpdate(ref PlayerController c)
     {   //Get the inputs
         float x = Input.GetAxisRaw("Horizontal");
+        //If we are moving up, check if there is something directly above the player
+        if (c.movement.VertSpeed > 0 && Physics.SphereCast(c.transform.position, c.PlayerRadius - 0.01f, Vector3.up, out RaycastHit hit, (c.Height / 2) + 0.01f, c.Ground))
+        {   //Since its a sphere cast, we need to do an extra check to make sure the distance is just above the palyer
+            if (hit.point.y - c.transform.position.y <= (c.Height / 2) + 0.01f)
+            {   //Set us up to use the "short hop" decelleration function
+                holdingJump = false;
+                earlyJumpRelease = true;
+                c.movement.VertSpeed = 0;
+                accelToMin = timeToMinFallSpeed;
+                floatTimer = 0;
+            }
+        }
+
         //Check if the player is still holding jump or if they are not allowed to hold it any longer
         if (holdingJump && (Input.GetAxisRaw("Jump") <= 0 || jumpTimer < 0))
             holdingJump = false;
@@ -86,6 +99,7 @@ public class AirborneMove : State
             //Set jumpTimer to 0 so we don't call this block again
             jumpTimer = 0;
         }
+
         //Math for jumping with an early jump key release
         if (earlyJumpRelease)
         {

@@ -15,8 +15,10 @@ public class GroundMove : State
         float x = Input.GetAxisRaw("Horizontal");
         //Don't move at all if there is no input
         if (x == 0)
+        {
+            c.movement.HozSpeed = 0;
             return;
-
+        }
         //Set the direction
         c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
         //Are we looking to the right
