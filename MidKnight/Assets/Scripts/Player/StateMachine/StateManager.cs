@@ -37,7 +37,7 @@ public class StateManager : MonoBehaviour
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
     private void SwapState(ref PlayerController c)
-    {
+    {   //If we are already in the state don't both
         if (target == current)
             return;
         current.StateEnd(ref c);
@@ -46,23 +46,29 @@ public class StateManager : MonoBehaviour
 
         current.StateStart(ref c);
     }
-
+    /// <summary>
+    /// Returns true if any transition returned true. Also assigns target
+    /// </summary>
+    /// <param name="c">A reference to the player controller</param>
+    /// <param name="transitions">The transitions to check</param>
+    /// <param name="ignore">An optional boolean array for transitions that should be ignored. Can be null</param>
+    /// <returns>Returns true if a transition passed. Target will have already been assigned</returns>
     private bool CheckTransitions(ref PlayerController c, ref Transition[] transitions, bool[] ignore)
     {
         for (int i = 0; i < transitions.Length; i++)
-        {
+        {   //Should we transition
             if (transitions[i].ShouldTransition(ref c))
-            {
+            {   //Should this transition be ignored
                 if (ignore != null && i < ignore.Length)
                         if (ignore[i])
                             continue;
                 
-
+                //Swap target and return true
                 target = transitions[i].target;
                 return true;
             }
         }
-
+        //No transitions passed
         return false;
     }
 }

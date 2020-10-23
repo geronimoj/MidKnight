@@ -11,19 +11,22 @@ public class GroundMove : State
     }
 
     public override void StateUpdate(ref PlayerController c)
-    {
+    {   //Get the input
         float x = Input.GetAxisRaw("Horizontal");
         //Don't move at all if there is no input
         if (x == 0)
+        {
+            c.movement.HozSpeed = 0;
             return;
-
+        }
         //Set the direction
         c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
+        //Are we looking to the right
         if (x > 0)
             c.FacingRight = true;
         //Invert the direction if we are walking left
         if (x < 0)
-        {
+        {   //Must be facing left
             c.FacingRight = false;
             c.movement.Direction = -c.movement.Direction;
         }

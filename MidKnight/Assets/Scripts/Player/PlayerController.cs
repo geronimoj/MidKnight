@@ -7,6 +7,11 @@ public class PlayerController : Character
     private StateManager manager;
 
     public GameManager gm;
+
+    /// <summary>
+    /// The layermask that we can stand on
+    /// </summary>
+    public LayerMask ground;
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
@@ -16,16 +21,24 @@ public class PlayerController : Character
     /// </summary>
     [SerializeField]
     private float moveSpeed = 1f;
-
+    /// <summary>
+    /// The downwards acceleration of the player when airborne
+    /// </summary>
     [SerializeField]
     private float gravity = 1f;
-
+    /// <summary>
+    /// The upwards speed of the player when they jump
+    /// </summary>
     [SerializeField]
     private float onJumpForce = 1f;
-
+    /// <summary>
+    /// The cooldown of the dash
+    /// </summary>
     [SerializeField]
     private float dashCooldown = 0;
-
+    /// <summary>
+    /// A Get for moveSpeed
+    /// </summary>
     public float MoveSpeed
     {
         get
@@ -33,7 +46,9 @@ public class PlayerController : Character
             return moveSpeed;
         }
     }
-
+    /// <summary>
+    /// A Get for gravity
+    /// </summary>
     public float Gravity
     {
         get
@@ -41,7 +56,9 @@ public class PlayerController : Character
             return gravity;
         }
     }
-
+    /// <summary>
+    /// A Get for the players height
+    /// </summary>
     public float Height
     {
         get
@@ -49,7 +66,9 @@ public class PlayerController : Character
             return cc.height;
         }
     }
-
+    /// <summary>
+    /// A Get for the players radius
+    /// </summary>
     public float PlayerRadius
     {
         get
@@ -57,7 +76,9 @@ public class PlayerController : Character
             return cc.radius;
         }
     }
-
+    /// <summary>
+    /// A Get for onJumpForce
+    /// </summary>
     public float OnJumpForce
     {
         get
@@ -65,7 +86,14 @@ public class PlayerController : Character
             return onJumpForce;
         }
     }
+    /// <summary>
+    /// The timer for if the player can dash
+    /// </summary>
+    private float dashTimer = 0;
 
+    /// <summary>
+    /// Returns true if the player can dash
+    /// </summary>
     public bool CanDash
     {
         get
@@ -73,9 +101,13 @@ public class PlayerController : Character
             return dashTimer <= 0;
         }
     }
-
+    /// <summary>
+    /// A storage location for the direction the player is facing relative to the path
+    /// </summary>
     private bool facingRight = false;
-
+    /// <summary>
+    /// A Get/Set for facingRight
+    /// </summary>
     public bool FacingRight
     {
         get
@@ -87,26 +119,43 @@ public class PlayerController : Character
             facingRight = value;
         }
     }
-
-    private float dashTimer = 0;
-
+    /// <summary>
+    /// A Get for ground
+    /// </summary>
+    public LayerMask Ground
+    {
+        get
+        {
+            return ground;
+        }
+    }
+    /// <summary>
+    /// Gets a reference to the State & Game Managers
+    /// </summary>
     protected override void AwakeExtra()
     {
         manager = GetComponent<StateManager>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
-
+    /// <summary>
+    /// Calls start on the current state
+    /// </summary>
     private void Start()
     {
         manager.CallStart(this);
     }
-
+    /// <summary>
+    /// Decrements the timer and calls update on the state
+    /// </summary>
     private void Update()
     {
         dashTimer -= Time.deltaTime;
         manager.DoState(this);
     }
-
+    /// <summary>
+    /// Moves the player along the vector given
+    /// </summary>
+    /// <param name="moveVec">The direction of movement</param>
     public override void Move(Vector3 moveVec)
     {
         if (gm == null)
@@ -121,8 +170,11 @@ public class PlayerController : Character
 
         //Set moveVec to be the difference between our current position and the final position
 
-        cc.Move(moveVec);
+        //Check if there are slopes or walls in the way of moveVec and adjust moveVec accordingly
 
+        //Move the player
+        cc.Move(moveVec);
+        //Ensure the player has not escaped the map
         transform.position = gm.SnapToPath(transform.position);
     }
 
