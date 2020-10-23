@@ -16,10 +16,12 @@ public class meleeSkeletonIdle : StateMachineBehaviour
     public float chaseRadiusSize;
     Transform playerTrans;
     public int atkRange;
-
     floorCheck floorCheck;
     wallCheck wallCheck;
     playerCheck playerCheck;
+    Vector3 destination;
+    bool isThereFloor;
+    bool isThereAWall;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -27,10 +29,10 @@ public class meleeSkeletonIdle : StateMachineBehaviour
         //initialise stuff
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         skeleTrans = animator.GetComponent<Transform>();
-
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
         playerCheck = animator.GetComponentInChildren<playerCheck>();
+        destination = new Vector3(skeleTrans.position.x, skeleTrans.position.y, skeleTrans.position.z);
 
         //Set it's vision range in the inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
@@ -41,18 +43,53 @@ public class meleeSkeletonIdle : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //check if floor wall or player is nearby
-        bool isThereFloor = floorCheck.isThereFloor;
-        bool isThereAWall = wallCheck.isThereAWall;
+        isThereFloor = floorCheck.isThereFloor;
+        isThereAWall = wallCheck.isThereAWall;
         bool isThereAPlayer = playerCheck.isTherePlayer;
         
-        if(Mathf.Abs(playerTrans.position.x - skeleTrans.position.x) < atkRange)
+        //atk as soon as skele is in range and player is above skeleton
+        if(Vector3.Distance(playerTrans.position, skeleTrans.position) < atkRange && playerTrans.position.y >= skeleTrans.position.y)
         {
             animator.SetTrigger("atk");
         }
 
+        //walk to the player if there is one, but stop if there is a wall or no floor
         if(isThereAPlayer)
         {
-            skeleTrans.position = Vector3.MoveTowards(skeleTrans.position, playerTrans.position, speed * Time.deltaTime);
+            bool wallAndFloorCheck = WallAndFloorCheck();
+
+            if(wallAndFloorCheck)
+            {
+                destination.Set(skeleTrans.position.x, skeleTrans.position.y, skeleTrans.position.z);
+            }
+            else
+            {
+                if(playerTrans.position.x > skeleTrans.position.x)
+                {
+                    skeleTrans.eulerAngles = new Vector3(0, 180, 0);
+                }
+                else
+                {
+                    skeleTrans.eulerAngles = new Vector3(0, 0, 0);
+                }
+
+                destination.Set(playerTrans.position.x, skeleTrans.position.y, skeleTrans.position.z);
+            }
+        }
+
+        //skele always walks to destination
+        skeleTrans.position = Vector3.MoveTowards(skeleTrans.position, destination, speed * Time.deltaTime);
+    }
+
+    bool WallAndFloorCheck()
+    {
+        if (isThereAWall || !isThereFloor)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

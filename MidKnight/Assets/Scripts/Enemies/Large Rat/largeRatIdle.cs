@@ -34,18 +34,7 @@ public class largeRatIdle : StateMachineBehaviour
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
         playerCheck = animator.GetComponentInChildren<playerCheck>();
-
-        //The rat moves the way its facing
-        if (ratTrans.eulerAngles == new Vector3(0, 0, 0))
-        {
-            destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
-            isMovingRight = true;
-        }
-        else
-        {
-            destination = new Vector3(ratTrans.position.x - 500, ratTrans.position.y, ratTrans.position.z);
-            isMovingRight = false;
-        }
+        destination = new Vector3(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -66,6 +55,7 @@ public class largeRatIdle : StateMachineBehaviour
                 isMovingRight = true;
 
                 WallAndFloorCheck();
+                SwapDirections();
             }
             else
             {
@@ -74,12 +64,14 @@ public class largeRatIdle : StateMachineBehaviour
                 isMovingRight = false;
 
                 WallAndFloorCheck();
+                SwapDirections();
             }
         }
         else
         {
             //If there's a wall or no floor in front of the rat, it changes directions
             WallAndFloorCheck();
+            SwapDirections();
         }
 
         //Move to it's destination
@@ -87,9 +79,23 @@ public class largeRatIdle : StateMachineBehaviour
     }
 
     //If there's a wall or no floor in front of the rat, it changes directions
-    void WallAndFloorCheck()
+    bool WallAndFloorCheck()
     {
         if (isThereAWall || !isThereFloor)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    void SwapDirections()
+    {
+        bool wallAndFloorCheck = WallAndFloorCheck();
+
+        if(wallAndFloorCheck)
         {
             if (isMovingRight)
             {
