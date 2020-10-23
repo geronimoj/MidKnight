@@ -92,9 +92,14 @@ public class AirborneMove : State
             speed = c.MoveSpeed;
         //Get the direction to the right
         Vector3 right = c.gm.GetPathDirection(c.transform.position);
+        if (x > 0)
+            c.FacingRight = true;
         //Invert the vector if we are trying to go left
         if (x < 0)
+        {
+            c.FacingRight = false;
             right = -right;
+        }
         //Set the horizontal direction of the player to that direction
         right *= speed;
 

@@ -17,7 +17,6 @@ public class Unlockable : MonoBehaviour
             case "crescent moon":
                 other.gameObject.GetComponent<UnlockTracker>().AddCrescentMoon();
                 Destroy(gameObject);
-                Debug.Log("crescent moon");
                 break;
             case "half moon":
                 other.gameObject.GetComponent<UnlockTracker>().AddHalfMoon();
