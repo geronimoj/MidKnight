@@ -12,21 +12,25 @@ public class meleeSkeletonIdle : StateMachineBehaviour
     public float maxStartTimeTillMove;
     Transform skeleTrans;
     public int speed;
-    Vector3 destination;
-    bool floorCheck;
-    bool wallCheck;
-    bool playerCheck;
     Transform chaseRadius;
     public float chaseRadiusSize;
     Transform playerTrans;
     public int atkRange;
 
+    floorCheck floorCheck;
+    wallCheck wallCheck;
+    playerCheck playerCheck;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //initialise stuff
-        destination = new Vector3(skeleTrans.position.x, skeleTrans.position.y, skeleTrans.position.z);
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        skeleTrans = animator.GetComponent<Transform>();
+
+        floorCheck = animator.GetComponentInChildren<floorCheck>();
+        wallCheck = animator.GetComponentInChildren<wallCheck>();
+        playerCheck = animator.GetComponentInChildren<playerCheck>();
 
         //Set it's vision range in the inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
@@ -37,11 +41,19 @@ public class meleeSkeletonIdle : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //check if floor wall or player is nearby
-        floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
-        wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
-        playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
-
+        bool isThereFloor = floorCheck.isThereFloor;
+        bool isThereAWall = wallCheck.isThereAWall;
+        bool isThereAPlayer = playerCheck.isTherePlayer;
         
+        if(Mathf.Abs(playerTrans.position.x - skeleTrans.position.x) < atkRange)
+        {
+            animator.SetTrigger("atk");
+        }
+
+        if(isThereAPlayer)
+        {
+            skeleTrans.position = Vector3.MoveTowards(skeleTrans.position, playerTrans.position, speed * Time.deltaTime);
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

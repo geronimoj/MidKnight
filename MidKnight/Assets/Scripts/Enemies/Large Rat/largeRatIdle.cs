@@ -11,13 +11,17 @@ public class largeRatIdle : StateMachineBehaviour
     Transform ratTrans;
     Vector3 destination;
     public int speed;
-    bool floorCheck;
-    bool wallCheck;
-    bool playerCheck;
+    floorCheck floorCheck;
+    wallCheck wallCheck;
+    playerCheck playerCheck;
     Transform chaseRadius;
     public float chaseRadiusSize;
     Transform playerTrans;
     bool isMovingRight;
+
+    bool isThereFloor;
+    bool isThereAWall;
+    bool isThereAPlayer;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -27,6 +31,9 @@ public class largeRatIdle : StateMachineBehaviour
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        floorCheck = animator.GetComponentInChildren<floorCheck>();
+        wallCheck = animator.GetComponentInChildren<wallCheck>();
+        playerCheck = animator.GetComponentInChildren<playerCheck>();
 
         //The rat moves the way its facing
         if (ratTrans.eulerAngles == new Vector3(0, 0, 0))
@@ -45,12 +52,12 @@ public class largeRatIdle : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //check if wall floor or player nearby
-        floorCheck = animator.GetComponentInChildren<floorCheck>().isThereFloor;
-        wallCheck = animator.GetComponentInChildren<wallCheck>().isThereAWall;
-        playerCheck = animator.GetComponentInChildren<playerCheck>().isTherePlayer;
+        isThereFloor = floorCheck.isThereFloor;
+        isThereAWall = wallCheck.isThereAWall;
+        isThereAPlayer = playerCheck.isTherePlayer;
 
         //If the player is nearby, it changes direction to run into the player
-        if (playerCheck)
+        if (isThereAPlayer)
         {
             if (playerTrans.position.x > ratTrans.position.x)
             {
@@ -82,7 +89,7 @@ public class largeRatIdle : StateMachineBehaviour
     //If there's a wall or no floor in front of the rat, it changes directions
     void WallAndFloorCheck()
     {
-        if (wallCheck || !floorCheck)
+        if (isThereAWall || !isThereFloor)
         {
             if (isMovingRight)
             {
@@ -96,7 +103,6 @@ public class largeRatIdle : StateMachineBehaviour
                 destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
                 isMovingRight = true;
             }
-
         }
     }
 
