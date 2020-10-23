@@ -5,6 +5,10 @@ public class UnlockTracker : MonoBehaviour
     //Integer that holds current upgrade state
     [SerializeField]
     private int upgradeState = (int)Unlocks.NewMoon;
+    [SerializeField]
+    private string[] thisIsWhatTheNumbersAreDoNotTouchThisArray =
+        { "NewMoon = 1", "CrescentMoon = 2", "HalfMoon = 4", "Dash = 8",
+        "FullMoon = 16", "DoubleJump = 32", "MoonBeam = 64", "Eclipse = 128" };
     //Get function for the upgradeState
     public int GetUpgradeState()
     {
