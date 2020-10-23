@@ -47,13 +47,28 @@ public class batAttack : StateMachineBehaviour
     //face the player
     void FacePlayer()
     {
-        if (playerTrans.position.x > batTrans.position.x)
+        bool playerOnRight = PlayerOnRight();
+
+        if (playerOnRight)
         {
             batTrans.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
             batTrans.eulerAngles = new Vector3(0, 180, 0);
+        }
+    }
+
+    //which side is the player on
+    bool PlayerOnRight()
+    {
+        if (playerTrans.position.x > batTrans.position.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

@@ -18,7 +18,6 @@ public class largeRatIdle : StateMachineBehaviour
     public float chaseRadiusSize;
     Transform playerTrans;
     bool isMovingRight;
-
     bool isThereFloor;
     bool isThereAWall;
     bool isThereAPlayer;
@@ -52,7 +51,9 @@ public class largeRatIdle : StateMachineBehaviour
         {
             FacePlayer();
 
-            if (playerTrans.position.x > ratTrans.position.x)
+            bool playerOnRight = PlayerOnRight();
+
+            if (playerOnRight)
             {
                 destination.Set(ratTrans.position.x + 500, ratTrans.position.y, ratTrans.position.z);
                 isMovingRight = true;
@@ -119,7 +120,9 @@ public class largeRatIdle : StateMachineBehaviour
     //face the player
     void FacePlayer()
     {
-        if (playerTrans.position.x > ratTrans.position.x)
+        bool playerOnRight = PlayerOnRight();
+
+        if (playerOnRight)
         {
             ratTrans.eulerAngles = new Vector3(0, 0, 0);
         }
@@ -128,6 +131,21 @@ public class largeRatIdle : StateMachineBehaviour
             ratTrans.eulerAngles = new Vector3(0, 180, 0);
         }
     }
+
+    //which side is the player on
+    bool PlayerOnRight()
+    {
+        if (playerTrans.position.x > ratTrans.position.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
