@@ -23,30 +23,25 @@ public class GameManager : MonoBehaviour
 
         //Store the segments vector so we don't have to keep recalculating it
         Vector2 bestSegVec = room.pathNodes[bestSegment + 1] - room.pathNodes[bestSegment];
-
-        //Store the dot product. This is just so we don't keep asking for more floats. We are currently using it for calulating the overshoot for this segment
-        float dot = Vector2.Dot(V3ToNode(position) - room.pathNodes[bestSegment], bestSegVec);
+        //Store the distance from the start of the segment for the best segment
+        Vector2 distanceToPos = V3ToNode(position) - room.pathNodes[bestSegment];
+        //
+        float dot = Vector2.Dot(distanceToPos.normalized, bestSegVec.normalized);
+        float dist = Vector3.Project(distanceToPos, bestSegVec).magnitude;
         //Store the overshoot
         float bestSegOverShoot;
         //Assign overshoot the overshoot value of the bestSegment
         if (dot < 0)
-            bestSegOverShoot = Mathf.Abs(dot);
+            bestSegOverShoot = dist;
         else
-            bestSegOverShoot = dot - bestSegVec.magnitude;
-        //Store the distance from the start of the segment for the best segment
-        Vector2 distanceToPos = V3ToNode(position) - room.pathNodes[bestSegment];
+            bestSegOverShoot = dist - bestSegVec.magnitude;
 
-        //We should now have the "best segment" to move the position onto
-        //We store the movementDistance because if we overshoot, we want to manipulate this variable
-        float moveDist = Vector2.Dot(distanceToPos, bestSegVec);
         //If we overshoot, we need to adjust out bestSegment & bestSegVec
         if (bestSegOverShoot > 0)
         {   //MoveDist is the Dot so we can use it to check if we overshot to the left or right
-            if (moveDist < 0)
+            if (dot < 0)
             {   //We are moving into the previous segment 
                 bestSegment--;
-                //Make sure moveDist is positive since we will be inverting the movement vectors
-                moveDist = Mathf.Abs(moveDist);
                 //Make sure we don't hit out of range exceptions with edge cases, literally
                 if (bestSegment < 0)
                 {   //Invert this segments vector and use it instead
@@ -72,14 +67,14 @@ public class GameManager : MonoBehaviour
                     //We literally do nothing else since we are basically just moving further along this current segment than usual to avoid the outOfRange stuff
                 else
                 {   //Subtract the magnitude from moveDist to simulate moving along the segment
-                    moveDist -= bestSegVec.magnitude;
+                    dist -= bestSegVec.magnitude;
                     //Recalculate bestSegVec since we incremented bestSegment meaning we need to update the vector
                     bestSegVec = room.pathNodes[bestSegment + 1] - room.pathNodes[bestSegment];
                 }
             }
         }
         //Calculate where the position give would be on the x & z axis by moving along bestSegVec from the index of bestSegment
-        Vector2 v = room.pathNodes[bestSegment] + (bestSegVec.normalized * moveDist);
+        Vector2 v = room.pathNodes[bestSegment] + (bestSegVec.normalized * dist);
         //Assign positions x & z values to what was just calculated by keep the y position
         return new Vector3(v.x, position.y, v.y);
     }
@@ -103,33 +98,38 @@ public class GameManager : MonoBehaviour
             return -1;
         //Store the bestSegment
         int bestSegment = 0;
-        //Store the dot product. This is just so we don't keep asking for more floats. We are currently using it for calulating the overshoot for this segment
-        float dot = Vector2.Dot(room.pathNodes[bestSegment + 1] - room.pathNodes[bestSegment], V3ToNode(position) - room.pathNodes[bestSegment]);
+        //Store the distance from the start of the segment for the best segment
+        Vector2 distanceToPos = V3ToNode(position) - room.pathNodes[bestSegment];
+        Vector2 segment = room.pathNodes[bestSegment + 1] - room.pathNodes[bestSegment];
+        //We get a dot product to see if we overshot the segment negatively
+        float dot = Vector2.Dot(distanceToPos.normalized, segment.normalized);
+        //We get the distance the vector to the position project onto the segment, we use this to calculate if we overshot the segment
+        float dist = Vector3.Project(distanceToPos, segment).magnitude;
         //Store the overshoot
         float bestSegOverShoot;
         //Assign overshoot the overshoot value of the bestSegment
         if (dot < 0)
-            bestSegOverShoot = Mathf.Abs(dot);
+            bestSegOverShoot = dist;
         else
-            bestSegOverShoot = dot - (room.pathNodes[bestSegment + 1] - room.pathNodes[bestSegment]).magnitude;
-        //Store the distance from the start of the segment for the best segment
-        Vector2 distanceToPos = V3ToNode(position) - room.pathNodes[bestSegment];
+            bestSegOverShoot = dist - segment.magnitude;
         //A storage location for the segment so we don't have to keep recalculating it
-        Vector2 segment;
         float overShoot;
         bool replaceSegment;
+        Vector2 toPos;
 
         for (int i = 1; i < room.pathNodes.Length - 1; i++)
         {   //Make sure we have to pass the checks to replace the segment
             replaceSegment = false;
             //Get & store the info needed
             segment = room.pathNodes[i + 1] - room.pathNodes[i];
-            dot = Vector3.Dot(V3ToNode(position) - room.pathNodes[i], segment);
+            toPos = V3ToNode(position) - room.pathNodes[i];
+            dist = Vector3.Project(toPos, segment).magnitude;
+            dot = Vector2.Dot(toPos.normalized, segment.normalized);
             //calculate the overShoot
             if (dot < 0)
-                overShoot = Mathf.Abs(dot);
+                overShoot = dist;
             else
-                overShoot = dot - segment.magnitude;
+                overShoot = dist - segment.magnitude;
 
             //Does position project inside or outside of the current segment
             if (overShoot > 0)
@@ -214,7 +214,7 @@ public class GameManager : MonoBehaviour
         Vector3 point = pos;
         
         //Are we moving left or right?
-        if (Vector3.Dot(segVec, moveVector) < 0)
+        if (Vector3.Dot(segVec.normalized, moveVector.normalized) < 0)
         {   //We are moving left
             //Will we hit the end of this segment?
             if (distIntoSeg.magnitude - moveVector.magnitude < 0)
