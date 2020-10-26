@@ -165,13 +165,7 @@ public class PlayerController : Character
             cc.Move(moveVec);
             return;
         }
-        //Find our distance along the path
-
-        //Move moveVec along the path and store its final position
-
-        //Set moveVec to be the difference between our current position and the final position
-
-        //Check if there are slopes or walls in the way of moveVec and adjust moveVec accordingly
+        moveVec = gm.MoveAlongPath(transform.position, moveVec);
 
         //Move the player
         cc.Move(moveVec);

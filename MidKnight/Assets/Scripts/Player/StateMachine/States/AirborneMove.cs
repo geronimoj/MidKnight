@@ -135,7 +135,7 @@ public class AirborneMove : State
         if (x != 0)
             speed = c.MoveSpeed;
         //Get the direction to the right
-        Vector3 right = c.gm.GetPathDirection(c.transform.position);
+        Vector3 right = c.gm.GetPathDirectionRight(c.transform.position);
         //Check if we are facing right
         if (x > 0)
             c.FacingRight = true;

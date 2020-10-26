@@ -37,7 +37,7 @@ public class Dash : State
         //Set the tiemr
         dashTimer = duration;
         //Set the direction of movement for the dash
-        c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
+        c.movement.Direction = c.gm.GetPathDirectionRight(c.transform.position);
         if (!c.FacingRight)
             c.movement.Direction = -c.movement.Direction;
     }

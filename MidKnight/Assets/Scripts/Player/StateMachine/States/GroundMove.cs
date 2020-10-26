@@ -20,7 +20,7 @@ public class GroundMove : State
             return;
         }
         //Set the direction
-        c.movement.Direction = c.gm.GetPathDirection(c.transform.position);
+        c.movement.Direction = c.gm.GetPathDirectionRight(c.transform.position);
         //Are we looking to the right
         if (x > 0)
             c.FacingRight = true;
