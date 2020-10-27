@@ -210,26 +210,27 @@ public class GameManager : MonoBehaviour
 
         Vector2 segVec = room.pathNodes[curSeg + 1] - room.pathNodes[curSeg];
         Vector2 distIntoSeg = V3ToNode(pos) - room.pathNodes[curSeg];
+        Vector2 moveVecAs2 = V3ToNode(moveVector);
 
         Vector3 point = pos;
         
         //Are we moving left or right?
-        if (Vector3.Dot(segVec.normalized, moveVector.normalized) < 0)
+        if (Vector2.Dot(segVec.normalized, moveVecAs2.normalized) < 0)
         {   //We are moving left
             //Will we hit the end of this segment?
-            if (distIntoSeg.magnitude - moveVector.magnitude < 0)
+            if (distIntoSeg.magnitude - moveVecAs2.magnitude < 0)
             {   //We are moving into the next segment
                 curSeg--;
                 //Check for out of range errors
                 if (curSeg < 0)
                 {   //Out of range so just use the segment at 0, which, surprisingly, is currently segVec
-                    Vector2 dirWMag = (-segVec.normalized) * moveVector.magnitude;
+                    Vector2 dirWMag = (-segVec.normalized) * moveVecAs2.magnitude;
                     point = pos + new Vector3(dirWMag.x, moveVector.y, dirWMag.y);
                 }
                 else
                 {   //Not out of range so calculate the previous segment
                     //Calculate the distance we need to move down the next segment
-                    float extraDist = distIntoSeg.magnitude - moveVector.magnitude;
+                    float extraDist = distIntoSeg.magnitude - moveVecAs2.magnitude;
                     extraDist = Mathf.Abs(extraDist);
                     //We both calculate the next segment and calculate our movement down this segment in this line. 
                     //We do it backwards so we don't have to invert it later
@@ -242,25 +243,25 @@ public class GameManager : MonoBehaviour
             }
             else
             {   //Else, calc a new point along this segment (using right & moveVec.mag) then recalculate moveVec
-                Vector2 dirWMag = (-segVec.normalized) * moveVector.magnitude;
+                Vector2 dirWMag = (-segVec.normalized) * moveVecAs2.magnitude;
                 point = pos + new Vector3(dirWMag.x, moveVector.y, dirWMag.y);
             }
         }
         else
         {   //We are moving right
-            if (distIntoSeg.magnitude + moveVector.magnitude > segVec.magnitude)
+            if (distIntoSeg.magnitude + moveVecAs2.magnitude > segVec.magnitude && Vector2.Dot(distIntoSeg.normalized, segVec.normalized) > 0)
             {   //If so, calc a new point further into that segment, then recalculate moveVec
                 //The distance we need to move along the next segment
                 curSeg++;
                 //Make sure we are not out of range
                 if (curSeg >= room.pathNodes.Length - 1)
                 {   //We are out of range so literally just extend the current segment
-                    Vector2 dirWMag = segVec.normalized * moveVector.magnitude;
+                    Vector2 dirWMag = segVec.normalized * moveVecAs2.magnitude;
                     point = pos + new Vector3(dirWMag.x, moveVector.y, dirWMag.y);
                 }
                 else
                 {   //Calculate the distance we need to move down the next segment
-                    float extraDist = (distIntoSeg.magnitude + moveVector.magnitude) - segVec.magnitude;
+                    float extraDist = (distIntoSeg.magnitude + moveVecAs2.magnitude) - segVec.magnitude;
                     //We both calculate the next segment and calculate our movement down this segment in this line
                     Vector2 dirWMag = (room.pathNodes[curSeg + 1] - room.pathNodes[curSeg]).normalized * extraDist;
                     //In this line, we turn dirWMag into a Vector3 correctly and calculate the position of the start of the segments node as a Vector3
@@ -269,7 +270,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {   //Else, calc a new point along this segment (using right & moveVec.mag) then recalculate moveVec
-                Vector2 dirWMag = segVec.normalized * moveVector.magnitude;
+                Vector2 dirWMag = segVec.normalized * moveVecAs2.magnitude;
                 point = pos + new Vector3(dirWMag.x, moveVector.y, dirWMag.y);
             }
         }
