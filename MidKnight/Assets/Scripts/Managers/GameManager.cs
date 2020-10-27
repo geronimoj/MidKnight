@@ -204,14 +204,19 @@ public class GameManager : MonoBehaviour
             moveVector.z = 0;
             return moveVector;
         }
+        //Calculate the position along the path the player is
         Vector3 pos = SnapToPath(position);
-
+        //Get the current segment of path the player is in
         int curSeg = GetSegmentIndex(pos);
-
+        //Get the vector for the segment
         Vector2 segVec = room.pathNodes[curSeg + 1] - room.pathNodes[curSeg];
+        //Get a vector from the start of the segment to the players position
+        //This is stored as a vector 2 because we don't want height affecting the results
         Vector2 distIntoSeg = V3ToNode(pos) - room.pathNodes[curSeg];
+        //Store a copy of the moveVector as a V2 so we can use it without having to account for the y component
         Vector2 moveVecAs2 = V3ToNode(moveVector);
-
+        //The point we will finish at. We assign it pos just in case we somehow fail everything.
+        //Its always possible
         Vector3 point = pos;
         
         //Are we moving left or right?
