@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(StateManager))]
+[RequireComponent(typeof(UnlockTracker))]
 public class PlayerController : Character
 {
     private StateManager manager;
 
+    [HideInInspector]
     public UnlockTracker ut;
 
+    [HideInInspector]
     public GameManager gm;
+
+    [HideInInspector]
+    public Animator animator;
 
     /// <summary>
     /// The layermask that we can stand on
@@ -137,8 +143,14 @@ public class PlayerController : Character
     protected override void AwakeExtra()
     {
         manager = GetComponent<StateManager>();
+        ut = GetComponent<UnlockTracker>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        ut = GameObject.FindGameObjectWithTag("Player").GetComponent<UnlockTracker>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
+
+        if (gm == null)
+            Debug.LogError("GameManager not found. Check GameObject tagged GameManager has GameManager");
+        if (animator == null)
+            Debug.LogError("Animator not found on Child at index 0");
     }
     /// <summary>
     /// Calls start on the current state
