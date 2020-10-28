@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 2098010625}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -860,6 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+  ut: {fileID: 2098010625}
   gm: {fileID: 495730553}
   ground:
     serializedVersion: 2
@@ -914,6 +915,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26dd35d7feab8d84f941ec89e1ea8590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stringArray: []
+  boolArray: 
 --- !u!1001 &1243173264703205781
 PrefabInstance:
   m_ObjectHideFlags: 0
