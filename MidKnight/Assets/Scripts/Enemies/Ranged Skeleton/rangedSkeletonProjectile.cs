@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class largeBatSonicWave : basePrefab
+public class rangedSkeletonProjectile : basePrefab
 {
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
-        if(playerTrans.position.x - prefabTrans.position.x == 0 && playerTrans.position.y - prefabTrans.position.y == 0)
+        if (playerTrans.position.x - prefabTrans.position.x == 0 && playerTrans.position.y - prefabTrans.position.y == 0)
         {
             destination.Set(0, 10000, 0);
         }

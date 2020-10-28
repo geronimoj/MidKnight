@@ -79,11 +79,11 @@ public class meleeSkeletonIdle : baseEnemyIdle
             //face the way its walking
             if(distToWalk > 0)
             {
-                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+                FaceRight();
             }
             else
             {
-                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+                FaceLeft();
             }
 
             //stop moving if theres a wall or no floor
