@@ -22,25 +22,30 @@ public class ratIdle : baseEnemyIdle
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //If there's a wall or no floor in front of the rat, it changes directions
-        if(WallAndFloorCheck())
+        SwapDirections();
+
+        //Move to it's destination
+        MoveToDestination(destination);
+    }
+
+    //If there's a wall or no floor in front of the rat, it changes directions
+    void SwapDirections()
+    {
+        if (WallAndFloorCheck())
         {
             if (isMovingRight)
             {
-                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+                FaceLeft();
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+                FaceRight();
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }
         }
-
-        //Move to it's destination
-        MoveToDestination(destination);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

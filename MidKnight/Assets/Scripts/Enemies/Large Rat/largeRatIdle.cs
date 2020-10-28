@@ -67,13 +67,13 @@ public class largeRatIdle : baseEnemyIdle
         {
             if (isMovingRight)
             {
-                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+                FaceLeft();
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+                FaceRight();
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }

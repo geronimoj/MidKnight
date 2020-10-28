@@ -2,35 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class batIdle : baseEnemyIdle
+public class largeBatAttack1 : baseEnemyIdle
 {
-    /// <summary>
-    /// The bat's idle animation
-    /// </summary>
-    
-    Transform chaseRadius;
-    public float chaseRadiusSize;
-
+    public float windUpDist;
+    public float startTimeTillDash;
+    float timeTillDash;
+    bool hasUsedMove;
+    public int dashSpeed;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        //custom stuff for bat
-        //change the radius of bats vision in inspector
-        chaseRadius = animator.gameObject.transform.GetChild(0);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
+
+        //initialise stuff
+        timeTillDash = startTimeTillDash;
+        hasUsedMove = false;
+
+        if(PlayerOnRight())
+        {
+            destination.Set(enemyTrans.position.x - windUpDist, enemyTrans.position.y, enemyTrans.position.z);
+        }
+        else
+        {
+            destination.Set(enemyTrans.position.x + windUpDist, enemyTrans.position.y, enemyTrans.position.z);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Change to attack animation if the player is nearby
-        if(PlayerCheck())
+
+        if(timeTillDash > 0)
         {
-            animator.SetTrigger("chase");
+            timeTillDash -= Time.deltaTime;
+            MoveToDestination(destination);
+        }
+        else if(!hasUsedMove)
+        {
+            hasUsedMove = true;
+            destination.Set(playerTrans.position.x, playerTrans.position.y, enemyTrans.position.z);
+        }
+        else
+        {
+            MoveToDestination(destination, dashSpeed);
         }
     }
+
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

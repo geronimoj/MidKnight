@@ -2,40 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class batAttack : baseEnemyIdle
+public class largeBatAttack2 : baseEnemyIdle
 {
-    /// <summary>
-    /// the bat's attack
-    /// </summary>
-
-    Transform chaseRadius;
-    public float chaseRadiusSize;
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        base.OnStateEnter(animator, stateInfo, layerIndex);
-
-        //custom stuff for bat
-        //change the radius of bats vision in inspector
-        chaseRadius = animator.gameObject.transform.GetChild(0);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
-    }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-        //if the player is nearby, chase the player
-        if (PlayerCheck())
-        {
-            //Always move to destination
-            destination.Set(playerTrans.position.x, playerTrans.position.y, playerTrans.position.z);
-            MoveToDestination(destination);
-            FacePlayer();
-        }
-    }
-
+    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
