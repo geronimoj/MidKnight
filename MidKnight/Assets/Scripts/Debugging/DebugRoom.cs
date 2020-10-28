@@ -38,6 +38,12 @@ public class DebugRoom : MonoBehaviour
                 Gizmos.DrawLine(PNodeToV3(room.pathNodes[i]), PNodeToV3(room.pathNodes[i + 1]));
             }
         }
+        //Draw the entrance locations
+        Gizmos.color = Color.green;
+        for (int i = 0; i < room.entrances.Length; i++)
+        {
+            Gizmos.DrawWireSphere(room.entrances[i], pointRadius);
+        }
     }
     /// <summary>
     /// Converts the cords of a PathNode to Vector3 cords

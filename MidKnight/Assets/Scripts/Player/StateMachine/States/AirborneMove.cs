@@ -65,6 +65,8 @@ public class AirborneMove : State
             accelToMin = timeToMinFallSpeed;
             holdingJump = true;
         }
+
+        c.animator.SetBool("Airborne", true);
     }
     /// <summary>
     /// Moves the player with gravity
@@ -160,5 +162,10 @@ public class AirborneMove : State
 
         //Move the character
         c.Move(c.movement.MoveVec * Time.deltaTime);
+    }
+
+    public override void StateEnd(ref PlayerController c)
+    {
+        c.animator.SetBool("Airborne", false);
     }
 }

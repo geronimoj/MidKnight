@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Unlockable : MonoBehaviour
 {
@@ -8,6 +6,7 @@ public class Unlockable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Depending on which key you put in sets the value and adds the key if it doesn't exist
         switch(powerUP)
         {
             case "new moon":
