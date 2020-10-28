@@ -4,24 +4,33 @@ using UnityEngine;
 
 public class rangedSkeletonProjectile : basePrefab
 {
+    public int newSpeed;
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
-        if (playerTrans.position.x - prefabTrans.position.x == 0 && playerTrans.position.y - prefabTrans.position.y == 0)
-        {
-            destination.Set(0, 10000, 0);
-        }
-        else
-        {
-            destination.Set(10000 * (playerTrans.position.x - prefabTrans.position.x), 10000 * (playerTrans.position.y - prefabTrans.position.y), prefabTrans.position.z);
-        }
+        destination.Set((playerTrans.position.x + prefabTrans.position.x) / 2, prefabTrans.position.y + 5, prefabTrans.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveToDestination(destination);
+        MoveToDestination(destination, speed);
+
+        if(prefabTrans.position == destination)
+        {
+            destination.Set(10000 * (playerTrans.position.x - prefabTrans.position.x), 10000 * (playerTrans.position.y - prefabTrans.position.y), prefabTrans.position.z);
+            speed = newSpeed;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Boundary")
+        {
+            Destroy(this);
+        }
     }
 }

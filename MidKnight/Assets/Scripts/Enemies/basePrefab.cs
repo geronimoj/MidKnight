@@ -19,11 +19,11 @@ public class basePrefab : MonoBehaviour
 
         if(PlayerIsOnRight())
         {
-            prefabTrans.eulerAngles = new Vector3(0, 0, 0);
+            FaceRight();
         }
         else
         {
-            prefabTrans.eulerAngles = new Vector3(180, 0, 0);
+            FaceLeft();
         }
     }
 
@@ -46,5 +46,20 @@ public class basePrefab : MonoBehaviour
     public void MoveToDestination(Vector3 destination)
     {
         prefabTrans.position = Vector3.MoveTowards(prefabTrans.position, destination, speed * Time.deltaTime);
+    }
+
+    public void MoveToDestination(Vector3 destination, int speed)
+    {
+        prefabTrans.position = Vector3.MoveTowards(prefabTrans.position, destination, speed * Time.deltaTime);
+    }
+
+    public void FaceLeft()
+    {
+        prefabTrans.eulerAngles = new Vector3(180, 0, 0);
+    }
+
+    public void FaceRight()
+    {
+        prefabTrans.eulerAngles = new Vector3(0, 0, 0);
     }
 }

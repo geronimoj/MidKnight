@@ -17,6 +17,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
     bool hasChosenWalk;
     public float maxDistToWalk;
     float distToWalk;
+    int moveToUse;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -106,9 +107,25 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// <param name="animator"></param>
     void AttackPlayer(Animator animator)
     {
+        if(animator.name == "Ranged Skeleton")
+        {
+            moveToUse = Random.Range(1, 3);
+        }
+        else
+        {
+            moveToUse = 1;
+        }
+
         if (Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange)
         {
-            animator.SetTrigger("atk");
+            if(moveToUse == 1)
+            {
+                animator.SetTrigger("atk");
+            }
+            else
+            {
+                animator.SetTrigger("atk2");
+            }
         }
     }
 
