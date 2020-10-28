@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5894337470215843218}
   - component: {fileID: 5894337470215843219}
   - component: {fileID: 7505196055614748282}
-  - component: {fileID: 7301751331121192755}
   - component: {fileID: 5417116512797063116}
   m_Layer: 0
   m_Name: Large Bat
@@ -116,19 +115,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7301751331121192755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5894337470215843216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4565d170aa4a9eb48ae9add2ab066f5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTherePlayer: 0
 --- !u!54 &5417116512797063116
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -157,6 +143,7 @@ GameObject:
   - component: {fileID: 9199761997512153371}
   - component: {fileID: 5643161714278976061}
   - component: {fileID: 2924746288241070455}
+  - component: {fileID: 2691058616518568653}
   m_Layer: 0
   m_Name: Wake Radius
   m_TagString: Untagged
@@ -238,3 +225,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2691058616518568653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452041472731074557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4565d170aa4a9eb48ae9add2ab066f5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTherePlayer: 0

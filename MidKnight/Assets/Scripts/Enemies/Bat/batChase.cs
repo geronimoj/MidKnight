@@ -37,7 +37,7 @@ public class batChase : baseEnemyIdle
         if (PlayerCheck())
         {
             //Always move to destination
-            destination.Set(playerTrans.position.x, playerTrans.position.y, playerTrans.position.z);
+            destination.Set(playerTrans.position.x, playerTrans.position.y, enemyTrans.position.z);
             MoveToDestination(destination);
             FacePlayer();
         }
@@ -47,8 +47,6 @@ public class batChase : baseEnemyIdle
             if(Vector3.Distance(enemyTrans.position, playerTrans.position) < distFromPlayerToAtk)
             {
                 int rand = Random.Range(1, 3);
-
-                rand = 1;
 
                 if(rand == 1)
                 {

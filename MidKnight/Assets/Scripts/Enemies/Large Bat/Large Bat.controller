@@ -119,7 +119,7 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   windUpDist: 3
   startTimeTillDash: 1
-  dashSpeed: 10
+  dashSpeed: 15
 --- !u!1102 &-4584492611438797155
 AnimatorState:
   serializedVersion: 5
@@ -320,8 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87565b502510a3843a0bc934490dfa9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStartTimeTillIdle: 1
-  maxStartTimeTillIdle: 2
+  minStartTimeTillIdle: 3
+  maxStartTimeTillIdle: 4
 --- !u!114 &3154806736493758862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -334,10 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e9387a728d08a429b6a6bc8330fd89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTrans: {fileID: 0}
-  playerTrans: {fileID: 0}
-  speed: 1
-  destination: {x: 0, y: 0, z: 0}
+  startTimeTillAtk: 2
+  atk: {fileID: 6868960977462822073, guid: 49c8a8f2defc13e45af40df73a9e4205, type: 3}
 --- !u!1101 &4911864610434511280
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
