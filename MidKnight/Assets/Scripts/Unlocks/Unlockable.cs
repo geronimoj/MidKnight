@@ -11,35 +11,35 @@ public class Unlockable : MonoBehaviour
         switch(powerUP)
         {
             case "new moon":
-                other.gameObject.GetComponent<UnlockTracker>().AddNewMoon();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("new moon", true);
                 Destroy(gameObject);
                 break;
             case "crescent moon":
-                other.gameObject.GetComponent<UnlockTracker>().AddCrescentMoon();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("crescent moon", true);
                 Destroy(gameObject);
                 break;
             case "half moon":
-                other.gameObject.GetComponent<UnlockTracker>().AddHalfMoon();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("half moon", true);
                 Destroy(gameObject);
                 break;
             case "dash":
-                other.gameObject.GetComponent<UnlockTracker>().AddDash();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("dash", true);
                 Destroy(gameObject);
                 break;
             case "full moon":
-                other.gameObject.GetComponent<UnlockTracker>().AddFullMoon();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("full moon", true);
                 Destroy(gameObject);
                 break;
             case "double jump":
-                other.gameObject.GetComponent<UnlockTracker>().AddDoubleJump();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("double jump", true);
                 Destroy(gameObject);
                 break;
             case "moon beam":
-                other.gameObject.GetComponent<UnlockTracker>().AddMoonBeam();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("moon beam", true);
                 Destroy(gameObject);
                 break;
             case "eclipse":
-                other.gameObject.GetComponent<UnlockTracker>().AddEclipse();
+                other.gameObject.GetComponent<UnlockTracker>().SetKey("eclipse", true);
                 Destroy(gameObject);
                 break;
         }
