@@ -165,12 +165,20 @@ public class PlayerController : Character
             cc.Move(moveVec);
             return;
         }
+        //Update the moveVector to be along the path
         moveVec = gm.MoveAlongPath(transform.position, moveVec);
-
+        //Do a raycast to check for ramps or ramped objects
+        if (Physics.Raycast(transform.position + moveVec, Vector3.down, out RaycastHit hit, (Height / 2) - 0.01f, Ground))
+            moveVec.y = (hit.point.y + (Height / 2)) - transform.position.y;
         //Move the player
         cc.Move(moveVec);
-        //Ensure the player has not escaped the map
+        //Ensure the player has not escaped the map just in case moving did such a thing
+        //Disable the character controller to allow for teleportation. It has an internal
+        //sence of motion and stuffs up teleportation
+        cc.enabled = false;
         transform.position = gm.SnapToPath(transform.position);
+        //Re-enable the cc
+        cc.enabled = true;
     }
 
     /// <summary>
