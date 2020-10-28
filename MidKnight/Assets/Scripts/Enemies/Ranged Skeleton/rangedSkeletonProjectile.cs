@@ -30,7 +30,7 @@ public class rangedSkeletonProjectile : basePrefab
     {
         if(other.tag == "Boundary")
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 }
