@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class characterOwner : MonoBehaviour
 {
-    public GameObject Owner = null;
+    [HideInInspector] public GameObject Owner = null;
 }

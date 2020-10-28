@@ -6,11 +6,11 @@ public class baseEnemyIdle : StateMachineBehaviour
 {
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
+    [HideInInspector] public Vector3 destination;
     floorCheck floorCheck;
     wallCheck wallCheck;
     playerCheck playerCheck;
     public int speed = 1;
-    [HideInInspector] public Vector3 destination;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -31,12 +31,28 @@ public class baseEnemyIdle : StateMachineBehaviour
     {
         if (PlayerOnRight())
         {
-            enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+            FaceRight();
         }
         else
         {
-            enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+            FaceLeft();
         }
+    }
+
+    /// <summary>
+    /// Makes the enemy turn to the right
+    /// </summary>
+    public void FaceRight()
+    {
+        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    /// <summary>
+    /// makes the enemy turn to the left
+    /// </summary>
+    public void FaceLeft()
+    {
+        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
     }
 
     /// <summary>
@@ -92,6 +108,16 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// </summary>
     /// <param name="destination"></param>
     public void MoveToDestination(Vector3 destination)
+    {
+        enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// move to destination at set speed
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <param name="speed"></param>
+    public void MoveToDestination(Vector3 destination, int speed)
     {
         enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
     }

@@ -11,6 +11,7 @@ public class largeRatIdle : baseEnemyIdle
     bool isMovingRight;
     Transform chaseRadius;
     public float chaseRadiusSize;
+    public int chaseSpeed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -49,15 +50,19 @@ public class largeRatIdle : baseEnemyIdle
             {
                 destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
             }
+
+            //move to the player faster
+            MoveToDestination(destination, chaseSpeed);
         }
         else
         {
             //If there's a wall or no floor in front of the rat, it changes directions
             SwapDirections();
-        }
 
-        //Move to it's destination
-        MoveToDestination(destination);
+
+            //Move to it's destination
+            MoveToDestination(destination);
+        }
     }
 
     //swap the direction its facing
@@ -67,13 +72,13 @@ public class largeRatIdle : baseEnemyIdle
         {
             if (isMovingRight)
             {
-                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+                FaceLeft();
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+                FaceRight();
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }

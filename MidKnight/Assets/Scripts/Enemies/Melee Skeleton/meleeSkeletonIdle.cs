@@ -17,12 +17,12 @@ public class meleeSkeletonIdle : baseEnemyIdle
     bool hasChosenWalk;
     public float maxDistToWalk;
     float distToWalk;
+    int moveToUse;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
 
         //initialise stuff
         hasChosenWalk = false;
@@ -34,6 +34,9 @@ public class meleeSkeletonIdle : baseEnemyIdle
         //change the radius of skele vision in inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
+
+        //face the player
+        FacePlayer();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -79,11 +82,11 @@ public class meleeSkeletonIdle : baseEnemyIdle
             //face the way its walking
             if(distToWalk > 0)
             {
-                enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+                FaceRight();
             }
             else
             {
-                enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+                FaceLeft();
             }
 
             //stop moving if theres a wall or no floor
@@ -106,9 +109,25 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// <param name="animator"></param>
     void AttackPlayer(Animator animator)
     {
+        if (animator.name == "Ranged Skeleton")
+        {
+            moveToUse = Random.Range(1, 3);
+        }
+        else
+        {
+            moveToUse = 1;
+        }
+
         if (Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange)
         {
-            animator.SetTrigger("atk");
+            if (moveToUse == 1)
+            {
+                animator.SetTrigger("atk");
+            }
+            else
+            {
+                animator.SetTrigger("atk2");
+            }
         }
     }
 

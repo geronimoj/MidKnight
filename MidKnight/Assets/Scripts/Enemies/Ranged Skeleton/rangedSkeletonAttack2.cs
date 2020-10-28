@@ -2,31 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rangedSkeletonAttack : StateMachineBehaviour
+public class rangedSkeletonAttack2 : baseEnemyAttack
 {
-    /// <summary>
-    /// Ranged skeleton attack
-    /// </summary>
-
-    public float startTimeTillAtk;
-    float timeTillAtk;
-    bool hasUsedAtk;
     public GameObject atk;
-    Transform skeleTrans;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //initialise stuff
-        timeTillAtk = startTimeTillAtk;
-        hasUsedAtk = false;
-        skeleTrans = animator.GetComponent<Transform>();
+        base.OnStateEnter(animator, stateInfo, layerIndex);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //attack after x seconds
         if(timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;
@@ -35,10 +23,10 @@ public class rangedSkeletonAttack : StateMachineBehaviour
         {
             hasUsedAtk = true;
 
-            GameObject arrow = Instantiate(atk, skeleTrans.position, skeleTrans.rotation);
-            //characterOwner co = arrow.GetComponent<characterOwner>();
-            //Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
-            //co.Owner = animator.gameObject;
+            GameObject laserbeam = Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
+            characterOwner co = laserbeam.GetComponent<characterOwner>();
+            Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
+            co.Owner = animator.gameObject;
         }
     }
 

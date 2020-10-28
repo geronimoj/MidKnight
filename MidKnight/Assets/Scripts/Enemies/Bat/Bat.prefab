@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3777326731473160023}
   - component: {fileID: 3437715308873587157}
   - component: {fileID: 4896477871459976780}
-  - component: {fileID: 4735922729373938226}
   m_Layer: 0
   m_Name: Wake Radius
   m_TagString: Untagged
@@ -125,19 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTherePlayer: 1
---- !u!114 &4735922729373938226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222517774879933974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4565d170aa4a9eb48ae9add2ab066f5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTherePlayer: 0
 --- !u!1 &4719708922683968732
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +139,7 @@ GameObject:
   - component: {fileID: 7316947339585151265}
   m_Layer: 0
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

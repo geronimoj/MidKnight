@@ -69,4 +69,51 @@ public class baseBossIdle : StateMachineBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Make the enemy face the player
+    /// </summary>
+    public void FacePlayer()
+    {
+        if (PlayerOnRight())
+        {
+            FaceRight();
+        }
+        else
+        {
+            FaceLeft();
+        }
+    }
+
+    /// <summary>
+    /// Makes the enemy turn to the right
+    /// </summary>
+    public void FaceRight()
+    {
+        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    /// <summary>
+    /// makes the enemy turn to the left
+    /// </summary>
+    public void FaceLeft()
+    {
+        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+    }
+
+    /// <summary>
+    ///check which side of the enemy the player is on
+    /// </summary>
+    /// <returns></returns>
+    public bool PlayerOnRight()
+    {
+        if (playerTrans.position.x > enemyTrans.position.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

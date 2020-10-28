@@ -28,7 +28,7 @@ public class batIdle : baseEnemyIdle
         //Change to attack animation if the player is nearby
         if(PlayerCheck())
         {
-            animator.SetTrigger("attack");
+            animator.SetTrigger("chase");
         }
     }
 
