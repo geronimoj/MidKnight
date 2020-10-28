@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7633967924612074278}
+  - component: {fileID: -4184547247051788194}
   m_Layer: 0
   m_Name: Room 4
   m_TagString: Untagged
@@ -24,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633967924612074279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 172.43889, y: 11.947806, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7633967925474915394}
@@ -33,6 +34,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4184547247051788194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633967924612074279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac85f1b8c92e7e44ae1348f7fda3dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EM: {fileID: 0}
+  roomID: Room4
+  roomObjects: []
+  entrances:
+  - {x: 215, y: -9, z: 0}
+  pathNodes: []
 --- !u!1 &7633967924643382934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,13 +1126,13 @@ PrefabInstance:
         type: 3}
       propertyPath: currentRoom
       value: 
-      objectReference: {fileID: 7633967924612074279}
+      objectReference: {fileID: -4184547247051788194}
     - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: nextRoom
       value: 
-      objectReference: {fileID: 11400000, guid: a896be2eb30a15b47be174c5d44f6f70,
-        type: 2}
+      objectReference: {fileID: -3220416324484169545, guid: ccbc6a0404dcbe644b88c858e7b4176c,
+        type: 3}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name
