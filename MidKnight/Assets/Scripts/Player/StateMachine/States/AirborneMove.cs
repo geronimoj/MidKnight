@@ -57,7 +57,8 @@ public class AirborneMove : State
         jumpTimer = 0;
         floatTimer = 0;
         //If the player is holding the jump key, set the corresponding timers & values
-        if (Input.GetAxisRaw("Jump") > 0)
+        //We make sure the player has VertSpeed as a check if they just came out of a dash
+        if (Input.GetAxisRaw("Jump") > 0 && c.movement.VertSpeed > 0)
         {
             jumpTimer = jumpHoldTime;
             floatTimer = floatTime;
