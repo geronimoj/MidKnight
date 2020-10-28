@@ -122,9 +122,39 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &166549951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1243173265116924909, guid: f1302e08eaeabec45bb2ece6ace84f52,
+    type: 3}
+  m_PrefabInstance: {fileID: 1243173264703205781}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &166549952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166549951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac85f1b8c92e7e44ae1348f7fda3dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EM: {fileID: 0}
+  roomID: Room1
+  roomObjects:
+  - {fileID: 451880433}
+  entrances: []
+  pathNodes: []
 --- !u!4 &387245450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1243173264955626527, guid: f1302e08eaeabec45bb2ece6ace84f52,
+    type: 3}
+  m_PrefabInstance: {fileID: 1243173264703205781}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &451880433 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6617076022533636647, guid: f1302e08eaeabec45bb2ece6ace84f52,
     type: 3}
   m_PrefabInstance: {fileID: 1243173264703205781}
   m_PrefabAsset: {fileID: 0}
@@ -357,12 +387,12 @@ PrefabInstance:
     - target: {fileID: 2323523015460394955, guid: bab11a5bb0991bf43aa255b61c7d4896,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -46.08
+      value: -46
       objectReference: {fileID: 0}
     - target: {fileID: 2323523015460394955, guid: bab11a5bb0991bf43aa255b61c7d4896,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.62
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2323523015460394955, guid: bab11a5bb0991bf43aa255b61c7d4896,
         type: 3}
