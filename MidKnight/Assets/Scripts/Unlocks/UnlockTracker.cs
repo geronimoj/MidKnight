@@ -21,16 +21,17 @@ public class UnlockTracker : MonoBehaviour
                 //unlocks.Remove(key);
                 unlocks[key] = value;
 #if UNITY_EDITOR
+                stringArray = new string[0];
+                stringArray = new string[unlocks.Count()];
+                boolArray = new bool[0];
+                boolArray = new bool[unlocks.Count()];
+
                 int e = 0;
 
                 foreach (KeyValuePair<string, bool> kvp in unlocks)
                 {
-                    if (key == kvp.Key)
-                    {
-                        boolArray[e] = value;
-                        break;
-                    }
-
+                    stringArray[e] = kvp.Key;
+                    boolArray[e] = kvp.Value;
                     e++;
                 }
 #endif
@@ -40,7 +41,9 @@ public class UnlockTracker : MonoBehaviour
 
         unlocks.Add(key, value);
 #if UNITY_EDITOR
+        stringArray = new string[0];
         stringArray = new string[unlocks.Count()];
+        boolArray = new bool[0];
         boolArray = new bool[unlocks.Count()];
 
         int i = 0;
