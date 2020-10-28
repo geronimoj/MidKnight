@@ -1,8 +1,17 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(EntitiesManager))]
 public class Unlockable : MonoBehaviour
 {
-    public string powerUP = "new moon";
+    [SerializeField]
+    private string powerUP = "new moon";
+    [SerializeField]
+    private EntitiesManager EM;
+
+    private void Start()
+    {
+        EM = FindObjectOfType<EntitiesManager>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,36 +20,56 @@ public class Unlockable : MonoBehaviour
         {
             case "new moon":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("new moon", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "crescent moon":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("crescent moon", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "half moon":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("half moon", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "dash":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("dash", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "full moon":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("full moon", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "double jump":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("double jump", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "moon beam":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("moon beam", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
             case "eclipse":
                 other.gameObject.GetComponent<UnlockTracker>().SetKey("eclipse", true);
-                Destroy(gameObject);
+                LogEntity();
                 break;
         }
+    }
+    
+    private void LogEntity()
+    {
+        Entities e;
+        Room R = GetComponentInParent<Room>();
+        e.thisRoom = R.roomID;
+        e.index = -1;
+
+        for (int i = 0; i < R.roomObjects.Count; i++)
+        {
+            if (R.roomObjects[i] == gameObject)
+            {
+                e.index = i;
+                break;
+            }
+        }
+
+        EM.EntitiesToNotRespawn.Add(e);
+        gameObject.SetActive(false);
     }
 }
