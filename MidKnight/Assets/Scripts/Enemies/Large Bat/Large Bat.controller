@@ -113,13 +113,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 253a933a936af1a46aea8220cc9ea2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTimeTillAtk: 2
+  timeTillAtk: 0
+  hasUsedAtk: 0
   enemyTrans: {fileID: 0}
   playerTrans: {fileID: 0}
-  speed: 3
   destination: {x: 0, y: 0, z: 0}
-  windUpDist: 3
-  startTimeTillDash: 1
-  dashSpeed: 15
+  speed: 15
 --- !u!1102 &-4584492611438797155
 AnimatorState:
   serializedVersion: 5
@@ -235,8 +235,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTrans: {fileID: 0}
   playerTrans: {fileID: 0}
-  speed: 0
   destination: {x: 0, y: 0, z: 0}
+  speed: 0
   chaseRadiusSize: 10
 --- !u!91 &9100000
 AnimatorController:
@@ -304,8 +304,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTrans: {fileID: 0}
   playerTrans: {fileID: 0}
-  speed: 5
   destination: {x: 0, y: 0, z: 0}
+  speed: 5
   chaseRadiusSize: 50
   distFromPlayerToAtk: 10
 --- !u!114 &2904580427160664257
@@ -335,6 +335,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTimeTillAtk: 2
+  timeTillAtk: 0
+  hasUsedAtk: 0
+  enemyTrans: {fileID: 0}
+  playerTrans: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
+  speed: 0
   atk: {fileID: 6868960977462822073, guid: 49c8a8f2defc13e45af40df73a9e4205, type: 3}
 --- !u!1101 &4911864610434511280
 AnimatorStateTransition:

@@ -2,25 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rangedSkeletonAttack1 : StateMachineBehaviour
+public class rangedSkeletonAttack1 : baseEnemyAttack
 {
     /// <summary>
     /// Ranged skeleton attack
     /// </summary>
 
-    public float startTimeTillAtk;
-    float timeTillAtk;
-    bool hasUsedAtk;
     public GameObject atk;
-    Transform skeleTrans;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //initialise stuff
-        timeTillAtk = startTimeTillAtk;
-        hasUsedAtk = false;
-        skeleTrans = animator.GetComponent<Transform>();
+        base.OnStateEnter(animator, stateInfo, layerIndex);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -35,7 +28,7 @@ public class rangedSkeletonAttack1 : StateMachineBehaviour
         {
             hasUsedAtk = true;
 
-            GameObject projectile = Instantiate(atk, skeleTrans.position, skeleTrans.rotation);
+            GameObject projectile = Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
             characterOwner co = projectile.GetComponent<characterOwner>();
             Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
             co.Owner = animator.gameObject;

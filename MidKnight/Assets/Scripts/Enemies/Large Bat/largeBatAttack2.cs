@@ -2,21 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class largeBatAttack2 : StateMachineBehaviour
+public class largeBatAttack2 : baseEnemyAttack
 {
-    public float startTimeTillAtk;
-    float timeTillAtk;
-    bool hasUsedAtk;
     public GameObject atk;
-    Transform batTrans;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //initialise stuff
-        timeTillAtk = startTimeTillAtk;
-        hasUsedAtk = false;
-        batTrans = animator.GetComponent<Transform>();
+        base.OnStateEnter(animator, stateInfo, layerIndex);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -31,7 +24,7 @@ public class largeBatAttack2 : StateMachineBehaviour
         {
             hasUsedAtk = true;
 
-            GameObject sonicWave = Instantiate(atk, batTrans.position, batTrans.rotation);
+            GameObject sonicWave = Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
             characterOwner co = sonicWave.GetComponent<characterOwner>();
             Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
             co.Owner = animator.gameObject;

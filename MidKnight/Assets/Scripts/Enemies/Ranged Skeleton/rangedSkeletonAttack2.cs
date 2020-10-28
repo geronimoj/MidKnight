@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class largeBatAttack1 : baseEnemyAttack
+public class rangedSkeletonAttack2 : baseEnemyAttack
 {
+    public GameObject laserBeam;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -14,21 +15,8 @@ public class largeBatAttack1 : baseEnemyAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(timeTillAtk > 0)
-        {
-            timeTillAtk -= Time.deltaTime;
-        }
-        else if(!hasUsedAtk)
-        {
-            hasUsedAtk = true;
-            destination.Set(playerTrans.position.x, playerTrans.position.y, enemyTrans.position.z);
-        }
-        else
-        {
-            MoveToDestination(destination);
-        }
+        
     }
-
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

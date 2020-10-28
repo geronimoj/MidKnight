@@ -6,11 +6,11 @@ public class baseEnemyIdle : StateMachineBehaviour
 {
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
+    [HideInInspector] public Vector3 destination;
     floorCheck floorCheck;
     wallCheck wallCheck;
     playerCheck playerCheck;
     public int speed = 1;
-    [HideInInspector] public Vector3 destination;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
