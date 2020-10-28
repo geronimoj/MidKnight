@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class UnlockTracker : MonoBehaviour
 {
+    //Dictionary holding all the unlocks
     Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
 #if UNITY_EDITOR
+    //Arrays to show powerups and their boolean state
     public string[] stringArray;
     public bool[] boolArray;
 #endif
+    //Set a certain key to true or false and if it doesn't exist adds it
     public void SetKey(string key, bool value)
     {
-        foreach(KeyValuePair<string, bool> KVP in unlocks)
+        foreach (KeyValuePair<string, bool> KVP in unlocks)
         {
             if (key == KVP.Key)
             {
@@ -49,7 +52,8 @@ public class UnlockTracker : MonoBehaviour
             i++;
         }
 #endif
-        }
+    }
+    //Gets the value of a key
     public bool GetKeyValue(string key)
     {
         foreach(KeyValuePair<string, bool> KVP in unlocks)
