@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyManager))]
 public class GameManager : MonoBehaviour
 {
     public Room room;
