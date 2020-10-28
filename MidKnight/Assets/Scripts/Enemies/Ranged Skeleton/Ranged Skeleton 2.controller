@@ -16,7 +16,7 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 3
-  atkRange: 8
+  atkRange: 10
   chaseRadiusSize: 20
   minStartTimeTillWalk: 0
   maxStartTimeTillWalk: 10
@@ -33,14 +33,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6281a908ab058924ab2999338eb23c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeTillAtk: 0
+  startTimeTillAtk: 2
   timeTillAtk: 0
   hasUsedAtk: 0
   enemyTrans: {fileID: 0}
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 0
-  laserBeam: {fileID: 0}
+  atk: {fileID: 8548532077015578974, guid: 5f232bc2cd4fcf64fbb659eb3d09d6d4, type: 3}
 --- !u!1101 &-7608577381854472154
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -340,10 +340,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -365,7 +365,7 @@ AnimatorStateMachine:
     m_Position: {x: 380, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4005107768071091671}
-    m_Position: {x: 415, y: 175, z: 0}
+    m_Position: {x: 420, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2059227497461111607}
     m_Position: {x: 570, y: -30, z: 0}
@@ -375,7 +375,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 130, y: 170, z: 0}
+  m_AnyStatePosition: {x: 140, y: 220, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

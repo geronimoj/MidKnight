@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class rangedSkeletonAttack2 : baseEnemyAttack
 {
-    public GameObject laserBeam;
+    public GameObject atk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,7 +15,19 @@ public class rangedSkeletonAttack2 : baseEnemyAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        if(timeTillAtk > 0)
+        {
+            timeTillAtk -= Time.deltaTime;
+        }
+        else if (!hasUsedAtk)
+        {
+            hasUsedAtk = true;
+
+            GameObject laserbeam = Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
+            characterOwner co = laserbeam.GetComponent<characterOwner>();
+            Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
+            co.Owner = animator.gameObject;
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

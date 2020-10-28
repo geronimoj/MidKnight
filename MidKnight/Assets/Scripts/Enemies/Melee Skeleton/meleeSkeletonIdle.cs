@@ -24,7 +24,6 @@ public class meleeSkeletonIdle : baseEnemyIdle
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-
         //initialise stuff
         hasChosenWalk = false;
 
@@ -35,6 +34,9 @@ public class meleeSkeletonIdle : baseEnemyIdle
         //change the radius of skele vision in inspector
         chaseRadius = animator.gameObject.transform.GetChild(2);
         chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
+
+        //face the player
+        FacePlayer();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -107,7 +109,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// <param name="animator"></param>
     void AttackPlayer(Animator animator)
     {
-        if(animator.name == "Ranged Skeleton")
+        if (animator.name == "Ranged Skeleton")
         {
             moveToUse = Random.Range(1, 3);
         }
@@ -118,7 +120,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
 
         if (Vector3.Distance(playerTrans.position, enemyTrans.position) < atkRange)
         {
-            if(moveToUse == 1)
+            if (moveToUse == 1)
             {
                 animator.SetTrigger("atk");
             }
