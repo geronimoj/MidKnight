@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddffa7a0ba3c26c45a9f39ffb49a24f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemiesToNotRespawn: []
+  EntitiesToNotRespawn: []
 --- !u!114 &495730556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,6 +999,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Room 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243173265116924909, guid: f1302e08eaeabec45bb2ece6ace84f52,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1302e08eaeabec45bb2ece6ace84f52, type: 3}
