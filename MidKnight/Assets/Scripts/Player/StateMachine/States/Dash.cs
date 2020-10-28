@@ -40,6 +40,8 @@ public class Dash : State
         c.movement.Direction = c.gm.GetPathDirectionRight(c.transform.position);
         if (!c.FacingRight)
             c.movement.Direction = -c.movement.Direction;
+
+        c.animator.SetBool("Dashing", true);
     }
 
     public override void StateUpdate(ref PlayerController c)
@@ -51,5 +53,10 @@ public class Dash : State
         //If we are done dashing, enable the OnGround_Else_Airborne transition
         if (dashTimer <= 0)
             ignoreTransitions[0] = false;
+    }
+
+    public override void StateEnd(ref PlayerController c)
+    {
+        c.animator.SetBool("Dashing", false);
     }
 }

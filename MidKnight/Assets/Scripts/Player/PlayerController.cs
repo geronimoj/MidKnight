@@ -167,6 +167,15 @@ public class PlayerController : Character
     {
         dashTimer -= Time.deltaTime;
         manager.DoState(this);
+
+        if (FacingRight)
+        {
+            transform.eulerAngles = new Vector3(0,0,0);
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
     }
     /// <summary>
     /// Moves the player along the vector given
