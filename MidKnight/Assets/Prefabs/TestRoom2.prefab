@@ -102,6 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2044377974438557986}
+  - component: {fileID: 2230626955043651202}
   m_Layer: 0
   m_Name: TestRoom2
   m_TagString: Untagged
@@ -125,6 +126,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2230626955043651202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351319830579628356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac85f1b8c92e7e44ae1348f7fda3dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EM: {fileID: 0}
+  roomID: Test2
+  roomObjects:
+  - {fileID: 9178277736589888571}
+  - {fileID: 2988696289106789002}
+  - {fileID: 6652534931428396541}
+  - {fileID: 8305273302834107937}
+  - {fileID: 2936784867184461370}
+  - {fileID: 1614973969967169769}
+  - {fileID: 7807849211922133190}
+  - {fileID: 1623394942416938078}
+  - {fileID: 7099881932977391378}
+  entrances:
+  - {x: -10, y: 1.2, z: 0}
+  pathNodes: []
 --- !u!1 &6966490644590381445
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,8 +186,8 @@ Transform:
   - {fileID: 8727622294642468261}
   - {fileID: 1546868959738099461}
   - {fileID: 6513117800148696092}
-  - {fileID: 7099881932977391381}
   - {fileID: 1623394942416938073}
+  - {fileID: 7099881932977391381}
   m_Father: {fileID: 2044377974438557986}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -236,8 +264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ccb9ba7cc81574a803c457cef255e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 3351319830579628356}
-  nextRoom: {fileID: 11400000, guid: b0c6d945dca5a5349bc931620d0f220c, type: 2}
+  currentRoom: {fileID: 2230626955043651202}
+  nextRoom: {fileID: 1113223203, guid: 17a8fc144bfe06d4e92e16a1f82dbc76, type: 3}
   GM: {fileID: 0}
   EM: {fileID: 0}
   entranceIndex: 0
@@ -439,6 +467,11 @@ PrefabInstance:
       propertyPath: powerUP
       value: half moon
       objectReference: {fileID: 0}
+    - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: currentRoom
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -499,8 +532,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerUP (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ba715aaf92d6a2428cb23a195fee5e6, type: 3}
+--- !u!1 &6652534931428396541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 183662115966322661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &976644761888665186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
@@ -552,7 +596,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
@@ -576,6 +620,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bfd6d32099c7614fb72dc89857c8886, type: 3}
+--- !u!1 &1623394942416938078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1966793984708011054, guid: 9bfd6d32099c7614fb72dc89857c8886,
+    type: 3}
+  m_PrefabInstance: {fileID: 994171456995197040}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1623394942416938073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
@@ -593,6 +643,11 @@ PrefabInstance:
         type: 3}
       propertyPath: powerUP
       value: full moon
+      objectReference: {fileID: 0}
+    - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: currentRoom
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
@@ -654,8 +709,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerUP (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ba715aaf92d6a2428cb23a195fee5e6, type: 3}
+--- !u!1 &8305273302834107937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3286696366444780601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2494275569739511230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
@@ -673,6 +739,11 @@ PrefabInstance:
         type: 3}
       propertyPath: powerUP
       value: eclipse
+      objectReference: {fileID: 0}
+    - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: currentRoom
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
@@ -734,8 +805,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerUP (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ba715aaf92d6a2428cb23a195fee5e6, type: 3}
+--- !u!1 &2936784867184461370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8511658951697337378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8727622294642468261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
@@ -753,6 +835,11 @@ PrefabInstance:
         type: 3}
       propertyPath: powerUP
       value: crescent moon
+      objectReference: {fileID: 0}
+    - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: currentRoom
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
@@ -814,8 +901,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerUP
       objectReference: {fileID: 0}
+    - target: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ba715aaf92d6a2428cb23a195fee5e6, type: 3}
+--- !u!1 &2988696289106789002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6836168460074240536, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8621870517160855698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8693859375133581589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
@@ -887,7 +985,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
@@ -912,7 +1010,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011054, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_Name
-      value: Platform (16)
+      value: Exit
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011054, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
