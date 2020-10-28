@@ -6,6 +6,8 @@ public class PlayerController : Character
 {
     private StateManager manager;
 
+    public UnlockTracker ut;
+
     public GameManager gm;
 
     /// <summary>
@@ -136,6 +138,7 @@ public class PlayerController : Character
     {
         manager = GetComponent<StateManager>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        ut = GameObject.FindGameObjectWithTag("Player").GetComponent<UnlockTracker>();
     }
     /// <summary>
     /// Calls start on the current state
