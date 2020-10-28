@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 495730554}
   - component: {fileID: 495730553}
   - component: {fileID: 495730555}
+  - component: {fileID: 495730556}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -260,6 +261,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemiesToNotRespawn: []
+--- !u!114 &495730556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495730552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  room: {fileID: 0}
+  pointRadius: 2
 --- !u!1 &936897416
 GameObject:
   m_ObjectHideFlags: 0
