@@ -171,7 +171,8 @@ public class PlayerController : Character
         Vector3 dir = movement.Direction;
         //Rotate to look along the direction. We have to rotate the direction by 90 degrees to the "left", since we move along our x axis
         //And LookRotation wants the forward to be the z axis. This points dir either into our away from the screen, correctly rotating us
-        transform.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
+        if (dir != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
     /// <summary>
     /// Moves the player along the vector given
