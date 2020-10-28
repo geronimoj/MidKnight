@@ -128,20 +128,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3751154328660771770, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
-        type: 3}
-      propertyPath: GM
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3751154328660771770, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
-        type: 3}
+    - target: {fileID: 1113223203, guid: 17a8fc144bfe06d4e92e16a1f82dbc76, type: 3}
       propertyPath: EM
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4063476367608321428, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
+      objectReference: {fileID: 1512798401}
+    - target: {fileID: 415549484792422507, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
         type: 3}
-      propertyPath: m_Name
-      value: Exit
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437643736230796122, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447498680061632984, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5097109226034244516, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
         type: 3}
@@ -203,6 +207,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestRoom1
       objectReference: {fileID: 0}
+    - target: {fileID: 8719434335375261812, guid: 17a8fc144bfe06d4e92e16a1f82dbc76,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17a8fc144bfe06d4e92e16a1f82dbc76, type: 3}
 --- !u!1 &453310385
@@ -240,6 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26dd35d7feab8d84f941ec89e1ea8590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stringArray: []
+  boolArray: 
 --- !u!114 &453310387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +264,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+  ut: {fileID: 0}
   gm: {fileID: 0}
+  animator: {fileID: 0}
   ground:
     serializedVersion: 2
     m_Bits: 1
@@ -576,7 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddffa7a0ba3c26c45a9f39ffb49a24f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemiesToNotRespawn: []
+  EntitiesToNotRespawn: []
 --- !u!114 &1512798402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9928804774d2c1444898381c52b62b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  room: {fileID: 11400000, guid: b0c6d945dca5a5349bc931620d0f220c, type: 2}
+  room: {fileID: 0}
 --- !u!4 &1512798403
 Transform:
   m_ObjectHideFlags: 0

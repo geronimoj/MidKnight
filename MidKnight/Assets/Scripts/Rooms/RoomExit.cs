@@ -3,29 +3,30 @@
 public class RoomExit : MonoBehaviour
 {
     //Rooms
-    public GameObject currentRoom;
+    public Room currentRoom;
     public Room nextRoom;
     //Managers
     public GameManager GM;
-    public EnemyManager EM;
+    public EntitiesManager EM;
     [SerializeField]
     private uint entranceIndex = 0;
 
     //Find the managers on start
-    private void Start()
+    private void Awake()
     {
         GM = FindObjectOfType<GameManager>();
-        EM = FindObjectOfType<EnemyManager>();
+        EM = FindObjectOfType<EntitiesManager>();
     }
 
-    //On trigger, moves the player to the entrance, spawns the new room and destroys the old one
+    //On trigger, moves the player to the entrance, sets the new room active and deactivates the old one
     private void OnTriggerEnter(Collider other)
     {
         GM.room = nextRoom;
         other.GetComponent<CharacterController>().enabled = false;
         other.transform.position = nextRoom.entrances[entranceIndex];
         other.GetComponent<CharacterController>().enabled = true;
-        Instantiate(nextRoom.roomPrefab);
-        Destroy(currentRoom);
+        nextRoom.InstantiateRoom();
+        Destroy(currentRoom.gameObject);
+        //currentRoom.gameObject.SetActive(false);
     }
 }
