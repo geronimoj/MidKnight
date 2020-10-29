@@ -6,22 +6,25 @@ public class Room : MonoBehaviour
 {
     [SerializeField]
     private EntitiesManager EM;
-    public string roomID = "newRoom";
-    public List<GameObject> roomObjects;
+    public string roomID = "";
+    public List<GameObject> NonRespawningRoomObjects;
     public Vector3[] entrances;
     public Vector2[] pathNodes;
 
     private void Start()
     {
-        if (roomID == "newRoom")
+        //if the roomID isn't set there are potential spawning problems
+        if (roomID == "")
         {
             Debug.LogError("RoomID not set.");
+            Debug.Break();
         }
     }
 
+    //Set up to instantiate a room whilst removing objects that shouldn't be there
     public void InstantiateRoom()
     {
-        EM = FindObjectOfType<EntitiesManager>();
+        EM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EntitiesManager>();
         GameObject o = Instantiate(gameObject);
         Room r = o.GetComponent<Room>();
 
@@ -29,7 +32,7 @@ public class Room : MonoBehaviour
         {
             if (obj.thisRoom == r.roomID)
             {
-                r.roomObjects[obj.index].SetActive(false);
+                r.NonRespawningRoomObjects[obj.index].SetActive(false);
             }
         }
     }

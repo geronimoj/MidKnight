@@ -6,6 +6,7 @@ public class UnlockTracker : MonoBehaviour
 {
     //Dictionary holding all the unlocks
     Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
+
 #if UNITY_EDITOR
     //Arrays to show powerups and their boolean state
     public string[] stringArray;
@@ -20,6 +21,7 @@ public class UnlockTracker : MonoBehaviour
             {
                 //unlocks.Remove(key);
                 unlocks[key] = value;
+
 #if UNITY_EDITOR
                 stringArray = new string[0];
                 stringArray = new string[unlocks.Count()];
@@ -40,6 +42,7 @@ public class UnlockTracker : MonoBehaviour
         }
 
         unlocks.Add(key, value);
+
 #if UNITY_EDITOR
         stringArray = new string[0];
         stringArray = new string[unlocks.Count()];

@@ -6,19 +6,18 @@ public class RoomExit : MonoBehaviour
     public Room currentRoom;
     public Room nextRoom;
     //Managers
-    public GameManager GM;
-    public EntitiesManager EM;
+    [SerializeField]
+    private GameManager GM;
     [SerializeField]
     private uint entranceIndex = 0;
 
     //Find the managers on start
     private void Awake()
     {
-        GM = FindObjectOfType<GameManager>();
-        EM = FindObjectOfType<EntitiesManager>();
+        GM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
-    //On trigger, moves the player to the entrance, sets the new room active and deactivates the old one
+    //On trigger, moves the player to the entrance of the next room, sets the next room active and destroys the old one
     private void OnTriggerEnter(Collider other)
     {
         GM.room = nextRoom;
@@ -27,6 +26,5 @@ public class RoomExit : MonoBehaviour
         other.GetComponent<CharacterController>().enabled = true;
         nextRoom.InstantiateRoom();
         Destroy(currentRoom.gameObject);
-        //currentRoom.gameObject.SetActive(false);
     }
 }
