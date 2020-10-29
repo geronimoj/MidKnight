@@ -30,9 +30,9 @@ public class Unlockable : MonoBehaviour
         e.thisRoom = R.roomID;
         e.index = -1;
 
-        for (int i = 0; i < R.roomObjects.Count; i++)
+        for (int i = 0; i < R.NonRespawningRoomObjects.Count; i++)
         {
-            if (R.roomObjects[i] == gameObject)
+            if (R.NonRespawningRoomObjects[i] == gameObject)
             {
                 e.index = i;
                 break;
