@@ -10,6 +10,7 @@ public class baseEnemyAttack : StateMachineBehaviour
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Vector3 destination;
+    CharacterController cc;
     public float speed;
     
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,6 +20,12 @@ public class baseEnemyAttack : StateMachineBehaviour
         enemyTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+
+        cc = animator.GetComponent<CharacterController>();
+        if (cc == null)
+        {
+            Debug.LogError("cc not found");
+        }
     }
 
     /// <summary>
@@ -27,7 +34,7 @@ public class baseEnemyAttack : StateMachineBehaviour
     /// <param name="destination"></param>
     public void MoveToDestination(Vector3 destination)
     {
-        enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
+        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
     }
 
     /// <summary>
@@ -37,7 +44,7 @@ public class baseEnemyAttack : StateMachineBehaviour
     /// <param name="speed"></param>
     public void MoveToDestination(Vector3 destination, int speed)
     {
-        enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
+        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
     }
 
     /// <summary>
