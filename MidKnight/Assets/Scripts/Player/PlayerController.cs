@@ -110,9 +110,9 @@ public class PlayerController : Character
         }
     }
     /// <summary>
-    /// The number of jumps the player has made so far since they last hit the ground
+    /// Whether the player is allowed to jump again while airborne
     /// </summary>
-    private uint numOfJumps = 0;
+    private bool canJumpAgain = false;
     /// <summary>
     /// Returns true if the player can double jump or is on the ground
     /// </summary>
@@ -120,9 +120,15 @@ public class PlayerController : Character
     {
         get
         {
-            if (numOfJumps == 1 && !ut.GetKeyValue("double jump") || numOfJumps == 2 && ut.GetKeyValue("double jump"))
-                return false;
-            return true;
+            if (animator.GetBool("Airborne") && canJumpAgain && ut.GetKeyValue("double jump"))
+            {
+                canJumpAgain = false;
+                return true;
+            }
+            else if (!animator.GetBool("Airborne"))
+                return true;
+
+            return false;
         }
     }
     /// <summary>
@@ -240,15 +246,14 @@ public class PlayerController : Character
     /// </summary>
     public void DidJump()
     {
-        numOfJumps++;
-        if (numOfJumps == 2)
-            manager.CallStart(this);
+        if (!canJumpAgain && animator.GetBool("Airborne"))
+             manager.CallStart(this);
     }
     /// <summary>
     /// Called when the player lands
     /// </summary>
     public void DidLand()
     {
-        numOfJumps = 0;
+        canJumpAgain = true;
     }
 }
