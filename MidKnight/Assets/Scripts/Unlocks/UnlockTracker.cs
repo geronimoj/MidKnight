@@ -7,11 +7,14 @@ public class UnlockTracker : MonoBehaviour
     //Dictionary holding all the unlocks
     Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
 
+    #region UNITY_EDITOR
 #if UNITY_EDITOR
     //Arrays to show powerups and their boolean state
     public string[] stringArray;
     public bool[] boolArray;
 #endif
+    #endregion
+
     //Set a certain key to true or false and if it doesn't exist adds it
     public void SetKey(string key, bool value)
     {
@@ -22,6 +25,7 @@ public class UnlockTracker : MonoBehaviour
                 //unlocks.Remove(key);
                 unlocks[key] = value;
 
+                #region UNITY_EDITOR
 #if UNITY_EDITOR
                 stringArray = new string[0];
                 stringArray = new string[unlocks.Count()];
@@ -37,12 +41,15 @@ public class UnlockTracker : MonoBehaviour
                     e++;
                 }
 #endif
+                #endregion
+
                 return;
             }
         }
 
         unlocks.Add(key, value);
 
+        #region UNITY_EDITOR
 #if UNITY_EDITOR
         stringArray = new string[0];
         stringArray = new string[unlocks.Count()];
@@ -58,6 +65,7 @@ public class UnlockTracker : MonoBehaviour
             i++;
         }
 #endif
+        #endregion
     }
     //Gets the value of a key
     public bool GetKeyValue(string key)
