@@ -9,6 +9,7 @@ public class baseEnemyIdle : StateMachineBehaviour
     [HideInInspector] public Vector3 destination;
     floorCheck floorCheck;
     wallCheck wallCheck;
+    CharacterController cc;
     public int speed = 1;
     public int xVisionRange;
     public int yUpVisionRange;
@@ -23,6 +24,12 @@ public class baseEnemyIdle : StateMachineBehaviour
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
+
+        cc = animator.GetComponent<CharacterController>();
+        if (cc == null)
+        {
+            Debug.LogError("cc not found");
+        }
     }
 
     /// <summary>
@@ -78,6 +85,11 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// <returns></returns>
     public bool WallAndFloorCheck()
     {
+        if(wallCheck == null || floorCheck == null)
+        {
+            Debug.LogError("wall check or floor check not found");
+        }
+
         if (wallCheck.isThereAWall || !floorCheck.isThereFloor)
         {
             return true;
@@ -110,7 +122,7 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// <param name="destination"></param>
     public void MoveToDestination(Vector3 destination)
     {
-        enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
+        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime );
     }
 
     /// <summary>
@@ -120,6 +132,6 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// <param name="speed"></param>
     public void MoveToDestination(Vector3 destination, int speed)
     {
-        enemyTrans.position = Vector3.MoveTowards(enemyTrans.position, destination, speed * Time.deltaTime);
+        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
     }
 }
