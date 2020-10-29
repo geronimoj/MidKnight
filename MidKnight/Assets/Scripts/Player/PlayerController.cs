@@ -150,7 +150,11 @@ public class PlayerController : Character
         if (gm == null)
             Debug.LogError("GameManager not found. Check GameObject tagged GameManager has GameManager");
         if (animator == null)
-            Debug.LogError("Animator not found on Child at index 0");
+            Debug.LogError("Animator not found on Child at index 0 on Player");
+        if (manager == null)
+            Debug.LogError("StateManager not found on GameObject Player. Assign manager to make player work");
+        if (ut == null)
+            Debug.LogError("UnlockTracker not found on Player");
     }
     /// <summary>
     /// Calls start on the current state

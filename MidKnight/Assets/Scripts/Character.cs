@@ -59,6 +59,10 @@ public class Character : MonoBehaviour
     public void Awake()
     {
         cc = GetComponent<CharacterController>();
+
+        if (cc == null)
+            Debug.LogWarning("Could not find character controller. Will be unable to move with Move function");
+
         AwakeExtra();
     }
     /// <summary>
@@ -79,6 +83,8 @@ public class Character : MonoBehaviour
     /// <param name="moveVec">The movement vector</param>
     public virtual void Move(Vector3 moveVec)
     {
+        if (cc == null)
+            return;
         cc.Move(moveVec);
     }
 }
