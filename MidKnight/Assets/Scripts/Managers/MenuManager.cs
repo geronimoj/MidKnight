@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
+        Time.timeScale = 1;
         LoadScene(gameSceneName);
     }
 
@@ -52,6 +53,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMain()
     {
+        Debug.Log("Open Menu");
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
@@ -59,6 +61,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenOptions()
     {
+        Debug.Log("Open Options");
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
         controlMenu.SetActive(false);
@@ -66,6 +69,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenControl()
     {
+        Debug.Log("Open Controls");
         mainMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(true);
