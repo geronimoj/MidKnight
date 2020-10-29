@@ -32,7 +32,7 @@ public class Room : MonoBehaviour
         {
             if (enter.Equals(new Vector3(0, 0, 0)))
             {
-                Debug.LogWarning($"Entrance {i} may be wrong.");
+                Debug.LogWarning($"Entrance {i} on {roomID} may be wrong.");
             }
 
             i++;
