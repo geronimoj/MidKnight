@@ -61,8 +61,10 @@ public class Character : MonoBehaviour
         cc = GetComponent<CharacterController>();
 
         if (cc == null)
+        {
             Debug.LogWarning("Could not find character controller. Will be unable to move with Move function");
-
+            Debug.Break();
+        }
         AwakeExtra();
     }
     /// <summary>

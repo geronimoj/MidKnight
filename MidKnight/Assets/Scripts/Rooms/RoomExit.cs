@@ -20,6 +20,14 @@ public class RoomExit : MonoBehaviour
     //On trigger, moves the player to the entrance of the next room, sets the next room active and destroys the old one
     private void OnTriggerEnter(Collider other)
     {
+        if (nextRoom == null || nextRoom.entrances.Length == 0 || entranceIndex >= nextRoom.entrances.Length)
+        {
+            other.GetComponent<CharacterController>().enabled = false;
+            other.transform.position = currentRoom.entrances[0];
+            other.GetComponent<CharacterController>().enabled = true;
+            Debug.LogWarning("Next room unassigned, has no entrances or the entranceIndex is invalid. Entering current room.");
+            return;
+        }
         GM.room = nextRoom;
         other.GetComponent<CharacterController>().enabled = false;
         other.transform.position = nextRoom.entrances[entranceIndex];
