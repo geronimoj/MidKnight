@@ -6,6 +6,10 @@ using UnityEngine;
 public class DidJump : Transition
 {
     /// <summary>
+    /// Determines if a new input has been made
+    /// </summary>
+    private bool newInput = false;
+    /// <summary>
     /// Checks if the player should jump
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
@@ -13,16 +17,20 @@ public class DidJump : Transition
     public override bool ShouldTransition(ref PlayerController c)
     {
         //Did the player press the jump key
-        if (Input.GetAxis("Jump") > 0)
+        if (newInput && Input.GetAxis("Jump") > 0 && c.CanJump)
         {   //Assign jump force
             c.movement.VertSpeed = c.OnJumpForce;
+            c.DidJump();
+            newInput = false;
 #if UNITY_EDITOR
             //Debug that we jumped for the editor
             Debug.Log("Jump");
 #endif
             return true;
         }
-        
+
+        if (Input.GetAxis("Jump") == 0)
+            newInput = true;
         return false;
     }
 }
