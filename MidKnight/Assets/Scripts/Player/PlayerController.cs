@@ -110,6 +110,22 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// The number of jumps the player has made so far since they last hit the ground
+    /// </summary>
+    private uint numOfJumps = 0;
+    /// <summary>
+    /// Returns true if the player can double jump or is on the ground
+    /// </summary>
+    public bool CanJump
+    {
+        get
+        {
+            if (numOfJumps == 1 && !ut.GetKeyValue("double jump") || numOfJumps == 2 && ut.GetKeyValue("double jump"))
+                return false;
+            return true;
+        }
+    }
+    /// <summary>
     /// A storage location for the direction the player is facing relative to the path
     /// </summary>
     private bool facingRight = false;
@@ -215,8 +231,24 @@ public class PlayerController : Character
     /// <summary>
     /// Called when the dash is performed
     /// </summary>
-    public void DoDash()
+    public void DidDash()
     {
         dashTimer = dashCooldown;
+    }
+    /// <summary>
+    /// Called when the player jumps
+    /// </summary>
+    public void DidJump()
+    {
+        numOfJumps++;
+        if (numOfJumps == 2)
+            manager.CallStart(this);
+    }
+    /// <summary>
+    /// Called when the player lands
+    /// </summary>
+    public void DidLand()
+    {
+        numOfJumps = 0;
     }
 }

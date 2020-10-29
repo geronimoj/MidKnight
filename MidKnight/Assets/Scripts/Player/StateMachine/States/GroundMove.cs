@@ -25,6 +25,7 @@ public class GroundMove : State
         c.animator.SetBool("Airborne",false);
         accelTimer = 0;
         decelTimer = 0;
+        c.DidLand();
     }
 
     public override void StateUpdate(ref PlayerController c)
