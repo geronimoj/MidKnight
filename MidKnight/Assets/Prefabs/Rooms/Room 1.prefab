@@ -338,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243173263736662588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.559998, y: -3.2399998, z: 0}
+  m_LocalPosition: {x: -40.5, y: -3.2, z: 0}
   m_LocalScale: {x: 3, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 6636568737517826970}
@@ -431,7 +431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243173263773119559}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.861, y: -1.8699999, z: 0}
+  m_LocalPosition: {x: -18.9, y: -1.8699999, z: 0}
   m_LocalScale: {x: 12, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 6636568737517826970}
@@ -803,7 +803,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243173263902537854}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.759998, y: -5.9799995, z: 0}
+  m_LocalPosition: {x: -32, y: -6, z: 0}
   m_LocalScale: {x: 3, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 6636568737517826970}
@@ -1733,7 +1733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243173265105530065}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.1, y: -9.26, z: 0}
+  m_LocalPosition: {x: -36, y: -9.5, z: 0}
   m_LocalScale: {x: 3, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 6636568737517826970}
@@ -1848,7 +1848,8 @@ MonoBehaviour:
   EM: {fileID: 0}
   roomID: Room1
   NonRespawningRoomObjects: []
-  entrances: []
+  entrances:
+  - {x: 0, y: 0, z: 0}
   pathNodes: []
 --- !u!1 &4516629284748851670
 GameObject:
@@ -2230,12 +2231,17 @@ PrefabInstance:
     - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
       propertyPath: powerUP.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
       propertyPath: powerUP
       value: dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: powerUP.Array.data[0]
+      value: Dash
       objectReference: {fileID: 0}
     - target: {fileID: 934201461629527391, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
@@ -2326,7 +2332,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.65
+      value: -10.5
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
