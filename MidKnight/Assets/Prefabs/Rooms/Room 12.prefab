@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165605402348533234}
   m_LocalRotation: {x: -0.50000006, y: -0.5, z: 0.50000006, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 8.7502, y: 0, z: 4.6499996}
   m_Children: []
   m_Father: {fileID: 1448615365121036733}
@@ -177,7 +177,8 @@ MonoBehaviour:
   roomID: Room1
   NonRespawningRoomObjects: []
   entrances:
-  - {x: 0, y: 0, z: 0}
+  - {x: 9.5, y: 29, z: 0}
+  - {x: -6.5, y: -14, z: 0}
   pathNodes: []
 --- !u!114 &-7115270887606570517
 MonoBehaviour:
@@ -192,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   room: {fileID: 3351599065106945508}
-  pointRadius: 0
+  pointRadius: 1
 --- !u!1 &5520002929125894524
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8953916954301539174}
   m_LocalRotation: {x: -0.50000006, y: -0.5, z: 0.50000006, w: 0.5}
-  m_LocalPosition: {x: -0, y: 8.9, z: 3}
+  m_LocalPosition: {x: -0, y: 8.9, z: 5}
   m_LocalScale: {x: 4.797578, y: 0, z: 2.3249998}
   m_Children: []
   m_Father: {fileID: 1448615365121036733}
@@ -836,12 +837,12 @@ PrefabInstance:
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.97
+      value: -10.08
       objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.53
+      value: -14.74
       objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
