@@ -22,6 +22,7 @@ public class ratIdle : baseEnemyIdle
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //swap directions when they run into the wall or the platform ends
         SwapDirections();
 
         //Move to it's destination

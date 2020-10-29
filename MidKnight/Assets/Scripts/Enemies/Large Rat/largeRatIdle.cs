@@ -27,6 +27,7 @@ public class largeRatIdle : baseEnemyIdle
         //If the player is nearby, it changes direction to run into the player
         if (PlayerCheck())
         {
+            //face the player if hes in range and run towards it
             FacePlayer();
 
             if (PlayerOnRight())
@@ -40,6 +41,7 @@ public class largeRatIdle : baseEnemyIdle
                 isMovingRight = false;
             }
 
+            //stop if theres a wall or the platform ends
             if(WallAndFloorCheck())
             {
                 destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class baseBossAttack : StateMachineBehaviour
 {
+    /// <summary>
+    /// most boss attacks follow this formula
+    /// </summary>
+    
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public float timeTillAtk;
@@ -11,9 +15,9 @@ public class baseBossAttack : StateMachineBehaviour
     public int speed;
     public float startTimeTillAtk;
 
-
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //initialise stuff
         timeTillAtk = startTimeTillAtk;
         hasUsedMove = false;
 
