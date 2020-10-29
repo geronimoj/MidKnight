@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class largeBatAttack2 : baseEnemyAttack
 {
+    /// <summary>
+    /// the script for the bat's sonic wave attack animation
+    /// </summary>
     public GameObject atk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -15,7 +18,7 @@ public class largeBatAttack2 : baseEnemyAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //attack after x seconds
+        //attack after this many seconds summon a sonic wave
         if (timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;

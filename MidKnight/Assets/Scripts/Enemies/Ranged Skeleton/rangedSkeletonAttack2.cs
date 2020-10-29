@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class rangedSkeletonAttack2 : baseEnemyAttack
 {
+    /// <summary>
+    /// the script for the magic bolt attack animation
+    /// </summary>
     public GameObject atk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -15,6 +18,7 @@ public class rangedSkeletonAttack2 : baseEnemyAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //after this many seconds, spawn the attack once at the location of the enemy
         if(timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;

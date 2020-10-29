@@ -5,7 +5,7 @@ using UnityEngine;
 public class rangedSkeletonAttack1 : baseEnemyAttack
 {
     /// <summary>
-    /// Ranged skeleton attack
+    /// the script for the laser beam attack animation
     /// </summary>
 
     public GameObject atk;
@@ -19,8 +19,8 @@ public class rangedSkeletonAttack1 : baseEnemyAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //attack after x seconds
-        if(timeTillAtk > 0)
+        //after this many seconds, spawn the attack once at the location of the enemy
+        if (timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;
         }

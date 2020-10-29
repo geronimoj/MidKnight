@@ -103,6 +103,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// <param name="animator"></param>
     void AttackPlayer(Animator animator)
     {
+        //do extra stuff on the ranged skeletons
         if (animator.name == "Ranged Skeleton")
         {
             moveToUse = Random.Range(1, 3);

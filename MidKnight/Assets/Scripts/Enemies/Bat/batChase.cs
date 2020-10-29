@@ -37,6 +37,7 @@ public class batChase : baseEnemyIdle
             FacePlayer();
         }
 
+        //do extra things if it's a large bat
         if(isLargeBat)
         {
             if(Vector3.Distance(enemyTrans.position, playerTrans.position) < distFromPlayerToAtk)
