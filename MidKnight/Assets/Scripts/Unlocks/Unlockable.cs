@@ -4,7 +4,7 @@
 public class Unlockable : MonoBehaviour
 {
     [SerializeField]
-    private string powerUP = "new moon";
+    private string[] powerUP = { "new moon" };
     [SerializeField]
     private EntitiesManager EM;
 
@@ -15,41 +15,11 @@ public class Unlockable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Depending on which key you put in sets the value and adds the key if it doesn't exist
-        switch(powerUP)
+        //Sets key you put in sets the value and adds the key if it doesn't exist
+        foreach (string powerUP in powerUP)
         {
-            case "new moon":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("new moon", true);
-                LogEntity();
-                break;
-            case "crescent moon":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("crescent moon", true);
-                LogEntity();
-                break;
-            case "half moon":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("half moon", true);
-                LogEntity();
-                break;
-            case "dash":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("dash", true);
-                LogEntity();
-                break;
-            case "full moon":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("full moon", true);
-                LogEntity();
-                break;
-            case "double jump":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("double jump", true);
-                LogEntity();
-                break;
-            case "moon beam":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("moon beam", true);
-                LogEntity();
-                break;
-            case "eclipse":
-                other.gameObject.GetComponent<UnlockTracker>().SetKey("eclipse", true);
-                LogEntity();
-                break;
+            other.gameObject.GetComponent<UnlockTracker>().SetKey(powerUP.ToLower(), true);
+            LogEntity();
         }
     }
     
