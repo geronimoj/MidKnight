@@ -23,6 +23,8 @@ public class GroundMove : State
     {   //Remove the players vertical speed
         c.movement.VertSpeed = 0;
         c.animator.SetBool("Airborne",false);
+        accelTimer = 0;
+        decelTimer = 0;
     }
 
     public override void StateUpdate(ref PlayerController c)
