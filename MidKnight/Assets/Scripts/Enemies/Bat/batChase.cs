@@ -8,8 +8,6 @@ public class batChase : baseEnemyIdle
     /// the bat's attack
     /// </summary>
 
-    Transform chaseRadius;
-    public float chaseRadiusSize;
     bool isLargeBat;
     public float distFromPlayerToAtk;
 
@@ -19,9 +17,6 @@ public class batChase : baseEnemyIdle
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
         //custom stuff for bat
-        //change the radius of bats vision in inspector
-        chaseRadius = animator.gameObject.transform.GetChild(0);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
 
         //check if this is bat or large bat
         if(animator.name == "Large Bat")

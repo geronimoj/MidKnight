@@ -237,7 +237,9 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 0
-  chaseRadiusSize: 10
+  xVisionRange: 10
+  yUpVisionRange: 1
+  yDownVisionRange: 10
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -252,31 +254,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: death
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attack1
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attack2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: idle
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -306,8 +308,10 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 5
-  chaseRadiusSize: 50
-  distFromPlayerToAtk: 10
+  xVisionRange: 10
+  yUpVisionRange: 10
+  yDownVisionRange: 10
+  distFromPlayerToAtk: 5
 --- !u!114 &2904580427160664257
 MonoBehaviour:
   m_ObjectHideFlags: 1
