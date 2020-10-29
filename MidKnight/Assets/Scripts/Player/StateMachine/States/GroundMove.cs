@@ -4,11 +4,27 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "GroundMove", menuName = "States/GroundMove", order = 1)]
 public class GroundMove : State
-{
+{   
+    /// <summary>
+    /// The time to accelerate to the max speed
+    /// </summary>
+    [Range(0,100)]
+    public float accelToMaxTime = 0;
+    /// <summary>
+    /// The time it takes to decellerate to zero when releasing the moveKey
+    /// </summary>
+    [Range(0, 100)]
+    public float decelToZeroTime = 0;
+
+    private float accelTimer = 0;
+    private float decelTimer = 0;
+
     public override void StateStart(ref PlayerController c)
     {   //Remove the players vertical speed
         c.movement.VertSpeed = 0;
         c.animator.SetBool("Airborne",false);
+        accelTimer = 0;
+        decelTimer = 0;
     }
 
     public override void StateUpdate(ref PlayerController c)
@@ -16,7 +32,11 @@ public class GroundMove : State
         float x = Input.GetAxisRaw("Horizontal");
         //Don't move at all if there is no input
         if (x == 0)
-            c.movement.HozSpeed = 0;
+        {
+            c.movement.HozSpeed = LerpTo(0, c.movement.HozSpeed, ref decelTimer);
+            if (decelToZeroTime != 0)
+                accelTimer = (1 - (decelTimer / decelToZeroTime)) * accelToMaxTime;
+        }
         else
         {
             //Set the direction
@@ -32,10 +52,32 @@ public class GroundMove : State
             }
 
             //Set the players move speed
-            c.movement.HozSpeed = c.MoveSpeed;
+            c.movement.HozSpeed = LerpTo(c.MoveSpeed, c.movement.HozSpeed, ref accelTimer);
+            if (accelToMaxTime != 0)
+                decelTimer = (1 - (accelTimer / accelToMaxTime)) * decelToZeroTime;
         }
         //Move the character
         c.Move(c.movement.MoveVec * Time.deltaTime);
         c.animator.SetFloat("MoveSpeed", c.movement.HozSpeed);
+    }
+    /// <summary>
+    /// Transitions current to target over the remaining timer
+    /// </summary>
+    /// <param name="target">Target float</param>
+    /// <param name="current">Current float</param>
+    /// <param name="timer">A reference to a timer</param>
+    /// <returns>Returns the new current speed</returns>
+    private float LerpTo(float target, float current, ref float timer)
+    {
+        if (timer <= 0)
+            return target;
+        float dif = target - current;
+        float t = Time.deltaTime;
+
+        current += dif * (t / timer);
+
+        timer -= t;
+
+        return current;
     }
 }

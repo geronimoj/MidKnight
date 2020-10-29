@@ -14,7 +14,8 @@ public class StateManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     public void CallStart(PlayerController c)
     {
-        current.StateStart(ref c);
+        if (current != null)
+            current.StateStart(ref c);
     }
     /// <summary>
     /// Checks the transitions, swaps to a different state if necessary, and calls update on the current state
@@ -31,6 +32,8 @@ public class StateManager : MonoBehaviour
         //Call update if current exists
         if (current != null)
             current.StateUpdate(ref c);
+        else
+            Debug.LogWarning("No State Assigned");
     }
     /// <summary>
     /// Swaps to the target state
@@ -54,7 +57,9 @@ public class StateManager : MonoBehaviour
     /// <param name="ignore">An optional boolean array for transitions that should be ignored. Can be null</param>
     /// <returns>Returns true if a transition passed. Target will have already been assigned</returns>
     private bool CheckTransitions(ref PlayerController c, ref Transition[] transitions, bool[] ignore)
-    {
+    {   //Make sure we have transitions to check
+        if (transitions == null)
+            return false;
         for (int i = 0; i < transitions.Length; i++)
         {   //Should we transition
             if (transitions[i].ShouldTransition(ref c))

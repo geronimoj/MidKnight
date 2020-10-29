@@ -28,7 +28,7 @@ public class AirborneMove : State
     /// The minimum fall speed of the player if they release the jump key early. The player quickly accelerates to this value
     /// </summary>
     [Tooltip("The fall speed the player will quickly accelerate too. ONLY APPLIES TO EARLY JUMP RELEASE")]
-    [Range(0,100)]
+    [Range(0.1f,100)]
     public float minFallSpeed = 0;
     /// <summary>
     /// The time it takes for the player to accelerate to the minimum fall speed
