@@ -13,10 +13,33 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
+        bool Break = false;
         //if the roomID isn't set there are potential spawning problems
         if (roomID == "")
         {
             Debug.LogError("RoomID not set.");
+            Break = true;
+        }
+        if (entrances.Length == 0)
+        {
+            Debug.LogError($"No Entrances on {roomID}.");
+            Break = true;
+        }
+
+        int i = 0;
+
+        foreach (Vector3 enter in entrances)
+        {
+            if (enter.Equals(new Vector3(0, 0, 0)))
+            {
+                Debug.LogWarning($"Entrance {i} may be wrong.");
+            }
+
+            i++;
+        }
+
+        if (Break)
+        {
             Debug.Break();
         }
     }
