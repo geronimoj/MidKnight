@@ -83,10 +83,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTrans: {fileID: 0}
   playerTrans: {fileID: 0}
-  speed: 5
   destination: {x: 0, y: 0, z: 0}
+  speed: 5
+  xVisionRange: 10
+  yUpVisionRange: 10
+  yDownVisionRange: 1
   atkRange: 3
-  chaseRadiusSize: 15
   minStartTimeTillWalk: 0
   maxStartTimeTillWalk: 10
   maxDistToWalk: 5
