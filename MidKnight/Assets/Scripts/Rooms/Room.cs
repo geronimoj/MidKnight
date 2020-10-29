@@ -48,8 +48,13 @@ public class Room : MonoBehaviour
     public void InstantiateRoom()
     {
         EM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EntitiesManager>();
-        GameObject o = Instantiate(gameObject);
-        Room r = o.GetComponent<Room>();
+        if (EM == null)
+        {
+            Debug.LogError("EntitiesManager not found on GameManager GameObject");
+            Debug.Break();
+            return;
+        }
+        Room r = Instantiate(gameObject).GetComponent<Room>();
 
         foreach (Entities obj in EM.EntitiesToNotRespawn)
         {

@@ -148,9 +148,15 @@ public class PlayerController : Character
         animator = transform.GetChild(0).GetComponent<Animator>();
 
         if (gm == null)
+        {
             Debug.LogError("GameManager not found. Check GameObject tagged GameManager has GameManager");
+            Debug.Break();
+        }
         if (animator == null)
+        {
             Debug.LogError("Animator not found on Child at index 0 on Player");
+            Debug.Break();
+        }
         if (manager == null)
             Debug.LogError("StateManager not found on GameObject Player. Assign manager to make player work");
         if (ut == null)
