@@ -9,8 +9,6 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// </summary>
     
     public int atkRange;
-    Transform chaseRadius;
-    public float chaseRadiusSize;
     public float minStartTimeTillWalk;
     public float maxStartTimeTillWalk;
     float timeTillWalk;
@@ -30,10 +28,6 @@ public class meleeSkeletonIdle : baseEnemyIdle
         //custom stuff for skele
         //atk as soon as skele is in range and player is above skeleton
         AttackPlayer(animator);
-
-        //change the radius of skele vision in inspector
-        chaseRadius = animator.gameObject.transform.GetChild(2);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
 
         //face the player
         FacePlayer();

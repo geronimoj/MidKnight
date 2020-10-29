@@ -9,8 +9,10 @@ public class baseEnemyIdle : StateMachineBehaviour
     [HideInInspector] public Vector3 destination;
     floorCheck floorCheck;
     wallCheck wallCheck;
-    playerCheck playerCheck;
     public int speed = 1;
+    public int xVisionRange;
+    public int yUpVisionRange;
+    public int yDownVisionRange;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -21,7 +23,6 @@ public class baseEnemyIdle : StateMachineBehaviour
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
         floorCheck = animator.GetComponentInChildren<floorCheck>();
         wallCheck = animator.GetComponentInChildren<wallCheck>();
-        playerCheck = animator.GetComponentInChildren<playerCheck>();
     }
 
     /// <summary>
@@ -93,7 +94,7 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// <returns></returns>
     public bool PlayerCheck()
     {
-        if(playerCheck.isTherePlayer)
+        if(Mathf.Abs(playerTrans.position.x - enemyTrans.position.x) < xVisionRange && playerTrans.position.y < enemyTrans.position.y + yUpVisionRange && playerTrans.position.y > enemyTrans.position.y - yDownVisionRange)
         {
             return true;
         }

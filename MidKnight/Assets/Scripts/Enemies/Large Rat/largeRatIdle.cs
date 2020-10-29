@@ -9,8 +9,6 @@ public class largeRatIdle : baseEnemyIdle
     /// </summary>
      
     bool isMovingRight;
-    Transform chaseRadius;
-    public float chaseRadiusSize;
     public int chaseSpeed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -20,10 +18,6 @@ public class largeRatIdle : baseEnemyIdle
 
         // Do custom stuff for the rat
         destination = new Vector3(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
-
-        //change the radius of rats vision in inspector
-        chaseRadius = animator.gameObject.transform.GetChild(2);
-        chaseRadius.localScale = new Vector3(chaseRadiusSize, chaseRadiusSize, chaseRadiusSize);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -59,16 +53,16 @@ public class largeRatIdle : baseEnemyIdle
             //If there's a wall or no floor in front of the rat, it changes directions
             SwapDirections();
 
-
             //Move to it's destination
             MoveToDestination(destination);
+
         }
     }
 
     //swap the direction its facing
     void SwapDirections()
     {
-        if(WallAndFloorCheck())
+        if (WallAndFloorCheck())
         {
             if (isMovingRight)
             {
@@ -81,6 +75,19 @@ public class largeRatIdle : baseEnemyIdle
                 FaceRight();
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
+            }
+        }
+        else
+        {
+            if (isMovingRight)
+            {
+                FaceRight();
+                destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
+            }
+            else
+            {
+                FaceLeft();
+                destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
             }
         }
     }
