@@ -24,7 +24,7 @@ public class floorCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Boundary")
+        if (other.gameObject.tag == "Floor")
         {
             isThereFloor = true;
         }
@@ -32,7 +32,7 @@ public class floorCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Boundary")
+        if (other.gameObject.tag == "Floor")
         {
             isThereFloor = false;
         }

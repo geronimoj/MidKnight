@@ -16,8 +16,21 @@ public class largeRatIdle : baseEnemyIdle
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        // Do custom stuff for the rat
-        destination = new Vector3(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
+        //rat can start off walking left or right
+        int coinFlip = Random.Range(1, 3);
+
+        if (coinFlip == 1)
+        {
+            FaceRight();
+            isMovingRight = true;
+            destination = new Vector3(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
+        }
+        else
+        {
+            FaceLeft();
+            isMovingRight = false;
+            destination = new Vector3(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -57,7 +70,6 @@ public class largeRatIdle : baseEnemyIdle
 
             //Move to it's destination
             MoveToDestination(destination);
-
         }
     }
 

@@ -88,15 +88,18 @@ public class baseEnemyIdle : StateMachineBehaviour
         if(wallCheck == null || floorCheck == null)
         {
             Debug.LogError("wall check or floor check not found");
-        }
-
-        if (wallCheck.isThereAWall || !floorCheck.isThereFloor)
-        {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            if (wallCheck.isThereAWall || !floorCheck.isThereFloor)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

@@ -2,63 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ratIdle : baseEnemyIdle
+public class kingRatAttack5 : baseBossAttack
 {
-    /// <summary>
-    /// Baby rat's idle script
-    /// </summary>
-
-    bool isMovingRight;
+    public int noOfDashesToUse;
+    int dashCount = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
-        //rat can start off walking left or right
-        int coinFlip = Random.Range(1, 3);
-
-        if(coinFlip == 1)
-        {
-            FaceRight();
-            isMovingRight = true;
-            destination = new Vector3(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
-        }
-        else
-        {
-            FaceLeft();
-            isMovingRight = false;
-            destination = new Vector3(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
-        }
+        dashCount++;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //swap directions when they run into the wall or the platform ends
-        SwapDirections();
-
-        //Move to it's destination
-        MoveToDestination(destination);
-    }
-
-    //If there's a wall or no floor in front of the rat, it changes directions
-    void SwapDirections()
-    {
-        if (WallAndFloorCheck())
+        if (dashCount < noOfDashesToUse)
         {
-            if (isMovingRight)
+            if (timeTillAtk > 0)
             {
-                FaceLeft();
-                destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
-                isMovingRight = false;
+                timeTillAtk -= Time.deltaTime;
+            }
+            else if (!hasUsedMove)
+            {
+                hasUsedMove = true;
+
+                if (isFacingRight())
+                {
+                    destination.Set(arenaRightXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
+                }
+                else
+                {
+                    destination.Set(arenaLeftXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
+                }
+            }
+            else if(Mathf.Abs(enemyTrans.position.x - destination.x) > 1)
+            {
+                MoveToDestination(destination);
             }
             else
             {
-                FaceRight();
-                destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
-                isMovingRight = true;
+                animator.SetTrigger("atk5part2");
             }
+        }
+
+        if(dashCount == noOfDashesToUse)
+        {
+            dashCount = 0;
+            animator.SetTrigger("idle");
         }
     }
 

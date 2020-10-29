@@ -12,10 +12,16 @@ public class baseBossAttack : StateMachineBehaviour
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public float timeTillAtk;
     [HideInInspector] public bool hasUsedMove;
+    [HideInInspector] public Vector3 destination;
     CharacterController cc;
     public int speed;
     public float startTimeTillAtk;
-
+    public GameObject attack;
+    public float arenaUpYCoordinate;
+    public float arenaDownYCoordinate;
+    public float arenaLeftXCoordinate;
+    public float arenaRightXCoordinate;
+    
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //initialise stuff
@@ -23,7 +29,8 @@ public class baseBossAttack : StateMachineBehaviour
         hasUsedMove = false;
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyTrans = animator.GetComponent<Transform>();
-        
+        destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+
         cc = animator.GetComponent<CharacterController>();
         if (cc == null)
         {
@@ -50,4 +57,62 @@ public class baseBossAttack : StateMachineBehaviour
         cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Make the enemy face the player
+    /// </summary>
+    public void FacePlayer()
+    {
+        if (PlayerOnRight())
+        {
+            FaceRight();
+        }
+        else
+        {
+            FaceLeft();
+        }
+    }
+
+    /// <summary>
+    /// Makes the enemy turn to the right
+    /// </summary>
+    public void FaceRight()
+    {
+        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    /// <summary>
+    /// makes the enemy turn to the left
+    /// </summary>
+    public void FaceLeft()
+    {
+        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+    }
+
+    /// <summary>
+    ///check which side of the enemy the player is on
+    /// </summary>
+    /// <returns></returns>
+    public bool PlayerOnRight()
+    {
+        if (playerTrans.position.x > enemyTrans.position.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+   public bool isFacingRight()
+    {
+        if(enemyTrans.eulerAngles == new Vector3(0,0,0))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
