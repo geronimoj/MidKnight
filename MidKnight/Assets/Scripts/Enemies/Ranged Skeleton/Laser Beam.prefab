@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5643919726769617555}
   - component: {fileID: 115952596926519145}
   - component: {fileID: 378729539623733702}
+  - component: {fileID: 8475065448343112476}
   m_Layer: 13
   m_Name: Cube
   m_TagString: Skill
@@ -110,6 +111,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8475065448343112476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5794029306296155247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e0ddf9a661f814bb98add8ad190680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTrans: {fileID: 0}
+  prefabTrans: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
+  speed: 1
+  damage: 1
 --- !u!1 &8548532077015578974
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +138,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3576945854646600381}
   - component: {fileID: 8863736802212480414}
-  - component: {fileID: 686317069442690496}
   m_Layer: 0
   m_Name: Laser Beam
   m_TagString: Untagged
@@ -156,16 +173,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTimeTillDestroy: 1
---- !u!114 &686317069442690496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8548532077015578974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 053f9d716ebac8a45a2dca7b429fbb69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}

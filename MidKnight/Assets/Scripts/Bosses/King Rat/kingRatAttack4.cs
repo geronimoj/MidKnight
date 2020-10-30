@@ -11,10 +11,7 @@ public class kingRatAttack4 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        GameObject laserbeam = Instantiate(attack, enemyTrans.position, Quaternion.Euler(0, 0, 90));
-        characterOwner co = laserbeam.GetComponent<characterOwner>();
-        Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
-        co.Owner = animator.gameObject;
+        Instantiate(attack, enemyTrans.position, Quaternion.Euler(0, 0, 90));
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -31,10 +28,7 @@ public class kingRatAttack4 : baseBossAttack
             for (int i = 0; i < noOfLaserBeams; i++)
             {
                 Vector3 spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), arenaDownYCoordinate, enemyTrans.position.z);
-                GameObject laserbeam = Instantiate(attack, spawnPos , Quaternion.Euler(0, 0, 90));
-                characterOwner co = laserbeam.GetComponent<characterOwner>();
-                Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
-                co.Owner = animator.gameObject;
+                Instantiate(attack, spawnPos , Quaternion.Euler(0, 0, 90));
             }
         }
     }

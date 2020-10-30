@@ -27,10 +27,7 @@ public class rangedSkeletonAttack2 : baseEnemyAttack
         {
             hasUsedAtk = true;
 
-            GameObject laserbeam = Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
-            characterOwner co = laserbeam.GetComponent<characterOwner>();
-            Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
-            co.Owner = animator.gameObject;
+            Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
         }
     }
 
