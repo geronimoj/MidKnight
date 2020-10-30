@@ -201,11 +201,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EM: {fileID: 0}
-  roomID: Room7
+  roomID: Room11
   NonRespawningRoomObjects: []
   entrances:
   - {x: -17.5, y: 36.5, z: 0}
-  - {x: 22, y: 31.5, z: 0}
+  - {x: 21.5, y: 32, z: 0}
   - {x: 22, y: -12, z: 0}
   - {x: 22, y: -38.4, z: 0}
   - {x: -22, y: -38.4, z: 0}
@@ -471,7 +471,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5219811564218426766}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -22.18, y: 2.62, z: 0}
+  m_LocalPosition: {x: -21.3, y: 2.62, z: 0}
   m_LocalScale: {x: 6.3449993, y: 1.8656249, z: 1}
   m_Children: []
   m_Father: {fileID: 461388807825186558}
@@ -2110,6 +2110,11 @@ PrefabInstance:
       propertyPath: currentRoom
       value: 
       objectReference: {fileID: 5758030969281249310}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name
@@ -2891,6 +2896,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4385623282273188733, guid: 2c9edecfc9464d94190535868e8a9da0,
         type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name

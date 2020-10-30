@@ -638,7 +638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EM: {fileID: 0}
-  roomID: Room7
+  roomID: Room10
   NonRespawningRoomObjects: []
   entrances:
   - {x: 26, y: 4.3, z: 0}
@@ -1285,10 +1285,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3554246013837378869, guid: 49482fc2eafad1c488ce8e498b79a7d7,
         type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name
-      value: Exit (1)
+      value: TopExit
       objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
@@ -1381,6 +1386,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5758030969281249310, guid: e397f752a7c85a24f84bf0df02cab5e8,
         type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name
