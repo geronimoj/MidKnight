@@ -7,6 +7,7 @@ public class baseBossIdle : StateMachineBehaviour
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Vector3 destination;
+    [HideInInspector] public Enemy enemy;
     int noOfMoves = 0;
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
@@ -16,6 +17,8 @@ public class baseBossIdle : StateMachineBehaviour
     int lastMove = 0;
     CharacterController cc;
     public int speed;
+    public float gravity = 5;
+    private float vertSpeed = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,6 +26,7 @@ public class baseBossIdle : StateMachineBehaviour
         //initialise stuff
         enemyTrans = animator.GetComponent<Transform>();
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        enemy = animator.GetComponent<Enemy>();
         timeTillAtk = Random.Range(minStartTimeTillAtk, maxStartTimeTillAtk);
         moveToUse = Random.Range(1, noOfMoves + 1);
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
@@ -134,6 +138,9 @@ public class baseBossIdle : StateMachineBehaviour
     /// <param name="destination"></param>
     public void MoveToDestination(Vector3 destination)
     {
-        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
+        vertSpeed = -gravity;
+        Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
+        dir.y = vertSpeed * Time.deltaTime;
+        cc.Move(dir);
     }
 }

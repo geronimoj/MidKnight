@@ -34,11 +34,12 @@ public class rangedSkeletonProjectile : basePrefab
     }
 
     //destroy this when it touches a wall or the floor
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(other.tag == "Boundary")
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Floor"))
         {
             Destroy(this.gameObject);
         }
     }
+
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7491521839467895503}
   - component: {fileID: 1315061835571345251}
   - component: {fileID: 254575451054961456}
-  - component: {fileID: 2079709856350843572}
+  - component: {fileID: 3601954333522901633}
   m_Layer: 11
   m_Name: Wall Check
   m_TagString: Untagged
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isThereAWall: 0
---- !u!54 &2079709856350843572
+--- !u!54 &3601954333522901633
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 5723597282331017064}
   - component: {fileID: 3348787823864535625}
   - component: {fileID: 8777588936312612126}
+  - component: {fileID: 3114787757839961855}
   m_Layer: 10
   m_Name: Large Rat
   m_TagString: Enemy
@@ -244,6 +245,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3114787757839961855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716646773951346126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2252bd468b92a764bbe226cfa35ec6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
 --- !u!1 &8261896409921610784
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +271,7 @@ GameObject:
   - component: {fileID: 2444827256290352510}
   - component: {fileID: 8676799762736191762}
   - component: {fileID: 5122529808040425038}
-  - component: {fileID: 2079709854643369663}
+  - component: {fileID: 6506926922336720431}
   m_Layer: 11
   m_Name: Floor Check
   m_TagString: Untagged
@@ -352,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isThereFloor: 0
---- !u!54 &2079709854643369663
+--- !u!54 &6506926922336720431
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

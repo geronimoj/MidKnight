@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4212925167499817352}
   - component: {fileID: 847162145997592917}
   - component: {fileID: 3746133674537591203}
+  - component: {fileID: 3219507799521237783}
   m_Layer: 10
   m_Name: Ranged Skeleton
   m_TagString: Enemy
@@ -120,6 +121,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3219507799521237783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978184840981108400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2252bd468b92a764bbe226cfa35ec6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
 --- !u!1 &3079150747367089470
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,8 +146,8 @@ GameObject:
   - component: {fileID: 8115196944625802418}
   - component: {fileID: 3337679725458237070}
   - component: {fileID: 8697439323743912454}
-  - component: {fileID: 8447867102138136436}
   - component: {fileID: 3926842649373324347}
+  - component: {fileID: 3491582139602582977}
   m_Layer: 11
   m_Name: Floor Check
   m_TagString: Untagged
@@ -215,7 +229,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8447867102138136436
+--- !u!114 &3926842649373324347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079150747367089470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e61a18b437a249a4693cf923c80a5ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isThereFloor: 0
+--- !u!54 &3491582139602582977
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,19 +258,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &3926842649373324347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3079150747367089470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e61a18b437a249a4693cf923c80a5ef5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isThereFloor: 0
 --- !u!1 &7680271992886394048
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,8 +270,8 @@ GameObject:
   - component: {fileID: 5250016725230363927}
   - component: {fileID: 1080878210251608856}
   - component: {fileID: 5127197264635579268}
-  - component: {fileID: 8830091205847710501}
   - component: {fileID: 3471324903822392356}
+  - component: {fileID: 4046765911331097392}
   m_Layer: 11
   m_Name: Wall Check
   m_TagString: Untagged
@@ -339,7 +353,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8830091205847710501
+--- !u!114 &3471324903822392356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7680271992886394048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7eb016176c7f354db1d91b59af84cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isThereAWall: 0
+--- !u!54 &4046765911331097392
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,16 +382,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &3471324903822392356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7680271992886394048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7eb016176c7f354db1d91b59af84cad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isThereAWall: 0
