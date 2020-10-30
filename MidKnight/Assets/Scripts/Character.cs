@@ -59,7 +59,19 @@ public class Character : MonoBehaviour
     public void Awake()
     {
         cc = GetComponent<CharacterController>();
+        health = MaxHealth;
+
+        if (cc == null)
+        {
+            Debug.LogWarning("Could not find character controller. Will be unable to move with Move function");
+            Debug.Break();
+        }
+        AwakeExtra();
     }
+    /// <summary>
+    /// Any additional awake calls because the awake function in here requires to do its own stuff
+    /// </summary>
+    protected virtual void AwakeExtra() { }
     /// <summary>
     /// An overridable take damage function
     /// </summary>
@@ -67,13 +79,23 @@ public class Character : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         SetHealth = Health - damage;
+
+        if (Health <= 0)
+            OnDeath();
     }
     /// <summary>
     /// Moves the character or object
     /// </summary>
-    /// <param name="moveVec"></param>
-    public void Move(Vector3 moveVec)
+    /// <param name="moveVec">The movement vector</param>
+    public virtual void Move(Vector3 moveVec)
     {
+        if (cc == null)
+            return;
+        cc.Move(moveVec);
+    }
 
+    public virtual void OnDeath()
+    {
+        Debug.Log("I am dead");
     }
 }
