@@ -59,6 +59,7 @@ public class Character : MonoBehaviour
     public void Awake()
     {
         cc = GetComponent<CharacterController>();
+        health = MaxHealth;
 
         if (cc == null)
         {

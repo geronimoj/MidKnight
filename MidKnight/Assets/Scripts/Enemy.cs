@@ -10,8 +10,11 @@ public class Enemy : Character
     // Start is called before the first frame update
     void Start()
     {
+        //initialise stuff
+
         enemyAnim = GetComponent<Animator>();
         //hitBox = GetComponentInChildren<>();
+        health = MaxHealth;
     }
 
     // Update is called once per frame

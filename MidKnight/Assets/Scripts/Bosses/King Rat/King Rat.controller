@@ -24,6 +24,7 @@ MonoBehaviour:
   arenaDownYCoordinate: 0
   arenaLeftXCoordinate: 0
   arenaRightXCoordinate: 0
+  gravity: 5
 --- !u!114 &-8204786507045177556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,10 +121,13 @@ MonoBehaviour:
   enemyTrans: {fileID: 0}
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
+  enemy: {fileID: 0}
+  noOfMoves: 4
   minStartTimeTillAtk: 2
   maxStartTimeTillAtk: 3
   moveToUse: 4
   speed: 6
+  gravity: 5
 --- !u!1101 &-5773016942031182436
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -173,6 +177,7 @@ MonoBehaviour:
   arenaDownYCoordinate: 0
   arenaLeftXCoordinate: -19
   arenaRightXCoordinate: 19
+  gravity: 5
 --- !u!114 &-5427814255283897965
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,6 +202,7 @@ MonoBehaviour:
   arenaDownYCoordinate: 0
   arenaLeftXCoordinate: -19
   arenaRightXCoordinate: 19
+  gravity: 5
 --- !u!1101 &-4843047636197172572
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -246,6 +252,7 @@ MonoBehaviour:
   arenaDownYCoordinate: 0
   arenaLeftXCoordinate: -19
   arenaRightXCoordinate: 19
+  gravity: 5
   noOfDashesToUse: 5
 --- !u!114 &-4041794163867437341
 MonoBehaviour:
@@ -397,49 +404,49 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk1
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk3
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk4
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk5
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk5part2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: death
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -527,6 +534,7 @@ MonoBehaviour:
   arenaDownYCoordinate: -1
   arenaLeftXCoordinate: -19
   arenaRightXCoordinate: 19
+  gravity: 5
   noOfLaserBeams: 4
 --- !u!1102 &900071883937044873
 AnimatorState:
@@ -834,6 +842,7 @@ MonoBehaviour:
   arenaDownYCoordinate: 0
   arenaLeftXCoordinate: -19
   arenaRightXCoordinate: 19
+  gravity: 5
 --- !u!1101 &7869295127641887130
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

@@ -8,11 +8,11 @@ public class baseBossIdle : StateMachineBehaviour
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Vector3 destination;
     [HideInInspector] public Enemy enemy;
-    int noOfMoves = 0;
+    [HideInInspector] public int moveToUse;
+    public int noOfMoves = 0;
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
     float timeTillAtk;
-    public int moveToUse;
     int secondLastMove = 0;
     int lastMove = 0;
     CharacterController cc;
