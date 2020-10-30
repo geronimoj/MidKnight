@@ -29,7 +29,7 @@ Transform:
   m_Children:
   - {fileID: 4461792996096224092}
   m_Father: {fileID: 1254461340786506604}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &598040609147459493
 GameObject:
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 598040609147459494}
   - component: {fileID: 598040609147459495}
   m_Layer: 0
-  m_Name: Platform L24 (1)
+  m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,8 +61,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -12.5, z: 0}
   m_LocalScale: {x: 69, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6643313665987756826}
-  m_RootOrder: 5
+  m_Father: {fileID: 8446952491557236171}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &598040609147459513
 MeshFilter:
@@ -124,6 +124,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &949469390758640119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8446952491557236171}
+  m_Layer: 0
+  m_Name: Environment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8446952491557236171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949469390758640119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1668090964076468544}
+  - {fileID: 1191506242096209023}
+  - {fileID: 598040609147459492}
+  - {fileID: 8085630508966208921}
+  m_Father: {fileID: 1254461340786506604}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191506242096209022
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +171,7 @@ GameObject:
   - component: {fileID: 1191506242096209021}
   - component: {fileID: 1191506242096209020}
   m_Layer: 0
-  m_Name: Platform L24
+  m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,8 +188,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 69, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6643313665987756826}
-  m_RootOrder: 4
+  m_Father: {fileID: 8446952491557236171}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1191506242096208994
 MeshFilter:
@@ -247,6 +281,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6643313665987756826}
+  - {fileID: 8446952491557236171}
   - {fileID: 8744845945349785937}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -264,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EM: {fileID: 0}
-  roomID: Room1
+  roomID: Room13
   NonRespawningRoomObjects: []
   entrances:
   - {x: -31, y: 7.5, z: 0}
@@ -296,7 +331,7 @@ GameObject:
   - component: {fileID: 1668090964076468546}
   - component: {fileID: 1668090964076468547}
   m_Layer: 0
-  m_Name: Platform L24 (2)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,10 +346,10 @@ Transform:
   m_GameObject: {fileID: 1668090964076468545}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 34, y: 0, z: 0}
-  m_LocalScale: {x: 24.300003, y: 1, z: 1}
+  m_LocalScale: {x: 24.300005, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6643313665987756826}
-  m_RootOrder: 3
+  m_Father: {fileID: 8446952491557236171}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &1668090964076468573
 MeshFilter:
@@ -517,10 +552,6 @@ Transform:
   - {fileID: 7745798484781474495}
   - {fileID: 2885763116367650309}
   - {fileID: 2791985763559774144}
-  - {fileID: 1668090964076468544}
-  - {fileID: 1191506242096209023}
-  - {fileID: 598040609147459492}
-  - {fileID: 8085630508966208921}
   - {fileID: 7745798483913359555}
   - {fileID: 7745798484849772583}
   - {fileID: 7745798485093557358}
@@ -541,7 +572,7 @@ GameObject:
   - component: {fileID: 8085630508966208927}
   - component: {fileID: 8085630508966208920}
   m_Layer: 0
-  m_Name: Platform L24 (3)
+  m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,10 +587,10 @@ Transform:
   m_GameObject: {fileID: 8085630508966208922}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -34, y: 0, z: 0}
-  m_LocalScale: {x: 24.300003, y: 1, z: 1}
+  m_LocalScale: {x: 24.300005, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6643313665987756826}
-  m_RootOrder: 6
+  m_Father: {fileID: 8446952491557236171}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &8085630508966208926
 MeshFilter:
@@ -666,7 +697,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
@@ -891,7 +922,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
@@ -1041,7 +1072,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
@@ -1116,7 +1147,7 @@ PrefabInstance:
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1966793984708011049, guid: 9bfd6d32099c7614fb72dc89857c8886,
         type: 3}
