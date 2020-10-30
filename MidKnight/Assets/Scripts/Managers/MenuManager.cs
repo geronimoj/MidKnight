@@ -114,6 +114,7 @@ public class MenuManager : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        Debug.Log($"Resolution: {Screen.width} x {Screen.height}");
     }
 
     public void SetVolume(float volume)
@@ -124,6 +125,7 @@ public class MenuManager : MonoBehaviour
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
+        Debug.Log($"Quality: {QualitySettings.GetQualityLevel()}");
     }
 
     public void SetFullScreen(bool isFullScreen)
