@@ -17,15 +17,6 @@ public class basePrefab : MonoBehaviour
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         prefabTrans = GetComponent<Transform>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-
-        if (PlayerIsOnRight())
-        {
-            FaceRight();
-        }
-        else
-        {
-            FaceLeft();
-        }
     }
 
     public bool PlayerIsOnRight()

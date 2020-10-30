@@ -14,7 +14,6 @@ public class largeBatSonicWave : basePrefab
         base.Start();
 
         destination.Set(1000 * (playerTrans.position.x - prefabTrans.position.x), 1000 * (playerTrans.position.y - prefabTrans.position.y), prefabTrans.position.z);
-
     }
 
     // Update is called once per frame
