@@ -5,7 +5,6 @@ using UnityEngine;
 public class basePrefab : MonoBehaviour
 {
     [HideInInspector] public Transform playerTrans;
-    [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform prefabTrans;
     [HideInInspector] public Vector3 destination = new Vector3(0,0,0);
     PlayerController player;
@@ -16,7 +15,6 @@ public class basePrefab : MonoBehaviour
     public virtual void Start()
     {
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        enemyTrans = GetComponent<characterOwner>().Owner.GetComponent<Transform>();
         prefabTrans = GetComponent<Transform>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -32,7 +30,7 @@ public class basePrefab : MonoBehaviour
 
     public bool PlayerIsOnRight()
     {
-        if(playerTrans.position.x > enemyTrans.position.x)
+        if(playerTrans.position.x > prefabTrans.position.x)
         {
             return true;
         }
@@ -42,7 +40,7 @@ public class basePrefab : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {

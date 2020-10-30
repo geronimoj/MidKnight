@@ -21,10 +21,7 @@ public class kingRatAttack3 : baseBossAttack
         {
             hasUsedMove = true;
 
-            GameObject laserbeam = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
-            characterOwner co = laserbeam.GetComponent<characterOwner>();
-            Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
-            co.Owner = animator.gameObject;
+            Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
         }
     }
 
