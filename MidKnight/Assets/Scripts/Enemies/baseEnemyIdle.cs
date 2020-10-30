@@ -14,6 +14,8 @@ public class baseEnemyIdle : StateMachineBehaviour
     public int xVisionRange;
     public int yUpVisionRange;
     public int yDownVisionRange;
+    public float gravity = 5;
+    float vertSpeed = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -123,9 +125,17 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// Make the enemy move to this destination
     /// </summary>
     /// <param name="destination"></param>
-    public void MoveToDestination(Vector3 destination)
+    public virtual void MoveToDestination(Vector3 destination)
     {
-        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime );
+        vertSpeed = -gravity;
+        Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
+
+        if(gravity != 0)
+        {
+            dir.y = vertSpeed * Time.deltaTime;
+        }
+
+        cc.Move(dir);
     }
 
     /// <summary>
@@ -135,6 +145,9 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// <param name="speed"></param>
     public void MoveToDestination(Vector3 destination, int speed)
     {
-        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
+        vertSpeed = -gravity;
+        Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
+        dir.y = vertSpeed * Time.deltaTime;
+        cc.Move(dir);
     }
 }

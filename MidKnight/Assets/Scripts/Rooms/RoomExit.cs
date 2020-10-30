@@ -20,6 +20,8 @@ public class RoomExit : MonoBehaviour
     //On trigger, moves the player to the entrance of the next room, sets the next room active and destroys the old one
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.CompareTag("Player"))
+            return;
         if (nextRoom == null || nextRoom.entrances.Length == 0 || entranceIndex >= nextRoom.entrances.Length)
         {
             other.GetComponent<CharacterController>().enabled = false;

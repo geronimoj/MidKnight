@@ -24,7 +24,7 @@ public class wallCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Wall")
+        if(other.CompareTag("Wall"))
         {
             isThereAWall = true;
         }
@@ -32,7 +32,7 @@ public class wallCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Wall")
+        if (other.CompareTag("Wall"))
         {
             isThereAWall = false;
         }
