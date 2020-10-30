@@ -8,7 +8,7 @@ public class basePrefab : MonoBehaviour
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform prefabTrans;
     [HideInInspector] public Vector3 destination = new Vector3(0,0,0);
-    Character player;
+    PlayerController player;
     public int speed = 1;
     public int damage = 1;
 
@@ -18,7 +18,7 @@ public class basePrefab : MonoBehaviour
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyTrans = GetComponent<characterOwner>().Owner.GetComponent<Transform>();
         prefabTrans = GetComponent<Transform>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         if (PlayerIsOnRight())
         {
@@ -50,7 +50,6 @@ public class basePrefab : MonoBehaviour
             Debug.Log("Skill did damage");
         }
     }
-
 
     /// <summary>
     /// Make the enemy move to this destination

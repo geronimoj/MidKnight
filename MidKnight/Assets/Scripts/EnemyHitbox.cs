@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyHitbox : MonoBehaviour
 {
-    Character player;
+    PlayerController player;
     Enemy enemy;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GetComponentInParent<Enemy>();
     }
 
