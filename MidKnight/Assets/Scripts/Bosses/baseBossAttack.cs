@@ -21,7 +21,8 @@ public class baseBossAttack : StateMachineBehaviour
     public float arenaDownYCoordinate;
     public float arenaLeftXCoordinate;
     public float arenaRightXCoordinate;
-    
+    public float gravity = 5;
+    private float vertSpeed = 0;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //initialise stuff
@@ -44,7 +45,10 @@ public class baseBossAttack : StateMachineBehaviour
     /// <param name="destination"></param>
     public void MoveToDestination(Vector3 destination)
     {
-        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
+        vertSpeed = -gravity;
+        Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
+        dir.y = vertSpeed * Time.deltaTime;
+        cc.Move(dir);
     }
 
     /// <summary>
@@ -54,7 +58,10 @@ public class baseBossAttack : StateMachineBehaviour
     /// <param name="speed"></param>
     public void MoveToDestination(Vector3 destination, int speed)
     {
-        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
+        vertSpeed = -gravity;
+        Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
+        dir.y = vertSpeed * Time.deltaTime;
+        cc.Move(dir);
     }
 
     /// <summary>

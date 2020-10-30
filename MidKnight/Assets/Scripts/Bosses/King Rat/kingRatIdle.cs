@@ -12,17 +12,18 @@ public class kingRatIdle : baseBossIdle
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        //if(boss health < 2/3 && !hasUsedBossMove1)
-        //{
-        //  hasUsedBossMove1 = true;
-        //  moveToUse = 5;
-        //}
-        //else if(boss health < 1 / 3 && !hasUsedBossMove2)
-        //{
-        //  moveToUse = 5;
-        //  hasUsedBossMove2 = true;
-        //}
+        //use these moves when they hit this amount of health
+        if (enemy.Health * 2 / 3 < enemy.MaxHealth && !hasUsedBossMove1)
+        {
+            hasUsedBossMove1 = true;
+        }
+        else if (enemy.Health / 3 < enemy.MaxHealth && !hasUsedBossMove2)
+        {
+            moveToUse = 5;
+            hasUsedBossMove2 = true;
+        }
 
+        moveToUse = 1;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
