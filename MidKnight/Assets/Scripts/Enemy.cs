@@ -5,15 +5,15 @@ using UnityEngine;
 public class Enemy : Character
 {
     Animator enemyAnim;
-    GameObject hitBox;
+    EnemyHitbox enemyHitbox;
+    public int damage;
 
     // Start is called before the first frame update
     void Start()
     {
         //initialise stuff
-
         enemyAnim = GetComponent<Animator>();
-        //hitBox = GetComponentInChildren<>();
+        enemyHitbox = GetComponentInChildren<EnemyHitbox>();
         health = MaxHealth;
     }
 
@@ -26,8 +26,6 @@ public class Enemy : Character
     public override void OnDeath()
     {
         enemyAnim.SetTrigger("Death");
-        Destroy(hitBox);
+        Destroy(enemyHitbox);
     }
-
-
 }

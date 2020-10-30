@@ -27,10 +27,7 @@ public class largeBatAttack2 : baseEnemyAttack
         {
             hasUsedAtk = true;
 
-            GameObject sonicWave = Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
-            characterOwner co = sonicWave.GetComponent<characterOwner>();
-            Debug.Assert(co != null, "Did not find characterOwner script on spawned prefab");
-            co.Owner = animator.gameObject;
+            Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
         }
     }
 

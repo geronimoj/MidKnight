@@ -13,15 +13,8 @@ public class largeBatSonicWave : basePrefab
     {
         base.Start();
 
-        //set the destination to the player's position
-        if(playerTrans.position.x - prefabTrans.position.x == 0 && playerTrans.position.y - prefabTrans.position.y == 0)
-        {
-            destination.Set(0, 10000, 0);
-        }
-        else
-        {
-            destination.Set(10000 * (playerTrans.position.x - prefabTrans.position.x), 10000 * (playerTrans.position.y - prefabTrans.position.y), prefabTrans.position.z);
-        }
+        destination.Set(1000 * (playerTrans.position.x - prefabTrans.position.x), 1000 * (playerTrans.position.y - prefabTrans.position.y), prefabTrans.position.z);
+
     }
 
     // Update is called once per frame
