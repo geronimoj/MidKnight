@@ -78,6 +78,9 @@ public class Character : MonoBehaviour
     public virtual void TakeDamage(int damage)
     {
         SetHealth = Health - damage;
+
+        if (Health <= 0)
+            OnDeath();
     }
     /// <summary>
     /// Moves the character or object
@@ -88,5 +91,10 @@ public class Character : MonoBehaviour
         if (cc == null)
             return;
         cc.Move(moveVec);
+    }
+
+    public virtual void OnDeath()
+    {
+        Debug.Log("I am dead");
     }
 }
