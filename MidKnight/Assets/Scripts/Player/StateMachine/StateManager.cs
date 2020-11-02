@@ -4,7 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 public class StateManager : MonoBehaviour
 {
-    public State current;
+    [SerializeField]
+    private State current;
     private State target;
     [Tooltip("These transitions are always checked and cannot be disabled")]
     public Transition[] globalTransitions;

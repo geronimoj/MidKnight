@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(StateManager))]
 [RequireComponent(typeof(UnlockTracker))]
+[RequireComponent(typeof(PhaseManager))]
 public class PlayerController : Character
 {
     private StateManager manager;
+
+    private PhaseManager phase;
 
     [HideInInspector]
     public UnlockTracker ut;
@@ -165,6 +168,7 @@ public class PlayerController : Character
     protected override void AwakeExtra()
     {
         manager = GetComponent<StateManager>();
+        phase = GetComponent<PhaseManager>();
         ut = GetComponent<UnlockTracker>();
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         animator = transform.GetChild(0).GetComponent<Animator>();
@@ -183,6 +187,8 @@ public class PlayerController : Character
             Debug.LogError("StateManager not found on GameObject Player. Assign manager to make player work");
         if (ut == null)
             Debug.LogError("UnlockTracker not found on Player");
+        if (phase == null)
+            Debug.LogError("PhaseManager not found on Player GameObject");
     }
     /// <summary>
     /// Calls start on the current state
@@ -190,6 +196,7 @@ public class PlayerController : Character
     private void Start()
     {
         manager.CallStart(this);
+        phase.PhaseStart(this);
         cc.stepOffset = 0;
     }
     /// <summary>
@@ -199,6 +206,7 @@ public class PlayerController : Character
     {
         dashTimer -= Time.deltaTime;
         manager.DoState(this);
+        phase.PhaseUpdate(this);
         //Get the players direction just to save excess cpu
         Vector3 dir = movement.Direction;
         //Rotate to look along the direction. We have to rotate the direction by 90 degrees to the "left", since we move along our x axis
