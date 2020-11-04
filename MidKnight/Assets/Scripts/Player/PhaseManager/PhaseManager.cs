@@ -53,8 +53,11 @@ public class PhaseManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     public void PhaseStart(PlayerController c)
     {
-        current.PhaseEnter(ref c);
-        current.OnEnter.Invoke();
+        if (current != null)
+        {
+            current.PhaseEnter(ref c);
+            current.OnEnter.Invoke();
+        }
     }
     /// <summary>
     /// Swaps the phase to target if possible
