@@ -66,10 +66,26 @@ public class Attack : ScriptableObject
         float dist;
         //Loop through the hitboxes and perform a raycast for each if it is active
         for (int i = 0; i < hitboxes.Length; i++)
-        {   //Make sure this hitbox is still active
-            if (timer < hitboxes[i].startTime && timer >= hitboxes[i].endTime)
+        {
+            float difInTime = timer - hitboxes[i].startTime;
+            float fTemp = f;
+            //Make sure this hitbox is still active
+            if (difInTime < 0 && difInTime + f < 0 && timer >= hitboxes[i].endTime)
                 //If not, skip to the next one
                 continue;
+            //Repeat the check because I'm lazy.
+            //This check determines if the change in time this frame would step into the raycasting time
+            if (difInTime < 0)
+            {   //Recalculate f to be shorter. Starting at startTime to where timer would end
+                fTemp = (timer + f) - hitboxes[i].startTime;
+                //difInTime would be 0 since this simulates timer == startTime
+                difInTime = 0;
+            }
+            //Check that the change in time would not exceed the endTime
+            else if (timer + f > hitboxes[i].endTime)
+                //If so recalculate the changeInTime to not exceed the endTime since we use it when calculating the distance of the raycast
+                fTemp = hitboxes[i].endTime - timer;
+
             //Calculate the position of origin, direction & distance.
             //Basically we create a vector. The x component of the start point goes along the right vector, z along forward & y along up
             origin = t.position + (t.right * hitboxes[i].startPoint.x) + (t.forward * hitboxes[i].startPoint.z) + (t.up * hitboxes[i].startPoint.y);
@@ -80,9 +96,9 @@ public class Attack : ScriptableObject
             //Vector from A to B is B - A
             dir -= origin;
             //Move origin and sec along dir by how much time has passed as a percent
-            origin += dir * ((timer - hitboxes[i].startTime) / (hitboxes[i].endTime - hitboxes[i].startTime));
+            origin += dir * (difInTime / (hitboxes[i].endTime - hitboxes[i].startTime));
             //Calculate the length of the raycast
-            dist = dir.magnitude * f;
+            dist = dir.magnitude * fTemp;
             //Perform the raycast for this hitbox
             hit = Physics.CapsuleCastAll(origin, secOrigin, hitboxes[i].radius, dir.normalized, dist);
             //Make sure we hit something
