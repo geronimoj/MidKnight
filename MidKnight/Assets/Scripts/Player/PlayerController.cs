@@ -183,6 +183,25 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// How much bonus damage the player has to their attacks
+    /// </summary>
+    [SerializeField]
+    private int bonusDamage = 0;
+    /// <summary>
+    /// A Get/Set for bonusDamage
+    /// </summary>
+    public int BonusDamage
+    {
+        get
+        {
+            return bonusDamage;
+        }
+        set
+        {
+            bonusDamage = value;
+        }
+    }
+    /// <summary>
     /// Set to true when the player is attacking
     /// </summary>
     private bool attacking = false;
