@@ -329,7 +329,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c1f1473ba0906e0499b0ca271eff004b, type: 2}
+  - {fileID: 2100000, guid: f3282f257751f01458ee7de5fb266a4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -501,12 +501,17 @@ PrefabInstance:
     - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
       propertyPath: powerUP.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
       propertyPath: powerUP.Array.data[0]
       value: dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 911037626843758973, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
+        type: 3}
+      propertyPath: powerUP.Array.data[1]
+      value: double jump
       objectReference: {fileID: 0}
     - target: {fileID: 1081359258353674631, guid: 6ba715aaf92d6a2428cb23a195fee5e6,
         type: 3}
