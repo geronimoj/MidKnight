@@ -18,28 +18,51 @@ public class PhaseAttack : ScriptableObject
     /// A storage location for enemies that were hit by attacks so they don't take damage multiple times
     /// </summary>
     protected List<GameObject> targetsHit = new List<GameObject>();
+
+    private float attackTimer = 0;
     /// <summary>
     /// The default attack
     /// </summary>
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
-    public virtual void DefaultAttack(ref PlayerController c)
+    public virtual void DefaultAttack(PlayerController c)
     {
+        attackTimer += Time.deltaTime;
 
+        if (attackTimer >= 1)
+        {
+            c.Attacking = false;
+            c.animator.SetBool("Attacking", false);
+            attackTimer = 0;
+        }
     }
     /// <summary>
     /// The upwards attack
     /// </summary>
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
-    public virtual void UpAttack(ref PlayerController c)
+    public virtual void UpAttack(PlayerController c)
     {
+        attackTimer += Time.deltaTime;
 
+        if (attackTimer >= 1)
+        {
+            c.Attacking = false;
+            c.animator.SetBool("Attacking", false);
+            attackTimer = 0;
+        }
     }
     /// <summary>
     /// The downwards attack
     /// </summary>
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
-    public virtual void DownAttack(ref PlayerController c)
+    public virtual void DownAttack(PlayerController c)
     {
+        attackTimer += Time.deltaTime;
 
+        if (attackTimer >= 1)
+        {
+            c.Attacking = false;
+            c.animator.SetBool("Attacking", false);
+            attackTimer = 0;
+        }
     }
 }

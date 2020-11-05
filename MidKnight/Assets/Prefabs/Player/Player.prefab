@@ -93,6 +93,7 @@ MonoBehaviour:
   gravity: 40
   onJumpForce: 15
   dashCooldown: 1
+  iFrames: 0
 --- !u!114 &701012600202567747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,11 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swapCooldown: 0
-  current: {fileID: 0}
+  current: {fileID: 11400000, guid: b103358b5e0dae54cbc9c902e8343e0b, type: 2}
   OnSwap:
     m_PersistentCalls:
       m_Calls: []
-  attackToDraw: 0
 --- !u!95 &2594905443749488671
 Animator:
   serializedVersion: 3
