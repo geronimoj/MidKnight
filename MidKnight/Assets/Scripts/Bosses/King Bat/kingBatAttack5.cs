@@ -2,34 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingRatAttack1 : baseBossAttack
+public class kingBatAttack5 : baseBossAttack
 {
-    Vector3 spawnPos;
+    int count = 0;
+    public int noOfSonicWaves;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        destination.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaDownYCoordinate, arenaUpYCoordinate), enemyTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (timeTillAtk > 0)
+        MoveToDestination(destination);
+
+        if (Vector3.Distance(enemyTrans.position, destination) < 0.1f)
         {
-            timeTillAtk -= Time.deltaTime;
+            animator.SetTrigger("atk5part2");
+            count++;
         }
-        else if(!hasUsedMove)
+
+        if (count >= 5)
         {
-            hasUsedMove = true;
-
-            //spawn 2 rats
-            for (int i = 0; i < 2; i++)
-            {
-                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
-
-                Instantiate(attack, spawnPos, enemyTrans.rotation);
-            }
+            animator.SetTrigger("idle");
+            count = 0;
         }
     }
 

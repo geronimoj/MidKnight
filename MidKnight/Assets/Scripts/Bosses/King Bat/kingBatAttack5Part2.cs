@@ -2,34 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingRatAttack1 : baseBossAttack
+public class kingBatAttack5Part2 : baseBossAttack
 {
-    Vector3 spawnPos;
+    public int sonicWaveSpeed;
+    public float sonicWaveSize;
+    public float startTimeTillAtk5;
+    float timeTillAtk5;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        timeTillAtk5 = startTimeTillAtk5;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (timeTillAtk > 0)
+        if(timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;
         }
-        else if(!hasUsedMove)
+        else if (!hasUsedMove)
         {
             hasUsedMove = true;
+            GameObject atk = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            atk.GetComponent<largeBatSonicWave>().speed = sonicWaveSpeed;
+            atk.GetComponent<Transform>().localScale = new Vector3(sonicWaveSize, sonicWaveSize, sonicWaveSize);
+        }
 
-            //spawn 2 rats
-            for (int i = 0; i < 2; i++)
-            {
-                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
-
-                Instantiate(attack, spawnPos, enemyTrans.rotation);
-            }
+        if(timeTillAtk5 > 0)
+        {
+            timeTillAtk5 -= Time.deltaTime;
+        }
+        else
+        {
+            animator.SetTrigger("atk5");
         }
     }
 

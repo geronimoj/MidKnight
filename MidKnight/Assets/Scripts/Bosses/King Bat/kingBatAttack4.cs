@@ -2,33 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingRatAttack1 : baseBossAttack
+public class kingBatAttack4 : baseBossAttack
 {
+    public int noOfRocks;
     Vector3 spawnPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        destination.Set(enemyTrans.position.x, arenaUpYCoordinate + 5, enemyTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (timeTillAtk > 0)
-        {
-            timeTillAtk -= Time.deltaTime;
-        }
-        else if(!hasUsedMove)
-        {
-            hasUsedMove = true;
+        MoveToDestination(destination);
 
-            //spawn 2 rats
-            for (int i = 0; i < 2; i++)
+        if(Vector3.Distance(enemyTrans.position, destination) < 0.1f)
+        {
+            if (!hasUsedMove)
             {
-                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
+                destination.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaDownYCoordinate, arenaUpYCoordinate), enemyTrans.position.z);
 
-                Instantiate(attack, spawnPos, enemyTrans.rotation);
+                hasUsedMove = true;
+                for (int i = 0; i < noOfRocks; i++)
+                {
+                    spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
+                    Instantiate(attack, spawnPos, enemyTrans.rotation);
+                }
+            }
+            else
+            {
+                destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
             }
         }
     }

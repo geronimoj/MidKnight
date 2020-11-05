@@ -2,33 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingRatAttack1 : baseBossAttack
+public class kingBatAttack2 : baseBossAttack
 {
-    Vector3 spawnPos;
+    int count;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        FacePlayer();
+        count = 0;
+        destination.Set(playerTrans.position.x, playerTrans.position.y + 1, enemyTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (timeTillAtk > 0)
+        if(timeTillAtk > 0)
         {
             timeTillAtk -= Time.deltaTime;
         }
-        else if(!hasUsedMove)
+        else
         {
-            hasUsedMove = true;
+            MoveToDestination(destination);
 
-            //spawn 2 rats
-            for (int i = 0; i < 2; i++)
+            if(Vector3.Distance(enemyTrans.position,destination) < 0.1f)
             {
-                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
+                count++;
 
-                Instantiate(attack, spawnPos, enemyTrans.rotation);
+                if(count == 1)
+                {
+                    destination.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaDownYCoordinate, arenaUpYCoordinate), enemyTrans.position.z);
+
+                    if(destination.x > enemyTrans.position.x)
+                    {
+                        FaceRight();
+                    }
+                    else
+                    {
+                        FaceLeft();
+                    }
+                }
+                else if(count == 2)
+                {
+                    animator.SetTrigger("idle");
+                }
+
             }
         }
     }

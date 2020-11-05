@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingRatAttack1 : baseBossAttack
+public class kingBatAttack3 : baseBossAttack
 {
-    Vector3 spawnPos;
+    public int sonicWaveSpeed;
+    public float sonicWaveSize;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        base.OnStateEnter(animator, stateInfo, layerIndex);
+        base.OnStateEnter(animator, stateInfo, layerIndex);    
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -19,17 +20,13 @@ public class kingRatAttack1 : baseBossAttack
         {
             timeTillAtk -= Time.deltaTime;
         }
-        else if(!hasUsedMove)
+        else if (!hasUsedMove)
         {
             hasUsedMove = true;
 
-            //spawn 2 rats
-            for (int i = 0; i < 2; i++)
-            {
-                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
-
-                Instantiate(attack, spawnPos, enemyTrans.rotation);
-            }
+            GameObject atk = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            atk.GetComponent<largeBatSonicWave>().speed = sonicWaveSpeed;
+            atk.GetComponent<Transform>().localScale = new Vector3(sonicWaveSize, sonicWaveSize, sonicWaveSize);
         }
     }
 
