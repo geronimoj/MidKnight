@@ -7,7 +7,7 @@ public class Enemy : Character
     Animator enemyAnim;
     EnemyHitbox enemyHitbox;
     public int damage;
-
+    [HideInInspector] public bool isPhase2 = false;
     // Start is called before the first frame update
     void Start()
     {

@@ -2,38 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class kingBatIdle : baseBossIdle
+public class werewolfIdle : baseBossIdle
 {
-    public float arenaUpYCoordinate;
-    public float arenaDownYCoordinate;
-    public float arenaLeftXCoordinate;
-    public float arenaRightXCoordinate;
-    public int minDistFromDestination;
-    bool hasUsedBossMove1;
-    bool hasUsedBossMove2;
+    public int arenaLeftXCoordinate;
+    public int ArenaRightXCoordinate;
+    public int phase2speed;
+    bool hasUsedBossMove = false;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
-        while (Vector3.Distance(destination, enemyTrans.position) < minDistFromDestination)
+        
+        if(playerTrans.position.x > enemyTrans.position.x)
         {
-            destination.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaDownYCoordinate, arenaUpYCoordinate), enemyTrans.position.z);
+            FaceLeft();
+            destination.Set(arenaLeftXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
+        }
+        else
+        {
+            FaceRight();
+            destination.Set(ArenaRightXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
         }
 
-        //use these moves when they hit this amount of health
-        if (enemy.Health < enemy.MaxHealth * 2 / 3 && !hasUsedBossMove1)
+        if (!hasUsedBossMove && enemy.Health <= 1 / 2 * enemy.MaxHealth)
         {
             moveToUse = 5;
-            hasUsedBossMove1 = true;
-        }
-        else if (enemy.Health < enemy.MaxHealth / 3 && !hasUsedBossMove2)
-        {
-            moveToUse = 5;
-            hasUsedBossMove2 = true;
+            hasUsedBossMove = true;
         }
 
+        if (animator.GetComponent<Enemy>().isPhase2)
+        {
+            speed = phase2speed;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -41,16 +42,7 @@ public class kingBatIdle : baseBossIdle
     {
         MoveToDestination(destination);
 
-        if(destination.x > enemyTrans.position.x)
-        {
-            FaceRight();
-        }
-        else
-        {
-            FaceLeft();
-        }
-
-        if (Vector3.Distance(destination, enemyTrans.position) < 0.1f)
+        if (Vector3.Distance(destination, enemyTrans.position) < 0.3f)
         {
             switch (moveToUse)
             {
@@ -80,7 +72,7 @@ public class kingBatIdle : baseBossIdle
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        FacePlayer();    
+        FacePlayer();   
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
