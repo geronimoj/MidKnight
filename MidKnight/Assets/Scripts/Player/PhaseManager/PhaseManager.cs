@@ -108,15 +108,11 @@ public class PhaseManager : MonoBehaviour
             knownPhases[i].DecrementCooldownTimer();
     }
 #if UNITY_EDITOR
-    public Vector3 test;
-    public Vector3 test2;
     /// <summary>
     /// Draws the PhaseAttack hitboxes
     /// </summary>
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(transform.position + (transform.right * test.x) + (transform.forward * test.z) + transform.up * test.y, 1f);
-        Gizmos.DrawSphere(transform.position + (transform.right * (test.x + test2.x)) + (transform.forward * (test.z + test2.z)) + transform.up * (test.y + test2.y), 1f);
     }
 #endif
 }
