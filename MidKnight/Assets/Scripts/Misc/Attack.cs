@@ -48,8 +48,9 @@ public class Attack : ScriptableObject
     /// <returns>Returns any new objects hit by the raycast. Objects hit is reset when the timer is 0</returns>
     public RaycastHit[] DoAttack(ref float timer, Transform t)
     {
-        if (timer == 0)
+        if (timer <= 0)
         {
+            complete = false;
             targetsHit.Clear();
             OnStart.Invoke();
         }
@@ -69,24 +70,26 @@ public class Attack : ScriptableObject
             if (timer < hitboxes[i].startTime && timer >= hitboxes[i].endTime)
                 //If not, skip to the next one
                 continue;
-            //Calculate the position of origin.
+            //Calculate the position of origin, direction & distance.
             //Basically we create a vector. The x component of the start point goes along the right vector, z along forward & y along up
             origin = t.position + (t.right * hitboxes[i].startPoint.x) + (t.forward * hitboxes[i].startPoint.z) + (t.up * hitboxes[i].startPoint.y);
             //Same as the first but we account for the orientation vector
             secOrigin = origin + (t.right * (hitboxes[i].orientation.normalized.x * hitboxes[i].length)) + (t.forward * (hitboxes[i].orientation.normalized.z * hitboxes[i].length)) + (t.up * (hitboxes[i].orientation.normalized.y * hitboxes[i].length));
-            //Calculate the direction of the raycast
+            //Calculate the direction of the raycast by repeating what we did on origin but for endPoint
             dir = t.position + (t.right * hitboxes[i].endPoint.x) + (t.forward * hitboxes[i].endPoint.z) + (t.up * hitboxes[i].endPoint.y);
+            //Vector from A to B is B - A
             dir -= origin;
+            //Move origin and sec along dir by how much time has passed as a percent
+            origin += dir * ((timer - hitboxes[i].startTime) / (hitboxes[i].endTime - hitboxes[i].startTime));
             //Calculate the length of the raycast
             dist = dir.magnitude * f;
             //Perform the raycast for this hitbox
             hit = Physics.CapsuleCastAll(origin, secOrigin, hitboxes[i].radius, dir.normalized, dist);
-
-
             //Make sure we hit something
             if (hit != null)
                 //Check if the hit objects have already been hit, if not, add them to the return
                 foreach (RaycastHit h in hit)
+                    //If already hit returns false, the RaycastHit will be automatically added to targetsHit but we need to add it to the hits array
                     if (!AlreadyHit(h))
                         hits.Add(h);
         }
