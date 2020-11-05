@@ -48,6 +48,16 @@ public class PlayerController : Character
     [SerializeField]
     private float dashCooldown = 0;
     /// <summary>
+    /// How long the players i-Frames last after taking damage
+    /// </summary>
+    [SerializeField]
+    [Range(0, 100)]
+    private float iFrames = 0;
+    /// <summary>
+    /// A timer for the players iframes
+    /// </summary>
+    private float iFrameTimer = 0;
+    /// <summary>
     /// A Get for moveSpeed
     /// </summary>
     public float MoveSpeed
@@ -163,6 +173,39 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// Returns true when the players iFrames have dropped below 0
+    /// </summary>
+    public bool CanTakeDamage
+    {
+        get
+        {
+            return iFrameTimer <= 0;
+        }
+    }
+    /// <summary>
+    /// Set to true when the player is attacking
+    /// </summary>
+    private bool attacking = false;
+    /// <summary>
+    /// Used internally to determine which attack needs to be called in the update loop if an attack has begun
+    /// </summary>
+    private int attackIndex = 0;
+    /// <summary>
+    /// A Get/Set for if the player is attacking
+    /// </summary>
+    public bool Attacking
+    {
+        get
+        {
+            return attacking;
+        }
+        set
+        {
+            attacking = value;
+        }
+    }
+
+    /// <summary>
     /// Gets a reference to the State & Game Managers
     /// </summary>
     protected override void AwakeExtra()
@@ -197,6 +240,7 @@ public class PlayerController : Character
     {
         manager.CallStart(this);
         phase.PhaseStart(this);
+        Attacking = false;
         cc.stepOffset = 0;
     }
     /// <summary>
@@ -204,9 +248,12 @@ public class PlayerController : Character
     /// </summary>
     private void Update()
     {
+        if (!CanTakeDamage)
+            iFrameTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
         manager.DoState(this);
         phase.PhaseUpdate(this);
+        Attack();
         //Get the players direction just to save excess cpu
         Vector3 dir = movement.Direction;
         //Rotate to look along the direction. We have to rotate the direction by 90 degrees to the "left", since we move along our x axis
@@ -263,5 +310,100 @@ public class PlayerController : Character
     public void DidLand()
     {
         canJumpAgain = true;
+    }
+    /// <summary>
+    /// Deals damage to the player with iframes included
+    /// </summary>
+    /// <param name="damage">How much damage to deal</param>
+    public override void TakeDamage(int damage)
+    {   //Can the player take damage
+        if (CanTakeDamage)
+        {   //Set the iFrame timer
+            iFrameTimer = iFrames;
+            //Deal damage
+            SetHealth = Health - damage;
+            //Log that damage was dealt
+#if UNITY_EDITOR
+            Debug.Log("Took Damage");
+#endif
+        }
+    }
+    /// <summary>
+    /// Checks and calls which attack the player should perform
+    /// </summary>
+    private void Attack()
+    {   //Do we want to attack
+        if (Input.GetAxisRaw("Attack") != 0 || Attacking)
+        {
+            //If anything is null, return so we don't create errors
+            if (phase == null || phase.CurrentPhase == null || phase.CurrentPhase.Attacks == null)
+            {
+                Debug.LogError("The phase manager, current phase or phase attack for the current phase has not been assigned");
+                return;
+            }
+            //If we are already attacking, continue the attack instead of starting a new one
+            if (Attacking)
+            {
+                switch (attackIndex)
+                {
+                    case -1:
+                        //If we are on the ground, we cannot attack so undo all of this. This also applies to when we land
+                        if (!animator.GetBool("Airborne"))
+                        {
+                            Attacking = false;
+                            animator.SetBool("Attacking", false);
+                            break;
+                        }
+                        phase.CurrentPhase.Attacks.DownAttack(this);
+                        break;
+                    case 0:
+                        phase.CurrentPhase.Attacks.DefaultAttack(this);
+                        break;
+                    case 1:
+                        phase.CurrentPhase.Attacks.UpAttack(this);
+                        break;
+                    default:
+                        //If none of the attacks passed for some reason, log an error
+                        Debug.LogWarning("Player Attack Failed");
+                        return;
+                }
+                return;
+            }
+            //This will only be entered when the attack is first called
+            else
+            {
+                float d = Input.GetAxisRaw("Vertical");
+                //Set us to be attacking. This is set to false once the attack is complete automatically
+                Attacking = true;
+                //Check which attack we should do
+                switch (d)
+                {
+                    case -1:
+                        //If we are on the ground, we cannot attack so undo all of this
+                        if (!animator.GetBool("Airborne"))
+                        {
+                            Attacking = false;
+                            break;
+                        }
+                        phase.CurrentPhase.Attacks.DownAttack(this);
+                        attackIndex = -1;
+                        break;
+                    case 0:
+                        phase.CurrentPhase.Attacks.DefaultAttack(this);
+                        attackIndex = 0;
+                        break;
+                    case 1:
+                        phase.CurrentPhase.Attacks.UpAttack(this);
+                        attackIndex = 1;
+                        break;
+                    default:
+                        //If none of the attacks passed for some reason, log an error
+                        Debug.LogWarning("Player Attack Failed");
+                        return;
+                }
+                animator.SetBool("Attacking", Attacking);
+                animator.SetInteger("Attack", attackIndex);
+            }
+        }
     }
 }

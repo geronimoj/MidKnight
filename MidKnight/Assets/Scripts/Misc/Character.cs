@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// A private Set for health to make things cleaner
     /// </summary>
-    private int SetHealth
+    protected int SetHealth
     {
         set
         {
