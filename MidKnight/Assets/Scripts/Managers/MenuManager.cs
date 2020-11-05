@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject controlMenu;
+    public GameObject background;
     public AudioMixer audioMixer;
     private Resolution[] resolutions;
     public Dropdown resolutionDropdown;
@@ -28,6 +29,10 @@ public class MenuManager : MonoBehaviour
     public Slider volumeSlider;
     public Text volumeText;
     private float currentVolume;
+    //Secret
+    public Toggle secretToogle;
+    public GameObject secretObject;
+    private bool secretBool = false;
 
     private void Start()
     {
@@ -50,6 +55,8 @@ public class MenuManager : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.RefreshShownValue();
         LoadSettings(currentResolutionIndex);
+        secretToogle.SetIsOnWithoutNotify(false);
+        secretObject.SetActive(false);
     }
 
     private void Update()
@@ -92,26 +99,41 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMain()
     {
-        Debug.Log("Open Menu");
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        background.SetActive(true);
+
+        if (secretBool)
+        {
+            secretObject.SetActive(true);
+        }
     }
 
     public void OpenOptions()
     {
-        Debug.Log("Open Options");
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
         controlMenu.SetActive(false);
+        background.SetActive(true);
+
+        if (secretBool)
+        {
+            secretObject.SetActive(true);
+        }
     }
 
     public void OpenControl()
     {
-        Debug.Log("Open Controls");
         mainMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(true);
+        background.SetActive(true);
+
+        if (secretBool)
+        {
+            secretObject.SetActive(true);
+        }
     }
 
     public void CloseMenu()
@@ -119,6 +141,12 @@ public class MenuManager : MonoBehaviour
         mainMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        background.SetActive(false);
+
+        if (secretBool)
+        {
+            secretObject.SetActive(false);
+        }
     }
 
     public void SetResolution(int resolutionIndex)
@@ -220,6 +248,13 @@ public class MenuManager : MonoBehaviour
         audioMixer.SetFloat("Volume", volume);
         currentVolume = volume;
         volumeText.text = $"{currentVolume + 100}";
+    }
+
+    public void SetSecret(bool isSecret)
+    {
+        secretBool = isSecret;
+        secretToogle.SetIsOnWithoutNotify(isSecret);
+        secretObject.SetActive(isSecret);
     }
 
     public void SaveSettings()

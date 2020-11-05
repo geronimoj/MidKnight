@@ -52,8 +52,6 @@ public class kingBatIdle : baseBossIdle
 
         if (Vector3.Distance(destination, enemyTrans.position) < 0.1f)
         {
-            Debug.Log("King Bat Reached Destination");
-
             switch (moveToUse)
             {
                 case 1:
