@@ -114,11 +114,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EM: {fileID: 0}
-  roomID: Room18
+  roomID: Room24
   NonRespawningRoomObjects: []
   entrances:
-  - {x: 12, y: 30.3, z: 0}
-  - {x: -11.63, y: -39.82, z: 0}
+  - {x: -20.9, y: -9.7, z: 0}
+  - {x: 20, y: 8.2, z: 0}
   pathNodes: []
 --- !u!114 &7934853579088743370
 MonoBehaviour:
@@ -182,7 +182,7 @@ PrefabInstance:
     - target: {fileID: 300744081626794905, guid: 8a75fd1ed6fbdc64e9eb01e9e56f5002,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.252451
+      value: 6.15
       objectReference: {fileID: 0}
     - target: {fileID: 300744081626794905, guid: 8a75fd1ed6fbdc64e9eb01e9e56f5002,
         type: 3}
@@ -254,6 +254,12 @@ PrefabInstance:
       propertyPath: currentRoom
       value: 
       objectReference: {fileID: 2698507568441218516}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: nextRoom
+      value: 
+      objectReference: {fileID: 861845425695544190, guid: 65e0d3ddfeab78d4fb9cffc212974711,
+        type: 3}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name

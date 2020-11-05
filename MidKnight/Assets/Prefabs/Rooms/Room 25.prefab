@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EM: {fileID: 0}
-  roomID: Room18
+  roomID: Room25
   NonRespawningRoomObjects: []
   entrances: []
   pathNodes: []
@@ -864,8 +864,18 @@ PrefabInstance:
         type: 3}
       propertyPath: currentRoom
       value: 
+      objectReference: {fileID: 861845425695544190}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: nextRoom
+      value: 
       objectReference: {fileID: 2698507568441218516, guid: f0e4c8792c4795946934d0df7c0ee81d,
         type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name
@@ -1650,13 +1660,12 @@ PrefabInstance:
         type: 3}
       propertyPath: currentRoom
       value: 
-      objectReference: {fileID: 1010371540799152426, guid: 856fc892768d58648854c992279a1110,
-        type: 3}
+      objectReference: {fileID: 861845425695544190}
     - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: nextRoom
       value: 
-      objectReference: {fileID: 5758030969281249310, guid: e397f752a7c85a24f84bf0df02cab5e8,
+      objectReference: {fileID: 285858985164485372, guid: f832af0ca4682ba4ab4c90fc17cd0592,
         type: 3}
     - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
@@ -1743,6 +1752,12 @@ PrefabInstance:
       propertyPath: currentRoom
       value: 
       objectReference: {fileID: 2698507568441218516, guid: f0e4c8792c4795946934d0df7c0ee81d,
+        type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: nextRoom
+      value: 
+      objectReference: {fileID: 3249753453781460942, guid: 5595e372bd8ab124cb836989a5792813,
         type: 3}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
