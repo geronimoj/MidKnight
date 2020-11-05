@@ -81,6 +81,9 @@ public class baseBossIdle : StateMachineBehaviour
                 case 5:
                     animator.SetTrigger("atk5");
                     break;
+                case 6:
+                    animator.SetTrigger("atk6");
+                    break;
             }
         }
     }
