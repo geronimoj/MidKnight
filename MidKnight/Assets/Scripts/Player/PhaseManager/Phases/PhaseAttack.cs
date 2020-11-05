@@ -18,7 +18,9 @@ public class PhaseAttack : ScriptableObject
     /// A storage location for enemies that were hit by attacks so they don't take damage multiple times
     /// </summary>
     protected List<GameObject> targetsHit = new List<GameObject>();
-
+    /// <summary>
+    /// A temporary value for displaying the attack animations until the Attacks are fully completed
+    /// </summary>
     private float attackTimer = 0;
     /// <summary>
     /// The default attack

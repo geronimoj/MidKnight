@@ -19,6 +19,8 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private MoonPhase current;
+
+    private List<MoonPhase> knownPhases;
     /// <summary>
     /// Called when the phase is swapped
     /// </summary>
@@ -33,6 +35,14 @@ public class PhaseManager : MonoBehaviour
             return current;
         }
     }
+
+    public void Start()
+    {
+        knownPhases = new List<MoonPhase>();
+        if (current != null)
+            knownPhases.Add(current);
+    }
+
     /// <summary>
     /// Calls update on the current phase if there is one
     /// </summary>
@@ -40,6 +50,7 @@ public class PhaseManager : MonoBehaviour
     public void PhaseUpdate(PlayerController c)
     {
         cooldownTimer -= Time.deltaTime;
+        DecrementTimers();
         if (current != null)
             current.DoPhase(ref c);
 #if UNITY_EDITOR
@@ -77,6 +88,9 @@ public class PhaseManager : MonoBehaviour
 
         current.PhaseEnter(ref c);
         current.OnEnter.Invoke();
+        //Add the phase to the list of known phases if its not already there
+        if (!knownPhases.Contains(current))
+            knownPhases.Add(current);
     }
     /// <summary>
     /// Returns true if the string given matches the phase ID of the current phase
@@ -86,6 +100,12 @@ public class PhaseManager : MonoBehaviour
     public bool CorrectPhase(string phaseID)
     {
         return current.phaseID.Equals(phaseID);
+    }
+
+    private void DecrementTimers()
+    {
+        for (int i = 0; i < knownPhases.Count; i++)
+            knownPhases[i].DecrementCooldownTimer();
     }
 #if UNITY_EDITOR
     /// <summary>

@@ -347,7 +347,7 @@ public class PlayerController : Character
                 switch (attackIndex)
                 {
                     case -1:
-                        //If we are on the ground, we cannot attack so undo all of this
+                        //If we are on the ground, we cannot attack so undo all of this. This also applies to when we land
                         if (!animator.GetBool("Airborne"))
                         {
                             Attacking = false;

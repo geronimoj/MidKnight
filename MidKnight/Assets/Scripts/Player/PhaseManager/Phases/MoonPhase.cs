@@ -69,8 +69,6 @@ public class MoonPhase : ScriptableObject
     /// <param name="c">A reference to the player controller</param>
     public void DoPhase(ref PlayerController c)
     {
-        cooldownTimer -= Time.deltaTime;
-
         PhaseUpdate(ref c);
     }
     /// <summary>
@@ -82,5 +80,13 @@ public class MoonPhase : ScriptableObject
     /// Called when the phase exits
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public virtual void PhaseExit(ref PlayerController c) { }
+    public virtual void PhaseExit(ref PlayerController c) 
+    {
+        cooldownTimer = phaseCooldown;
+    }
+
+    public void DecrementCooldownTimer()
+    {
+        cooldownTimer -= Time.deltaTime;
+    }
 }
