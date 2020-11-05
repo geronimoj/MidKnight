@@ -9,27 +9,37 @@ public class rangedSkeletonProjectile : basePrefab
     /// </summary>
 
     public int newSpeed;
+    Rigidbody prefabRB;
+    Vector3 force;
+    bool hasReachedDestination;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
 
+        //initialise stuff
+        prefabRB = GetComponent<Rigidbody>();
+
         //projectile flies in between the player and the enemy 
-        destination.Set((playerTrans.position.x + prefabTrans.position.x) / 2, prefabTrans.position.y + 5, prefabTrans.position.z);
+        destination.Set((playerTrans.position.x + prefabTrans.position.x) / 2, prefabTrans.position.y + 10, prefabTrans.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
         //always move to its destination
-        MoveToDestination(destination, speed);
 
-        //if it reaches its first destination fly at the player
-        if(prefabTrans.position == destination)
+        if(prefabTrans.position != destination && !hasReachedDestination)
         {
-            destination.Set(10000 * (playerTrans.position.x - prefabTrans.position.x), 10000 * (playerTrans.position.y - prefabTrans.position.y), prefabTrans.position.z);
-            speed = newSpeed;
+            MoveToDestination(destination, speed);
+        }
+        else
+        {
+            hasReachedDestination = true;
+
+            force.Set(playerTrans.position.x - prefabTrans.position.x, playerTrans.position.y - prefabTrans.position.y, playerTrans.position.z - prefabTrans.position.z);
+            prefabRB.AddForce(force * newSpeed * Time.deltaTime);
         }
     }
 

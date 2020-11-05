@@ -12,11 +12,18 @@ public class returnToIdle : StateMachineBehaviour
     public float minStartTimeTillIdle;
     public float maxStartTimeTillIdle;
     float timeTillIdle;
+    public float phase2MinStartTimeTillIdle;
+    public float phase2MaxStartTimeTillIdle;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timeTillIdle = Random.Range(minStartTimeTillIdle, maxStartTimeTillIdle);
+
+        if(animator.GetComponent<Enemy>().isPhase2)
+        {
+            timeTillIdle = Random.Range(phase2MinStartTimeTillIdle, phase2MaxStartTimeTillIdle);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

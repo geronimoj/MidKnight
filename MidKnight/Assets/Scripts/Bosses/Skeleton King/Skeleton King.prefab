@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 9137258105444135152}
   - component: {fileID: 1079851759852966492}
   - component: {fileID: 755549193894038882}
+  - component: {fileID: 3330414484145375250}
   m_Layer: 10
   m_Name: Skeleton King
   m_TagString: Enemy
@@ -103,7 +104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7663245011168264752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.27499998, y: -0.375, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7346463665816619445}
@@ -203,3 +204,22 @@ MonoBehaviour:
   maxHealth: 200
   damage: 1
   isPhase2: 0
+--- !u!95 &3330414484145375250
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7663245011168264752}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8ec7ecf1744c8a04b833409ec1c994a1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
