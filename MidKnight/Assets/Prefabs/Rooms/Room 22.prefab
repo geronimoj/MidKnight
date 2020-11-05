@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EM: {fileID: 0}
-  roomID: Room18
+  roomID: Room22
   NonRespawningRoomObjects: []
   entrances:
   - {x: -53, y: 18.5, z: 0}
@@ -417,13 +417,12 @@ PrefabInstance:
         type: 3}
       propertyPath: currentRoom
       value: 
-      objectReference: {fileID: 5682403497316245297, guid: 38a2b19ac393a3745aefa99a53a78277,
-        type: 3}
+      objectReference: {fileID: 1010371540799152426}
     - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: nextRoom
       value: 
-      objectReference: {fileID: 523227635966393174, guid: e426f7ee33b80844195442f5be3028e1,
+      objectReference: {fileID: 5682403497316245297, guid: 38a2b19ac393a3745aefa99a53a78277,
         type: 3}
     - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
@@ -846,6 +845,17 @@ PrefabInstance:
       propertyPath: currentRoom
       value: 
       objectReference: {fileID: 1010371540799152426}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: nextRoom
+      value: 
+      objectReference: {fileID: 417817749499152584, guid: 66b54e93f1e04a64186a8e929fedc80c,
+        type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name

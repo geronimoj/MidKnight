@@ -113,7 +113,6 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     private void OnDrawGizmosSelected()
     {
-        
     }
 #endif
 }
