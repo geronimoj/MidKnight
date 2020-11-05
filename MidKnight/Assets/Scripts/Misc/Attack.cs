@@ -70,8 +70,13 @@ public class Attack : ScriptableObject
             float difInTime = timer - hitboxes[i].startTime;
             float fTemp = f;
             //Make sure this hitbox is still active
-            if (difInTime < 0 && difInTime + f < 0 && timer >= hitboxes[i].endTime)
-                //If not, skip to the next one
+                //Is the current time below the start time?
+            if (difInTime < 0
+                //Will the current time + time.deltaTime step into the startTime?
+                && difInTime + f < 0
+                //Have we exceeded the endTime?
+                && timer >= hitboxes[i].endTime)
+                //The hitbox musn't be active so continue to the next one
                 continue;
             //Repeat the check because I'm lazy.
             //This check determines if the change in time this frame would step into the raycasting time
