@@ -183,6 +183,25 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// How much bonus damage the player has to their attacks
+    /// </summary>
+    [SerializeField]
+    private int bonusDamage = 0;
+    /// <summary>
+    /// A Get/Set for bonusDamage
+    /// </summary>
+    public int BonusDamage
+    {
+        get
+        {
+            return bonusDamage;
+        }
+        set
+        {
+            bonusDamage = value;
+        }
+    }
+    /// <summary>
     /// Set to true when the player is attacking
     /// </summary>
     private bool attacking = false;
@@ -345,8 +364,10 @@ public class PlayerController : Character
             if (Attacking)
             {
                 switch (attackIndex)
-                {
+                {   //To avoid attack animations playing twice when landing or jumping during one
+                    //The airborne animations have indexs 2,3,4. exactly + 3 of the original
                     case -1:
+                    case 2:
                         //If we are on the ground, we cannot attack so undo all of this. This also applies to when we land
                         if (!animator.GetBool("Airborne"))
                         {
@@ -357,9 +378,11 @@ public class PlayerController : Character
                         phase.CurrentPhase.Attacks.DownAttack(this);
                         break;
                     case 0:
+                    case 3:
                         phase.CurrentPhase.Attacks.DefaultAttack(this);
                         break;
                     case 1:
+                    case 4:
                         phase.CurrentPhase.Attacks.UpAttack(this);
                         break;
                     default:
@@ -401,6 +424,8 @@ public class PlayerController : Character
                         Debug.LogWarning("Player Attack Failed");
                         return;
                 }
+                if (animator.GetBool("Airborne"))
+                    attackIndex += 3;
                 animator.SetBool("Attacking", Attacking);
                 animator.SetInteger("Attack", attackIndex);
             }

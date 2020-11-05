@@ -9,13 +9,13 @@ public class baseBossIdle : StateMachineBehaviour
     [HideInInspector] public Vector3 destination;
     [HideInInspector] public Enemy enemy;
     [HideInInspector] public int moveToUse;
+    [HideInInspector] public int secondLastMove = 0;
+    [HideInInspector] public int lastMove = 0;
+    [HideInInspector] public float timeTillAtk;
+    [HideInInspector] public CharacterController cc;
     public int noOfMoves = 0;
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
-    float timeTillAtk;
-    int secondLastMove = 0;
-    int lastMove = 0;
-    CharacterController cc;
     public int speed;
     public float gravity = 5;
     private float vertSpeed = 0;
@@ -28,17 +28,17 @@ public class baseBossIdle : StateMachineBehaviour
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemy = animator.GetComponent<Enemy>();
         timeTillAtk = Random.Range(minStartTimeTillAtk, maxStartTimeTillAtk);
-        moveToUse = Random.Range(1, noOfMoves + 1);
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
         cc = animator.GetComponent<CharacterController>();
 
+        moveToUse = Random.Range(1, noOfMoves + 1);
         //ensures no boss will use the same move three times in a row
-        //while(moveToUse == lastMove && moveToUse == secondLastMove)
-        //{
-        //    moveToUse = Random.Range(1, noOfMoves + 1);
-        //    lastMove = moveToUse;
-        //    lastMove = secondLastMove;
-        //}
+        while (moveToUse == lastMove && moveToUse == secondLastMove)
+        {
+            moveToUse = Random.Range(1, noOfMoves + 1);
+            lastMove = moveToUse;
+            lastMove = secondLastMove;
+        }
 
         lastMove = moveToUse;
         secondLastMove = lastMove;
@@ -140,7 +140,12 @@ public class baseBossIdle : StateMachineBehaviour
     {
         vertSpeed = -gravity;
         Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
-        dir.y = vertSpeed * Time.deltaTime;
+        
+        if(gravity != 0)
+        {
+            dir.y = vertSpeed * Time.deltaTime;
+        }
+
         cc.Move(dir);
     }
 }
