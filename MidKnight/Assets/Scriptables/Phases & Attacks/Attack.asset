@@ -9,10 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed06590d1076f8d41ba2556136809b86, type: 3}
+  m_Script: {fileID: 11500000, guid: c4f9bef916012024385a9000fdd66cad, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  damage: 0
-  OnHit:
+  duration: 0.5
+  hitboxes:
+  - startTime: 0
+    endTime: 0
+    length: 0
+    radius: 0
+    orientation: {x: 0, y: 0, z: 0}
+    startPoint: {x: 0, y: 0, z: 0}
+    endPoint: {x: 0, y: 0, z: 0}
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
     m_PersistentCalls:
       m_Calls: []
