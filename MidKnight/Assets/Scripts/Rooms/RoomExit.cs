@@ -3,7 +3,6 @@
 public class RoomExit : MonoBehaviour
 {
     //Rooms
-    public Room currentRoom;
     public Room nextRoom;
     //Managers
     [SerializeField]
@@ -22,6 +21,14 @@ public class RoomExit : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
+        Room currentRoom = GM.room;
+
+        if(currentRoom == null)
+        {
+            Debug.LogError("GameManager room null. Set it to something");
+            return;
+        }
+
         if (nextRoom == null || nextRoom.entrances.Length == 0 || entranceIndex >= nextRoom.entrances.Length)
         {
             other.GetComponent<CharacterController>().enabled = false;
@@ -30,11 +37,10 @@ public class RoomExit : MonoBehaviour
             Debug.LogWarning("Next room unassigned, has no entrances or the entranceIndex is invalid. Entering current room.");
             return;
         }
-        GM.room = nextRoom;
         other.GetComponent<CharacterController>().enabled = false;
         other.transform.position = nextRoom.entrances[entranceIndex];
         other.GetComponent<CharacterController>().enabled = true;
-        nextRoom.InstantiateRoom();
+        nextRoom.InstantiateRoom(ref GM);
         Destroy(currentRoom.gameObject);
     }
 }

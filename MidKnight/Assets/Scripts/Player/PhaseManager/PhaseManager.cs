@@ -19,7 +19,9 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private MoonPhase current;
-
+    /// <summary>
+    /// A list of preivously active phases
+    /// </summary>
     private List<MoonPhase> knownPhases;
     /// <summary>
     /// Called when the phase is swapped

@@ -22,7 +22,8 @@ public class PlayerController : Character
     /// <summary>
     /// The layermask that we can stand on
     /// </summary>
-    public LayerMask ground;
+    [SerializeField]
+    private LayerMask ground;
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
@@ -69,7 +70,6 @@ public class PlayerController : Character
     /// So we can see it in inspector
     [SerializeField]
     private float moonLight = 0;
-
     /// <summary>
     /// How long the bonusDamage lasts
     /// </summary>
@@ -85,6 +85,10 @@ public class PlayerController : Character
     /// Necessary for breaking out of healing & dash on damage
     /// </summary>
     private bool tookDamageThisLoop = false;
+    /// <summary>
+    /// Is true when the player dies
+    /// </summary>
+    private bool dead = false;
     /// <summary>
     /// A Get for moveSpeed
     /// </summary>
@@ -139,7 +143,6 @@ public class PlayerController : Character
     /// The timer for if the player can dash
     /// </summary>
     private float dashTimer = 0;
-
     /// <summary>
     /// Returns true if the player can dash
     /// </summary>
@@ -300,20 +303,26 @@ public class PlayerController : Character
     /// </summary>
     private void Start()
     {
+        SetHealth = MaxHealth;
         manager.CallStart(this);
         phase.PhaseStart(this);
         Attacking = false;
         cc.stepOffset = 0;
+        dead = false;
     }
     /// <summary>
     /// Decrements the timer and calls update on the state
     /// </summary>
     private void Update()
-    {
+    {   //Is the player dead
+        if (dead)
+            return;
+        //Decrement the timers
         if (!CanTakeDamage)
             iFrameTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
         bonusDamageTimer -= Time.deltaTime;
+        //If the timer for bonus damage is finished, set bonus damage to 0
         if (bonusDamageTimer < 0)
             bonusDamage = 0;
 
@@ -326,7 +335,7 @@ public class PlayerController : Character
         //And LookRotation wants the forward to be the z axis. This points dir either into our away from the screen, correctly rotating us
         if (dir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
-
+        //If we took damage earlier, reset took damage
         tookDamageThisLoop = false;
     }
     /// <summary>
@@ -360,14 +369,14 @@ public class PlayerController : Character
     /// <summary>
     /// Called when the dash is performed
     /// </summary>
-    public void DidDash()
+    public void OnDash()
     {
         dashTimer = dashCooldown;
     }
     /// <summary>
     /// Called when the player jumps
     /// </summary>
-    public void DidJump()
+    public void OnJump()
     {
         if (!canJumpAgain && animator.GetBool("Airborne"))
              manager.CallStart(this);
@@ -375,7 +384,7 @@ public class PlayerController : Character
     /// <summary>
     /// Called when the player lands
     /// </summary>
-    public void DidLand()
+    public void OnLand()
     {
         canJumpAgain = true;
     }
@@ -384,18 +393,29 @@ public class PlayerController : Character
     /// </summary>
     /// <param name="damage">How much damage to deal</param>
     public override void TakeDamage(int damage)
-    {   //Can the player take damage
+    {   //If the damage is negative, its healing.
+        if (damage <= 0)
+        {   //Heal
+            SetHealth = Health - damage;
+            return;
+        }
+        //Can the player take damage
         if (CanTakeDamage)
         {   //Set the iFrame timer
             iFrameTimer = iFrames;
             //Deal damage
             SetHealth = Health - damage;
-
+            //Set us to have taken damage this frame
             tookDamageThisLoop = true;
+            //Trigger the damage animation
+            animator.SetTrigger("TookDamage");
             //Log that damage was dealt
 #if UNITY_EDITOR
             Debug.Log("Took Damage");
 #endif
+
+            if (Health <= 0)
+                OnDeath();
         }
     }
     /// <summary>
@@ -410,15 +430,15 @@ public class PlayerController : Character
     /// Checks and calls which attack the player should perform
     /// </summary>
     private void Attack()
-    {   //Do we want to attack
+    {   //If anything is null, return so we don't create errors
+        if (phase == null || phase.CurrentPhase == null || phase.CurrentPhase.Attacks == null)
+        {
+            Debug.LogError("The phase manager, current phase or phase attack for the current phase has not been assigned");
+            return;
+        }
+        //Do we want to attack or are we already attacking
         if (Input.GetAxisRaw("Attack") != 0 || Attacking)
         {
-            //If anything is null, return so we don't create errors
-            if (phase == null || phase.CurrentPhase == null || phase.CurrentPhase.Attacks == null)
-            {
-                Debug.LogError("The phase manager, current phase or phase attack for the current phase has not been assigned");
-                return;
-            }
             //If we are already attacking, continue the attack instead of starting a new one
             if (Attacking)
             {
@@ -449,7 +469,6 @@ public class PlayerController : Character
                         Debug.LogWarning("Player Attack Failed");
                         return;
                 }
-                return;
             }
             //This will only be entered when the attack is first called
             else
@@ -515,5 +534,12 @@ public class PlayerController : Character
     public bool TookDamageThisFrame()
     {
         return tookDamageThisLoop;
+    }
+
+    public override void OnDeath()
+    {
+        animator.SetTrigger("Dead");
+        Debug.Log("Player is dead");
+        dead = true;
     }
 }
