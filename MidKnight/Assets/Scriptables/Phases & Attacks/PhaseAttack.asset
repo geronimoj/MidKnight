@@ -12,11 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed06590d1076f8d41ba2556136809b86, type: 3}
   m_Name: PhaseAttack
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 2
+  moonLightGain: 20
   attacks:
   - {fileID: 11400000, guid: 8c67d1fa48aacbc42a6da04392895512, type: 2}
   - {fileID: 11400000, guid: 8c67d1fa48aacbc42a6da04392895512, type: 2}
   - {fileID: 11400000, guid: 8c67d1fa48aacbc42a6da04392895512, type: 2}
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: fe054eb81527cde4aa77a0416bf5a55b, type: 2}
+        m_MethodName: GiveMoonLight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

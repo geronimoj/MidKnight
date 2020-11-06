@@ -15,9 +15,8 @@ public class NewMoon : MoonPhase
     /// </summary>
     public void GiveMoonLight()
     {
-        if (!Active)
+        if (pc == null || !Active)
             return;
-
         pc.MoonLight += bonusMoonLight;
     }
 }
