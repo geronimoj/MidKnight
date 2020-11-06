@@ -37,11 +37,10 @@ public class RoomExit : MonoBehaviour
             Debug.LogWarning("Next room unassigned, has no entrances or the entranceIndex is invalid. Entering current room.");
             return;
         }
-        GM.room = nextRoom;
         other.GetComponent<CharacterController>().enabled = false;
         other.transform.position = nextRoom.entrances[entranceIndex];
         other.GetComponent<CharacterController>().enabled = true;
-        nextRoom.InstantiateRoom();
+        nextRoom.InstantiateRoom(ref GM);
         Destroy(currentRoom.gameObject);
     }
 }
