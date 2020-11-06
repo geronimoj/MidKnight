@@ -69,7 +69,10 @@ public class PlayerController : Character
     /// So we can see it in inspector
     [SerializeField]
     private float moonLight = 0;
-
+    /// <summary>
+    /// Is true when the player dies
+    /// </summary>
+    private bool dead;
     /// <summary>
     /// How long the bonusDamage lasts
     /// </summary>
@@ -300,16 +303,20 @@ public class PlayerController : Character
     /// </summary>
     private void Start()
     {
+        SetHealth = MaxHealth;
         manager.CallStart(this);
         phase.PhaseStart(this);
         Attacking = false;
         cc.stepOffset = 0;
+        dead = false;
     }
     /// <summary>
     /// Decrements the timer and calls update on the state
     /// </summary>
     private void Update()
     {
+        if (dead)
+            return;
         if (!CanTakeDamage)
             iFrameTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
@@ -390,12 +397,17 @@ public class PlayerController : Character
             iFrameTimer = iFrames;
             //Deal damage
             SetHealth = Health - damage;
-
+            //Set us to have taken damage this frame
             tookDamageThisLoop = true;
+            //Trigger the damage animation
+            animator.SetTrigger("TookDamage");
             //Log that damage was dealt
 #if UNITY_EDITOR
             Debug.Log("Took Damage");
 #endif
+
+            if (Health <= 0)
+                OnDeath();
         }
     }
     /// <summary>
@@ -515,5 +527,12 @@ public class PlayerController : Character
     public bool TookDamageThisFrame()
     {
         return tookDamageThisLoop;
+    }
+
+    public override void OnDeath()
+    {
+        animator.SetTrigger("Dead");
+        Debug.Log("Player is dead");
+        dead = true;
     }
 }

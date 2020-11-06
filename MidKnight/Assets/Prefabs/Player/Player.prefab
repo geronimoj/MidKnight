@@ -93,7 +93,11 @@ MonoBehaviour:
   gravity: 40
   onJumpForce: 15
   dashCooldown: 1
-  iFrames: 0
+  iFrames: 1
+  moonLightCap: 100
+  moonLight: 0
+  bonusDamageLifeTime: 1
+  bonusDamage: 0
 --- !u!114 &701012600202567747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +129,8 @@ MonoBehaviour:
   OnSwap:
     m_PersistentCalls:
       m_Calls: []
+  attackIndexToDisplay: 0
+  displayAttack: 0
 --- !u!95 &2594905443749488671
 Animator:
   serializedVersion: 3
