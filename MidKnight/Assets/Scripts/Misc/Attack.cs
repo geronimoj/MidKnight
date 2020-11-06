@@ -62,7 +62,7 @@ public class Attack : ScriptableObject
         RaycastHit[] hit;
         //Loop through the hitboxes and perform a raycast for each if it is active
         for (int i = 0; i < hitboxes.Length; i++)
-        {
+        {   //Check if the hitbox was active this time period
             if (!GetHitBoxInfo(hitboxes[i], t, timer, f, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist))
                 continue;
             //Perform the raycast for this hitbox
@@ -90,7 +90,18 @@ public class Attack : ScriptableObject
 
         return hits.ToArray();
     }
-
+    /// <summary>
+    /// Determines if the given hitbox was active during the time frame given & its positional & directional data
+    /// </summary>
+    /// <param name="h">The hitbox to check</param>
+    /// <param name="t">The transform to use as its origin</param>
+    /// <param name="timer">The current time</param>
+    /// <param name="deltaTime">The change in time over this call</param>
+    /// <param name="origin">Return the origin of the capsual hitbox</param>
+    /// <param name="secOrigin">Return the origin of the other end of the capsual hitbox</param>
+    /// <param name="dir">Return the direction of movement to its endpoint from startPoint</param>
+    /// <param name="dist">Return the distance that will be moved along this frame</param>
+    /// <returns>Returns true if the hitbox was active</returns>
     public bool GetHitBoxInfo(Hitbox h, Transform t, float timer, float deltaTime, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist)
     {
         origin = Vector3.zero;
@@ -137,7 +148,12 @@ public class Attack : ScriptableObject
 
         return true;
     }
-
+    /// <summary>
+    /// Returns true if the hit gameobject was already hit.
+    /// If the hit object is new, return false & add it to the targets hit
+    /// </summary>
+    /// <param name="h">The target to check</param>
+    /// <returns>Returns false if it hasn't been hit and logs it so subsequent checks account for it having been hit</returns>
     private bool AlreadyHit(RaycastHit h)
     {   //Is the gameObject already hit
         if (targetsHit.Contains(h.transform.gameObject))

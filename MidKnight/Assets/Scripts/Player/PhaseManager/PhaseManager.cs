@@ -50,7 +50,9 @@ public class PhaseManager : MonoBehaviour
     public void PhaseUpdate(PlayerController c)
     {   //Timer for the OnDrawGizmos
 #if UNITY_EDITOR
+        //Increment the timer
         timer += Time.deltaTime;
+        //If we have gone pass the duration, reset the timer
         if (timer > current.Attacks.attacks[attackIndexToDisplay].duration)
             timer = 0;
 #endif
@@ -81,16 +83,18 @@ public class PhaseManager : MonoBehaviour
     /// <param name="target">The phase to swap to</param>
     /// <param name="c">A reference to the player controller</param>
     public void SwapPhase(MoonPhase target, PlayerController c)
-    {
+    {   //Make sure the target is valid vand we can swap to it
         if (cooldownTimer > 0 || target == null || target.OnCooldown)
             return;
+        //Set the cooldown timer
         cooldownTimer = swapCooldown;
+        //Exit
         current.PhaseExit(ref c);
         current.OnExit.Invoke();
-
+        //Swap
         current = target;
         OnSwap.Invoke();
-
+        //Enter
         current.PhaseEnter(ref c);
         current.OnEnter.Invoke();
         //Add the phase to the list of known phases if its not already there
@@ -106,7 +110,9 @@ public class PhaseManager : MonoBehaviour
     {
         return current.phaseID.Equals(phaseID);
     }
-
+    /// <summary>
+    /// Called to decrement to cooldown timers of phases that have been equiped
+    /// </summary>
     private void DecrementTimers()
     {
         for (int i = 0; i < knownPhases.Count; i++)
@@ -116,28 +122,37 @@ public class PhaseManager : MonoBehaviour
     private float timer = 0;
     [Range(0,2)]
     public int attackIndexToDisplay;
+    public bool displayAttack;
     /// <summary>
     /// Draws the PhaseAttack hitboxes
     /// </summary>
     private void OnDrawGizmos()
     {
-        if (current == null || current.Attacks == null || current.Attacks.attacks.Length < 1 || current.Attacks.attacks[attackIndexToDisplay] == null)
+        if (!displayAttack)
             return;
+        //Make sure the index is valid
+        if (current == null || current.Attacks == null || current.Attacks.attacks.Length < attackIndexToDisplay + 1 || current.Attacks.attacks[attackIndexToDisplay] == null)
+            return;
+        //Store a reference to it to make code look cleaner
         Attack a = current.Attacks.attacks[attackIndexToDisplay];
-
+        //GREEN
         Gizmos.color = Color.green;
-        
+        //Loop through the hitboxes of the attack
         for (int i = 0; i < a.hitboxes.Length; i++)
-        {
+        {   //Check if the hitbox is active and, if so, where it is
             if (!a.GetHitBoxInfo(a.hitboxes[i], transform, timer, Time.deltaTime, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist))
                 continue;
-
+            //Draw the front and end of the capsual hitbox
             Gizmos.DrawWireSphere(origin, a.hitboxes[i].radius);
             Gizmos.DrawWireSphere(secOrigin, a.hitboxes[i].radius);
+            //Calculate the vectors "above" and "to the right" of the hitboxes orientation
             Vector3 r = Vector3.Cross(transform.up, a.hitboxes[i].orientation);
             Vector3 t = Vector3.Cross(r, a.hitboxes[i].orientation);
+            //Draw the lines along the side of the spheres to create the appearance of a capsual
+            //Left & Right
             Gizmos.DrawLine(origin + r.normalized * a.hitboxes[i].radius, secOrigin + r.normalized * a.hitboxes[i].radius);
             Gizmos.DrawLine(origin + -r.normalized * a.hitboxes[i].radius, secOrigin + -r.normalized * a.hitboxes[i].radius);
+            //Top & bottom
             Gizmos.DrawLine(origin + t.normalized * a.hitboxes[i].radius, secOrigin + t.normalized * a.hitboxes[i].radius);
             Gizmos.DrawLine(origin + -t.normalized * a.hitboxes[i].radius, secOrigin + -t.normalized * a.hitboxes[i].radius);
         }

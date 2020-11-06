@@ -15,5 +15,23 @@ MonoBehaviour:
   transitions:
   - {fileID: 11400000, guid: 37bc45f849a91644dac059ab7f6d5d51, type: 2}
   ignoreTransitions: 00
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a6a6d065a228bc24283ecaed1ff67952, type: 2}
+        m_MethodName: GivePlayerIFrames
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
   distance: 8
   duration: 0.25
+  halfMoonBonusDist: 1

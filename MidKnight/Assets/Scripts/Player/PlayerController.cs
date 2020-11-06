@@ -348,6 +348,14 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// Sets the i frame timer to duration
+    /// </summary>
+    /// <param name="duration">The length of the i frames</param>
+    public void SetIFrames(float duration)
+    {
+        iFrameTimer = duration;
+    }
+    /// <summary>
     /// Checks and calls which attack the player should perform
     /// </summary>
     private void Attack()
@@ -430,5 +438,14 @@ public class PlayerController : Character
                 animator.SetInteger("Attack", attackIndex);
             }
         }
+    }
+    /// <summary>
+    /// Calls the phasemanagers CorrectPhase function & returns the results
+    /// </summary>
+    /// <param name="ID">The ID of the phase we want to check if we are in</param>
+    /// <returns>Returns true if the ID of the current phase is equal to ID</returns>
+    public bool CurrentPhaseIDCompare(string ID)
+    {
+        return phase.CorrectPhase(ID);
     }
 }

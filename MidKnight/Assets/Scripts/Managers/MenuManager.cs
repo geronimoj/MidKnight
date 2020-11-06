@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     public AudioMixer audioMixer;
     private Resolution[] resolutions;
     public Dropdown resolutionDropdown;
-    public Toggle fullScreenToogle;
+    public Toggle fullScreenToggle;
     public Dropdown presetQualityDropdown;
     //public Slider pixelLightCountSlider;
     //public Text pixelLightCountText;
@@ -25,12 +25,13 @@ public class MenuManager : MonoBehaviour
     public Dropdown anisotropicTexturesDropdown;
     //public Dropdown antiAliasingDropdown;
     //public Toggle softParticlesToogle;
-    public Toggle realtimeReflectionProbesToogle;
+    public Toggle realtimeReflectionProbesToggle;
+    public Toggle textureStreamingToggle;
     public Slider volumeSlider;
     public Text volumeText;
     private float currentVolume;
     //Secret
-    public Toggle secretToogle;
+    public Toggle secretToggle;
     public GameObject secretObject;
     private bool secretBool = false;
 
@@ -55,7 +56,7 @@ public class MenuManager : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.RefreshShownValue();
         LoadSettings(currentResolutionIndex);
-        secretToogle.SetIsOnWithoutNotify(false);
+        secretToggle.SetIsOnWithoutNotify(false);
         secretObject.SetActive(false);
     }
 
@@ -149,6 +150,20 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public void SetDropdownHelper(int dropdownIndex, Dropdown dropdown)
+    {
+        QualitySettings.SetQualityLevel(7);
+        presetQualityDropdown.value = 7;
+        dropdown.value = dropdownIndex;
+    }
+
+    public void SetToggleHelper(bool toggleBool, Toggle toggle)
+    {
+        QualitySettings.SetQualityLevel(7);
+        presetQualityDropdown.value = 7;
+        toggle.SetIsOnWithoutNotify(toggleBool);
+    }
+
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
@@ -158,7 +173,7 @@ public class MenuManager : MonoBehaviour
 
     public void SetFullscreen(bool isFullScreen)
     {
-        fullScreenToogle.SetIsOnWithoutNotify(isFullScreen);
+        fullScreenToggle.SetIsOnWithoutNotify(isFullScreen);
         Screen.fullScreen = isFullScreen;
     }
 
@@ -173,7 +188,8 @@ public class MenuManager : MonoBehaviour
             anisotropicTexturesDropdown.value = Convert.ToInt32(QualitySettings.anisotropicFiltering);
             //antiAliasingDropdown.value = QualitySettings.antiAliasing;
             //softParticlesToogle.SetIsOnWithoutNotify(QualitySettings.softParticles);
-            realtimeReflectionProbesToogle.SetIsOnWithoutNotify(QualitySettings.realtimeReflectionProbes);
+            realtimeReflectionProbesToggle.SetIsOnWithoutNotify(QualitySettings.realtimeReflectionProbes);
+            textureStreamingToggle.SetIsOnWithoutNotify(QualitySettings.streamingMipmapsActive);
         }
 
         presetQualityDropdown.value = qualityIndex;
@@ -190,9 +206,7 @@ public class MenuManager : MonoBehaviour
 
     public void SetTextureQuality(int textureIndex)
     {
-        QualitySettings.SetQualityLevel(7);
-        presetQualityDropdown.value = 7;
-        textureQualityDropdown.value = textureIndex;
+        SetDropdownHelper(textureIndex, textureQualityDropdown);
         QualitySettings.masterTextureLimit = textureIndex;
     }
 
@@ -200,9 +214,7 @@ public class MenuManager : MonoBehaviour
     {
         if (atIndex < 3)
         {
-            QualitySettings.SetQualityLevel(7);
-            presetQualityDropdown.value = 7;
-            anisotropicTexturesDropdown.value = atIndex;
+            SetDropdownHelper(atIndex, anisotropicTexturesDropdown);
 
             if (atIndex == 0)
             {
@@ -237,10 +249,14 @@ public class MenuManager : MonoBehaviour
 
     public void SetRealtimeReflectionProbes(bool isRealtimeReflectionProbes)
     {
-        QualitySettings.SetQualityLevel(7);
-        presetQualityDropdown.value = 7;
-        realtimeReflectionProbesToogle.SetIsOnWithoutNotify(isRealtimeReflectionProbes);
+        SetToggleHelper(isRealtimeReflectionProbes, realtimeReflectionProbesToggle);
         QualitySettings.realtimeReflectionProbes = isRealtimeReflectionProbes;
+    }
+
+    public void SetTextureStreaming(bool isTextureStreaming)
+    {
+        SetToggleHelper(isTextureStreaming, textureStreamingToggle);
+        QualitySettings.streamingMipmapsActive = isTextureStreaming;
     }
 
     public void SetVolume(float volume)
@@ -253,7 +269,7 @@ public class MenuManager : MonoBehaviour
     public void SetSecret(bool isSecret)
     {
         secretBool = isSecret;
-        secretToogle.SetIsOnWithoutNotify(isSecret);
+        secretToggle.SetIsOnWithoutNotify(isSecret);
         secretObject.SetActive(isSecret);
     }
 
@@ -268,35 +284,24 @@ public class MenuManager : MonoBehaviour
         //PlayerPrefs.SetInt("AntiAliasing", antiAliasingDropdown.value);
         //PlayerPrefs.SetInt("SoftParticles", Convert.ToInt32(QualitySettings.softParticles));
         PlayerPrefs.SetInt("RealtimeReflectionProbes", Convert.ToInt32(QualitySettings.realtimeReflectionProbes));
+        PlayerPrefs.SetInt("TextureStreaming", Convert.ToInt32(QualitySettings.streamingMipmapsActive));
         PlayerPrefs.SetFloat("Volume", currentVolume);
     }
 
     public void LoadSettings(int currentResolutionIndex)
     {
-        if (PlayerPrefs.HasKey("Resolution"))
-        {
-            resolutionDropdown.value = PlayerPrefs.GetInt("Resolution");
-        }
-        else
-        {
-            resolutionDropdown.value = currentResolutionIndex;
-        }
-        if (PlayerPrefs.HasKey("FullScreen"))
-        {
-            fullScreenToogle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("FullScreen")));
-        }
-        else
-        {
-            fullScreenToogle.SetIsOnWithoutNotify(Screen.fullScreen);
-        }
+        if (PlayerPrefs.HasKey("Resolution")) 
+        { resolutionDropdown.value = PlayerPrefs.GetInt("Resolution"); }
+        else 
+        { resolutionDropdown.value = currentResolutionIndex; }
+        if (PlayerPrefs.HasKey("FullScreen")) 
+        { fullScreenToggle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("FullScreen"))); }
+        else 
+        { fullScreenToggle.SetIsOnWithoutNotify(Screen.fullScreen); }
         if (PlayerPrefs.HasKey("PresetQuality"))
-        {
-            presetQualityDropdown.value = PlayerPrefs.GetInt("PresetQuality");
-        }
+        { presetQualityDropdown.value = PlayerPrefs.GetInt("PresetQuality"); }
         else
-        {
-            presetQualityDropdown.value = 3;
-        }
+        { presetQualityDropdown.value = 3; }
         /*if (PlayerPrefs.HasKey("PixelLightCount"))
         {
             pixelLightCountSlider.value = PlayerPrefs.GetFloat("PixelLightCount");
@@ -306,21 +311,13 @@ public class MenuManager : MonoBehaviour
             pixelLightCountSlider.value = QualitySettings.pixelLightCount;
         }*/
         if (PlayerPrefs.HasKey("TextureQuality"))
-        {
-            textureQualityDropdown.value = PlayerPrefs.GetInt("TextureQuality");
-        }
+        { textureQualityDropdown.value = PlayerPrefs.GetInt("TextureQuality"); }
         else
-        {
-            textureQualityDropdown.value = 0;
-        }
+        { textureQualityDropdown.value = 0; }
         if (PlayerPrefs.HasKey("AnisotropicTextures"))
-        {
-            anisotropicTexturesDropdown.value = PlayerPrefs.GetInt("AnisotropicTextures");
-        }
+        { anisotropicTexturesDropdown.value = PlayerPrefs.GetInt("AnisotropicTextures"); }
         else
-        {
-            anisotropicTexturesDropdown.value = 0;
-        }
+        { anisotropicTexturesDropdown.value = 0; }
         /*if (PlayerPrefs.HasKey("AntiAliasing"))
         {
             antiAliasingDropdown.value = PlayerPrefs.GetInt("AntiAliasing");
@@ -338,21 +335,17 @@ public class MenuManager : MonoBehaviour
             softParticlesToogle.SetIsOnWithoutNotify(QualitySettings.softParticles);
         }*/
         if (PlayerPrefs.HasKey("RealtimeReflectionProbes"))
-        {
-            realtimeReflectionProbesToogle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("RealtimeReflectionProbes")));
-        }
+        { realtimeReflectionProbesToggle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("RealtimeReflectionProbes"))); }
         else
-        {
-            realtimeReflectionProbesToogle.SetIsOnWithoutNotify(QualitySettings.realtimeReflectionProbes);
-        }
+        { realtimeReflectionProbesToggle.SetIsOnWithoutNotify(QualitySettings.realtimeReflectionProbes); }
+        if (PlayerPrefs.HasKey("TextureStreaming"))
+        { textureStreamingToggle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("TextureStreaming"))); }
+        else
+        { textureStreamingToggle.SetIsOnWithoutNotify(QualitySettings.streamingMipmapsActive); }
         if (PlayerPrefs.HasKey("Volume"))
-        {
-            volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        }
+        { volumeSlider.value = PlayerPrefs.GetFloat("Volume"); }
         else
-        {
-            volumeSlider.value = currentVolume;
-        }
+        { volumeSlider.value = currentVolume; }
     }
 
     public void Quit()
