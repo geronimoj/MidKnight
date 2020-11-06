@@ -23,6 +23,20 @@ public class MoonPhase : ScriptableObject
     /// </summary>
     public PhaseAttack attack;
     /// <summary>
+    /// Set to true if this is the active phase.
+    /// </summary>
+    private bool active = false;
+    /// <summary>
+    /// Returns true if this is the active phase
+    /// </summary>
+    protected bool Active
+    {
+        get
+        {
+            return active;
+        }
+    }
+    /// <summary>
     /// A Get for the phase attacks so the attack functions can be called
     /// </summary>
     public PhaseAttack Attacks
@@ -61,6 +75,7 @@ public class MoonPhase : ScriptableObject
     public virtual void PhaseEnter(ref PlayerController c)
     {
         pc = c;
+        active = true;
     }
     /// <summary>
     /// Called when in the phase. Also calls PhaseUpdate
@@ -82,6 +97,7 @@ public class MoonPhase : ScriptableObject
     public virtual void PhaseExit(ref PlayerController c) 
     {
         cooldownTimer = phaseCooldown;
+        active = false;
     }
 
     public void DecrementCooldownTimer()

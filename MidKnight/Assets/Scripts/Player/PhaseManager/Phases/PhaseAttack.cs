@@ -112,6 +112,7 @@ public class PhaseAttack : ScriptableObject
                 //Deal damage to the enemy
                 e.TakeDamage(damage + bonusDamage);
                 c.MoonLight += moonLightGain;
+                OnHit.Invoke();
             }
     }
     /// <summary>

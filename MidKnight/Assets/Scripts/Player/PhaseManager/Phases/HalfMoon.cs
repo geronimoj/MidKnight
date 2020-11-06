@@ -9,9 +9,13 @@ public class HalfMoon : MoonPhase
     /// </summary>
     [Range(0,100f)]
     public float dashIFrameDuration = 0;
-
+    /// <summary>
+    /// Gives the player IFrames if this is the active phase
+    /// </summary>
     public void GivePlayerIFrames()
     {
+        if (!Active)
+            return;
         pc.SetIFrames(dashIFrameDuration);
     }
 }
