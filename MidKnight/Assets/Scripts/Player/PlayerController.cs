@@ -391,7 +391,13 @@ public class PlayerController : Character
     /// </summary>
     /// <param name="damage">How much damage to deal</param>
     public override void TakeDamage(int damage)
-    {   //Can the player take damage
+    {   //If the damage is negative, its healing.
+        if (damage <= 0)
+        {   //Heal
+            SetHealth = Health - damage;
+            return;
+        }
+        //Can the player take damage
         if (CanTakeDamage)
         {   //Set the iFrame timer
             iFrameTimer = iFrames;

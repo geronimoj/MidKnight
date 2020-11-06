@@ -23,6 +23,10 @@ public class CastSpell : State
     /// endLag Timer
     /// </summary>
     private float endLagTimer = 0;
+    /// <summary>
+    /// The cost of the spell
+    /// </summary>
+    public float spellCost = 0;
 
     private bool spellCasted = false;
 
@@ -47,6 +51,7 @@ public class CastSpell : State
         else
             //Otherwise decrement the endLag
             endLagTimer -= Time.deltaTime;
+        ExtraUpdate(ref c);
         //If the windUp is done, cast the spell
         if (windUpTimer <= 0 && !spellCasted)
         {   //Don't recast the spell
@@ -64,6 +69,11 @@ public class CastSpell : State
     protected virtual void DoSpell(ref PlayerController c)
     {
         Debug.Log("Empty Spell");
+    }
+
+    protected virtual void ExtraUpdate(ref PlayerController c)
+    {
+
     }
 
     protected virtual void ExtraOnEnter(ref PlayerController c)
