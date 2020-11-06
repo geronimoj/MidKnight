@@ -14,7 +14,7 @@ public class HalfMoon : MoonPhase
     /// </summary>
     public void GivePlayerIFrames()
     {
-        if (!Active)
+        if (pc == null || !Active)
             return;
         pc.SetIFrames(dashIFrameDuration);
     }
