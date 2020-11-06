@@ -61,7 +61,6 @@ public class MoonPhase : ScriptableObject
     public virtual void PhaseEnter(ref PlayerController c)
     {
         pc = c;
-        Debug.LogWarning("Empty Phase");
     }
     /// <summary>
     /// Called when in the phase. Also calls PhaseUpdate

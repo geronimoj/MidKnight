@@ -54,7 +54,10 @@ public class Dash : State
     }
 
     public override void StateUpdate(ref PlayerController c)
-    {   //Set the horizontal speed
+    {   //If the player took damage this frame, exit the dash on the next loop
+        if (c.TookDamageThisFrame())
+            ignoreTransitions[0] = false;
+        //Set the horizontal speed
         c.movement.HozSpeed = dashSpeed;
         //Move the player & decrement the timer
         c.Move(c.movement.MoveVec * Time.deltaTime);

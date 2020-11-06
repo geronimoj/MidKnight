@@ -88,6 +88,7 @@ public class PhaseManager : MonoBehaviour
             return;
         //Set the cooldown timer
         cooldownTimer = swapCooldown;
+        c.GainBonusDamage();
         //Exit
         current.PhaseExit(ref c);
         current.OnExit.Invoke();

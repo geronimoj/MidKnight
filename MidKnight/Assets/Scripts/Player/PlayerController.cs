@@ -58,6 +58,32 @@ public class PlayerController : Character
     /// </summary>
     private float iFrameTimer = 0;
     /// <summary>
+    /// The maximum moonLight the player can have
+    /// </summary>
+    [SerializeField]
+    [Range(0, 1000)]
+    private float moonLightCap = 100;
+    /// <summary>
+    /// The current moonLight the player has
+    /// </summary>
+    private float moonLight = 0;
+
+    /// <summary>
+    /// How long the bonusDamage lasts
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The time the player must swap phases to keep bonus damage")]
+    private float bonusDamageLifeTime = 1;
+    /// <summary>
+    /// The timer for bonusDamageLifeTime
+    /// </summary>
+    private float bonusDamageTimer = 0;
+    /// <summary>
+    /// Set to true if the player took damage this frame.
+    /// Necessary for breaking out of healing & dash on damage
+    /// </summary>
+    private bool tookDamageThisLoop = false;
+    /// <summary>
     /// A Get for moveSpeed
     /// </summary>
     public float MoveSpeed
@@ -202,6 +228,20 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// Gets or Sets the moonLight of the player. Caps the moonlight between 0 & moonLight cap
+    /// </summary>
+    public float MoonLight
+    {
+        get
+        {
+            return moonLight;
+        }
+        set
+        {
+            moonLight = Mathf.Clamp(moonLight, 0, moonLightCap);
+        }
+    }
+    /// <summary>
     /// Set to true when the player is attacking
     /// </summary>
     private bool attacking = false;
@@ -270,6 +310,10 @@ public class PlayerController : Character
         if (!CanTakeDamage)
             iFrameTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
+        bonusDamageTimer -= Time.deltaTime;
+        if (bonusDamageTimer < 0)
+            bonusDamage = 0;
+
         manager.DoState(this);
         phase.PhaseUpdate(this);
         Attack();
@@ -279,6 +323,8 @@ public class PlayerController : Character
         //And LookRotation wants the forward to be the z axis. This points dir either into our away from the screen, correctly rotating us
         if (dir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
+
+        tookDamageThisLoop = false;
     }
     /// <summary>
     /// Moves the player along the vector given
@@ -341,6 +387,8 @@ public class PlayerController : Character
             iFrameTimer = iFrames;
             //Deal damage
             SetHealth = Health - damage;
+
+            tookDamageThisLoop = true;
             //Log that damage was dealt
 #if UNITY_EDITOR
             Debug.Log("Took Damage");
@@ -447,5 +495,22 @@ public class PlayerController : Character
     public bool CurrentPhaseIDCompare(string ID)
     {
         return phase.CorrectPhase(ID);
+    }
+    /// <summary>
+    /// Gives the player 1 unit of bonus damage and sets the timer
+    /// </summary>
+    public void GainBonusDamage()
+    {
+        bonusDamage++;
+        bonusDamageTimer = bonusDamageLifeTime;
+    }
+    /// <summary>
+    /// Returns true if the player took damage this frame.
+    /// Set to false at the end of their update cycle
+    /// </summary>
+    /// <returns>Returns true if the player took damage this frame</returns>
+    public bool TookDamageThisFrame()
+    {
+        return tookDamageThisLoop;
     }
 }
