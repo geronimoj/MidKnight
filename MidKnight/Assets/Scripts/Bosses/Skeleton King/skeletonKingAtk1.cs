@@ -31,6 +31,7 @@ public class skeletonKingAtk1 : baseBossAttack
 
             GameObject laserBeam = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
             laserBeam.GetComponent<Transform>().localScale = new Vector3(laserBeamHeight, laserBeamHeight, laserBeamHeight);
+            laserBeam.GetComponentInChildren<basePrefab>().damage = 2;
         }
     }
 
