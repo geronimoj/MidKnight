@@ -120,10 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87565b502510a3843a0bc934490dfa9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStartTimeTillIdle: 0
-  maxStartTimeTillIdle: 0
-  phase2MinStartTimeTillIdle: 0
-  phase2MaxStartTimeTillIdle: 0
+  minStartTimeTillIdle: 2
+  maxStartTimeTillIdle: 3
+  phase2MinStartTimeTillIdle: 2
+  phase2MaxStartTimeTillIdle: 2
 --- !u!1101 &-7465830256080894267
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -167,14 +167,16 @@ MonoBehaviour:
   hasUsedMove: 0
   destination: {x: 0, y: 0, z: 0}
   speed: 0
-  startTimeTillAtk: 0
-  attack: {fileID: 0}
+  startTimeTillAtk: 1
+  attack: {fileID: 8924399860201203995, guid: 6ddd04dd3eee8ca40870853f75986a3b, type: 3}
   arenaUpYCoordinate: 0
   arenaDownYCoordinate: 0
   arenaLeftXCoordinate: 0
   arenaRightXCoordinate: 0
   gravity: 5
-  phase2StartTimeTillAtk: 0
+  phase2StartTimeTillAtk: 0.5
+  phase1BarrierRadius: 15
+  phase2BarrierRadius: 20
 --- !u!1102 &-7076142619261326360
 AnimatorState:
   serializedVersion: 5
@@ -320,10 +322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87565b502510a3843a0bc934490dfa9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minStartTimeTillIdle: 0
-  maxStartTimeTillIdle: 0
-  phase2MinStartTimeTillIdle: 0
-  phase2MaxStartTimeTillIdle: 0
+  minStartTimeTillIdle: 2
+  maxStartTimeTillIdle: 3
+  phase2MinStartTimeTillIdle: 2
+  phase2MaxStartTimeTillIdle: 2
 --- !u!114 &-3079492664940473883
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -837,9 +839,9 @@ MonoBehaviour:
   noOfMoves: 7
   minStartTimeTillAtk: 2
   maxStartTimeTillAtk: 3
-  speed: 3
+  speed: 2
   gravity: 5
-  phase2speed: 6
+  phase2speed: 4
 --- !u!114 &3249939674528278337
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -859,13 +861,14 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   speed: 0
   startTimeTillAtk: 0
-  attack: {fileID: 0}
-  arenaUpYCoordinate: 0
+  attack: {fileID: 4572753889813434670, guid: 97b10d52273965b41b745dd2d94801ba, type: 3}
+  arenaUpYCoordinate: 10
   arenaDownYCoordinate: 0
-  arenaLeftXCoordinate: 0
-  arenaRightXCoordinate: 0
+  arenaLeftXCoordinate: -18
+  arenaRightXCoordinate: 18
   gravity: 5
   phase2StartTimeTillAtk: 0
+  phase2Speed: 30
 --- !u!1101 &4269694445921930079
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
