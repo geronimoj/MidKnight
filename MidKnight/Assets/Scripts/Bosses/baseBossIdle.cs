@@ -13,7 +13,7 @@ public class baseBossIdle : StateMachineBehaviour
     [HideInInspector] public int lastMove = 0;
     [HideInInspector] public float timeTillAtk;
     [HideInInspector] public CharacterController cc;
-    public int noOfMoves = 0;
+    [Range(1,7)] public int noOfMoves = 5;
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
     public int speed;
