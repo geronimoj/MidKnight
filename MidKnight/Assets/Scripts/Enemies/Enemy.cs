@@ -25,7 +25,7 @@ public class Enemy : Character
 
     public override void OnDeath()
     {
-        enemyAnim.SetTrigger("Death");
+        enemyAnim.SetTrigger("death");
         Destroy(enemyHitbox);
     }
 }
