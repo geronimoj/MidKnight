@@ -45,10 +45,12 @@ public class StateManager : MonoBehaviour
         if (target == current)
             return;
         current.StateEnd(ref c);
+        current.OnExit.Invoke();
 
         current = target;
 
         current.StateStart(ref c);
+        current.OnEnter.Invoke();
     }
     /// <summary>
     /// Returns true if any transition returned true. Also assigns target

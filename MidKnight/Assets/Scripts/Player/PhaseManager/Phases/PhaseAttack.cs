@@ -77,7 +77,7 @@ public class PhaseAttack : ScriptableObject
             return null;
         }
         //Perform the attack
-        RaycastHit[] hits = attacks[2].DoAttack(ref attackTimer, c.transform);
+        RaycastHit[] hits = attacks[attackIndex].DoAttack(ref attackTimer, c.transform);
         //Does damage
         DealDamage(ref hits, c.BonusDamage);
 

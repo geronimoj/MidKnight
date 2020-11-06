@@ -16,6 +16,11 @@ public class Dash : State
     [Range(0.001f, 10)]
     public float duration = 0.1f;
     /// <summary>
+    /// The bonus distance of the dash during a half moon
+    /// </summary>
+    [Range(0.001f, 100)]
+    public float halfMoonBonusDist = 1;
+    /// <summary>
     /// A storage location for the speed of the dash
     /// </summary>
     private float dashSpeed = 0;
@@ -28,8 +33,12 @@ public class Dash : State
     {   //Make sure we have space for the transition
         if (ignoreTransitions.Length < 1)
             ignoreTransitions = new bool[1];
-        //Calculate the speed of the dash
-        dashSpeed = distance / duration;
+        //If we have half moon unlocked, gain bonus dash distance
+        if (c.CurrentPhaseIDCompare("Half Moon"))
+            dashSpeed = (distance + halfMoonBonusDist) / duration;
+        else
+            //Calculate the speed of the dash
+            dashSpeed = distance / duration;
         //No vertical movement
         c.movement.VertSpeed = 0;
         //Disable the OnGround/InAir transition
