@@ -2,42 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class returnToIdle : StateMachineBehaviour
+public class skeletonKingAtk4 : baseBossAttack
 {
-    /// <summary>
-    /// Return to idle after x seconds
-    /// </summary>
-
-
-    public float minStartTimeTillIdle;
-    public float maxStartTimeTillIdle;
-    float timeTillIdle;
-    public float phase2MinStartTimeTillIdle;
-    public float phase2MaxStartTimeTillIdle;
+    public float phase2StartTimeTillAtk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeTillIdle = Random.Range(minStartTimeTillIdle, maxStartTimeTillIdle);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if(animator.GetComponent<Enemy>().isPhase2)
+        if (animator.GetComponent<Enemy>().isPhase2)
         {
-            timeTillIdle = Random.Range(phase2MinStartTimeTillIdle, phase2MaxStartTimeTillIdle);
+            timeTillAtk = phase2StartTimeTillAtk;
         }
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if(timeTillIdle > 0)
-        {
-            timeTillIdle -= Time.deltaTime;
-        }
-        else
-        {
-            animator.SetTrigger("idle");
-        }
-    }
+    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

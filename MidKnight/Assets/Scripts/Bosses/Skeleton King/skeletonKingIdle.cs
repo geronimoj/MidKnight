@@ -2,41 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class returnToIdle : StateMachineBehaviour
+public class skeletonKingIdle : baseBossIdle
 {
-    /// <summary>
-    /// Return to idle after x seconds
-    /// </summary>
-
-
-    public float minStartTimeTillIdle;
-    public float maxStartTimeTillIdle;
-    float timeTillIdle;
-    public float phase2MinStartTimeTillIdle;
-    public float phase2MaxStartTimeTillIdle;
+    bool hasUsedBossMove = false;
+    public int phase2speed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeTillIdle = Random.Range(minStartTimeTillIdle, maxStartTimeTillIdle);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if(animator.GetComponent<Enemy>().isPhase2)
+        if (animator.GetComponent<Enemy>().isPhase2)
         {
-            timeTillIdle = Random.Range(phase2MinStartTimeTillIdle, phase2MaxStartTimeTillIdle);
+            speed = phase2speed;
         }
+
+        if (!hasUsedBossMove && enemy.Health <= 1 / 2 * enemy.MaxHealth)
+        {
+            moveToUse = 7;
+            hasUsedBossMove = true;
+        }
+
+        //test 
+        moveToUse = 3;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(timeTillIdle > 0)
-        {
-            timeTillIdle -= Time.deltaTime;
-        }
-        else
-        {
-            animator.SetTrigger("idle");
-        }
+        FacePlayer();
+
+        destination.Set(playerTrans.position.x, playerTrans.position.y, playerTrans.position.z);
+        MoveToDestination(destination);
+
+        base.OnStateUpdate(animator, stateInfo, layerIndex);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

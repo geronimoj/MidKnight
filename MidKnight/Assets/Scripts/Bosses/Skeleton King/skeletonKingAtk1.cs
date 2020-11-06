@@ -2,40 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class returnToIdle : StateMachineBehaviour
+public class skeletonKingAtk1 : baseBossAttack
 {
-    /// <summary>
-    /// Return to idle after x seconds
-    /// </summary>
-
-
-    public float minStartTimeTillIdle;
-    public float maxStartTimeTillIdle;
-    float timeTillIdle;
-    public float phase2MinStartTimeTillIdle;
-    public float phase2MaxStartTimeTillIdle;
+    public float phase2StartTimeTillAtk;
+    public int laserBeamHeight;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeTillIdle = Random.Range(minStartTimeTillIdle, maxStartTimeTillIdle);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if(animator.GetComponent<Enemy>().isPhase2)
+        if (animator.GetComponent<Enemy>().isPhase2)
         {
-            timeTillIdle = Random.Range(phase2MinStartTimeTillIdle, phase2MaxStartTimeTillIdle);
+            timeTillAtk = phase2StartTimeTillAtk;
         }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(timeTillIdle > 0)
+        if (timeTillAtk > 0)
         {
-            timeTillIdle -= Time.deltaTime;
+            timeTillAtk -= Time.deltaTime;
         }
-        else
+        else if(!hasUsedMove)
         {
-            animator.SetTrigger("idle");
+            hasUsedMove = true;
+
+            GameObject laserBeam = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            laserBeam.GetComponent<Transform>().localScale = new Vector3(laserBeamHeight, laserBeamHeight, laserBeamHeight);
         }
     }
 
