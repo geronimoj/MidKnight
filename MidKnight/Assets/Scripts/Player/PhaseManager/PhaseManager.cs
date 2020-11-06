@@ -48,7 +48,12 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
     public void PhaseUpdate(PlayerController c)
-    {
+    {   //Timer for the OnDrawGizmos
+#if UNITY_EDITOR
+        timer += Time.deltaTime;
+        if (timer > current.Attacks.attacks[attackIndexToDisplay].duration)
+            timer = 0;
+#endif
         cooldownTimer -= Time.deltaTime;
         DecrementTimers();
         if (current != null)
@@ -108,11 +113,34 @@ public class PhaseManager : MonoBehaviour
             knownPhases[i].DecrementCooldownTimer();
     }
 #if UNITY_EDITOR
+    private float timer = 0;
+    [Range(0,2)]
+    public int attackIndexToDisplay;
     /// <summary>
     /// Draws the PhaseAttack hitboxes
     /// </summary>
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
+        if (current == null || current.Attacks == null || current.Attacks.attacks.Length < 1 || current.Attacks.attacks[attackIndexToDisplay] == null)
+            return;
+        Attack a = current.Attacks.attacks[attackIndexToDisplay];
+
+        Gizmos.color = Color.green;
+        
+        for (int i = 0; i < a.hitboxes.Length; i++)
+        {
+            if (!a.GetHitBoxInfo(a.hitboxes[i], transform, timer, Time.deltaTime, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist))
+                continue;
+
+            Gizmos.DrawWireSphere(origin, a.hitboxes[i].radius);
+            Gizmos.DrawWireSphere(secOrigin, a.hitboxes[i].radius);
+            Vector3 r = Vector3.Cross(transform.up, a.hitboxes[i].orientation);
+            Vector3 t = Vector3.Cross(r, a.hitboxes[i].orientation);
+            Gizmos.DrawLine(origin + r.normalized * a.hitboxes[i].radius, secOrigin + r.normalized * a.hitboxes[i].radius);
+            Gizmos.DrawLine(origin + -r.normalized * a.hitboxes[i].radius, secOrigin + -r.normalized * a.hitboxes[i].radius);
+            Gizmos.DrawLine(origin + t.normalized * a.hitboxes[i].radius, secOrigin + t.normalized * a.hitboxes[i].radius);
+            Gizmos.DrawLine(origin + -t.normalized * a.hitboxes[i].radius, secOrigin + -t.normalized * a.hitboxes[i].radius);
+        }
     }
 #endif
 }
