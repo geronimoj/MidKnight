@@ -390,8 +390,10 @@ public class PlayerController : Character
             iFrameTimer = iFrames;
             //Deal damage
             SetHealth = Health - damage;
-
+            //Set us to have taken damage this frame
             tookDamageThisLoop = true;
+            //Trigger the damage animation
+            animator.SetTrigger("TookDamage");
             //Log that damage was dealt
 #if UNITY_EDITOR
             Debug.Log("Took Damage");
