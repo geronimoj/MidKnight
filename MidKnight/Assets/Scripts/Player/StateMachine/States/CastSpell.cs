@@ -26,6 +26,7 @@ public class CastSpell : State
     /// <summary>
     /// The cost of the spell
     /// </summary>
+    [Range(0,1000)]
     public float spellCost = 0;
 
     private bool spellCasted = false;
