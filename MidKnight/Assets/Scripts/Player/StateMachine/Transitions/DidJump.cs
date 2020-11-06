@@ -20,7 +20,7 @@ public class DidJump : Transition
         if (newInput && Input.GetAxis("Jump") > 0 && c.CanJump)
         {   //Assign jump force
             c.movement.VertSpeed = c.OnJumpForce;
-            c.DidJump();
+            c.OnJump();
             newInput = false;
 #if UNITY_EDITOR
             //Debug that we jumped for the editor

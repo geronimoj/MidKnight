@@ -10,7 +10,7 @@ public class DoDash : Transition
 #if UNITY_EDITOR
             Debug.Log("Dash");
 #endif      //Let the player controller know that we dashed
-            c.DidDash();
+            c.OnDash();
             return true;
         }
         return false;
