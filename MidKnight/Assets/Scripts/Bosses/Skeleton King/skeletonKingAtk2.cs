@@ -2,40 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class returnToIdle : StateMachineBehaviour
+public class skeletonKingAtk2 : baseBossAttack
 {
-    /// <summary>
-    /// Return to idle after x seconds
-    /// </summary>
-
-
-    public float minStartTimeTillIdle;
-    public float maxStartTimeTillIdle;
-    float timeTillIdle;
-    public float phase2MinStartTimeTillIdle;
-    public float phase2MaxStartTimeTillIdle;
+    public float phase2StartTimeTillAtk;
+    float timeBetweenAttacks;
+    public float startTimeBetweenAttacks;
+    int noOfOrbs;
+    int count;
+    public int phase1NoOfOrbs;
+    public int phase2NoOfOrbs;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeTillIdle = Random.Range(minStartTimeTillIdle, maxStartTimeTillIdle);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if(animator.GetComponent<Enemy>().isPhase2)
+        noOfOrbs = phase1NoOfOrbs;
+
+        if (animator.GetComponent<Enemy>().isPhase2)
         {
-            timeTillIdle = Random.Range(phase2MinStartTimeTillIdle, phase2MaxStartTimeTillIdle);
+            timeTillAtk = phase2StartTimeTillAtk;
+            noOfOrbs = phase2NoOfOrbs;
         }
+
+        timeBetweenAttacks = startTimeBetweenAttacks;
+
+        count = 0;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(timeTillIdle > 0)
+        if (timeTillAtk > 0)
         {
-            timeTillIdle -= Time.deltaTime;
+            timeTillAtk -= Time.deltaTime;
         }
-        else
+        else 
         {
-            animator.SetTrigger("idle");
+            timeBetweenAttacks -= Time.deltaTime;
+        }
+
+        if (timeBetweenAttacks > 0)
+        {
+            hasUsedMove = false;
+        }
+        else if(!hasUsedMove && count < noOfOrbs)
+        {
+            hasUsedMove = true;
+            timeBetweenAttacks = startTimeBetweenAttacks;
+            count++;
+            Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
         }
     }
 

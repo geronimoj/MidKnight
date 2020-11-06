@@ -2,40 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class returnToIdle : StateMachineBehaviour
+public class skeletonKingAtk3 : baseBossAttack
 {
-    /// <summary>
-    /// Return to idle after x seconds
-    /// </summary>
-
-
-    public float minStartTimeTillIdle;
-    public float maxStartTimeTillIdle;
-    float timeTillIdle;
-    public float phase2MinStartTimeTillIdle;
-    public float phase2MaxStartTimeTillIdle;
+    public float phase2StartTimeTillAtk;
+    int noOfLaserBeams;
+    public int phase1NoOfLaserBeams;
+    public int phase2NoOfLaserBeams;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeTillIdle = Random.Range(minStartTimeTillIdle, maxStartTimeTillIdle);
+        base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        if(animator.GetComponent<Enemy>().isPhase2)
+        noOfLaserBeams = phase1NoOfLaserBeams;
+
+        if (animator.GetComponent<Enemy>().isPhase2)
         {
-            timeTillIdle = Random.Range(phase2MinStartTimeTillIdle, phase2MaxStartTimeTillIdle);
+            timeTillAtk = phase2StartTimeTillAtk;
+            noOfLaserBeams = phase2NoOfLaserBeams;
         }
+
+        Instantiate(attack, enemyTrans.position, Quaternion.Euler(0, 0, 90));
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(timeTillIdle > 0)
+        if (timeTillAtk > 0)
         {
-            timeTillIdle -= Time.deltaTime;
+            timeTillAtk -= Time.deltaTime;
         }
-        else
+        else if (!hasUsedMove)
         {
-            animator.SetTrigger("idle");
+            hasUsedMove = true;
+
+            for (int i = 0; i < noOfLaserBeams; i++)
+            {
+                Vector3 spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), arenaDownYCoordinate, enemyTrans.position.z);
+                Instantiate(attack, spawnPos, Quaternion.Euler(0, 0, 90));
+            }
         }
     }
 

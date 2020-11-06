@@ -13,7 +13,7 @@ public class baseBossIdle : StateMachineBehaviour
     [HideInInspector] public int lastMove = 0;
     [HideInInspector] public float timeTillAtk;
     [HideInInspector] public CharacterController cc;
-    public int noOfMoves = 0;
+    [Range(1,7)] public int noOfMoves = 5;
     public float minStartTimeTillAtk;
     public float maxStartTimeTillAtk;
     public int speed;
@@ -65,21 +65,23 @@ public class baseBossIdle : StateMachineBehaviour
                 case 1:
                     animator.SetTrigger("atk1");
                     break;
-
                 case 2:
                     animator.SetTrigger("atk2");
                     break;
-
                 case 3:
                     animator.SetTrigger("atk3");
                     break;
-
                 case 4:
                     animator.SetTrigger("atk4");
                     break;
-
                 case 5:
                     animator.SetTrigger("atk5");
+                    break;
+                case 6:
+                    animator.SetTrigger("atk6");
+                    break;
+                case 7:
+                    animator.SetTrigger("atk7");
                     break;
             }
         }
