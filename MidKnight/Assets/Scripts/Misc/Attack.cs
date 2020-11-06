@@ -65,6 +65,12 @@ public class Attack : ScriptableObject
         {   //Check if the hitbox was active this time period
             if (!GetHitBoxInfo(hitboxes[i], t, timer, f, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist))
                 continue;
+            //Make sure that dir and dist are non zero otherwise the raycast will return nothing
+            //They are set to really small values so that it doesn't affect the raycast too much
+            if (dir == Vector3.zero)
+                dir.x = 1;
+            if (dist == 0)
+                dist = 0.001f;
             //Perform the raycast for this hitbox
             hit = Physics.CapsuleCastAll(origin, secOrigin, hitboxes[i].radius, dir.normalized, dist);
             //Make sure we hit something

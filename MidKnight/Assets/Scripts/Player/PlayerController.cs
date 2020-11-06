@@ -66,6 +66,8 @@ public class PlayerController : Character
     /// <summary>
     /// The current moonLight the player has
     /// </summary>
+    /// So we can see it in inspector
+    [SerializeField]
     private float moonLight = 0;
 
     /// <summary>
@@ -238,6 +240,7 @@ public class PlayerController : Character
         }
         set
         {
+            moonLight = value;
             moonLight = Mathf.Clamp(moonLight, 0, moonLightCap);
         }
     }

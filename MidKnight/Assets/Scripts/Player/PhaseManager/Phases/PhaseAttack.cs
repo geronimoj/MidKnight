@@ -7,7 +7,12 @@ public class PhaseAttack : ScriptableObject
     /// <summary>
     /// The damage of the attacks
     /// </summary>
-    public int damage;
+    public int damage = 0;
+    /// <summary>
+    /// How much moonLight will be gained on hit
+    /// </summary>
+    [Range(0, 1000)]
+    public float moonLightGain = 0;
     /// <summary>
     /// The attacks
     /// </summary>
@@ -79,7 +84,7 @@ public class PhaseAttack : ScriptableObject
         //Perform the attack
         RaycastHit[] hits = attacks[attackIndex].DoAttack(ref attackTimer, c.transform);
         //Does damage
-        DealDamage(ref hits, c.BonusDamage);
+        DealDamage(ref hits, ref c, c.BonusDamage);
 
         return hits;
     }
@@ -87,8 +92,9 @@ public class PhaseAttack : ScriptableObject
     /// Deals damage to the hit targets
     /// </summary>
     /// <param name="hits">The hit targets</param>
+    /// <param name="c">A reference to the player controller for moonLight Gain</param>
     /// <param name="bonusDamage">Any bonus damage to add</param>
-    protected void DealDamage(ref RaycastHit[] hits, int bonusDamage)
+    protected void DealDamage(ref RaycastHit[] hits, ref PlayerController c, int bonusDamage)
     {   //Make sure hits is valid
         if (hits == null)
             return;
@@ -105,6 +111,7 @@ public class PhaseAttack : ScriptableObject
                 }
                 //Deal damage to the enemy
                 e.TakeDamage(damage + bonusDamage);
+                c.MoonLight += moonLightGain;
             }
     }
     /// <summary>
