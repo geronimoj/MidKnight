@@ -60,50 +60,11 @@ public class Attack : ScriptableObject
         //Setting up storage locations for our returns and raycasts
         List<RaycastHit> hits = new List<RaycastHit>();
         RaycastHit[] hit;
-        Vector3 origin;
-        Vector3 secOrigin;
-        Vector3 dir;
-        float dist;
         //Loop through the hitboxes and perform a raycast for each if it is active
         for (int i = 0; i < hitboxes.Length; i++)
-        {
-            float difInTime = timer - hitboxes[i].startTime;
-            float fTemp = f;
-            //Make sure this hitbox is still active
-                //Is the current time below the start time?
-            if (difInTime < 0
-                //Will the current time + time.deltaTime step into the startTime?
-                && difInTime + f < 0
-                //Have we exceeded the endTime?
-                && timer >= hitboxes[i].endTime)
-                //The hitbox musn't be active so continue to the next one
+        {   //Check if the hitbox was active this time period
+            if (!GetHitBoxInfo(hitboxes[i], t, timer, f, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist))
                 continue;
-            //Repeat the check because I'm lazy.
-            //This check determines if the change in time this frame would step into the raycasting time
-            if (difInTime < 0)
-            {   //Recalculate f to be shorter. Starting at startTime to where timer would end
-                fTemp = (timer + f) - hitboxes[i].startTime;
-                //difInTime would be 0 since this simulates timer == startTime
-                difInTime = 0;
-            }
-            //Check that the change in time would not exceed the endTime
-            else if (timer + f > hitboxes[i].endTime)
-                //If so recalculate the changeInTime to not exceed the endTime since we use it when calculating the distance of the raycast
-                fTemp = hitboxes[i].endTime - timer;
-
-            //Calculate the position of origin, direction & distance.
-            //Basically we create a vector. The x component of the start point goes along the right vector, z along forward & y along up
-            origin = t.position + (t.right * hitboxes[i].startPoint.x) + (t.forward * hitboxes[i].startPoint.z) + (t.up * hitboxes[i].startPoint.y);
-            //Same as the first but we account for the orientation vector
-            secOrigin = origin + (t.right * (hitboxes[i].orientation.normalized.x * hitboxes[i].length)) + (t.forward * (hitboxes[i].orientation.normalized.z * hitboxes[i].length)) + (t.up * (hitboxes[i].orientation.normalized.y * hitboxes[i].length));
-            //Calculate the direction of the raycast by repeating what we did on origin but for endPoint
-            dir = t.position + (t.right * hitboxes[i].endPoint.x) + (t.forward * hitboxes[i].endPoint.z) + (t.up * hitboxes[i].endPoint.y);
-            //Vector from A to B is B - A
-            dir -= origin;
-            //Move origin and sec along dir by how much time has passed as a percent
-            origin += dir * (difInTime / (hitboxes[i].endTime - hitboxes[i].startTime));
-            //Calculate the length of the raycast
-            dist = dir.magnitude * fTemp;
             //Perform the raycast for this hitbox
             hit = Physics.CapsuleCastAll(origin, secOrigin, hitboxes[i].radius, dir.normalized, dist);
             //Make sure we hit something
@@ -129,7 +90,70 @@ public class Attack : ScriptableObject
 
         return hits.ToArray();
     }
+    /// <summary>
+    /// Determines if the given hitbox was active during the time frame given & its positional & directional data
+    /// </summary>
+    /// <param name="h">The hitbox to check</param>
+    /// <param name="t">The transform to use as its origin</param>
+    /// <param name="timer">The current time</param>
+    /// <param name="deltaTime">The change in time over this call</param>
+    /// <param name="origin">Return the origin of the capsual hitbox</param>
+    /// <param name="secOrigin">Return the origin of the other end of the capsual hitbox</param>
+    /// <param name="dir">Return the direction of movement to its endpoint from startPoint</param>
+    /// <param name="dist">Return the distance that will be moved along this frame</param>
+    /// <returns>Returns true if the hitbox was active</returns>
+    public bool GetHitBoxInfo(Hitbox h, Transform t, float timer, float deltaTime, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist)
+    {
+        origin = Vector3.zero;
+        secOrigin = Vector3.zero;
+        dir = Vector3.zero;
+        dist = 0;
 
+        float difInTime = timer - h.startTime;
+        //Make sure this hitbox is still active
+        //Is the current time below the start time?
+        if (difInTime < 0
+            //Will the current time + time.deltaTime step into the startTime?
+            && difInTime + deltaTime < 0
+            //Have we exceeded the endTime?
+            || timer >= h.endTime)
+            //The hitbox musn't be active so continue to the next one
+            return false;
+        //Repeat the check because I'm lazy.
+        //This check determines if the change in time this frame would step into the raycasting time
+        if (difInTime < 0)
+        {   //Recalculate f to be shorter. Starting at startTime to where timer would end
+            deltaTime = (timer + deltaTime) - h.startTime;
+            //difInTime would be 0 since this simulates timer == startTime
+            difInTime = 0;
+        }
+        //Check that the change in time would not exceed the endTime
+        else if (timer + deltaTime > h.endTime)
+            //If so recalculate the changeInTime to not exceed the endTime since we use it when calculating the distance of the raycast
+            deltaTime = h.endTime - timer;
+
+        //Calculate the position of origin, direction & distance.
+        //Basically we create a vector. The x component of the start point goes along the right vector, z along forward & y along up
+        origin = t.position + (t.right * h.startPoint.x) + (t.forward * h.startPoint.z) + (t.up * h.startPoint.y);
+        //Calculate the direction of the raycast by repeating what we did on origin but for endPoint
+        dir = t.position + (t.right * h.endPoint.x) + (t.forward * h.endPoint.z) + (t.up * h.endPoint.y);
+        //Vector from A to B is B - A
+        dir -= origin;
+        //Move origin and sec along dir by how much time has passed as a percent
+        origin += dir * (difInTime / (h.endTime - h.startTime));
+        //Same as the first but we account for the orientation vector
+        secOrigin = origin + (t.right * (h.orientation.normalized.x * h.length)) + (t.forward * (h.orientation.normalized.z * h.length)) + (t.up * (h.orientation.normalized.y * h.length));
+        //Calculate the length of the raycast
+        dist = dir.magnitude * deltaTime;
+
+        return true;
+    }
+    /// <summary>
+    /// Returns true if the hit gameobject was already hit.
+    /// If the hit object is new, return false & add it to the targets hit
+    /// </summary>
+    /// <param name="h">The target to check</param>
+    /// <returns>Returns false if it hasn't been hit and logs it so subsequent checks account for it having been hit</returns>
     private bool AlreadyHit(RaycastHit h)
     {   //Is the gameObject already hit
         if (targetsHit.Contains(h.transform.gameObject))

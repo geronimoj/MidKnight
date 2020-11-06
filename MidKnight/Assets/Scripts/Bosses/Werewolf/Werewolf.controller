@@ -41,6 +41,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStartTimeTillIdle: 4
   maxStartTimeTillIdle: 5
+  phase2MinStartTimeTillIdle: 3
+  phase2MaxStartTimeTillIdle: 4
 --- !u!1102 &-7382461541134297312
 AnimatorState:
   serializedVersion: 5
@@ -394,49 +396,49 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: death
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk1
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk3
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk4
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk5
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: atk2part2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -539,6 +541,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStartTimeTillIdle: 3
   maxStartTimeTillIdle: 3
+  phase2MinStartTimeTillIdle: 0
+  phase2MaxStartTimeTillIdle: 0
 --- !u!1102 &1125503127922994125
 AnimatorState:
   serializedVersion: 5
@@ -789,6 +793,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStartTimeTillIdle: 3
   maxStartTimeTillIdle: 3
+  phase2MinStartTimeTillIdle: 2
+  phase2MaxStartTimeTillIdle: 2
 --- !u!114 &8945523317093530982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -803,6 +809,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStartTimeTillIdle: 2.5
   maxStartTimeTillIdle: 2.5
+  phase2MinStartTimeTillIdle: 2
+  phase2MaxStartTimeTillIdle: 2
 --- !u!114 &9120092113642688706
 MonoBehaviour:
   m_ObjectHideFlags: 1

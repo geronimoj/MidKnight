@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "Empty", menuName = "States/EmptyState", order = 0)]
 public class State : ScriptableObject
@@ -13,6 +14,14 @@ public class State : ScriptableObject
     /// </summary>
     [Tooltip("Set corresponding index to true for transitions on this state that should be ignored")]
     public bool[] ignoreTransitions;
+    /// <summary>
+    /// Called when the player enters the state
+    /// </summary>
+    public UnityEvent OnEnter;
+    /// <summary>
+    /// Called when the player exits the state
+    /// </summary>
+    public UnityEvent OnExit;
 
     /// <summary>
     /// Called when the state is entered
