@@ -25,7 +25,7 @@ public class HealSpell : CastSpell
     }
 
     protected override void ExtraOnEnter(ref PlayerController c)
-    {
+    {   //Enter the heal animation
         c.animator.SetTrigger("DoHeal");
     }
 }
