@@ -71,11 +71,6 @@ public class MenuManager : MonoBehaviour
         LoadScene(gameSceneName);
     }
 
-    public void LoadGame()
-    {
-
-    }
-
     public void LoadScene(string scene)
     {
         SceneManager.LoadScene(scene);
@@ -233,9 +228,7 @@ public class MenuManager : MonoBehaviour
 
     /*public void SetAntiAliasing(int aaIndex)
     {
-        QualitySettings.SetQualityLevel(6);
-        presetQualityDropdown.value = 6;
-        antiAliasingDropdown.value = aaIndex;
+        SetDropdownHelper(aaIndex, antiAliasingDropdown);
         QualitySettings.antiAliasing = aaIndex;
     }*/
 
@@ -319,13 +312,9 @@ public class MenuManager : MonoBehaviour
         else
         { anisotropicTexturesDropdown.value = 0; }
         /*if (PlayerPrefs.HasKey("AntiAliasing"))
-        {
-            antiAliasingDropdown.value = PlayerPrefs.GetInt("AntiAliasing");
-        }
+        { antiAliasingDropdown.value = PlayerPrefs.GetInt("AntiAliasing"); }
         else
-        {
-            antiAliasingDropdown.value = 1;
-        }*/
+        { antiAliasingDropdown.value = QualitySettings.antiAliasing; }*/
         /*if (PlayerPrefs.HasKey("SoftParticles"))
         {
             softParticlesToogle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("SoftParticles")));
