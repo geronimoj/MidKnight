@@ -3,7 +3,6 @@
 public class RoomExit : MonoBehaviour
 {
     //Rooms
-    public Room currentRoom;
     public Room nextRoom;
     //Managers
     [SerializeField]
@@ -22,6 +21,7 @@ public class RoomExit : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
+        Room currentRoom = GM.room;
         if (nextRoom == null || nextRoom.entrances.Length == 0 || entranceIndex >= nextRoom.entrances.Length)
         {
             other.GetComponent<CharacterController>().enabled = false;
