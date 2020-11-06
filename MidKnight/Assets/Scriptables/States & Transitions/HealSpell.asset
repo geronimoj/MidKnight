@@ -9,20 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d6897edf2dec334d982c63f8e309edd, type: 3}
-  m_Name: GroundMove
+  m_Script: {fileID: 11500000, guid: db8746fca4186454bb2f96168703c226, type: 3}
+  m_Name: HealSpell
   m_EditorClassIdentifier: 
   transitions:
-  - {fileID: 11400000, guid: 579658679f6fee2408932cea0d8c4688, type: 2}
-  - {fileID: 11400000, guid: 8c1c723d5780cf84dad3968fe107482a, type: 2}
-  - {fileID: 11400000, guid: 9c5903787b1f7ff4cac855dc3ece8c4f, type: 2}
   - {fileID: 11400000, guid: 37bc45f849a91644dac059ab7f6d5d51, type: 2}
-  ignoreTransitions: 
+  ignoreTransitions: 00
   OnEnter:
     m_PersistentCalls:
       m_Calls: []
   OnExit:
     m_PersistentCalls:
       m_Calls: []
-  accelToMaxTime: 0.2
-  decelToZeroTime: 0.2
+  windUp: 2
+  endLag: 0
+  spellCost: 0
+  healAmount: 2

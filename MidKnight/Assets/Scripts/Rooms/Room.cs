@@ -45,7 +45,7 @@ public class Room : MonoBehaviour
     }
 
     //Set up to instantiate a room whilst removing objects that shouldn't be there
-    public void InstantiateRoom()
+    public void InstantiateRoom(ref GameManager gm)
     {
         EM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EntitiesManager>();
         if (EM == null)
@@ -55,7 +55,7 @@ public class Room : MonoBehaviour
             return;
         }
         Room r = Instantiate(gameObject).GetComponent<Room>();
-
+        gm.room = r;
         foreach (Entities obj in EM.EntitiesToNotRespawn)
         {
             if (obj.thisRoom == r.roomID)
