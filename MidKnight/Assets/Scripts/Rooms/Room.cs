@@ -69,6 +69,7 @@ public class Room : MonoBehaviour
     /// <summary>
     /// The radius of the debugged points
     /// </summary>
+    [Range(0.1f, 10)]
     public float pointRadius;
     /// <summary>
     /// Draws the Path and PathNodes
