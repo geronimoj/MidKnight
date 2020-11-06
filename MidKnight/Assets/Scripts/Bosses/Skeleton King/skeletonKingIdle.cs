@@ -22,9 +22,6 @@ public class skeletonKingIdle : baseBossIdle
             moveToUse = 7;
             hasUsedBossMove = true;
         }
-
-        //test 
-        moveToUse = 6;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
