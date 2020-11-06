@@ -51,7 +51,15 @@ public class SkeletonKingLaserStorage : basePrefab
                 else if(!hasSetZRotation)
                 {
                     hasSetZRotation = true;
-                    laserZRotation = playerTrans.position.x * 3.47f + 267.36f;
+
+                    if(playerTrans.position.x < 0)
+                    {
+                        laserZRotation = (0.096f * Mathf.Pow(playerTrans.position.x, 2)) + 4.78f * playerTrans.position.x + 269.945f;
+                    }
+                    else
+                    {
+                        laserZRotation = -(0.096f * Mathf.Pow(playerTrans.position.x, 2)) + 4.78f * playerTrans.position.x + 269.945f;
+                    }
                     timeBetweenAttacks = startTimeBetweenAttacks;
                 }
                 else if(!hasUsedMove)
