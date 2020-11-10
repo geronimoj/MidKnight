@@ -63,7 +63,9 @@ public class PhaseManager : MonoBehaviour
         if (current != null)
         {
             current.DoPhase(ref c);
-            current.Attack(ref c);
+            //If we can attack, check the attacks
+            if (c.CanAttack)
+                current.Attack(ref c);
         }
 #if UNITY_EDITOR
         else

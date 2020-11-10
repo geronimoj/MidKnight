@@ -100,7 +100,10 @@ public class Projectile : MonoBehaviour
         foreach (RaycastHit hit in r)
         {   //Don't collide with the player
             if (!hit.transform.CompareTag("Player"))
-                destroySelf = true;
+            {   //Make sure the layer isn't check or skill
+                if (hit.transform.gameObject.layer != LayerMask.NameToLayer("Check") && hit.transform.gameObject.layer != LayerMask.NameToLayer("Skill"))
+                    destroySelf = true;
+            }
             else
                 continue;
             //If its an enemy, deal damage

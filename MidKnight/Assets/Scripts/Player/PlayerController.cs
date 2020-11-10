@@ -265,7 +265,24 @@ public class PlayerController : Character
             attacking = value;
         }
     }
-
+    /// <summary>
+    /// Set to true when the player can attack
+    /// </summary>
+    private bool canAttack = true;
+    /// <summary>
+    /// A Get/Set for can attack
+    /// </summary>
+    public bool CanAttack
+    {
+        get
+        {
+            return canAttack;
+        }
+        set
+        {
+            canAttack = value;
+        }
+    }
     /// <summary>
     /// Gets a reference to the State & Game Managers
     /// </summary>
@@ -324,7 +341,6 @@ public class PlayerController : Character
 
         manager.DoState(this);
         phase.PhaseUpdate(this);
-        Attack();
         //Get the players direction just to save excess cpu
         Vector3 dir = movement.Direction;
         //Rotate to look along the direction. We have to rotate the direction by 90 degrees to the "left", since we move along our x axis
@@ -421,12 +437,6 @@ public class PlayerController : Character
     public void SetIFrames(float duration)
     {
         iFrameTimer = duration;
-    }
-    /// <summary>
-    /// Checks and calls which attack the player should perform
-    /// </summary>
-    private void Attack()
-    {   
     }
     /// <summary>
     /// Calls the phasemanagers CorrectPhase function & returns the results

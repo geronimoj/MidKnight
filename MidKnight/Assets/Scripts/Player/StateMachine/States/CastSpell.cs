@@ -41,6 +41,8 @@ public class CastSpell : State
         if (ignoreTransitions.Length == 0)
             ignoreTransitions = new bool[1];
         ignoreTransitions[0] = true;
+        //The player cannot attack while casting spells
+        c.CanAttack = false;
         //Call anything extra the player wants to do
         ExtraOnEnter(ref c);
     }
@@ -80,5 +82,10 @@ public class CastSpell : State
     protected virtual void ExtraOnEnter(ref PlayerController c)
     {
 
+    }
+
+    public override void StateEnd(ref PlayerController c)
+    {   //The player can attack again
+        c.CanAttack = true;
     }
 }
