@@ -10,6 +10,12 @@ public class EntitiesManager : MonoBehaviour
 [System.Serializable]
 public struct Entities
 {
+    public Entities(int Index = 0, string RoomID = "")
+    {
+        index = Index;
+        thisRoom = RoomID;
+    }
+
     public int index;
     public string thisRoom;
 }
