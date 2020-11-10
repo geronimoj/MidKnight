@@ -61,7 +61,10 @@ public class PhaseManager : MonoBehaviour
         cooldownTimer -= Time.deltaTime;
         DecrementTimers();
         if (current != null)
+        {
             current.DoPhase(ref c);
+            current.Attack(ref c);
+        }
 #if UNITY_EDITOR
         else
             Debug.LogWarning("No State");

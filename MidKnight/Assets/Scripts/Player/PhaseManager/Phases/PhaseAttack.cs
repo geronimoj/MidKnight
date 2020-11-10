@@ -29,7 +29,7 @@ public class PhaseAttack : ScriptableObject
     /// The default attack
     /// </summary>
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
-    public virtual void DefaultAttack(PlayerController c)
+    public virtual void DefaultAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         GetAttackHit(0, ref c);
         //Apply other affects
@@ -42,7 +42,7 @@ public class PhaseAttack : ScriptableObject
     /// The upwards attack
     /// </summary>
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
-    public virtual void UpAttack(PlayerController c)
+    public virtual void UpAttack(ref PlayerController c)
     {
         //Calls the raycast & does damage.
         GetAttackHit(1, ref c);
@@ -56,7 +56,7 @@ public class PhaseAttack : ScriptableObject
     /// The downwards attack
     /// </summary>
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
-    public virtual void DownAttack(PlayerController c)
+    public virtual void DownAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         GetAttackHit(2, ref c);
         //Apply other affects

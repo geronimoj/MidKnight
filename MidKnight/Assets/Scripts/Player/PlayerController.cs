@@ -252,10 +252,6 @@ public class PlayerController : Character
     /// </summary>
     private bool attacking = false;
     /// <summary>
-    /// Used internally to determine which attack needs to be called in the update loop if an attack has begun
-    /// </summary>
-    private int attackIndex = 0;
-    /// <summary>
     /// A Get/Set for if the player is attacking
     /// </summary>
     public bool Attacking
@@ -430,84 +426,7 @@ public class PlayerController : Character
     /// Checks and calls which attack the player should perform
     /// </summary>
     private void Attack()
-    {   //If anything is null, return so we don't create errors
-        if (phase == null || phase.CurrentPhase == null || phase.CurrentPhase.Attacks == null)
-        {
-            Debug.LogError("The phase manager, current phase or phase attack for the current phase has not been assigned");
-            return;
-        }
-        //Do we want to attack or are we already attacking
-        if (Input.GetAxisRaw("Attack") != 0 || Attacking)
-        {
-            //If we are already attacking, continue the attack instead of starting a new one
-            if (Attacking)
-            {
-                switch (attackIndex)
-                {   //To avoid attack animations playing twice when landing or jumping during one
-                    //The airborne animations have indexs 2,3,4. exactly + 3 of the original
-                    case -1:
-                    case 2:
-                        //If we are on the ground, we cannot attack so undo all of this. This also applies to when we land
-                        if (!animator.GetBool("Airborne"))
-                        {
-                            Attacking = false;
-                            animator.SetBool("Attacking", false);
-                            break;
-                        }
-                        phase.CurrentPhase.Attacks.DownAttack(this);
-                        break;
-                    case 0:
-                    case 3:
-                        phase.CurrentPhase.Attacks.DefaultAttack(this);
-                        break;
-                    case 1:
-                    case 4:
-                        phase.CurrentPhase.Attacks.UpAttack(this);
-                        break;
-                    default:
-                        //If none of the attacks passed for some reason, log an error
-                        Debug.LogWarning("Player Attack Failed");
-                        return;
-                }
-            }
-            //This will only be entered when the attack is first called
-            else
-            {
-                float d = Input.GetAxisRaw("Vertical");
-                //Set us to be attacking. This is set to false once the attack is complete automatically
-                Attacking = true;
-                //Check which attack we should do
-                switch (d)
-                {
-                    case -1:
-                        //If we are on the ground, we cannot attack so undo all of this
-                        if (!animator.GetBool("Airborne"))
-                        {
-                            Attacking = false;
-                            break;
-                        }
-                        phase.CurrentPhase.Attacks.DownAttack(this);
-                        attackIndex = -1;
-                        break;
-                    case 0:
-                        phase.CurrentPhase.Attacks.DefaultAttack(this);
-                        attackIndex = 0;
-                        break;
-                    case 1:
-                        phase.CurrentPhase.Attacks.UpAttack(this);
-                        attackIndex = 1;
-                        break;
-                    default:
-                        //If none of the attacks passed for some reason, log an error
-                        Debug.LogWarning("Player Attack Failed");
-                        return;
-                }
-                if (animator.GetBool("Airborne"))
-                    attackIndex += 3;
-                animator.SetBool("Attacking", Attacking);
-                animator.SetInteger("Attack", attackIndex);
-            }
-        }
+    {   
     }
     /// <summary>
     /// Calls the phasemanagers CorrectPhase function & returns the results

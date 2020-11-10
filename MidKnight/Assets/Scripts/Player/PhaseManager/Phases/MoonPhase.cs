@@ -37,6 +37,10 @@ public class MoonPhase : ScriptableObject
         }
     }
     /// <summary>
+    /// The index of the attack to continue calling
+    /// </summary>
+    protected int attackIndex = 0;
+    /// <summary>
     /// A Get for the phase attacks so the attack functions can be called
     /// </summary>
     public PhaseAttack Attacks
@@ -98,6 +102,91 @@ public class MoonPhase : ScriptableObject
     {
         cooldownTimer = phaseCooldown;
         active = false;
+    }
+    /// <summary>
+    /// Calls the first 3 attacks from the phase attack by default
+    /// </summary>
+    /// <param name="c">A reference to the player controller</param>
+    public virtual void Attack(ref PlayerController c)
+    {
+        //If anything is null, return so we don't create errors
+        if (Attacks == null)
+        {
+            Debug.LogError("The attack for Phase: " + this.name + " has not been assigned");
+            return;
+        }
+        //Do we want to attack or are we already attacking
+        if (Input.GetAxisRaw("Attack") != 0 || c.Attacking)
+        {
+            //If we are already attacking, continue the attack instead of starting a new one
+            if (c.Attacking)
+            {
+                switch (attackIndex)
+                {   //To avoid attack animations playing twice when landing or jumping during one
+                    //The airborne animations have indexs 2,3,4. exactly + 3 of the original
+                    case -1:
+                    case 2:
+                        //If we are on the ground, we cannot attack so undo all of this. This also applies to when we land
+                        if (!c.animator.GetBool("Airborne"))
+                        {
+                            c.Attacking = false;
+                            c.animator.SetBool("Attacking", false);
+                            break;
+                        }
+                        Attacks.DownAttack(ref c);
+                        break;
+                    case 0:
+                    case 3:
+                        Attacks.DefaultAttack(ref c);
+                        break;
+                    case 1:
+                    case 4:
+                        Attacks.UpAttack(ref c);
+                        break;
+                    default:
+                        //If none of the attacks passed for some reason, log an error
+                        Debug.LogWarning("Player Attack Failed");
+                        return;
+                }
+            }
+            //This will only be entered when the attack is first called
+            else
+            {
+                float d = Input.GetAxisRaw("Vertical");
+                //Set us to be attacking. This is set to false once the attack is complete automatically
+                c.Attacking = true;
+                //Check which attack we should do
+                switch (d)
+                {
+                    case -1:
+                        //If we are on the ground, we cannot attack so undo all of this
+                        if (!c.animator.GetBool("Airborne"))
+                        {
+                            c.Attacking = false;
+                            break;
+                        }
+                        Attacks.DownAttack(ref c);
+                        attackIndex = -1;
+                        break;
+                    case 0:
+                        Attacks.DefaultAttack(ref c);
+                        attackIndex = 0;
+                        break;
+                    case 1:
+                        Attacks.UpAttack(ref c);
+                        attackIndex = 1;
+                        break;
+                    default:
+                        //If none of the attacks passed for some reason, log an error
+                        Debug.LogWarning("Player Attack Failed");
+                        return;
+                }
+                if (c.animator.GetBool("Airborne"))
+                    attackIndex += 3;
+                c.animator.SetBool("Attacking", c.Attacking);
+                c.animator.SetInteger("Attack", attackIndex);
+            }
+        }
     }
 
     public void DecrementCooldownTimer()
