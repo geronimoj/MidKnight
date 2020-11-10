@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d6f9bfc2a91814a80d46c6d1d89d10, type: 3}
   m_Name: RangedSpell
   m_EditorClassIdentifier: 
-  transitions: []
-  ignoreTransitions: 
+  transitions:
+  - {fileID: 11400000, guid: 37bc45f849a91644dac059ab7f6d5d51, type: 2}
+  ignoreTransitions: 00
   OnEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -23,5 +24,8 @@ MonoBehaviour:
   windUp: 0
   endLag: 0
   spellCost: 0
-  projectile: {fileID: 0}
+  projectile: {fileID: 8843692347943986699, guid: 1a0d9bd2e135c1b48abe9dbe5b38c761,
+    type: 3}
+  damage: 1
+  speed: 10
   spawnOffset: {x: 0, y: 0, z: 0}
