@@ -6,6 +6,7 @@ using UnityEngine;
 public class RangedSpell : CastSpell
 {
     public GameObject projectile;
+    public int damage = 1;
     public Vector3 spawnOffset;
 
     protected override void ExtraOnEnter(ref PlayerController c)
@@ -22,6 +23,7 @@ public class RangedSpell : CastSpell
         }
         Vector3 spawnPos = c.transform.position + c.transform.right * spawnOffset.x + c.transform.forward * spawnOffset.y + c.transform.up * spawnOffset.y;
 
-        Instantiate(projectile, spawnPos, Quaternion.identity);
+        Projectile p = Instantiate(projectile, spawnPos, Quaternion.identity).GetComponent<Projectile>();
+        p.Damage = damage + c.BonusDamage;
     }
 }
