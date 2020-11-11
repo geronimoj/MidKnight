@@ -10,6 +10,7 @@ public class basePrefab : MonoBehaviour
     PlayerController player;
     public int speed = 1;
     public int damage = 1;
+    public bool isBreakable = false;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -62,5 +63,13 @@ public class basePrefab : MonoBehaviour
     public void FaceRight()
     {
         prefabTrans.eulerAngles = new Vector3(0, 0, 0);
+    }
+
+    public virtual void HasBeenHit()
+    {
+        if (isBreakable)
+        {
+
+        }
     }
 }

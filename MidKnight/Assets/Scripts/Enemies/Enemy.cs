@@ -9,6 +9,8 @@ public class Enemy : Character
     public int damage;
     [HideInInspector] public bool isPhase2 = false;
     float timeTillDestroy = 5;
+    public float gravity;
+    public float vertSpeed;
     bool isDead = false;
 
     // Start is called before the first frame update

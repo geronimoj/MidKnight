@@ -39,13 +39,13 @@ public class Character : MonoBehaviour
     /// <summary>
     /// The direction of knockback
     /// </summary>
-    protected Vector3 knockBackDir = Vector3.zero;
+    public Vector3 knockBackDir = Vector3.zero;
     /// <summary>
     /// How quickly the knockback moves the cahracter
     /// </summary>
     [SerializeField]
     [Range(0, 100)]
-    protected float knockBackForce = 0;
+    public float knockBackForce = 0;
     /// <summary>
     /// Returns true if the character is currently in hitstun
     /// </summary>

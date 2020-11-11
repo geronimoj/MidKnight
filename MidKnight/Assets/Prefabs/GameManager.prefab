@@ -71,4 +71,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841db7922b97c5b4aa3fbcd31b823957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filenameTxt: Save.txt
+  RestPoints:
+  - spawnPoint: {x: -70, y: 13, z: 0}
+    thisRoom: Room1
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room7
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room15
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room24
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room36
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room45
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room55
+  - spawnPoint: {x: 0, y: 0, z: 0}
+    thisRoom: Room59
+  currentRestPoint: 0
+  filenameBinary: SaveBinary.bin
+  filenameTxt: SaveText.txt

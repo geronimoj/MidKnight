@@ -74,5 +74,7 @@ public class Dash : State
         c.animator.SetBool("Dashing", false);
         //The player is allowed to attack again
         c.CanAttack = true;
+        //Let the player controller know that we dashed
+        c.OnDash();
     }
 }
