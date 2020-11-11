@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnlockTracker : MonoBehaviour
 {
     //Dictionary holding all the unlocks
-    Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
+    public Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR

@@ -4,37 +4,51 @@ using System.IO;
 
 public class SavingManager : MonoBehaviour
 {
-    public bool SaveTxt(string filename, List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
+    public string filenameTxt = "Save.txt";
+
+    public bool SaveTxt(List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
     {
         try
         {
-            StreamWriter writer = new StreamWriter(filename);
+            StreamWriter writer = new StreamWriter(filenameTxt);
             writer.WriteLine("EntitiesToNotRespawn");
             writer.WriteLine(entitiesToNotRespawnToSave.Count);
-            writer.WriteLine(entitiesToNotRespawnToSave);
+
+            for (int i = 0; i < entitiesToNotRespawnToSave.Count; i++)
+            {
+                writer.WriteLine(entitiesToNotRespawnToSave[i].index);
+                writer.WriteLine(entitiesToNotRespawnToSave[i].thisRoom);
+            }
+
             writer.WriteLine("Unlocks");
             writer.WriteLine(unlocksToSave.Count);
-            writer.WriteLine(unlocksToSave);
+
+            foreach(KeyValuePair<string, bool> kvp in unlocksToSave)
+            {
+                writer.WriteLine(kvp.Key);
+                writer.WriteLine(kvp.Value);
+            }
+
             writer.Close();
             return true;
         }
         catch (IOException ioe)
         {
             Debug.LogError($"Save failed: {ioe.Message}");
+            Debug.Break();
             return false;
         }
     }
 
-    public bool LoadTxt(string filename, ref List<Entities> entitiesToNotRespawnToLoad, ref Dictionary<string, bool> unlocksToLoad)
+    public bool LoadTxt(ref List<Entities> entitiesToNotRespawnToLoad, ref Dictionary<string, bool> unlocksToLoad)
     {
         try
         {
-            StreamReader reader = new StreamReader(filename);
+            StreamReader reader = new StreamReader(filenameTxt);
             List<Entities> tempEntities = new List<Entities>();
             Dictionary<string, bool> tempUnlocks = new Dictionary<string, bool>();
-            bool done = false;
 
-            while (!done)
+            while (!reader.EndOfStream)
             {
                 string readLine = reader.ReadLine();
 
@@ -68,6 +82,7 @@ public class SavingManager : MonoBehaviour
         catch (IOException ioe)
         {
             Debug.LogError($"Load failed: {ioe.Message}");
+            Debug.Break();
             return false;
         }
     }
