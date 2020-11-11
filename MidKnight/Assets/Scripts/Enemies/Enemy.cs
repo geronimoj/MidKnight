@@ -26,11 +26,8 @@ public class Enemy : Character
         if(isDead)
         {
             timeTillDestroy -= Time.deltaTime;
-
-            Color enemyColor = GetComponent<Renderer>().material.color;
-            float fadeAmount =  enemyColor.a - (100f * Time.deltaTime);
-            enemyColor = new Color(enemyColor.r, enemyColor.g, enemyColor.b, fadeAmount);
-            GetComponent<Renderer>().material.color = enemyColor;
+            
+            //fade enemy here
         }
 
         if(timeTillDestroy < 0)

@@ -43,7 +43,24 @@ public class EnemyRush : MonoBehaviour
             meleeSkeleton,
             rangedSkeleton,
             rat,
-            largeRat
+            largeRat,
+            rat,
+            largeBat,
+            largeRat,
+            meleeSkeleton,
+            rat,
+            largeBat,
+            rat,
+            meleeSkeleton,
+            rangedSkeleton,
+            largeBat,
+            rangedSkeleton,
+            meleeSkeleton,
+            rangedSkeleton,
+            rat,
+            largeRat,
+            rangedSkeleton,
+            rangedSkeleton,
         };
     }
 
