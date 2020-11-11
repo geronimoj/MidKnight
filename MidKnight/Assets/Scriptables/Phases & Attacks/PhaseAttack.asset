@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed06590d1076f8d41ba2556136809b86, type: 3}
   m_Name: PhaseAttack
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 0
+  knockBack: 20
+  pogoForce: 20
   moonLightGain: 20
   attacks:
   - {fileID: 11400000, guid: 8c67d1fa48aacbc42a6da04392895512, type: 2}
   - {fileID: 11400000, guid: 8c67d1fa48aacbc42a6da04392895512, type: 2}
-  - {fileID: 11400000, guid: 8c67d1fa48aacbc42a6da04392895512, type: 2}
+  - {fileID: 11400000, guid: 8f1bbbf67a847c54a82b66a98713705b, type: 2}
   OnHit:
     m_PersistentCalls:
       m_Calls:
