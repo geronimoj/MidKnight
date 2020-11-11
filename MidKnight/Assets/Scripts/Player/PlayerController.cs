@@ -97,6 +97,10 @@ public class PlayerController : Character
     [Range(0, 2)]
     private float knockBackDuration = 0.1f;
 
+    [SerializeField]
+    [Range(0, 90)]
+    private float knockBackAngle = 20f;
+
     private float knockBackTimer = 0;
 
     private Vector3 knockBackDir = Vector3.zero;
@@ -530,5 +534,7 @@ public class PlayerController : Character
     public void SetKnockBackDirection(Vector3 dir)
     {
         knockBackDir = dir.normalized;
+
+        knockBackDir.y = Mathf.Sin(knockBackAngle * Mathf.Deg2Rad);
     }
 }
