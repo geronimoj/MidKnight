@@ -35,7 +35,7 @@ public class DoSpell : Transition
                 spellCost = 0;
         }
         //Make sure we have a new input, we have the moonlight for the spell & we have an input
-        if (newInput && c.MoonLight >= spellCost && Input.GetAxisRaw(axisNameForSpellInput) != 0)
+        if (newInput && c.MoonLight >= spellCost && !c.Attacking && Input.GetAxisRaw(axisNameForSpellInput) != 0)
         {   //We don't have a new input anymore
             newInput = false;
             Debug.Log("Cast Spell");

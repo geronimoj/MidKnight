@@ -67,9 +67,6 @@ public class PhaseManager : MonoBehaviour
 #if UNITY_EDITOR
         //Increment the timer
         timer += Time.deltaTime;
-        //If we have gone pass the duration, reset the timer
-        if (timer > current.Attacks.attacks[attackIndexToDisplay].duration)
-            timer = 0;
 #endif
         CyclePhase(ref c);
         cooldownTimer -= Time.deltaTime;
@@ -77,9 +74,38 @@ public class PhaseManager : MonoBehaviour
         if (current != null)
         {
             current.DoPhase(ref c);
+#if UNITY_EDITOR
+            bool newAttack = c.Attacking;
+#endif
             //If we can attack, check the attacks
             if (c.CanAttack)
+            {   //Perform the attack if we can
                 current.Attack(ref c);
+#if UNITY_EDITOR
+                //In the editor we draw the hitboxes only when the player attacks
+                if (newAttack != c.Attacking)
+                {
+                    displayAttack = c.Attacking;
+                    timer = 0;
+                    attackIndexToDisplay = c.animator.GetInteger("Attack");
+                    if (attackIndexToDisplay > 1)
+                        attackIndexToDisplay -= 3;
+
+                    switch (attackIndexToDisplay)
+                    {
+                        case -1:
+                            attackIndexToDisplay = 2;
+                            break;
+                        case 0:
+                            attackIndexToDisplay = 0;
+                            break;
+                        case 1:
+                            attackIndexToDisplay = 1;
+                            break;
+                    }
+                }
+#endif
+            }
         }
 #if UNITY_EDITOR
         else
