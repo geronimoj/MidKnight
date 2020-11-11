@@ -11,6 +11,7 @@ public class skeletonKingAtk2 : baseBossAttack
     int count;
     public int phase1NoOfOrbs;
     public int phase2NoOfOrbs;
+    public int projectileRadius;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -51,7 +52,8 @@ public class skeletonKingAtk2 : baseBossAttack
             hasUsedMove = true;
             timeBetweenAttacks = startTimeBetweenAttacks;
             count++;
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation);
+            projectile.transform.localScale = new Vector3(projectileRadius, projectileRadius, projectileRadius);
         }
     }
 
