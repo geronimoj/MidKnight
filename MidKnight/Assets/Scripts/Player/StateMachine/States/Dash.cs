@@ -51,6 +51,8 @@ public class Dash : State
             c.movement.Direction = -c.movement.Direction;
 
         c.animator.SetBool("Dashing", true);
+        //The player cannot attack while dashing
+        c.CanAttack = false;
     }
 
     public override void StateUpdate(ref PlayerController c)
@@ -70,5 +72,7 @@ public class Dash : State
     public override void StateEnd(ref PlayerController c)
     {
         c.animator.SetBool("Dashing", false);
+        //The player is allowed to attack again
+        c.CanAttack = true;
     }
 }

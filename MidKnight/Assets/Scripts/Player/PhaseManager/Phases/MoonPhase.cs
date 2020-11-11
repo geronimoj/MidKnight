@@ -57,7 +57,7 @@ public class MoonPhase : ScriptableObject
     {
         get
         {
-            return cooldownTimer <= 0;
+            return cooldownTimer > 0;
         }
     }
     /// <summary>
@@ -152,6 +152,7 @@ public class MoonPhase : ScriptableObject
             //This will only be entered when the attack is first called
             else
             {
+                Debug.Log("Attack");
                 float d = Input.GetAxisRaw("Vertical");
                 //Set us to be attacking. This is set to false once the attack is complete automatically
                 c.Attacking = true;

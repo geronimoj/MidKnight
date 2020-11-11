@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnlockTracker : MonoBehaviour
 {
     //Dictionary holding all the unlocks
-    Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
+    public Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR
@@ -70,6 +70,7 @@ public class UnlockTracker : MonoBehaviour
     //Gets the value of a key
     public bool GetKeyValue(string key)
     {
+        key = key.ToLower();
         foreach(KeyValuePair<string, bool> KVP in unlocks)
         {
             if (key == KVP.Key)

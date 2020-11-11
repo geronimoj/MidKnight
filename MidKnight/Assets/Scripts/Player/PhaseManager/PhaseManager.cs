@@ -28,6 +28,15 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     public UnityEvent OnSwap;
     /// <summary>
+    /// The index of the phase to swap too
+    /// </summary>
+    [SerializeField]
+    private int swapToIndex = 0;
+    /// <summary>
+    /// An array containing every moon phase, unlocked or not
+    /// </summary>
+    public MoonPhase[] everyMoonPhase;
+    /// <summary>
     /// A get for the current phase
     /// </summary>
     public MoonPhase CurrentPhase
@@ -45,6 +54,10 @@ public class PhaseManager : MonoBehaviour
             knownPhases.Add(current);
     }
 
+    private bool newCycleInput = false;
+
+    private bool newSwapInput = false;
+
     /// <summary>
     /// Calls update on the current phase if there is one
     /// </summary>
@@ -58,12 +71,15 @@ public class PhaseManager : MonoBehaviour
         if (timer > current.Attacks.attacks[attackIndexToDisplay].duration)
             timer = 0;
 #endif
+        CyclePhase(ref c);
         cooldownTimer -= Time.deltaTime;
         DecrementTimers();
         if (current != null)
         {
             current.DoPhase(ref c);
-            current.Attack(ref c);
+            //If we can attack, check the attacks
+            if (c.CanAttack)
+                current.Attack(ref c);
         }
 #if UNITY_EDITOR
         else
@@ -87,7 +103,7 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     /// <param name="target">The phase to swap to</param>
     /// <param name="c">A reference to the player controller</param>
-    public void SwapPhase(MoonPhase target, PlayerController c)
+    public void SwapPhase(MoonPhase target, ref PlayerController c)
     {   //Make sure the target is valid vand we can swap to it
         if (cooldownTimer > 0 || target == null || target.OnCooldown)
             return;
@@ -123,6 +139,85 @@ public class PhaseManager : MonoBehaviour
     {
         for (int i = 0; i < knownPhases.Count; i++)
             knownPhases[i].DecrementCooldownTimer();
+    }
+    /// <summary>
+    /// Checks if the player wants to cycle between moon phases & swaps them if they request to.
+    /// </summary>
+    /// <param name="c">A reference to the player controller</param>
+    private void CyclePhase(ref PlayerController c)
+    {
+        float cycleDir = Input.GetAxis("CyclePhase");
+
+        if (cycleDir > 0 && newCycleInput)
+        {
+            swapToIndex = SetSwapIndex(swapToIndex, true, ref c);
+            newCycleInput = false;
+        }
+        else if (cycleDir < 0 && newCycleInput)
+        {
+            swapToIndex = SetSwapIndex(swapToIndex, false, ref c);
+            newCycleInput = false;
+        }
+        else if (cycleDir == 0)
+            newCycleInput = true;
+
+        if (swapToIndex < 0)
+        {
+            Debug.LogError("Could not find valid, unlocked moon phase to cycle to. Setting cycle index to 0");
+            swapToIndex = 0;
+            return;
+        }
+
+        cycleDir = Input.GetAxis("SelectPhase");
+        //If we press R, swap to the phase at swapToIndex
+        if (cooldownTimer < 0 && cycleDir > 0 && newSwapInput)
+        {
+            SwapPhase(everyMoonPhase[swapToIndex], ref c);
+            newSwapInput = false;
+        }
+        else if (cycleDir == 0)
+            newSwapInput = true;
+        
+    }
+    /// <summary>
+    /// Takes the expected index of the phase to swap to and checks if it is a valid index & the phase is unlocked
+    /// </summary>
+    /// <param name="expectedIndex">The index to start from</param>
+    /// <returns>Returns the new index to swap too</returns>
+    public int SetSwapIndex(int expectedIndex, bool indexUpwards, ref PlayerController c)
+    {
+        int initial = expectedIndex;
+
+        for (int i = expectedIndex; i < everyMoonPhase.Length;)
+        {
+            //Decrement or increment expectedindex
+            if (indexUpwards)
+            {
+                expectedIndex++;
+                //Clamp i & expectedindex between 0 & everyMoonPhase.Length
+                if (expectedIndex >= everyMoonPhase.Length)
+                    expectedIndex = 0;
+            }
+            else
+            {
+                expectedIndex--;
+                //Clamp i & expectedindex between 0 & everyMoonPhase.Length
+                if (expectedIndex < 0)
+                    expectedIndex = everyMoonPhase.Length - 1;
+            }
+            //Check if this index is an unlocked phase.
+            if (c.ut.GetKeyValue(everyMoonPhase[expectedIndex].phaseID) && everyMoonPhase[expectedIndex] != current)
+                //If it is, return the index
+                return expectedIndex;
+            
+            //Check if expectedindex = initial. If so, return -1
+            //This means we've looped through all the indexes & none of them are unlocked
+            if (expectedIndex == initial)
+                break;
+            i = expectedIndex;
+        }
+        //Return -1 because we failed to find a valid moonPhase
+        return -1;
     }
 #if UNITY_EDITOR
     private float timer = 0;
