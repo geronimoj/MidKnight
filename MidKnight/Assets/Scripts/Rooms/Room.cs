@@ -60,6 +60,11 @@ public class Room : MonoBehaviour
         {
             if (obj.thisRoom == r.roomID)
             {
+                if (obj.index == -1)
+                {
+                    Debug.LogError("Entity does not exist in NonRespawningRoomObjects");
+                    continue; 
+                }
                 r.NonRespawningRoomObjects[obj.index].SetActive(false);
             }
         }
