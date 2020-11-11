@@ -5,7 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(UnlockTracker))]
 [RequireComponent(typeof(PhaseManager))]
 public class PlayerController : Character
-{
+{   //Its up here so it looks good in the inspector
+    /// <summary>
+    /// The angle of the knockback
+    /// </summary>
+    [SerializeField]
+    [Range(0, 90)]
+    protected float knockBackAngle = 20f;
+
     private StateManager manager;
 
     private PhaseManager phase;
@@ -86,28 +93,6 @@ public class PlayerController : Character
     /// Necessary for breaking out of healing & dash on damage
     /// </summary>
     private bool tookDamageThisLoop = false;
-
-    [SerializeField]
-    [Range(0, 2)]
-    private float hitstunDuration = 0.1f;
-
-    private float hitstunTimer = 0;
-
-    [SerializeField]
-    [Range(0, 2)]
-    private float knockBackDuration = 0.1f;
-
-    [SerializeField]
-    [Range(0, 90)]
-    private float knockBackAngle = 20f;
-
-    private float knockBackTimer = 0;
-
-    private Vector3 knockBackDir = Vector3.zero;
-
-    [SerializeField]
-    [Range(0, 100)]
-    private float knockBackForce = 0;
 
     /// <summary>
     /// Is true when the player dies
@@ -368,7 +353,7 @@ public class PlayerController : Character
     /// <summary>
     /// Decrements the timer and calls update on the state
     /// </summary>
-    private void Update()
+    protected override void ExtraUpdate()
     {   //Is the player dead
         if (dead)
             return;
@@ -378,9 +363,7 @@ public class PlayerController : Character
         dashTimer -= Time.deltaTime;
         bonusDamageTimer -= Time.deltaTime;
         moonBeamTimer -= Time.deltaTime;
-        hitstunTimer -= Time.deltaTime;
-        if (hitstunTimer < 0)
-            knockBackTimer -= Time.deltaTime;
+        
         //If the timer for bonus damage is finished, set bonus damage to 0
         if (bonusDamageTimer < 0)
             bonusDamage = 0;
@@ -531,7 +514,7 @@ public class PlayerController : Character
         dead = true;
     }
 
-    public void SetKnockBackDirection(Vector3 dir)
+    public override void SetKnockBackDirection(Vector3 dir)
     {
         knockBackDir = dir.normalized;
 

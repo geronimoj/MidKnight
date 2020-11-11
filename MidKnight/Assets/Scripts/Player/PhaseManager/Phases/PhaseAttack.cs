@@ -31,9 +31,12 @@ public class PhaseAttack : ScriptableObject
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
     public virtual void DefaultAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
-        GetAttackHit(0, ref c);
+        RaycastHit[] hits = GetAttackHit(0, ref c);
         //Apply other affects
-
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+                //Get the enemy component from the enemy and knock them backwards
+                hits[i].transform.GetComponent<Enemy>().SetKnockBackDirection(c.transform.right);
         //Check if the attack has finished
         if (attacks[0].AttackFinished)
             AttackFinished(ref c);
@@ -45,8 +48,12 @@ public class PhaseAttack : ScriptableObject
     public virtual void UpAttack(ref PlayerController c)
     {
         //Calls the raycast & does damage.
-        GetAttackHit(1, ref c);
+        RaycastHit[] hits = GetAttackHit(1, ref c);
         //Apply other affects
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+                //Get the enemy component from the enemy and knock them backwards
+                hits[i].transform.GetComponent<Enemy>().SetKnockBackDirection(Vector3.up);
 
         //Did the attack finish?
         if (attacks[1].AttackFinished)
@@ -58,9 +65,12 @@ public class PhaseAttack : ScriptableObject
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
     public virtual void DownAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
-        GetAttackHit(2, ref c);
+        RaycastHit[] hits = GetAttackHit(2, ref c);
         //Apply other affects
-
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+                //Get the enemy component from the enemy and knock them backwards
+                hits[i].transform.GetComponent<Enemy>().SetKnockBackDirection(Vector3.down);
         //Has the attack finished?
         if (attacks[2].AttackFinished)
             AttackFinished(ref c);
