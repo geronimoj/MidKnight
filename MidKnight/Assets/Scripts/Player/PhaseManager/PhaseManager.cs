@@ -151,6 +151,7 @@ public class PhaseManager : MonoBehaviour
     }
     /// <summary>
     /// Returns true if the string given matches the phase ID of the current phase
+    /// Or if the current phase is Eclipse.
     /// </summary>
     /// <param name="phaseID">The ID to compare against</param>
     /// <returns>Returns true if the string matches the current phases ID</returns>
