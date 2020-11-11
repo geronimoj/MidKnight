@@ -190,15 +190,10 @@ public class PhaseManager : MonoBehaviour
 
         for (int i = expectedIndex; i < everyMoonPhase.Length;)
         {
-            //Check if this index is an unlocked phase.
-            if (c.ut.GetKeyValue(everyMoonPhase[expectedIndex].phaseID) && everyMoonPhase[expectedIndex] != current)
-                //If it is, break
-                return expectedIndex;
-            //else, decrement or increment expectedindex
+            //Decrement or increment expectedindex
             if (indexUpwards)
             {
                 expectedIndex++;
-
                 //Clamp i & expectedindex between 0 & everyMoonPhase.Length
                 if (expectedIndex >= everyMoonPhase.Length)
                     expectedIndex = 0;
@@ -206,11 +201,15 @@ public class PhaseManager : MonoBehaviour
             else
             {
                 expectedIndex--;
-
                 //Clamp i & expectedindex between 0 & everyMoonPhase.Length
                 if (expectedIndex < 0)
                     expectedIndex = everyMoonPhase.Length - 1;
             }
+            //Check if this index is an unlocked phase.
+            if (c.ut.GetKeyValue(everyMoonPhase[expectedIndex].phaseID) && everyMoonPhase[expectedIndex] != current)
+                //If it is, return the index
+                return expectedIndex;
+            
             //Check if expectedindex = initial. If so, return -1
             //This means we've looped through all the indexes & none of them are unlocked
             if (expectedIndex == initial)
