@@ -52,8 +52,17 @@ public class skeletonKingAtk2 : baseBossAttack
             hasUsedMove = true;
             timeBetweenAttacks = startTimeBetweenAttacks;
             count++;
-            GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation);
-            projectile.transform.localScale = new Vector3(projectileRadius, projectileRadius, projectileRadius);
+
+            if(isFacingRight())
+            {
+                GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x + 2, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation);
+                projectile.transform.localScale = new Vector3(projectileRadius, projectileRadius, projectileRadius);
+            }
+            else
+            {
+                GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x - 2, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation);
+                projectile.transform.localScale = new Vector3(projectileRadius, projectileRadius, projectileRadius);
+            }
         }
     }
 

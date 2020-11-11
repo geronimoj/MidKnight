@@ -22,7 +22,14 @@ public class skeletonKingAtk3 : baseBossAttack
             noOfLaserBeams = phase2NoOfLaserBeams;
         }
 
-        Instantiate(attack, enemyTrans.position, Quaternion.Euler(0, 0, 90));
+        if (isFacingRight())
+        {
+            Instantiate(attack, new Vector3(enemyTrans.position.x + 3, enemyTrans.position.y - 2, enemyTrans.position.z), Quaternion.Euler(0, 0, 90));
+        }
+        else
+        {
+            Instantiate(attack, new Vector3(enemyTrans.position.x - 3, enemyTrans.position.y - 2, enemyTrans.position.z), Quaternion.Euler(0, 0, 90));
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
