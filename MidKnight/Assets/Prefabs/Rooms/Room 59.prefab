@@ -43,7 +43,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7073338881356930130}
   - component: {fileID: 8316230155808722558}
-  - component: {fileID: 4036468126540943456}
   m_Layer: 0
   m_Name: Room 59
   m_TagString: Untagged
@@ -84,22 +83,8 @@ MonoBehaviour:
   roomID: Room19
   NonRespawningRoomObjects: []
   entrances:
-  - {x: -11, y: 31.5, z: 0}
-  - {x: 6.5, y: -33, z: 0}
+  - {x: 0, y: -13.89, z: 0}
   pathNodes: []
---- !u!114 &4036468126540943456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7073338881356930131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room: {fileID: 8316230155808722558}
   pointRadius: 1
 --- !u!1 &8365231436809561026
 GameObject:
@@ -676,7 +661,7 @@ PrefabInstance:
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.27
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}

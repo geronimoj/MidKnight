@@ -453,7 +453,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4944554131934717317}
   - component: {fileID: 941562165221822197}
-  - component: {fileID: 2243449314551676060}
   m_Layer: 0
   m_Name: Room 41
   m_TagString: Untagged
@@ -493,21 +492,14 @@ MonoBehaviour:
   EM: {fileID: 0}
   roomID: Room8
   NonRespawningRoomObjects: []
-  entrances: []
+  entrances:
+  - {x: -55.39, y: 45.8, z: 0}
+  - {x: 31, y: 46.41, z: 0}
+  - {x: 43.48, y: 35.41, z: 0}
+  - {x: -61.29, y: 9.45, z: 0}
+  - {x: 41.21, y: 10, z: 0}
+  - {x: 31.72, y: 26.81, z: 0}
   pathNodes: []
---- !u!114 &2243449314551676060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4944554131934717316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room: {fileID: 941562165221822197}
   pointRadius: 1
 --- !u!1 &4944554132217876500
 GameObject:
@@ -2153,12 +2145,12 @@ PrefabInstance:
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.370007
+      value: -8.37
       objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -127.500015
+      value: -125.38
       objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
@@ -2403,7 +2395,7 @@ PrefabInstance:
     - target: {fileID: 6357293047996824001, guid: 5f5efd2852ff0eb458d422cb847da26d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -50.1
+      value: -51.9
       objectReference: {fileID: 0}
     - target: {fileID: 6357293047996824001, guid: 5f5efd2852ff0eb458d422cb847da26d,
         type: 3}
