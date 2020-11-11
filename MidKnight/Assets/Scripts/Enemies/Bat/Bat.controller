@@ -16,11 +16,11 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 5
-  xVisionRange: 10
-  yUpVisionRange: 10
-  yDownVisionRange: 10
+  xVisionRange: 100
+  yUpVisionRange: 100
+  yDownVisionRange: 100
   gravity: 0
-  distFromPlayerToAtk: 10
+  distFromPlayerToAtk: 100
 --- !u!1107 &-7354781751571928410
 AnimatorStateMachine:
   serializedVersion: 5
@@ -154,9 +154,9 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 0
-  xVisionRange: 10
-  yUpVisionRange: 1
-  yDownVisionRange: 10
+  xVisionRange: 100
+  yUpVisionRange: 100
+  yDownVisionRange: 100
   gravity: 0
 --- !u!1102 &4792959457043895764
 AnimatorState:

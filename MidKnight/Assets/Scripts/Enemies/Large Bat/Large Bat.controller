@@ -163,6 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStartTimeTillIdle: 3
   maxStartTimeTillIdle: 4
+  phase2MinStartTimeTillIdle: 0
+  phase2MaxStartTimeTillIdle: 0
 --- !u!1102 &-1993628068510574888
 AnimatorState:
   serializedVersion: 5
@@ -237,10 +239,10 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 0
-  xVisionRange: 10
-  yUpVisionRange: 1
-  yDownVisionRange: 10
-  gravity: 0
+  xVisionRange: 100
+  yUpVisionRange: 100
+  yDownVisionRange: 100
+  gravity: 100
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -309,9 +311,9 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 5
-  xVisionRange: 10
-  yUpVisionRange: 10
-  yDownVisionRange: 10
+  xVisionRange: 100
+  yUpVisionRange: 100
+  yDownVisionRange: 100
   gravity: 0
   distFromPlayerToAtk: 5
 --- !u!114 &2904580427160664257
@@ -328,6 +330,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minStartTimeTillIdle: 3
   maxStartTimeTillIdle: 4
+  phase2MinStartTimeTillIdle: 0
+  phase2MaxStartTimeTillIdle: 0
 --- !u!114 &3154806736493758862
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -23,8 +23,12 @@ public class kingBatAttack1 : baseBossAttack
         {
             hasUsedMove = true;
 
-            spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
-            Instantiate(attack, spawnPos, enemyTrans.rotation);
+            for (int i = 0; i < 2; i++)
+            {
+                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
+                Instantiate(attack, spawnPos, enemyTrans.rotation);
+            }
+
         }
     }
 
