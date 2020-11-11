@@ -263,7 +263,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1585904494427924858}
   - component: {fileID: 523227635966393174}
-  - component: {fileID: 5489788849268172104}
   m_Layer: 0
   m_Name: Room 18
   m_TagString: Untagged
@@ -308,19 +307,6 @@ MonoBehaviour:
   - {x: 29.66, y: -0, z: 0}
   - {x: 24.77, y: -10.7, z: 0}
   pathNodes: []
---- !u!114 &5489788849268172104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585904494427924859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room: {fileID: 523227635966393174}
   pointRadius: 1
 --- !u!1 &1721477662193897064
 GameObject:
@@ -521,7 +507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ccb9ba7cc81574a803c457cef255e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 523227635966393174}
   nextRoom: {fileID: 8390955966661244475, guid: d036dfde577430d4cae847ac935ad1ca,
     type: 3}
   GM: {fileID: 0}
@@ -725,7 +710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ccb9ba7cc81574a803c457cef255e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 523227635966393174}
   nextRoom: {fileID: 5758030969281249310, guid: e397f752a7c85a24f84bf0df02cab5e8,
     type: 3}
   GM: {fileID: 0}
@@ -836,7 +820,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ccb9ba7cc81574a803c457cef255e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 523227635966393174}
   nextRoom: {fileID: 5682403497316245297, guid: 38a2b19ac393a3745aefa99a53a78277,
     type: 3}
   GM: {fileID: 0}
