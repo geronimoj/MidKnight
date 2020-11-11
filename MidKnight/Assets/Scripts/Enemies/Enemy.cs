@@ -26,8 +26,6 @@ public class Enemy : Character
         if(isDead)
         {
             timeTillDestroy -= Time.deltaTime;
-            
-            //fade enemy here
         }
 
         if(timeTillDestroy < 0)
