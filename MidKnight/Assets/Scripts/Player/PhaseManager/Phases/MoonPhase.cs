@@ -57,7 +57,7 @@ public class MoonPhase : ScriptableObject
     {
         get
         {
-            return cooldownTimer <= 0;
+            return cooldownTimer > 0;
         }
     }
     /// <summary>

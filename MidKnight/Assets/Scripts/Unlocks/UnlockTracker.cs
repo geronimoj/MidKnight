@@ -70,6 +70,7 @@ public class UnlockTracker : MonoBehaviour
     //Gets the value of a key
     public bool GetKeyValue(string key)
     {
+        key = key.ToLower();
         foreach(KeyValuePair<string, bool> KVP in unlocks)
         {
             if (key == KVP.Key)
