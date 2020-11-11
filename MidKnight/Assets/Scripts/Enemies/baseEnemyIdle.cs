@@ -127,12 +127,18 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// <param name="destination"></param>
     public virtual void MoveToDestination(Vector3 destination)
     {
-        vertSpeed = -gravity;
+        Enemy e = enemyTrans.GetComponent<Enemy>();
+        e.vertSpeed = -e.gravity;
         Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
 
-        if(gravity != 0)
+        if (e.gravity != 0)
         {
-            dir.y = vertSpeed * Time.deltaTime;
+            dir.y = e.vertSpeed * Time.deltaTime;
+        }
+
+        if (e.BeingKnockedBack)
+        {
+            dir = e.knockBackDir * e.knockBackForce * Time.deltaTime;
         }
 
         cc.Move(dir);
