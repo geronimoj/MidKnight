@@ -230,6 +230,22 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// The cap for bonus damage
+    /// </summary>
+    [Range(0, 100)]
+    [SerializeField]
+    private int bonusDamageCap = 0;
+    /// <summary>
+    /// A get for the bonus damage cap
+    /// </summary>
+    public int BonusDamageCap
+    {
+        get
+        {
+            return bonusDamageCap;
+        }
+    }
+    /// <summary>
     /// How much bonus damage the player has to their attacks
     /// </summary>
     private int bonusDamage = 0;
@@ -504,6 +520,8 @@ public class PlayerController : Character
     public void GainBonusDamage()
     {
         bonusDamage++;
+        if (bonusDamage > BonusDamageCap)
+            bonusDamage = bonusDamageCap;
         bonusDamageTimer = bonusDamageLifeTime;
     }
     /// <summary>
