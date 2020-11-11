@@ -804,7 +804,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4622126173735810105}
   - component: {fileID: 5865292256842163733}
-  - component: {fileID: 1876014396453107723}
   m_Layer: 0
   m_Name: Room 48
   m_TagString: Untagged
@@ -844,21 +843,9 @@ MonoBehaviour:
   EM: {fileID: 0}
   roomID: Room18
   NonRespawningRoomObjects: []
-  entrances: []
+  entrances:
+  - {x: -37.47, y: 1.61, z: 0}
   pathNodes: []
---- !u!114 &1876014396453107723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4622126173735810104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room: {fileID: 5865292256842163733}
   pointRadius: 1
 --- !u!1 &6204797910211955625
 GameObject:

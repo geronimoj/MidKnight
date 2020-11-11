@@ -8,6 +8,11 @@ public class Enemy : Character
     EnemyHitbox enemyHitbox;
     public int damage;
     [HideInInspector] public bool isPhase2 = false;
+    float timeTillDestroy = 5;
+    public float gravity;
+    public float vertSpeed;
+    bool isDead = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +23,23 @@ public class Enemy : Character
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void ExtraUpdate()
     {
-        
+        if(isDead)
+        {
+            timeTillDestroy -= Time.deltaTime;
+        }
+
+        if(timeTillDestroy < 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public override void OnDeath()
     {
         enemyAnim.SetTrigger("death");
         Destroy(enemyHitbox);
+        isDead = true;  
     }
 }

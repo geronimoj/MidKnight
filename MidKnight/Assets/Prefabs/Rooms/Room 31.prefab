@@ -62,7 +62,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5676079719300801171}
   - component: {fileID: 6883152869845561535}
-  - component: {fileID: 1506623456033959585}
   m_Layer: 0
   m_Name: Room 31
   m_TagString: Untagged
@@ -102,21 +101,9 @@ MonoBehaviour:
   EM: {fileID: 0}
   roomID: Room31
   NonRespawningRoomObjects: []
-  entrances: []
+  entrances:
+  - {x: 3.33, y: -34.91, z: 0}
   pathNodes: []
---- !u!114 &1506623456033959585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5676079719300801170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room: {fileID: 6883152869845561535}
   pointRadius: 1
 --- !u!1 &5945016483770097672
 GameObject:

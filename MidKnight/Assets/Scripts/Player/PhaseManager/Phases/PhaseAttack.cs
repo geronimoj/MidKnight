@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "PhaseAttack", menuName = "Attacks/Default", order = 0)]
+[CreateAssetMenu(fileName = "PhaseAttack", menuName = "PhaseAttack/Default", order = 0)]
 public class PhaseAttack : ScriptableObject
 {   
     /// <summary>
     /// The damage of the attacks
     /// </summary>
     public int damage = 0;
+    /// <summary>
+    /// The knockBack of any given attack
+    /// </summary>
+    [Range(0, 100)]
+    public float knockBack = 0;
+
+    [Range(0,100)]
+    public float pogoForce = 0;
     /// <summary>
     /// How much moonLight will be gained on hit
     /// </summary>
@@ -31,9 +39,16 @@ public class PhaseAttack : ScriptableObject
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
     public virtual void DefaultAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
-        GetAttackHit(0, ref c);
+        RaycastHit[] hits = GetAttackHit(0, ref c);
         //Apply other affects
-
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+            {
+                Enemy e = hits[i].transform.GetComponent<Enemy>();
+                //Get the enemy component from the enemy and knock them backwards
+                e.SetKnockBackDirection(c.transform.right);
+                e.knockBackForce = knockBack;
+            }
         //Check if the attack has finished
         if (attacks[0].AttackFinished)
             AttackFinished(ref c);
@@ -45,8 +60,16 @@ public class PhaseAttack : ScriptableObject
     public virtual void UpAttack(ref PlayerController c)
     {
         //Calls the raycast & does damage.
-        GetAttackHit(1, ref c);
+        RaycastHit[] hits = GetAttackHit(1, ref c);
         //Apply other affects
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+            {
+                Enemy e = hits[i].transform.GetComponent<Enemy>();
+                //Get the enemy component from the enemy and knock them backwards
+                e.SetKnockBackDirection(Vector3.up);
+                e.knockBackForce = knockBack;
+            }
 
         //Did the attack finish?
         if (attacks[1].AttackFinished)
@@ -58,9 +81,18 @@ public class PhaseAttack : ScriptableObject
     /// <param name="c">A reference to the player controller. Can retrive bonus damage and positional data from it</param>
     public virtual void DownAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
-        GetAttackHit(2, ref c);
+        RaycastHit[] hits = GetAttackHit(2, ref c);
         //Apply other affects
-
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+            {
+                Enemy e = hits[i].transform.GetComponent<Enemy>();
+                //Get the enemy component from the enemy and knock them backwards
+                e.SetKnockBackDirection(Vector3.down);
+                e.knockBackForce = knockBack;
+                c.movement.VertSpeed = pogoForce;
+                c.OnLand();
+            }
         //Has the attack finished?
         if (attacks[2].AttackFinished)
             AttackFinished(ref c);

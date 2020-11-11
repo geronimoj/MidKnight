@@ -77,7 +77,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1783401100279786514}
   - component: {fileID: 720376539649441342}
-  - component: {fileID: 4796913842101837856}
   m_Layer: 0
   m_Name: Room 44
   m_TagString: Untagged
@@ -117,21 +116,11 @@ MonoBehaviour:
   EM: {fileID: 0}
   roomID: Room27
   NonRespawningRoomObjects: []
-  entrances: []
+  entrances:
+  - {x: 0, y: 17, z: 0}
+  - {x: -9.2, y: -18.13, z: 0}
+  - {x: 9.04, y: -18.15, z: 0}
   pathNodes: []
---- !u!114 &4796913842101837856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1783401100279786515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5802926c391d6f642b021ccc5b3247d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  room: {fileID: 720376539649441342}
   pointRadius: 1
 --- !u!1 &5652448147633229785
 GameObject:
