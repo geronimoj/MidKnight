@@ -21,7 +21,7 @@ public class Enemy : Character
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void ExtraUpdate()
     {
         if(isDead)
         {

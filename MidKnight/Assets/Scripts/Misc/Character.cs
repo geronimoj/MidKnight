@@ -17,6 +17,57 @@ public class Character : MonoBehaviour
     [Range(1, 200)]
     private float maxHealth = 1;
     /// <summary>
+    /// The length of the hitstun
+    /// </summary>
+    [SerializeField]
+    [Range(0, 2)]
+    protected float hitstunDuration = 0.1f;
+    /// <summary>
+    /// A timer for hitstun
+    /// </summary>
+    protected float hitstunTimer = 0;
+    /// <summary>
+    /// The duration of the knockback
+    /// </summary>
+    [SerializeField]
+    [Range(0, 2)]
+    protected float knockBackDuration = 0.1f;
+    /// <summary>
+    /// A timer for the knockBack
+    /// </summary>
+    protected float knockBackTimer = 0;
+    /// <summary>
+    /// The direction of knockback
+    /// </summary>
+    protected Vector3 knockBackDir = Vector3.zero;
+    /// <summary>
+    /// How quickly the knockback moves the cahracter
+    /// </summary>
+    [SerializeField]
+    [Range(0, 100)]
+    protected float knockBackForce = 0;
+    /// <summary>
+    /// Returns true if the character is currently in hitstun
+    /// </summary>
+    public bool InHitStun
+    {
+        get
+        {
+            return hitstunTimer > 0;
+        }
+    }
+    /// <summary>
+    /// Returns true if the character is currently being knocked back
+    /// </summary>
+    public bool BeingKnockedBack
+    {
+        get
+        {
+            return knockBackTimer > 0;
+        }
+    }
+
+    /// <summary>
     /// A get for maxHealth
     /// </summary>
     public int MaxHealth
@@ -56,7 +107,7 @@ public class Character : MonoBehaviour
     /// <summary>
     /// Gets the character controller
     /// </summary>
-    public void Awake()
+    private void Awake()
     {
         cc = GetComponent<CharacterController>();
         health = MaxHealth;
@@ -67,6 +118,14 @@ public class Character : MonoBehaviour
             Debug.Break();
         }
         AwakeExtra();
+    }
+
+    private void Update()
+    {
+        hitstunTimer -= Time.deltaTime;
+        if (hitstunTimer < 0)
+            knockBackTimer -= Time.deltaTime;
+        ExtraUpdate();
     }
     /// <summary>
     /// Any additional awake calls because the awake function in here requires to do its own stuff
@@ -80,8 +139,17 @@ public class Character : MonoBehaviour
     {
         SetHealth = Health - damage;
 
+        knockBackTimer = knockBackDuration;
+        hitstunTimer = hitstunDuration;
+
         if (Health <= 0)
             OnDeath();
+    }
+    /// <summary>
+    /// An overrideable function for any extra update function calls
+    /// </summary>
+    protected virtual void ExtraUpdate()
+    {
     }
     /// <summary>
     /// Moves the character or object
@@ -97,5 +165,13 @@ public class Character : MonoBehaviour
     public virtual void OnDeath()
     {
         Debug.Log("I am dead");
+    }
+    /// <summary>
+    /// A set for the direction of knockback. Is normalised by default
+    /// </summary>
+    /// <param name="dir">The direction of knockback</param>
+    public virtual void SetKnockBackDirection(Vector3 dir)
+    {
+        knockBackDir = dir.normalized;
     }
 }
