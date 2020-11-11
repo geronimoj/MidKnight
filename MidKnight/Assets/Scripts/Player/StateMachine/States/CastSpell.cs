@@ -32,7 +32,9 @@ public class CastSpell : State
     private bool spellCasted = false;
 
     public override void StateStart(ref PlayerController c)
-    {   //Setup the timers
+    {   //Started the spell
+        Debug.Log("Cast Spell");
+        //Setup the timers
         windUpTimer = windUp;
         endLagTimer = endLag;
         //Set us to not have cast the spell yet

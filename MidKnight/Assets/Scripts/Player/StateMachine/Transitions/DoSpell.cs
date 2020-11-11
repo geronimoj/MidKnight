@@ -38,7 +38,6 @@ public class DoSpell : Transition
         if (newInput && c.MoonLight >= spellCost && !c.Attacking && Input.GetAxisRaw(axisNameForSpellInput) != 0)
         {   //We don't have a new input anymore
             newInput = false;
-            Debug.Log("Cast Spell");
             return true;
         }
         //Check that the button has been released.

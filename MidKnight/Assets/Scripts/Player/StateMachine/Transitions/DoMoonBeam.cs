@@ -8,7 +8,7 @@ public class DoMoonBeam : DoSpell
     {
         if (base.ShouldTransition(ref c))
         {
-            if (c.CanCastMoonBeam)
+            if (c.CanCastMoonBeam && c.ut.GetKeyValue("Moon Beam"))
                 return true;
             else
                 return false;
