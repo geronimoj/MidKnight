@@ -89,7 +89,7 @@ MonoBehaviour:
   roomID: Room34
   NonRespawningRoomObjects: []
   entrances:
-  - {x: 5.55, y: 26.32, z: 0}
+  - {x: 5.9, y: 26.32, z: 0}
   - {x: 5.47, y: -28.36, z: 0}
   pathNodes: []
   pointRadius: 1
@@ -246,6 +246,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 329143583762922036}
     m_Modifications:
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: nextRoom
+      value: 
+      objectReference: {fileID: 9061848990091482882, guid: e96d7c0fa22a6454fbc786011bc22d4d,
+        type: 3}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name
@@ -1301,6 +1307,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 329143583762922036}
     m_Modifications:
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: nextRoom
+      value: 
+      objectReference: {fileID: 7043785491738145054, guid: b6ce113096afc1a44943a5def9dcb684,
+        type: 3}
+    - target: {fileID: 1840448051480346468, guid: 7394abab11edd9c4bb217487f51bb2c8,
+        type: 3}
+      propertyPath: entranceIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
         type: 3}
       propertyPath: m_Name

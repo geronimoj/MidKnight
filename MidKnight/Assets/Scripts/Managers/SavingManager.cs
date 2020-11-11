@@ -2,12 +2,20 @@
 using UnityEngine;
 using System.IO;
 
+[RequireComponent(typeof(GameManager))]
 public class SavingManager : MonoBehaviour
 {
-    public List<SavePoint> SavePoints = new List<SavePoint>();
+    public List<RestPoint> RestPoints = new List<RestPoint>();
     public int currentRestPoint = 0;
     public string filenameBinary = "SaveBinary.bin";
     public string filenameTxt = "SaveText.txt";
+    private PlayerController player;
+
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerController>();
+        player.transform.position = RestPoints[currentRestPoint].spawnPoint;
+    }
 
     public bool Save(bool binary, List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
     {
@@ -15,12 +23,10 @@ public class SavingManager : MonoBehaviour
         {
             return SaveBinary(entitiesToNotRespawnToSave, unlocksToSave);
         }
-        else if (!binary)
+        else
         {
             return SaveTxt(entitiesToNotRespawnToSave, unlocksToSave);
         }
-
-        return false;
     }
 
     private bool SaveBinary(List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
@@ -101,12 +107,10 @@ public class SavingManager : MonoBehaviour
         {
             return LoadBinary(ref entitiesToNotRespawnToLoad, ref unlocksToLoad);
         }
-        else if (!binary)
+        else
         {
             return LoadTxt(ref entitiesToNotRespawnToLoad, ref unlocksToLoad);
         }
-
-        return false;
     }
 
     private bool LoadBinary(ref List<Entities> entitiesToNotRespawnToLoad, ref Dictionary<string, bool> unlocksToLoad)
@@ -215,7 +219,7 @@ public class SavingManager : MonoBehaviour
 }
 
 [System.Serializable]
-public struct SavePoint
+public struct RestPoint
 {
     public Vector3 spawnPoint;
     public string thisRoom;
