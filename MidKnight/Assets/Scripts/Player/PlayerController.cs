@@ -46,6 +46,7 @@ public class PlayerController : Character
     /// The cooldown of the dash
     /// </summary>
     [SerializeField]
+    [Range(0, 100)]
     private float dashCooldown = 0;
     /// <summary>
     /// How long the players i-Frames last after taking damage
@@ -74,6 +75,7 @@ public class PlayerController : Character
     /// </summary>
     [SerializeField]
     [Tooltip("The time the player must swap phases to keep bonus damage")]
+    [Range(0, 100)]
     private float bonusDamageLifeTime = 1;
     /// <summary>
     /// The timer for bonusDamageLifeTime
@@ -84,6 +86,25 @@ public class PlayerController : Character
     /// Necessary for breaking out of healing & dash on damage
     /// </summary>
     private bool tookDamageThisLoop = false;
+
+    [SerializeField]
+    [Range(0, 2)]
+    private float hitstunDuration = 0.1f;
+
+    private float hitstunTimer = 0;
+
+    [SerializeField]
+    [Range(0, 2)]
+    private float knockBackDuration = 0.1f;
+
+    private float knockBackTimer = 0;
+
+    private Vector3 knockBackDir = Vector3.zero;
+
+    [SerializeField]
+    [Range(0, 100)]
+    private float knockBackForce = 0;
+
     /// <summary>
     /// Is true when the player dies
     /// </summary>
@@ -215,7 +236,6 @@ public class PlayerController : Character
     /// <summary>
     /// How much bonus damage the player has to their attacks
     /// </summary>
-    [SerializeField]
     private int bonusDamage = 0;
     /// <summary>
     /// A Get/Set for bonusDamage
@@ -354,6 +374,9 @@ public class PlayerController : Character
         dashTimer -= Time.deltaTime;
         bonusDamageTimer -= Time.deltaTime;
         moonBeamTimer -= Time.deltaTime;
+        hitstunTimer -= Time.deltaTime;
+        if (hitstunTimer < 0)
+            knockBackTimer -= Time.deltaTime;
         //If the timer for bonus damage is finished, set bonus damage to 0
         if (bonusDamageTimer < 0)
             bonusDamage = 0;
@@ -375,6 +398,10 @@ public class PlayerController : Character
     /// <param name="moveVec">The direction of movement</param>
     public override void Move(Vector3 moveVec)
     {
+        if (hitstunTimer > 0)
+            return;
+        if (knockBackTimer > 0)
+            moveVec = knockBackDir * knockBackForce * Time.deltaTime;
         if (gm == null)
         {   //If we don't have a gameManager, move along the x axis only
             moveVec.z = 0;
@@ -432,7 +459,7 @@ public class PlayerController : Character
     /// <param name="damage">How much damage to deal</param>
     public override void TakeDamage(int damage)
     {   //If the damage is negative, its healing.
-        if (damage <= 0)
+        if (damage < 0)
         {   //Heal
             SetHealth = Health - damage;
             return;
@@ -441,6 +468,8 @@ public class PlayerController : Character
         if (CanTakeDamage)
         {   //Set the iFrame timer
             iFrameTimer = iFrames;
+            hitstunTimer = hitstunDuration;
+            knockBackTimer = knockBackDuration;
             //Deal damage
             SetHealth = Health - damage;
             //Set us to have taken damage this frame
@@ -496,5 +525,10 @@ public class PlayerController : Character
         animator.SetTrigger("Dead");
         Debug.Log("Player is dead");
         dead = true;
+    }
+
+    public void SetKnockBackDirection(Vector3 dir)
+    {
+        knockBackDir = dir.normalized;
     }
 }
