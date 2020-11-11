@@ -14,6 +14,7 @@ public class RangedSpell : CastSpell
     {
         c.DoMoonBeam();
         //Call the spell animation
+        c.animator.SetTrigger("MoonBeam");
     }
 
     protected override void DoSpell(ref PlayerController c)

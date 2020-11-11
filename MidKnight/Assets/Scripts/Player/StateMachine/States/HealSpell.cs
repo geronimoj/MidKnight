@@ -11,6 +11,7 @@ public class HealSpell : CastSpell
     /// <param name="c"></param>
     protected override void DoSpell(ref PlayerController c)
     {
+        c.animator.SetBool("FinishHeal", true);
         c.MoonLight -= spellCost;
         c.TakeDamage(-healAmount);
     }
@@ -27,5 +28,6 @@ public class HealSpell : CastSpell
     protected override void ExtraOnEnter(ref PlayerController c)
     {   //Enter the heal animation
         c.animator.SetTrigger("DoHeal");
+        c.animator.SetBool("FinishHeal", false);
     }
 }
