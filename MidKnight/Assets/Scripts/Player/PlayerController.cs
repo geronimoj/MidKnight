@@ -22,8 +22,7 @@ public class PlayerController : Character
     /// <summary>
     /// The layermask that we can stand on
     /// </summary>
-    [SerializeField]
-    private LayerMask ground;
+    public LayerMask ground;
     /// <summary>
     /// The storage location for the players movement infromation
     /// </summary>
@@ -284,6 +283,25 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// The cooldown duration of moonBeam
+    /// </summary>
+    [Range(0,100)]
+    public float moonBeamCooldown = 0;
+    /// <summary>
+    /// A timer for moonBeam's cooldown
+    /// </summary>
+    private float moonBeamTimer = 0;
+    /// <summary>
+    /// Returns true if the moonBeam can be cast
+    /// </summary>
+    public bool CanCastMoonBeam
+    {
+        get
+        {
+            return moonBeamTimer < 0;
+        }
+    }
+    /// <summary>
     /// Gets a reference to the State & Game Managers
     /// </summary>
     protected override void AwakeExtra()
@@ -335,6 +353,7 @@ public class PlayerController : Character
             iFrameTimer -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
         bonusDamageTimer -= Time.deltaTime;
+        moonBeamTimer -= Time.deltaTime;
         //If the timer for bonus damage is finished, set bonus damage to 0
         if (bonusDamageTimer < 0)
             bonusDamage = 0;
@@ -399,6 +418,13 @@ public class PlayerController : Character
     public void OnLand()
     {
         canJumpAgain = true;
+    }
+    /// <summary>
+    /// Called when moonBeam is casted
+    /// </summary>
+    public void DoMoonBeam()
+    {
+        moonBeamTimer = moonBeamCooldown;
     }
     /// <summary>
     /// Deals damage to the player with iframes included

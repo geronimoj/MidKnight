@@ -12,6 +12,7 @@ public class RangedSpell : CastSpell
 
     protected override void ExtraOnEnter(ref PlayerController c)
     {
+        c.DoMoonBeam();
         //Call the spell animation
     }
 
