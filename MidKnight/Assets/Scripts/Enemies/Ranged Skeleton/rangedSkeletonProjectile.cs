@@ -50,8 +50,12 @@ public class rangedSkeletonProjectile : basePrefab
 
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Floor"))
         {
-            Destroy(this.gameObject);
+            HasBeenHit();
         }
     }
 
+    public override void HasBeenHit()
+    {
+        Destroy(this.gameObject);
+    }
 }
