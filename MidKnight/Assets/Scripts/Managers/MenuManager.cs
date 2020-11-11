@@ -71,7 +71,13 @@ public class MenuManager : MonoBehaviour
         LoadScene(gameSceneName);
     }
 
-    public void LoadScene(string scene)
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        LoadScene("MainMenu");
+    }
+
+    private void LoadScene(string scene)
     {
         SceneManager.LoadScene(scene);
     }
