@@ -81,6 +81,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
+  hitstunDuration: 0.1
+  knockBackDuration: 0.1
+  knockBackDir: {x: 0, y: 0, z: 0}
+  knockBackForce: 10
+  knockBackAngle: 20
   ut: {fileID: 0}
   gm: {fileID: 0}
   animator: {fileID: 0}
@@ -97,10 +102,6 @@ MonoBehaviour:
   moonLightCap: 100
   moonLight: 0
   bonusDamageLifeTime: 1
-  hitstunDuration: 0.1
-  knockBackDuration: 0.1
-  knockBackAngle: 20
-  knockBackForce: 10
   moonBeamCooldown: 2
 --- !u!114 &701012600202567747
 MonoBehaviour:
@@ -137,6 +138,7 @@ MonoBehaviour:
   everyMoonPhase:
   - {fileID: 11400000, guid: fe054eb81527cde4aa77a0416bf5a55b, type: 2}
   - {fileID: 11400000, guid: a6a6d065a228bc24283ecaed1ff67952, type: 2}
+  - {fileID: 11400000, guid: 9f475ba111ca12d49b0913d3422490b4, type: 2}
   - {fileID: 11400000, guid: b103358b5e0dae54cbc9c902e8343e0b, type: 2}
   attackIndexToDisplay: 0
   displayAttack: 0
