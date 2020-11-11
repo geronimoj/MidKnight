@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4f9bef916012024385a9000fdd66cad, type: 3}
-  m_Name: ProjectileHitbox
+  m_Name: Attack
   m_EditorClassIdentifier: 
-  duration: 10
+  duration: 0.3
   hitboxes:
   - startTime: 0
-    endTime: 1.720986
-    length: 0
-    radius: 0.3
-    orientation: {x: 0, y: 0, z: 0}
-    startPoint: {x: 0, y: 0, z: 0}
-    endPoint: {x: 0.06965256, y: 0, z: -0.036949933}
+    endTime: 0.3
+    length: 1
+    radius: 0.5
+    orientation: {x: 1, y: 0, z: 0}
+    startPoint: {x: 1, y: 0, z: 0}
+    endPoint: {x: 1, y: 0, z: 0}
   OnStart:
     m_PersistentCalls:
       m_Calls: []

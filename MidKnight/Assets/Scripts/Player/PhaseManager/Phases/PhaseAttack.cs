@@ -41,14 +41,7 @@ public class PhaseAttack : ScriptableObject
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(0, ref c);
         //Apply other affects
-        for (int i = 0; i < hits.Length; i++)
-            if (hits[i].transform.CompareTag("Enemy"))
-            {
-                Enemy e = hits[i].transform.GetComponent<Enemy>();
-                //Get the enemy component from the enemy and knock them backwards
-                e.SetKnockBackDirection(c.transform.right);
-                e.knockBackForce = knockBack;
-            }
+        ApplyKnockback(ref hits, c.transform.right);
         //Check if the attack has finished
         if (attacks[0].AttackFinished)
             AttackFinished(ref c);
@@ -62,15 +55,7 @@ public class PhaseAttack : ScriptableObject
         //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(1, ref c);
         //Apply other affects
-        for (int i = 0; i < hits.Length; i++)
-            if (hits[i].transform.CompareTag("Enemy"))
-            {
-                Enemy e = hits[i].transform.GetComponent<Enemy>();
-                //Get the enemy component from the enemy and knock them backwards
-                e.SetKnockBackDirection(Vector3.up);
-                e.knockBackForce = knockBack;
-            }
-
+        ApplyKnockback(ref hits, Vector3.up);
         //Did the attack finish?
         if (attacks[1].AttackFinished)
             AttackFinished(ref c);
@@ -83,13 +68,11 @@ public class PhaseAttack : ScriptableObject
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(2, ref c);
         //Apply other affects
+        ApplyKnockback(ref hits, Vector3.down);
+        //Do a pogo on the enemies hit
         for (int i = 0; i < hits.Length; i++)
             if (hits[i].transform.CompareTag("Enemy"))
             {
-                Enemy e = hits[i].transform.GetComponent<Enemy>();
-                //Get the enemy component from the enemy and knock them backwards
-                e.SetKnockBackDirection(Vector3.down);
-                e.knockBackForce = knockBack;
                 c.movement.VertSpeed = pogoForce;
                 c.OnLand();
             }
@@ -119,6 +102,18 @@ public class PhaseAttack : ScriptableObject
         DealDamage(ref hits, ref c, c.BonusDamage);
 
         return hits;
+    }
+
+    protected void ApplyKnockback(ref RaycastHit[] hits, Vector3 pushDir)
+    {
+        for (int i = 0; i < hits.Length; i++)
+            if (hits[i].transform.CompareTag("Enemy"))
+            {
+                Enemy e = hits[i].transform.GetComponent<Enemy>();
+                //Get the enemy component from the enemy and knock them backwards
+                e.SetKnockBackDirection(pushDir);
+                e.knockBackForce = knockBack;
+            }
     }
     /// <summary>
     /// Deals damage to the hit targets

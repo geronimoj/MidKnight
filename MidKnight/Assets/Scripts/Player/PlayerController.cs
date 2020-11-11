@@ -152,14 +152,21 @@ public class PlayerController : Character
     /// The timer for if the player can dash
     /// </summary>
     private float dashTimer = 0;
+
+    private bool canDash = false;
     /// <summary>
     /// Returns true if the player can dash
+    /// Sets if the player is allowed to dash. Wether the player can dash is still determined by an external timer tho
     /// </summary>
     public bool CanDash
     {
         get
         {
-            return dashTimer <= 0;
+            return dashTimer <= 0 && canDash;
+        }
+        set
+        {
+            canDash = value;
         }
     }
     /// <summary>
@@ -417,6 +424,7 @@ public class PlayerController : Character
     public void OnDash()
     {
         dashTimer = dashCooldown;
+        CanDash = false;
     }
     /// <summary>
     /// Called when the player jumps
@@ -432,6 +440,7 @@ public class PlayerController : Character
     public void OnLand()
     {
         canJumpAgain = true;
+        CanDash = true;
     }
     /// <summary>
     /// Called when moonBeam is casted
