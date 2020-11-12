@@ -480,7 +480,7 @@ public class PlayerController : Character
             return;
         if (knockBackTimer > 0)
         {
-            moveVec = knockBackDir.normalized * knockBackForce;
+            moveVec = knockBackDir * knockBackForce;
             //Calculate the change in the vectors
             Vector3 v = movement.MoveVec - moveVec;
             v *= 1 - (knockBackTimer / knockBackDuration);
@@ -622,6 +622,10 @@ public class PlayerController : Character
     {
         knockBackDir = dir.normalized;
 
+        if (Vector3.Dot(dir, Vector3.up) > 0.95)
+            knockBackDir = transform.right;
+
         knockBackDir.y = Mathf.Sin(knockBackAngle * Mathf.Deg2Rad);
+
     }
 }
