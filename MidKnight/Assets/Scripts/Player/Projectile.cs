@@ -43,7 +43,9 @@ public class Projectile : MonoBehaviour
     /// A storage location for the movementVector so we don't have to keep creating it
     /// </summary>
     private Vector3 moveVec;
-
+    /// <summary>
+    /// Set to true when the projectile should destroy itself
+    /// </summary>
     private bool destroySelf = false;
     /// <summary>
     /// A reference to the gameManager
@@ -77,7 +79,10 @@ public class Projectile : MonoBehaviour
         //If we should destroy ourself. DO IT
         //We do this at the beginning of the frame so it has a chance to update its visual location before destroying itself
         if (destroySelf)
+        {
             Destroy(gameObject);
+            return;
+        }
         //Calculate the vector of movement
         moveVec = transform.right * speed * Time.deltaTime;
 
