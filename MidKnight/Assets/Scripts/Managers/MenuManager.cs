@@ -41,9 +41,9 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI
-    public Slider healthSlider;
-    public Slider moonlightSlider;
-    public Slider eclipseSlider;
+    public Image healthFillImage;
+    public Image moonlightFillImage;
+    public Image eclipseFillImage;
     public Slider newMoonCooldownSlider;
     public Slider crescentMoonCooldownSlider;
     public Slider halfMoonCooldownSlider;
@@ -51,8 +51,6 @@ public class MenuManager : MonoBehaviour
     public Text healthText;
     public Text moonlightText;
     public Text eclipseText;
-    public GameObject nextPhase;
-    public GameObject previousPhase;
     public GameObject eclipse;
     public GameObject newMoon;
     public GameObject crescentMoon;
@@ -378,6 +376,6 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI Functions
-    
+
     #endregion
 }
