@@ -139,6 +139,9 @@ public class PhaseManager : MonoBehaviour
         //Exit
         current.PhaseExit(ref c);
         current.OnExit.Invoke();
+        //We do this outside of the OnExit so that if someone overrides it, it doesn't poop itself & so we can call OnExit
+        //when exiting the eclipse mode to "deactivate" the phase without putting it on cooldown
+        current.PutOnCooldown();
         //Swap
         current = target;
         OnSwap.Invoke();
