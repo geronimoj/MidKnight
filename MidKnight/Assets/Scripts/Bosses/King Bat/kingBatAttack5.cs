@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingBatAttack5 : baseBossAttack
 {
+    /// <summary>
+    /// the king bat's fifth attack
+    /// it dashes to a random spot in the arena
+    /// </summary>
     int count = 0;
     public int noOfSonicWaves;
 
@@ -19,12 +23,15 @@ public class kingBatAttack5 : baseBossAttack
     {
         MoveToDestination(destination);
 
+        //use the second part of his fifth attack at this destination 5 times
         if (Vector3.Distance(enemyTrans.position, destination) < 0.1f)
         {
             animator.SetTrigger("atk5part2");
             count++;
         }
 
+
+        //go back to idle after the fifth time and set count to 0 for next time
         if (count >= 5)
         {
             animator.SetTrigger("idle");

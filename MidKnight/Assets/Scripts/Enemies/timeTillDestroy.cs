@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class timeTillDestroy : MonoBehaviour
 {
+    /// <summary>
+    /// destroy the object after this timer
+    /// </summary>
     public float startTimeTillDestroy;
 
     // Start is called before the first frame update

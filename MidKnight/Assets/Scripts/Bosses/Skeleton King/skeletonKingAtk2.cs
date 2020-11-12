@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class skeletonKingAtk2 : baseBossAttack
 {
+    /// <summary>
+    /// the skeleton king's first attack
+    /// it summons homing orbs
+    /// </summary>
     public float phase2StartTimeTillAtk;
     float timeBetweenAttacks;
     public float startTimeBetweenAttacks;

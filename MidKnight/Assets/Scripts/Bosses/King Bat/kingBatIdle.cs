@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class kingBatIdle : baseBossIdle
 {
+    /// <summary>
+    /// idle state for the king bat
+    /// </summary>
     public float arenaUpYCoordinate;
     public float arenaDownYCoordinate;
     public float arenaLeftXCoordinate;
@@ -17,6 +20,7 @@ public class kingBatIdle : baseBossIdle
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //make it so the bat has to move at least a little bit
         while (Vector3.Distance(destination, enemyTrans.position) < minDistFromDestination)
         {
             destination.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaDownYCoordinate, arenaUpYCoordinate), enemyTrans.position.z);
@@ -33,7 +37,6 @@ public class kingBatIdle : baseBossIdle
             moveToUse = 5;
             hasUsedBossMove2 = true;
         }
-
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -41,6 +44,7 @@ public class kingBatIdle : baseBossIdle
     {
         MoveToDestination(destination);
 
+        //face the way its flying
         if(destination.x > enemyTrans.position.x)
         {
             FaceRight();
@@ -50,6 +54,7 @@ public class kingBatIdle : baseBossIdle
             FaceLeft();
         }
 
+        //use its attack when its at its destination
         if (Vector3.Distance(destination, enemyTrans.position) < 0.1f)
         {
             switch (moveToUse)
@@ -80,6 +85,7 @@ public class kingBatIdle : baseBossIdle
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //face the player on exit
         FacePlayer();    
     }
 

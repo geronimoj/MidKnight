@@ -129,11 +129,12 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   speed: 10
   damage: 1
+  isBreakable: 0
   laser: {fileID: 8548532077015578974, guid: 5f232bc2cd4fcf64fbb659eb3d09d6d4, type: 3}
   radiusIncrease: 0.1
   maxRadius: 10
   startTimeBetweenAttacks: 0.3
-  noOfLasers: 5
+  noOfLasers: 7
   timeTillShrink: 1.5
 --- !u!114 &2417523163139258207
 MonoBehaviour:
@@ -147,4 +148,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16497c97cec3edc42a95d9804514fa0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTimeTillDestroy: 6.6
+  startTimeTillDestroy: 9

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingRatAttack5 : baseBossAttack
 {
+    /// <summary>
+    /// king rat's fifth attack
+    /// it dashes to the other side of the arena then calls the second part of its attack
+    /// </summary>
     public int noOfDashesToUse;
     int dashCount = 0;
 
@@ -17,6 +21,7 @@ public class kingRatAttack5 : baseBossAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //if it hasnt dashed 5 times yet, dash to the other side and go to part 2
         if (dashCount < noOfDashesToUse)
         {
             if (timeTillAtk > 0)
@@ -46,6 +51,7 @@ public class kingRatAttack5 : baseBossAttack
             }
         }
 
+        //reset this to 0 and go to idle
         if(dashCount == noOfDashesToUse)
         {
             dashCount = 0;

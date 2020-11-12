@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class werewolfIdle : baseBossIdle
 {
+    /// <summary>
+    /// werewolf's idle state.
+    /// it runs to one side of the arena then uses its move
+    /// </summary>
     public int arenaLeftXCoordinate;
     public int ArenaRightXCoordinate;
     public int phase2speed;
@@ -14,6 +18,7 @@ public class werewolfIdle : baseBossIdle
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         
+        //face away from the player and run to that side of the arena
         if(playerTrans.position.x > enemyTrans.position.x)
         {
             FaceLeft();
@@ -25,6 +30,7 @@ public class werewolfIdle : baseBossIdle
             destination.Set(ArenaRightXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
         }
 
+        //when it has under half health it switches to phase 2
         if (!hasUsedBossMove && enemy.Health <= 1 / 2 * enemy.MaxHealth)
         {
             moveToUse = 5;
@@ -42,7 +48,8 @@ public class werewolfIdle : baseBossIdle
     {
         MoveToDestination(destination);
 
-        if (Vector3.Distance(destination, enemyTrans.position) < 0.3f)
+        //use its move at the end of the arena
+        if (Vector3.Distance(destination, enemyTrans.position) < 2f)
         {
             switch (moveToUse)
             {

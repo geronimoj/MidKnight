@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingBatAttack1 : baseBossAttack
 {
+    /// <summary>
+    /// king bat's first attack
+    /// It spawns 2 small bats
+    /// </summary>
     Vector3 spawnPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -23,6 +27,7 @@ public class kingBatAttack1 : baseBossAttack
         {
             hasUsedMove = true;
 
+            //spawns 2 small bats
             for (int i = 0; i < 2; i++)
             {
                 spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);

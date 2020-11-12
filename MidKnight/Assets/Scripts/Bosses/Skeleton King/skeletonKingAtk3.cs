@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class skeletonKingAtk3 : baseBossAttack
 {
+    /// <summary>
+    /// the skeleton king's third attack
+    /// it summons some laser beams
+    /// </summary>
     public float phase2StartTimeTillAtk;
     int noOfLaserBeams;
     public int phase1NoOfLaserBeams;
@@ -14,6 +18,7 @@ public class skeletonKingAtk3 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //the amount of laser beams changes dependong on the phase
         noOfLaserBeams = phase1NoOfLaserBeams;
 
         if (animator.GetComponent<Enemy>().isPhase2)

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingBatAttack3 : baseBossAttack
 {
+    /// <summary>
+    /// king bat's third attack
+    /// it fires a sonic wave at the player
+    /// </summary>
     public int sonicWaveSpeed;
     public float sonicWaveSize;
 

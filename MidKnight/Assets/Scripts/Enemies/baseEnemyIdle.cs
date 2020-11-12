@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class baseEnemyIdle : StateMachineBehaviour
 {
+    /// <summary>
+    /// All basic enemies idle animations will derive from this
+    /// </summary>
+    /// 
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Vector3 destination;

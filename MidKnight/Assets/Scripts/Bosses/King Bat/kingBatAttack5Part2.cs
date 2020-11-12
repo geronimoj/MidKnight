@@ -4,16 +4,30 @@ using UnityEngine;
 
 public class kingBatAttack5Part2 : baseBossAttack
 {
+    /// <summary>
+    /// king bat's fifth attack part 2
+    /// it shoots a sonic wave at the player and drops rocks
+    /// </summary>
     public int sonicWaveSpeed;
     public float sonicWaveSize;
     public float startTimeTillAtk5;
     float timeTillAtk5;
+    public int noOfRocks;
+    Vector3 spawnPos;
+    public GameObject rocks;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         timeTillAtk5 = startTimeTillAtk5;
+        spawnPos = new Vector3(0, 0, 0);
+
+        for (int i = 0; i < noOfRocks; i++)
+        {
+            spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
+            Instantiate(rocks, spawnPos, enemyTrans.rotation);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
