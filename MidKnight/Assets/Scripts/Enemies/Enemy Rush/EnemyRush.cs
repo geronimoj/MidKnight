@@ -24,6 +24,7 @@ public class EnemyRush : MonoBehaviour
     int i = 0;
     GameObject[] enemiesArray;
     int noOfEnemies;
+    public bool hasCompletedEnemyRush = false;
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +93,10 @@ public class EnemyRush : MonoBehaviour
                     Instantiate(Enemies[i], spawnPos, playerTrans.rotation);
                     i++;
                 }
+            }
+            else
+            {
+                hasCompletedEnemyRush = true;
             }
         }
     }
