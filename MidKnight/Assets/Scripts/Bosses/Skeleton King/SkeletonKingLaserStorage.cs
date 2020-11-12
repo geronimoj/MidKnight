@@ -29,7 +29,7 @@ public class SkeletonKingLaserStorage : basePrefab
 
         //initialise stuff
         radiusIncreaseVector = new Vector3(radiusIncrease, radiusIncrease, radiusIncrease);
-        destination.Set(0, 13, 0);
+        destination.Set(0, 20, 0);
 
     }
 
@@ -62,11 +62,11 @@ public class SkeletonKingLaserStorage : basePrefab
 
                     if(playerTrans.position.x < 0)
                     {
-                        laserZRotation = (0.096f * Mathf.Pow(playerTrans.position.x, 2)) + 4.78f * playerTrans.position.x + 269.945f;
+                        laserZRotation = (0.047f * Mathf.Pow(playerTrans.position.x, 2)) + 3.3f * playerTrans.position.x + 270;
                     }
                     else
                     {
-                        laserZRotation = -(0.096f * Mathf.Pow(playerTrans.position.x, 2)) + 4.78f * playerTrans.position.x + 269.945f;
+                        laserZRotation = -(0.047f * Mathf.Pow(playerTrans.position.x, 2)) + 3.3f * playerTrans.position.x + 270;
                     }
                     timeBetweenAttacks = startTimeBetweenAttacks;
                 }
