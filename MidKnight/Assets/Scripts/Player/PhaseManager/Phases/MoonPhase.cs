@@ -26,6 +26,8 @@ public class MoonPhase : ScriptableObject
     /// Set to true if this is the active phase.
     /// </summary>
     private bool active = false;
+
+    private bool newAttackInput = false;
     /// <summary>
     /// Returns true if this is the active phase
     /// </summary>
@@ -115,7 +117,7 @@ public class MoonPhase : ScriptableObject
             return;
         }
         //Do we want to attack or are we already attacking
-        if (Input.GetAxisRaw("Attack") != 0 || c.Attacking)
+        if (Input.GetAxisRaw("Attack") != 0 && newAttackInput || c.Attacking)
         {
             //If we are already attacking, continue the attack instead of starting a new one
             if (c.Attacking)
@@ -155,6 +157,7 @@ public class MoonPhase : ScriptableObject
                 float d = Input.GetAxisRaw("Vertical");
                 //Set us to be attacking. This is set to false once the attack is complete automatically
                 c.Attacking = true;
+                newAttackInput = false;
                 //Check which attack we should do
                 switch (d)
                 {
@@ -187,6 +190,8 @@ public class MoonPhase : ScriptableObject
                 c.animator.SetInteger("Attack", attackIndex);
             }
         }
+        else if (Input.GetAxis("Attack") == 0)
+            newAttackInput = true;
     }
 
     public void DecrementCooldownTimer()
