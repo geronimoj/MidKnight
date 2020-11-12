@@ -98,7 +98,7 @@ public class PhaseManager : MonoBehaviour
         //Increment the timer
         timer += Time.deltaTime;
 #endif  //Perform the custom functions for eclipse mode
-        if (stepToEclipse >= swapsTillEclipse)
+        if (stepToEclipse >= swapsTillEclipse && Input.GetAxis("Eclipse") != 0)
             EclipseMode(ref c);
         else
             CyclePhase(ref c);
