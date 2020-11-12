@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class baseEnemyAttack : StateMachineBehaviour
 {
+    /// <summary>
+    /// All basic enemies attack animations will derive from this
+    /// </summary>
+
     public float startTimeTillAtk;
     [HideInInspector] public float timeTillAtk;
     [HideInInspector] public bool hasUsedAtk;

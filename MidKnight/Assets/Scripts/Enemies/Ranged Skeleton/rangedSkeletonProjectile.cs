@@ -54,6 +54,7 @@ public class rangedSkeletonProjectile : basePrefab
         }
     }
 
+    //destroy this when the player hits it
     public override void HasBeenHit()
     {
         Destroy(this.gameObject);

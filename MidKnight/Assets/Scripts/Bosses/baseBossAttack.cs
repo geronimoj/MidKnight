@@ -5,9 +5,9 @@ using UnityEngine;
 public class baseBossAttack : StateMachineBehaviour
 {
     /// <summary>
-    /// most boss attacks follow this formula
+    /// all boss attack states derives from this
     /// </summary>
-    
+
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public float timeTillAtk;
@@ -122,6 +122,10 @@ public class baseBossAttack : StateMachineBehaviour
         }
     }
 
+    /// <summary>
+    /// check if the enemy is facing the right
+    /// </summary>
+    /// <returns></returns>
    public bool isFacingRight()
     {
         if(enemyTrans.eulerAngles == new Vector3(0,0,0))

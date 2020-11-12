@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : Character
 {
+    /// <summary>
+    /// every enemy has this script
+    /// </summary>
     Animator enemyAnim;
     EnemyHitbox enemyHitbox;
     Collider enemyCol;
@@ -39,6 +42,9 @@ public class Enemy : Character
         }
     }
 
+    /// <summary>
+    /// Call this when the enemy dies
+    /// </summary>
     public override void OnDeath()
     {
         enemyAnim.SetTrigger("death");
