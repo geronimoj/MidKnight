@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingBatAttack2 : baseBossAttack
 {
+    /// <summary>
+    /// king bat's second attack.
+    /// it dashes to the player
+    /// </summary>
     int count;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -48,7 +52,6 @@ public class kingBatAttack2 : baseBossAttack
                 {
                     animator.SetTrigger("idle");
                 }
-
             }
         }
     }

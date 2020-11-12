@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class werewolfAttack4 : baseBossAttack
 {
+    /// <summary>
+    /// werewolf's fourth attack. it jumps high in the air and lands on the player
+    /// </summary>
     public int phase2speed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -11,10 +14,12 @@ public class werewolfAttack4 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         
+        //set him to have 0 gravity
         gravity = 0;
 
         destination.Set(playerTrans.position.x, arenaUpYCoordinate, enemyTrans.position.z);
 
+        //change the speed if its phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
         {
             speed = phase2speed;
@@ -24,6 +29,7 @@ public class werewolfAttack4 : baseBossAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //change its gravity to make it fall faster
         if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
         {
             gravity = 15;

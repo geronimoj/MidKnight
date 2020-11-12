@@ -7,8 +7,10 @@ public class SavingManager : MonoBehaviour
 {
     public List<RestPoint> RestPoints = new List<RestPoint>();
     public int currentRestPoint = 0;
-    public string filenameBinary = "SaveBinary.bin";
-    public string filenameTxt = "SaveText.txt";
+    [SerializeField]
+    private string filenameBinary = "SaveBinary.bin";
+    [SerializeField]
+    private string filenameTxt = "SaveText.txt";
     [SerializeField]
     private PlayerController player;
     [SerializeField]
@@ -151,7 +153,6 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
-                    EM.EntitiesToNotRespawn.Clear();
                     EM.EntitiesToNotRespawn = tempEntities;
                 }
                 else if (readLine == "Unlocks")
@@ -165,7 +166,6 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadString(), reader.ReadBoolean());
                     }
 
-                    player.GetComponent<UnlockTracker>().unlocks.Clear();
                     player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                     done = true;
                 }
@@ -209,7 +209,6 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
-                    EM.EntitiesToNotRespawn.Clear();
                     EM.EntitiesToNotRespawn = tempEntities;
                 }
                 else if (readLine == "Unlocks")
@@ -223,7 +222,6 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadLine(), bool.Parse(reader.ReadLine()));
                     }
 
-                    player.GetComponent<UnlockTracker>().unlocks.Clear();
                     player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                 }
             }

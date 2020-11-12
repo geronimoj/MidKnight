@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class skeletonKingAtk6 : baseBossAttack
 {
+    /// <summary>
+    /// skeleton king's sixth attack.
+    /// it summons a barrier on him
+    /// </summary>
     public float phase2StartTimeTillAtk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -11,6 +15,7 @@ public class skeletonKingAtk6 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //the barrier summons earlier if its phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
         {
             timeTillAtk = phase2StartTimeTillAtk;

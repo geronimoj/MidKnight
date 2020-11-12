@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class werewolfAttack1 : baseBossAttack
 {
+    /// <summary>
+    /// werewolf's first attack.
+    /// it summons rocks from the sky
+    /// </summary>
     public int noOfRocks;
     Vector3 spawnPos;
     public int phase2speed;
@@ -12,8 +16,11 @@ public class werewolfAttack1 : baseBossAttack
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        //set the destination to the middle of the arena
         destination.Set((arenaLeftXCoordinate + arenaRightXCoordinate) / 2, enemyTrans.position.y + 0.1f, enemyTrans.position.z);
         
+        //change its speed if its in phase 2.
         if(animator.GetComponent<Enemy>().isPhase2)
         {
             speed = phase2speed;
@@ -33,6 +40,7 @@ public class werewolfAttack1 : baseBossAttack
         {
             hasUsedMove = true;
 
+            //summon rocks
             for (int i = 0; i < noOfRocks; i++)
             {
                 spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);

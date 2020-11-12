@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyHitbox : MonoBehaviour
 {
+    /// <summary>
+    /// the hitbox of the enemies
+    /// </summary>
     PlayerController player;
     Enemy enemy;
 
@@ -20,6 +23,10 @@ public class EnemyHitbox : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// deal damage to the player when they come into contact with the enemy
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))

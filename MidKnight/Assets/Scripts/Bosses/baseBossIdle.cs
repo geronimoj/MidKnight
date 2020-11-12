@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class baseBossIdle : StateMachineBehaviour
 {
+    /// <summary>
+    /// all boss idle states derives from this
+    /// </summary>
     [HideInInspector] public Transform enemyTrans;
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Vector3 destination;

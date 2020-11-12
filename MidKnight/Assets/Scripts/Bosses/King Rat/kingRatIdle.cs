@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class kingRatIdle : baseBossIdle
 {
+    /// <summary>
+    /// idle state of king rat
+    /// </summary>
     bool hasUsedBossMove1;
     bool hasUsedBossMove2;
 

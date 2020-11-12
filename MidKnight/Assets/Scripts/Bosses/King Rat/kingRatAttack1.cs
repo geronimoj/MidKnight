@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingRatAttack1 : baseBossAttack
 {
+    /// <summary>
+    /// king rat's first attack
+    /// it spawns 2 rats
+    /// </summary>
     Vector3 spawnPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

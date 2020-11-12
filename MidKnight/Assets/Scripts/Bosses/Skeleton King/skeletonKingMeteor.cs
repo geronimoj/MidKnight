@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class skeletonKingMeteor : basePrefab
 {
+    /// <summary>
+    /// the meteor's script
+    /// it flies towards the player
+    /// </summary>
     public int floorCoordinate;
 
     // Start is called before the first frame update
