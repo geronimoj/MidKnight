@@ -7,7 +7,7 @@ public class UnlockTracker : MonoBehaviour
 {
     //Dictionary holding all the unlocks
     public Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
-    private int healthAdd = 0;
+    private int healthAdd = 0, eclipseAdd = 0;
     private PlayerController PC;
 
     #region UNITY_EDITOR
@@ -56,18 +56,7 @@ public class UnlockTracker : MonoBehaviour
         }
 
         unlocks.Add(key, value);
-
-        if (GetKeyValue("health"))
-        {
-            healthAdd++;
-            SetKey("health", false);
-
-            while (healthAdd >= 3)
-            {
-                PC.SetMaxHealth = PC.MaxHealth + 1;
-                healthAdd -= 3;
-            }
-        }
+        CheckHealthAndEclipse();
 
         #region UNITY_EDITOR
 #if UNITY_EDITOR
@@ -102,6 +91,33 @@ public class UnlockTracker : MonoBehaviour
         return false;
     }
 
+    private void CheckHealthAndEclipse()
+    {
+        if (GetKeyValue("health"))
+        {
+            healthAdd++;
+            SetKey("health", false);
+            unlocks.Remove("health");
+
+            while (healthAdd >= 3)
+            {
+                PC.SetMaxHealth = PC.MaxHealth + 1;
+                healthAdd -= 3;
+            }
+        }
+        if (GetKeyValue("eclipse shard") && !GetKeyValue("eclipse"))
+        {
+            eclipseAdd++;
+            SetKey("eclipse shard", false);
+            unlocks.Remove("eclipse shard");
+
+            if (eclipseAdd >= 4)
+            {
+                SetKey("eclipse", true);
+            }
+        }
+    }
+
     //For saving and loading
     public int HealthAdd
     {
@@ -112,6 +128,17 @@ public class UnlockTracker : MonoBehaviour
         set
         {
             healthAdd = value;
+        }
+    }
+    public int EclipseAdd
+    {
+        get
+        {
+            return eclipseAdd;
+        }
+        set
+        {
+            eclipseAdd = value;
         }
     }
 }

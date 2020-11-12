@@ -52,6 +52,7 @@ public class SavingManager : MonoBehaviour
 
             writer.Write("Unlocks");
             writer.Write(player.GetComponent<UnlockTracker>().HealthAdd);
+            writer.Write(player.GetComponent<UnlockTracker>().EclipseAdd);
             writer.Write(player.GetComponent<UnlockTracker>().unlocks.Count);
 
             foreach (KeyValuePair<string, bool> kvp in player.GetComponent<UnlockTracker>().unlocks)
@@ -90,6 +91,7 @@ public class SavingManager : MonoBehaviour
 
             writer.WriteLine("Unlocks");
             writer.WriteLine(player.GetComponent<UnlockTracker>().HealthAdd);
+            writer.WriteLine(player.GetComponent<UnlockTracker>().EclipseAdd);
             writer.WriteLine(player.GetComponent<UnlockTracker>().unlocks.Count);
 
             foreach(KeyValuePair<string, bool> kvp in player.GetComponent<UnlockTracker>().unlocks)
@@ -154,6 +156,7 @@ public class SavingManager : MonoBehaviour
                 else if (readLine == "Unlocks")
                 {
                     player.GetComponent<UnlockTracker>().HealthAdd = reader.ReadInt32();
+                    player.GetComponent<UnlockTracker>().EclipseAdd = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
                     for (int i = 0; i < count; i++)
@@ -208,6 +211,7 @@ public class SavingManager : MonoBehaviour
                 else if (readLine == "Unlocks")
                 {
                     player.GetComponent<UnlockTracker>().HealthAdd = int.Parse(reader.ReadLine());
+                    player.GetComponent<UnlockTracker>().EclipseAdd = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
                     for (int i = 0; i < count; i++)
