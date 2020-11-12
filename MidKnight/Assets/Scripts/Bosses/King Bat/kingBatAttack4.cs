@@ -12,6 +12,7 @@ public class kingBatAttack4 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         destination.Set(enemyTrans.position.x, arenaUpYCoordinate + 5, enemyTrans.position.z);
+        spawnPos = new Vector3(0, 0, 0);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -28,7 +29,7 @@ public class kingBatAttack4 : baseBossAttack
                 hasUsedMove = true;
                 for (int i = 0; i < noOfRocks; i++)
                 {
-                    spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
+                    spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
                     Instantiate(attack, spawnPos, enemyTrans.rotation);
                 }
             }
