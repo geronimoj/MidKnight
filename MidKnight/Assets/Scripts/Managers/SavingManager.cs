@@ -151,6 +151,7 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
+                    EM.EntitiesToNotRespawn.Clear();
                     EM.EntitiesToNotRespawn = tempEntities;
                 }
                 else if (readLine == "Unlocks")
@@ -164,11 +165,13 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadString(), reader.ReadBoolean());
                     }
 
+                    player.GetComponent<UnlockTracker>().unlocks.Clear();
                     player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                     done = true;
                 }
             }
 
+            reader.Close();
             return true;
         }
         catch (IOException ioe)
@@ -206,6 +209,7 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
+                    EM.EntitiesToNotRespawn.Clear();
                     EM.EntitiesToNotRespawn = tempEntities;
                 }
                 else if (readLine == "Unlocks")
@@ -219,10 +223,12 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadLine(), bool.Parse(reader.ReadLine()));
                     }
 
+                    player.GetComponent<UnlockTracker>().unlocks.Clear();
                     player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                 }
             }
 
+            reader.Close();
             return true;
         }
         catch (IOException ioe)
