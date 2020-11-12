@@ -479,7 +479,15 @@ public class PlayerController : Character
         if (hitstunTimer > 0)
             return;
         if (knockBackTimer > 0)
-            moveVec = knockBackDir * knockBackForce * Time.deltaTime;
+        {
+            moveVec = knockBackDir.normalized * knockBackForce;
+            //Calculate the change in the vectors
+            Vector3 v = movement.MoveVec - moveVec;
+            v *= 1 - (knockBackTimer / knockBackDuration);
+            moveVec += v;
+            moveVec *= Time.deltaTime;
+            movement.VertSpeed = 0;
+        }
         if (gm == null)
         {   //If we don't have a gameManager, move along the x axis only
             moveVec.z = 0;

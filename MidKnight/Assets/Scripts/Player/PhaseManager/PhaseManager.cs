@@ -160,14 +160,16 @@ public class PhaseManager : MonoBehaviour
         //Set the cooldown timer
         cooldownTimer = swapCooldown;
         c.GainBonusDamage();
-        //Gain a step towards eclipse mode
-        stepToEclipse++;
+        //If we have eclipse unlocked, step towards it
+        if (c.ut.GetKeyValue("Eclipse"))
+            //Gain a step towards eclipse mode
+            stepToEclipse++;
         //Exit
         current.PhaseExit(ref c);
         current.OnExit.Invoke();
         //Store the previous phase
         previous = current;
-        //We do this outside of the OnExit so that if someone overrides it, it doesn't poop itself & so we can call OnExit
+        //We do this outside of the OnExit so that if someone overrides it and doesn't add the timer & active checks, it doesn't poop itself & so we can call OnExit
         //when exiting the eclipse mode to "deactivate" the phase without putting it on cooldown
         current.PutOnCooldown();
         //Swap
