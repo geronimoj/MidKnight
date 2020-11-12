@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class rocks : basePrefab
 {
+    /// <summary>
+    /// a prefab that drops downwards
+    /// </summary>
+    /// 
     // Start is called before the first frame update
     public override void Start()
     {
@@ -18,6 +22,10 @@ public class rocks : basePrefab
         MoveToDestination(destination);
     }
 
+    /// <summary>
+    /// destroy this when it hits the wall or the floor
+    /// </summary>
+    /// <param name="other"></param>
     public override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

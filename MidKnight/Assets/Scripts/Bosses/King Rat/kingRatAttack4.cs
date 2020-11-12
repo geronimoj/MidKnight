@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingRatAttack4 : baseBossAttack
 {
+    /// <summary>
+    /// king rat's fourth attack
+    /// it shoots a laser beam into the sky, and multiple more rain down shortly after
+    /// </summary>
     public int noOfLaserBeams;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

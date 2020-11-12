@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class kingRatAttack3 : baseBossAttack
 {
+    /// <summary>
+    /// king rat's third attack
+    /// it shoots a laser beam
+    /// </summary>
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

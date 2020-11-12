@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingRatAttack2 : baseBossAttack
 {
+    /// <summary>
+    /// king rat's second attack
+    /// it dashes to the other side of the arena then drops some rocks
+    /// </summary>
     Vector3 spawnPos;
     public int noOfRocks;
 
@@ -11,6 +15,8 @@ public class kingRatAttack2 : baseBossAttack
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        //initialise stuff
         spawnPos = new Vector3(0, 0, 0);
         destination.Set(playerTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
     }
@@ -43,6 +49,7 @@ public class kingRatAttack2 : baseBossAttack
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //drop some rocks
         for (int i = 0; i < noOfRocks; i++)
         {
             spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);

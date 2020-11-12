@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class skeletonKingAtk7 : baseBossAttack
 {
+    /// <summary>
+    /// skeleton king's transition phase.
+    /// </summary>
     public float phase2StartTimeTillAtk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -11,6 +14,7 @@ public class skeletonKingAtk7 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //set the skeleton king to phase 2
         animator.GetComponent<Enemy>().isPhase2 = true;
     }
 

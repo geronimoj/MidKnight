@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class skeletonKingAtk1 : baseBossAttack
 {
+    /// <summary>
+    /// skeleton kings first attack.
+    /// it shoots a laser beam at the player
+    /// </summary>
     public float phase2StartTimeTillAtk;
     public int laserBeamHeight;
 
@@ -12,6 +16,7 @@ public class skeletonKingAtk1 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //the laser appears earlier if its in phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
         {
             timeTillAtk = phase2StartTimeTillAtk;

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class skeletonKingIdle : baseBossIdle
 {
+    /// <summary>
+    /// the skeleton king's idle animation
+    /// </summary>
     bool hasUsedBossMove = false;
     public int phase2speed;
 
@@ -12,11 +15,13 @@ public class skeletonKingIdle : baseBossIdle
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //change its speed if its phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
         {
             speed = phase2speed;
         }
 
+        //use this once when its under half health
         if (!hasUsedBossMove && enemy.Health <= 1 / 2 * enemy.MaxHealth)
         {
             moveToUse = 7;

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class skeletonKingAtk4 : baseBossAttack
 {
+    /// <summary>
+    /// skeleton king's fourth attack
+    /// </summary>
     public float phase2StartTimeTillAtk;
     int barrierRadius;
     public int phase1BarrierRadius;
@@ -12,6 +15,8 @@ public class skeletonKingAtk4 : baseBossAttack
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        //change the radius and and cast speed depending on the phase
         barrierRadius = phase1BarrierRadius;
 
         if (animator.GetComponent<Enemy>().isPhase2)

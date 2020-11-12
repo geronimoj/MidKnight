@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class timeTillColliderEnabled : MonoBehaviour
 {
+    /// <summary>
+    /// turn on the collider after this timer
+    /// </summary>
     Collider prefabCol;
     public float timeTillEnabled;
 

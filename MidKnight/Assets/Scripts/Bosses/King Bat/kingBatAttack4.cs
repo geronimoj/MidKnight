@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingBatAttack4 : baseBossAttack
 {
+    /// <summary>
+    /// king bat's fourth attack.
+    /// it flies up and drops rocks at the player
+    /// </summary>
     public int noOfRocks;
     Vector3 spawnPos;
 
@@ -11,6 +15,8 @@ public class kingBatAttack4 : baseBossAttack
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        //initialise stuff
         destination.Set(enemyTrans.position.x, arenaUpYCoordinate + 5, enemyTrans.position.z);
         spawnPos = new Vector3(0, 0, 0);
     }
@@ -20,6 +26,7 @@ public class kingBatAttack4 : baseBossAttack
     {
         MoveToDestination(destination);
 
+        //if the bat is at its destination it drops rocks then moves back down
         if(Vector3.Distance(enemyTrans.position, destination) < 0.1f)
         {
             if (!hasUsedMove)
