@@ -19,7 +19,6 @@ public class skeletonKingAtk4 : baseBossAttack
             barrierRadius = phase2BarrierRadius;
             timeTillAtk = phase2StartTimeTillAtk;
         }
-
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

@@ -8,9 +8,11 @@ public class basePrefab : MonoBehaviour
     [HideInInspector] public Transform prefabTrans;
     [HideInInspector] public Vector3 destination = new Vector3(0,0,0);
     PlayerController player;
+    timeTillDestroy timeTillDestroy;
     public int speed = 1;
     public int damage = 1;
     public bool isBreakable = false;
+    Collider prefabCol;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -18,6 +20,8 @@ public class basePrefab : MonoBehaviour
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         prefabTrans = GetComponent<Transform>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        timeTillDestroy = GetComponent<timeTillDestroy>();
+        prefabCol = GetComponent<Collider>();
     }
 
     public bool PlayerIsOnRight()
@@ -69,7 +73,10 @@ public class basePrefab : MonoBehaviour
     {
         if (isBreakable)
         {
-
+            destination.Set(prefabTrans.position.x, prefabTrans.position.y, prefabTrans.position.z);
+            prefabCol.enabled = false;
+            timeTillDestroy.enabled = true;
+            timeTillDestroy.startTimeTillDestroy = 1f;
         }
     }
 }
