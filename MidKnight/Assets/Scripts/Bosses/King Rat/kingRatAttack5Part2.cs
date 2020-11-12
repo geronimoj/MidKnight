@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class kingRatAttack5Part2 : baseBossAttack
 {
+    public int noOfRocks;
+    public GameObject rocks;
+    Vector3 spawnPos;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-
         FacePlayer();
+        spawnPos = new Vector3(0, 0, 0);
+
+        for (int i = 0; i < noOfRocks; i++)
+        {
+            spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
+            Instantiate(rocks, spawnPos, enemyTrans.rotation);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
