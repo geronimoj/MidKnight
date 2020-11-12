@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 2481530346075154322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.41637173, y: 0.5415282, z: 0.0000009536743}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 8277874654442051686}
   m_Father: {fileID: 0}
@@ -202,7 +202,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 200
+  hitstunDuration: 0.1
+  knockBackDuration: 0.1
+  knockBackDir: {x: 0, y: 0, z: 0}
+  knockBackForce: 0
   damage: 1
+  isPhase2: 0
+  gravity: 0
+  vertSpeed: 0
 --- !u!95 &293588288420838079
 Animator:
   serializedVersion: 3
