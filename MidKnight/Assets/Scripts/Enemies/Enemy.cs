@@ -6,6 +6,8 @@ public class Enemy : Character
 {
     Animator enemyAnim;
     EnemyHitbox enemyHitbox;
+    Collider enemyCol;
+    CharacterController enemyCC;
     public int damage;
     [HideInInspector] public bool isPhase2 = false;
     float timeTillDestroy = 5;
@@ -19,6 +21,7 @@ public class Enemy : Character
         //initialise stuff
         enemyAnim = GetComponent<Animator>();
         enemyHitbox = GetComponentInChildren<EnemyHitbox>();
+        enemyCC = GetComponent<CharacterController>();
         health = MaxHealth;
     }
 
@@ -39,6 +42,7 @@ public class Enemy : Character
     public override void OnDeath()
     {
         enemyAnim.SetTrigger("death");
+        enemyCC.enabled = false;
         Destroy(enemyHitbox);
         isDead = true;  
     }
