@@ -12,17 +12,27 @@ public class PlayerController : Character
     [SerializeField]
     [Range(0, 90)]
     protected float knockBackAngle = 20f;
-
+    /// <summary>
+    /// Reference to the state manager
+    /// </summary>
     private StateManager manager;
-
+    /// <summary>
+    /// Reference to the Phase Manager
+    /// </summary>
     private PhaseManager phase;
-
+    /// <summary>
+    /// Reference to the unlock tracker
+    /// </summary>
     [HideInInspector]
     public UnlockTracker ut;
-
+    /// <summary>
+    /// Reference to the gameManager
+    /// </summary>
     [HideInInspector]
     public GameManager gm;
-
+    /// <summary>
+    /// Reference to the animator
+    /// </summary>
     [HideInInspector]
     public Animator animator;
 
@@ -152,7 +162,9 @@ public class PlayerController : Character
     /// The timer for if the player can dash
     /// </summary>
     private float dashTimer = 0;
-
+    /// <summary>
+    /// Is true if we are allowed to dash
+    /// </summary>
     private bool canDash = false;
     /// <summary>
     /// Returns true if the player can dash
@@ -252,6 +264,9 @@ public class PlayerController : Character
     [Tooltip("The damage dealt on hit")]
     [SerializeField]
     private int damage = 0;
+    /// <summary>
+    /// A Get for damage. does not include bonus damage
+    /// </summary>
     public int Damage
     {
         get
@@ -266,6 +281,9 @@ public class PlayerController : Character
     [Range(0, 100)]
     [SerializeField]
     private float knockBack = 0;
+    /// <summary>
+    /// A Get for the base knockback. This will never change
+    /// </summary>
     public float BaseKnockBack
     {
         get
@@ -273,7 +291,13 @@ public class PlayerController : Character
             return knockBack;
         }
     }
+    /// <summary>
+    /// Where we store the actual knockback value. This one gets changed
+    /// </summary>
     private float actualKnockback = 0;
+    /// <summary>
+    /// The current knockback value
+    /// </summary>
     public float Knockback
     {
         get
@@ -285,11 +309,16 @@ public class PlayerController : Character
             actualKnockback = value;
         }
     }
-
+    /// <summary>
+    /// The upward force to apply to the player when they hit an enemy from above while airborne
+    /// </summary>
     [Tooltip("The upwards speed given to the player when hitting an enemy with the down attack while airborne")]
     [Range(0, 100)]
     [SerializeField]
     private float pogoForce = 0;
+    /// <summary>
+    /// A Get for pogoForce
+    /// </summary>
     public float PogoForce
     {
         get
@@ -304,6 +333,9 @@ public class PlayerController : Character
     [Range(0, 1000)]
     [SerializeField]
     private float moonLightGain = 0;
+    /// <summary>
+    /// A Get for the moonlight to gain per hit
+    /// </summary>
     public float MoonLightGain
     {
         get
@@ -475,11 +507,24 @@ public class PlayerController : Character
     /// </summary>
     /// <param name="moveVec">The direction of movement</param>
     public override void Move(Vector3 moveVec)
-    {
+    {   //If we are in hit stun, don't move
         if (hitstunTimer > 0)
             return;
         if (knockBackTimer > 0)
-            moveVec = knockBackDir * knockBackForce * Time.deltaTime;
+        {
+            moveVec = knockBackDir * knockBackForce;
+            //Calculate the change in the vectors
+            Vector3 v = movement.MoveVec - moveVec;
+            //Get the change as a percentage of how much knockback we have left to enforce.
+            v *= 1 - (knockBackTimer / knockBackDuration);
+            //Apply the change to the x & z component by not the y as we want that to be affected by gravity
+            moveVec.x += v.x;
+            moveVec.z += v.z;
+            //Apply gravity. We can figure out how much to add thanks to the knockback timer
+            moveVec.y -= Gravity * (knockBackDuration - knockBackTimer);
+            //Apply time
+            moveVec *= Time.deltaTime;
+        }
         if (gm == null)
         {   //If we don't have a gameManager, move along the x axis only
             moveVec.z = 0;
@@ -586,10 +631,12 @@ public class PlayerController : Character
     /// Gives the player 1 unit of bonus damage and sets the timer
     /// </summary>
     public void GainBonusDamage()
-    {
+    {   //Increase the damage
         bonusDamage++;
+        //Clamp the damage bonus
         if (bonusDamage > BonusDamageCap)
             bonusDamage = bonusDamageCap;
+        //Reset the damage bonus liftime timer
         bonusDamageTimer = bonusDamageLifeTime;
     }
     /// <summary>
@@ -612,7 +659,12 @@ public class PlayerController : Character
     public override void SetKnockBackDirection(Vector3 dir)
     {
         knockBackDir = dir.normalized;
-
+        //Check if the knockback direction is directly up
+        //This is to cover edge cases where knockback dir was directly upwards
+        if (Vector3.Dot(dir, Vector3.up) > 0.95)
+            knockBackDir = transform.right;
+        //Force the y value to be the knockback angle
         knockBackDir.y = Mathf.Sin(knockBackAngle * Mathf.Deg2Rad);
+
     }
 }

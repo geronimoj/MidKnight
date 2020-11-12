@@ -7,8 +7,10 @@ public class SavingManager : MonoBehaviour
 {
     public List<RestPoint> RestPoints = new List<RestPoint>();
     public int currentRestPoint = 0;
-    public string filenameBinary = "SaveBinary.bin";
-    public string filenameTxt = "SaveText.txt";
+    [SerializeField]
+    private string filenameBinary = "SaveBinary.bin";
+    [SerializeField]
+    private string filenameTxt = "SaveText.txt";
     [SerializeField]
     private PlayerController player;
     [SerializeField]
@@ -169,6 +171,7 @@ public class SavingManager : MonoBehaviour
                 }
             }
 
+            reader.Close();
             return true;
         }
         catch (IOException ioe)
@@ -223,6 +226,7 @@ public class SavingManager : MonoBehaviour
                 }
             }
 
+            reader.Close();
             return true;
         }
         catch (IOException ioe)
