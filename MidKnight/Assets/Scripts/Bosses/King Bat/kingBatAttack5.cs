@@ -31,7 +31,7 @@ public class kingBatAttack5 : baseBossAttack
         }
 
 
-        //go back to idle after the fifth time
+        //go back to idle after the fifth time and set count to 0 for next time
         if (count >= 5)
         {
             animator.SetTrigger("idle");

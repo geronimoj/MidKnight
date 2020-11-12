@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SkeletonKingLaserStorage : basePrefab
 {
+    /// <summary>
+    /// the skeleton king's laser storage
+    /// it flies into the air, expands, then shoots 5 lasers and the player then shrinks
+    /// </summary>
     public GameObject laser;
     public float radiusIncrease;
     Vector3 radiusIncreaseVector;
@@ -23,6 +27,7 @@ public class SkeletonKingLaserStorage : basePrefab
     {
         base.Start();
 
+        //initialise stuff
         radiusIncreaseVector = new Vector3(radiusIncrease, radiusIncrease, radiusIncrease);
         destination.Set(0, 13, 0);
 
@@ -33,12 +38,14 @@ public class SkeletonKingLaserStorage : basePrefab
     {
         MoveToDestination(destination);
 
+        //when it reaches its destination and hasnt expanded to max radius, expand
         if(prefabTrans.position == destination)
         {
             if(prefabTrans.localScale.x < maxRadius && !hasReachedMaxRadius)
             {
                 prefabTrans.localScale += radiusIncreaseVector;
             }
+            //if count is less than amount of lasers to fire, fire the next one and increase count
             else if (count < noOfLasers)
             {
                 hasReachedMaxRadius = true;
@@ -50,6 +57,7 @@ public class SkeletonKingLaserStorage : basePrefab
                 }
                 else if(!hasSetZRotation)
                 {
+                    //set its rotation slightly before it fires
                     hasSetZRotation = true;
 
                     if(playerTrans.position.x < 0)
@@ -64,6 +72,7 @@ public class SkeletonKingLaserStorage : basePrefab
                 }
                 else if(!hasUsedMove)
                 {
+                    //shoot 5 lasers
                     hasUsedMove = true;
                     hasSetZRotation = false;
                     timeBetweenAttacks = startTimeBetweenAttacks;
@@ -74,6 +83,7 @@ public class SkeletonKingLaserStorage : basePrefab
             }
             else
             {
+                //start shrinking
                 if(timeTillShrink > 0)
                 {
                     timeTillShrink -= Time.deltaTime;

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class werewolfAttack3 : baseBossAttack
 {
+    /// <summary>
+    /// werewolf's third attack.
+    /// it jumps into the air aiming to land on the player
+    /// </summary>
     public int phase2speed;
     bool isMovingRight;
 
@@ -12,11 +16,13 @@ public class werewolfAttack3 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //change its speed when its in phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
         {
             speed = phase2speed;
         }
 
+        //jump at the player
         if(PlayerOnRight())
         {
             destination.Set(arenaLeftXCoordinate/3, enemyTrans.position.y + 5f, enemyTrans.position.z);
@@ -32,6 +38,7 @@ public class werewolfAttack3 : baseBossAttack
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //when it reaches its destination switch it once
         if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
         {
             if (isMovingRight)

@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class werewolfAttack5 : baseBossAttack
 {
+    /// <summary>
+    /// werewolf's transition to phase 2 animation
+    /// </summary>
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         destination.Set((arenaLeftXCoordinate + arenaRightXCoordinate) / 2, enemyTrans.position.y + 0.1f, enemyTrans.position.z);
+
+        //change its phase to phase 2
         animator.GetComponent<Enemy>().isPhase2 = true;
     }
 

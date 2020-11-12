@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class kingRatAttack5Part2 : baseBossAttack
 {
+    /// <summary>
+    /// king rat's fifth attack part 2
+    /// he shoots a laser beam and rains rocks
+    /// </summary>
     public int noOfRocks;
     public GameObject rocks;
     Vector3 spawnPos;
@@ -12,9 +16,12 @@ public class kingRatAttack5Part2 : baseBossAttack
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        
+        //initialise stuff
         FacePlayer();
         spawnPos = new Vector3(0, 0, 0);
 
+        //rain down some rocks
         for (int i = 0; i < noOfRocks; i++)
         {
             spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);

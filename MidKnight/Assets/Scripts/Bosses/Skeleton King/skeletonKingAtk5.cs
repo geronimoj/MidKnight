@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class skeletonKingAtk5 : baseBossAttack
 {
+    /// <summary>
+    /// skeleton kings fifth attack
+    /// it summons a giant meteor at the player
+    /// </summary>
     public float phase2StartTimeTillAtk;
     public int phase2Speed;
 
@@ -29,6 +33,7 @@ public class skeletonKingAtk5 : baseBossAttack
         {
             hasUsedMove = true;
             
+            //summon a meteor which changes speed depending on skeleton king's phase
             if(enemyTrans.position.x > playerTrans.position.x)
             {
                 GameObject meteor = Instantiate(attack, new Vector3(arenaRightXCoordinate, arenaUpYCoordinate, enemyTrans.position.z), enemyTrans.rotation);

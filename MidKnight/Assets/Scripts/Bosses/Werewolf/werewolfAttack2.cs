@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class werewolfAttack2 : baseBossAttack
 {
+    /// <summary>
+    /// werewolfs second attack
+    /// it runs to the player then attacks him
+    /// </summary>
     public int phase2speed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -11,6 +15,7 @@ public class werewolfAttack2 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
+        //face the player
         if(PlayerOnRight())
         {
             destination.Set(playerTrans.position.x - 2, enemyTrans.position.y, enemyTrans.position.z);
@@ -21,6 +26,7 @@ public class werewolfAttack2 : baseBossAttack
 
         }
 
+        //change its speed if its phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
         {
             speed = phase2speed;
@@ -32,6 +38,7 @@ public class werewolfAttack2 : baseBossAttack
     {
         MoveToDestination(destination);
 
+        //attack the player when in range
         if(Vector3.Distance(enemyTrans.position, destination) < 0.1f)
         {
             animator.SetTrigger("atk2part2");
