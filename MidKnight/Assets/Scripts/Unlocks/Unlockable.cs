@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(EntitiesManager))]
 public class Unlockable : MonoBehaviour
 {
     [SerializeField]

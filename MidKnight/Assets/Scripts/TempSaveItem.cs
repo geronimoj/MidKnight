@@ -18,13 +18,13 @@ public class TempSaveItem : MonoBehaviour
         {
             if (saving)
             {
-                Debug.Log("Save Text: " + SM.Save(false, EM.EntitiesToNotRespawn, other.GetComponent<UnlockTracker>().unlocks));
-                Debug.Log("Save Binary: " + SM.Save(true, EM.EntitiesToNotRespawn, other.GetComponent<UnlockTracker>().unlocks));
+                Debug.Log("Save Text: " + SM.Save(false));
+                Debug.Log("Save Binary: " + SM.Save(true));
             }
             else if (!saving)
             {
-                Debug.Log("Load Text: " + SM.Load(false, ref EM.EntitiesToNotRespawn, ref other.GetComponent<UnlockTracker>().unlocks));
-                Debug.Log("Load Binary: " + SM.Load(true, ref EM.EntitiesToNotRespawn, ref other.GetComponent<UnlockTracker>().unlocks));
+                Debug.Log("Load Text: " + SM.Load(false));
+                Debug.Log("Load Binary: " + SM.Load(true));
             }
         }
     }

@@ -9,46 +9,52 @@ public class SavingManager : MonoBehaviour
     public int currentRestPoint = 0;
     public string filenameBinary = "SaveBinary.bin";
     public string filenameTxt = "SaveText.txt";
+    [SerializeField]
     private PlayerController player;
+    [SerializeField]
+    private EntitiesManager EM;
 
     private void Start()
     {
+        EM = GetComponent<EntitiesManager>();
         player = FindObjectOfType<PlayerController>();
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
     }
 
-    public bool Save(bool binary, List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
+    public bool Save(bool binary)
     {
         if (binary)
         {
-            return SaveBinary(entitiesToNotRespawnToSave, unlocksToSave);
+            return SaveBinary();
         }
         else
         {
-            return SaveTxt(entitiesToNotRespawnToSave, unlocksToSave);
+            return SaveTxt();
         }
     }
 
-    private bool SaveBinary(List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
+    private bool SaveBinary()
     {
         try
         {
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(filenameBinary));
-            writer.Write("Rest");
+            writer.Write("Player");
+            writer.Write(player.MaxHealth);
             writer.Write(currentRestPoint);
             writer.Write("EntitiesToNotRespawn");
-            writer.Write(entitiesToNotRespawnToSave.Count);
+            writer.Write(EM.EntitiesToNotRespawn.Count);
 
-            for (int i = 0; i < entitiesToNotRespawnToSave.Count; i++)
+            for (int i = 0; i < EM.EntitiesToNotRespawn.Count; i++)
             {
-                writer.Write(entitiesToNotRespawnToSave[i].index);
-                writer.Write(entitiesToNotRespawnToSave[i].thisRoom);
+                writer.Write(EM.EntitiesToNotRespawn[i].index);
+                writer.Write(EM.EntitiesToNotRespawn[i].thisRoom);
             }
 
             writer.Write("Unlocks");
-            writer.Write(unlocksToSave.Count);
+            writer.Write(player.GetComponent<UnlockTracker>().HealthAdd);
+            writer.Write(player.GetComponent<UnlockTracker>().unlocks.Count);
 
-            foreach (KeyValuePair<string, bool> kvp in unlocksToSave)
+            foreach (KeyValuePair<string, bool> kvp in player.GetComponent<UnlockTracker>().unlocks)
             {
                 writer.Write(kvp.Key);
                 writer.Write(kvp.Value);
@@ -65,26 +71,28 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    private bool SaveTxt(List<Entities> entitiesToNotRespawnToSave, Dictionary<string, bool> unlocksToSave)
+    private bool SaveTxt()
     {
         try
         {
             StreamWriter writer = new StreamWriter(filenameTxt);
-            writer.WriteLine("Rest");
+            writer.WriteLine("Player");
+            writer.WriteLine(player.MaxHealth);
             writer.WriteLine(currentRestPoint);
             writer.WriteLine("EntitiesToNotRespawn");
-            writer.WriteLine(entitiesToNotRespawnToSave.Count);
+            writer.WriteLine(EM.EntitiesToNotRespawn.Count);
 
-            for (int i = 0; i < entitiesToNotRespawnToSave.Count; i++)
+            for (int i = 0; i < EM.EntitiesToNotRespawn.Count; i++)
             {
-                writer.WriteLine(entitiesToNotRespawnToSave[i].index);
-                writer.WriteLine(entitiesToNotRespawnToSave[i].thisRoom);
+                writer.WriteLine(EM.EntitiesToNotRespawn[i].index);
+                writer.WriteLine(EM.EntitiesToNotRespawn[i].thisRoom);
             }
 
             writer.WriteLine("Unlocks");
-            writer.WriteLine(unlocksToSave.Count);
+            writer.WriteLine(player.GetComponent<UnlockTracker>().HealthAdd);
+            writer.WriteLine(player.GetComponent<UnlockTracker>().unlocks.Count);
 
-            foreach(KeyValuePair<string, bool> kvp in unlocksToSave)
+            foreach(KeyValuePair<string, bool> kvp in player.GetComponent<UnlockTracker>().unlocks)
             {
                 writer.WriteLine(kvp.Key);
                 writer.WriteLine(kvp.Value);
@@ -101,19 +109,19 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    public bool Load(bool binary, ref List<Entities> entitiesToNotRespawnToLoad, ref Dictionary<string, bool> unlocksToLoad)
+    public bool Load(bool binary)
     {
         if (binary)
         {
-            return LoadBinary(ref entitiesToNotRespawnToLoad, ref unlocksToLoad);
+            return LoadBinary();
         }
         else
         {
-            return LoadTxt(ref entitiesToNotRespawnToLoad, ref unlocksToLoad);
+            return LoadTxt();
         }
     }
 
-    private bool LoadBinary(ref List<Entities> entitiesToNotRespawnToLoad, ref Dictionary<string, bool> unlocksToLoad)
+    private bool LoadBinary()
     {
         try
         {
@@ -126,8 +134,9 @@ public class SavingManager : MonoBehaviour
             {
                 string readLine = reader.ReadString();
 
-                if (readLine == "Rest")
+                if (readLine == "Player")
                 {
+                    player.SetMaxHealth = reader.ReadInt32();
                     currentRestPoint = reader.ReadInt32();
                 }
                 else if (readLine == "EntitiesToNotRespawn")
@@ -140,10 +149,11 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
-                    entitiesToNotRespawnToLoad = tempEntities;
+                    EM.EntitiesToNotRespawn = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
+                    player.GetComponent<UnlockTracker>().HealthAdd = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
                     for (int i = 0; i < count; i++)
@@ -151,7 +161,7 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadString(), reader.ReadBoolean());
                     }
 
-                    unlocksToLoad = tempUnlocks;
+                    player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                     done = true;
                 }
             }
@@ -166,7 +176,7 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    private bool LoadTxt(ref List<Entities> entitiesToNotRespawnToLoad, ref Dictionary<string, bool> unlocksToLoad)
+    private bool LoadTxt()
     {
         try
         {
@@ -178,8 +188,9 @@ public class SavingManager : MonoBehaviour
             {
                 string readLine = reader.ReadLine();
 
-                if (readLine == "Rest")
+                if (readLine == "Player")
                 {
+                    player.SetMaxHealth = int.Parse(reader.ReadLine());
                     currentRestPoint = int.Parse(reader.ReadLine());
                 }
                 else if (readLine == "EntitiesToNotRespawn")
@@ -192,10 +203,11 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
-                    entitiesToNotRespawnToLoad = tempEntities;
+                    EM.EntitiesToNotRespawn = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
+                    player.GetComponent<UnlockTracker>().HealthAdd = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
                     for (int i = 0; i < count; i++)
@@ -203,7 +215,7 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadLine(), bool.Parse(reader.ReadLine()));
                     }
 
-                    unlocksToLoad = tempUnlocks;
+                    player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                 }
             }
 
