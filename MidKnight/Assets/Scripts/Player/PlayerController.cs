@@ -484,9 +484,10 @@ public class PlayerController : Character
             //Calculate the change in the vectors
             Vector3 v = movement.MoveVec - moveVec;
             v *= 1 - (knockBackTimer / knockBackDuration);
-            moveVec += v;
+            moveVec.x += v.x;
+            moveVec.z += v.z;
+            moveVec.y -= Gravity * (knockBackDuration - knockBackTimer);
             moveVec *= Time.deltaTime;
-            movement.VertSpeed = 0;
         }
         if (gm == null)
         {   //If we don't have a gameManager, move along the x axis only
