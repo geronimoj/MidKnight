@@ -245,6 +245,73 @@ public class PlayerController : Character
             return bonusDamageCap;
         }
     }
+
+    /// <summary>
+    /// The damage of the attacks
+    /// </summary>
+    [Tooltip("The damage dealt on hit")]
+    [SerializeField]
+    private int damage = 0;
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+    }
+    /// <summary>
+    /// The knockBack of any given attack
+    /// </summary>
+    [Tooltip("The knockback dealt on hit")]
+    [Range(0, 100)]
+    [SerializeField]
+    private float knockBack = 0;
+    public float BaseKnockBack
+    {
+        get
+        {
+            return knockBack;
+        }
+    }
+    private float actualKnockback = 0;
+    public float Knockback
+    {
+        get
+        {
+            return actualKnockback;
+        }
+        set
+        {
+            actualKnockback = value;
+        }
+    }
+
+    [Tooltip("The upwards speed given to the player when hitting an enemy with the down attack while airborne")]
+    [Range(0, 100)]
+    [SerializeField]
+    private float pogoForce = 0;
+    public float PogoForce
+    {
+        get
+        {
+            return pogoForce;
+        }
+    }
+    /// <summary>
+    /// How much moonLight will be gained on hit
+    /// </summary>
+    [Tooltip("The moonlight gain on hit")]
+    [Range(0, 1000)]
+    [SerializeField]
+    private float moonLightGain = 0;
+    public float MoonLightGain
+    {
+        get
+        {
+            return moonLightGain;
+        }
+    }
+
     /// <summary>
     /// How much bonus damage the player has to their attacks
     /// </summary>
@@ -371,6 +438,7 @@ public class PlayerController : Character
         phase.PhaseStart(this);
         Attacking = false;
         cc.stepOffset = 0;
+        actualKnockback = knockBack;
         dead = false;
     }
     /// <summary>
