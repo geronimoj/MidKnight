@@ -11,7 +11,7 @@ public class basePrefab : MonoBehaviour
     [HideInInspector] public Transform playerTrans;
     [HideInInspector] public Transform prefabTrans;
     [HideInInspector] public Vector3 destination = new Vector3(0,0,0);
-    PlayerController player;
+    Character player;
     timeTillDestroy timeTillDestroy;
     public int speed = 1;
     public int damage = 1;
@@ -24,7 +24,7 @@ public class basePrefab : MonoBehaviour
         //initialise stuff
         playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         prefabTrans = GetComponent<Transform>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         timeTillDestroy = GetComponent<timeTillDestroy>();
         prefabCol = GetComponent<Collider>();
     }
