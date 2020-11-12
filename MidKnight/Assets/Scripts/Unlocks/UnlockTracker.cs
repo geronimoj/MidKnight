@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class UnlockTracker : MonoBehaviour
 {
     //Dictionary holding all the unlocks
     public Dictionary<string, bool> unlocks = new Dictionary<string, bool>();
+    private int healthAdd = 0;
+    private PlayerController PC;
 
     #region UNITY_EDITOR
 #if UNITY_EDITOR
@@ -14,6 +17,11 @@ public class UnlockTracker : MonoBehaviour
     public bool[] boolArray;
 #endif
     #endregion
+
+    private void Start()
+    {
+        PC = GetComponent<PlayerController>();
+    }
 
     //Set a certain key to true or false and if it doesn't exist adds it
     public void SetKey(string key, bool value)
@@ -49,6 +57,18 @@ public class UnlockTracker : MonoBehaviour
 
         unlocks.Add(key, value);
 
+        if (GetKeyValue("health"))
+        {
+            healthAdd++;
+            SetKey("health", false);
+
+            while (healthAdd >= 3)
+            {
+                PC.SetMaxHealth = PC.MaxHealth + 1;
+                healthAdd -= 3;
+            }
+        }
+
         #region UNITY_EDITOR
 #if UNITY_EDITOR
         stringArray = new string[0];
@@ -80,5 +100,18 @@ public class UnlockTracker : MonoBehaviour
         }
 
         return false;
+    }
+
+    //For saving and loading
+    public int HealthAdd
+    {
+        get
+        {
+            return healthAdd;
+        }
+        set
+        {
+            healthAdd = value;
+        }
     }
 }

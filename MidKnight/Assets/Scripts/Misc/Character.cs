@@ -66,7 +66,6 @@ public class Character : MonoBehaviour
             return knockBackTimer > 0;
         }
     }
-
     /// <summary>
     /// A get for maxHealth
     /// </summary>
@@ -88,7 +87,7 @@ public class Character : MonoBehaviour
         }
     }
     /// <summary>
-    /// A private Set for health to make things cleaner
+    /// A protected Set for health to make things cleaner
     /// </summary>
     protected int SetHealth
     {
@@ -98,6 +97,16 @@ public class Character : MonoBehaviour
             //Clamp the health
             if (health > MaxHealth)
                 health = MaxHealth;
+        }
+    }
+    /// <summary>
+    /// A public Set for maxHealth to update it during the load
+    /// </summary>
+    public int SetMaxHealth
+    {
+        set
+        {
+            maxHealth = value;
         }
     }
     /// <summary>
