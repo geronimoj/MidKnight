@@ -9,7 +9,7 @@ public class FullMoonAttack : PhaseAttack
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(0, ref c);
         //Apply other affects
-        ApplyKnockback(ref hits, c.transform.right);
+        ApplyKnockback(ref hits, ref c, c.transform.right);
         //Check if the hit objects are skills
         for (int i = 0; i < hits.Length; i++)
             if (hits[i].transform.CompareTag("Skill"))
@@ -28,13 +28,13 @@ public class FullMoonAttack : PhaseAttack
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(2, ref c);
         //Apply other affects
-        ApplyKnockback(ref hits, Vector3.down);
+        ApplyKnockback(ref hits, ref c, Vector3.down);
         //Do a pogo on the enemies hit
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].transform.CompareTag("Enemy"))
             {
-                c.movement.VertSpeed = pogoForce;
+                c.movement.VertSpeed = c.PogoForce;
                 c.OnLand();
                 continue;
             }
@@ -56,7 +56,7 @@ public class FullMoonAttack : PhaseAttack
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(0, ref c);
         //Apply other affects
-        ApplyKnockback(ref hits, Vector3.up);
+        ApplyKnockback(ref hits, ref c, Vector3.up);
         //Check if the hit objects are skills
         for (int i = 0; i < hits.Length; i++)
             if (hits[i].transform.CompareTag("Skill"))
