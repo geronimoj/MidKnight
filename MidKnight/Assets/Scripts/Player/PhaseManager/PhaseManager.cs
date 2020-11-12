@@ -24,18 +24,26 @@ public class PhaseManager : MonoBehaviour
     /// The "timer" until we hit eclipse mode
     /// </summary>
     private int stepToEclipse = 0;
-
+    /// <summary>
+    /// Is true if we are in Eclipse mode
+    /// </summary>
     private bool inEclipse = false;
-
+    /// <summary>
+    /// The duration of eclipse mode
+    /// </summary>
     public float eclipseDuration = 0;
-
+    /// <summary>
+    /// A timer for eclipse mode
+    /// </summary>
     private float eclipseTimer = 0;
     /// <summary>
     /// A storage location for the current moonPhase. Is viewable in the inspector
     /// </summary>
     [SerializeField]
     private MoonPhase current;
-
+    /// <summary>
+    /// A reference to the previous moonPhase
+    /// </summary>
     private MoonPhase previous;
     /// <summary>
     /// A list of preivously active phases
@@ -54,7 +62,9 @@ public class PhaseManager : MonoBehaviour
     /// An array containing every moon phase, unlocked or not
     /// </summary>
     public MoonPhase[] everyMoonPhase;
-
+    /// <summary>
+    /// The phase that represents eclipse mode
+    /// </summary>
     public MoonPhase eclipse;
     /// <summary>
     /// A get for the current phase
@@ -279,7 +289,10 @@ public class PhaseManager : MonoBehaviour
         //Return -1 because we failed to find a valid moonPhase
         return -1;
     }
-
+    /// <summary>
+    /// Contains all the checks and info for Eclipse Phase
+    /// </summary>
+    /// <param name="c">A referemce to the player controller</param>
     public void EclipseMode(ref PlayerController c)
     {
         if (eclipse == null)
@@ -290,49 +303,30 @@ public class PhaseManager : MonoBehaviour
         }
         if (!inEclipse)
             EnterEclipse(ref c);
-        UpdateEclipse(ref c);
+        eclipseTimer -= Time.deltaTime;
         if (eclipseTimer <= 0)
             ExitEclipse(ref c);
     }
-
+    /// <summary>
+    /// The Start function for Eclipse
+    /// </summary>
+    /// <param name="c">A reference to the player controller</param>
     public void EnterEclipse(ref PlayerController c)
     {
-        Debug.Log("Entering Eclipse Mode");
         inEclipse = true;
         eclipseTimer = eclipseDuration;
 
         SwapPhase(eclipse, ref c);
-
-        for (int i = 0; i < everyMoonPhase.Length; i++)
-            if (c.ut.GetKeyValue(everyMoonPhase[i].phaseID))
-            {
-                everyMoonPhase[i].PhaseEnter(ref c);
-                everyMoonPhase[i].OnEnter.Invoke();
-            }
     }
-
-    public void UpdateEclipse(ref PlayerController c)
-    {
-        eclipseTimer -= Time.deltaTime;
-        for (int i = 0; i < everyMoonPhase.Length; i++)
-            if (c.ut.GetKeyValue(everyMoonPhase[i].phaseID))
-                everyMoonPhase[i].PhaseUpdate(ref c);
-    }
-
+    /// <summary>
+    /// The Exit function for Eclipse
+    /// </summary>
+    /// <param name="c">A reference to the player controller</param>
     public void ExitEclipse(ref PlayerController c)
     {
-        Debug.Log("Exiting Eclipse Mode");
         SwapPhase(previous, ref c);
-
         inEclipse = false;
         stepToEclipse = 0;
-
-        for (int i = 0; i < everyMoonPhase.Length; i++)
-            if (everyMoonPhase[i].Active)
-            {
-                everyMoonPhase[i].PhaseExit(ref c);
-                everyMoonPhase[i].OnExit.Invoke();
-            }
     }
 
 #if UNITY_EDITOR
