@@ -29,7 +29,7 @@ public class MoonPhase : ScriptableObject
     /// <summary>
     /// Returns true if this is the active phase
     /// </summary>
-    protected bool Active
+    public bool Active
     {
         get
         {

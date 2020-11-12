@@ -15,10 +15,28 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     private float cooldownTimer = 0;
     /// <summary>
+    /// How many swaps need to be made before eclipse is unlocked
+    /// </summary>
+    [Tooltip("How many swaps need to be made before eclipse is unlocked.")]
+    [Range(0,100)]
+    public int swapsTillEclipse = 10;
+    /// <summary>
+    /// The "timer" until we hit eclipse mode
+    /// </summary>
+    private int stepToEclipse = 0;
+
+    private bool inEclipse = false;
+
+    public float eclipseDuration = 0;
+
+    private float eclipseTimer = 0;
+    /// <summary>
     /// A storage location for the current moonPhase. Is viewable in the inspector
     /// </summary>
     [SerializeField]
     private MoonPhase current;
+
+    private MoonPhase previous;
     /// <summary>
     /// A list of preivously active phases
     /// </summary>
@@ -36,6 +54,8 @@ public class PhaseManager : MonoBehaviour
     /// An array containing every moon phase, unlocked or not
     /// </summary>
     public MoonPhase[] everyMoonPhase;
+
+    public MoonPhase eclipse;
     /// <summary>
     /// A get for the current phase
     /// </summary>
@@ -67,10 +87,14 @@ public class PhaseManager : MonoBehaviour
 #if UNITY_EDITOR
         //Increment the timer
         timer += Time.deltaTime;
-#endif
-        CyclePhase(ref c);
+#endif  //Perform the custom functions for eclipse mode
+        if (stepToEclipse >= swapsTillEclipse)
+            EclipseMode(ref c);
+        else
+            CyclePhase(ref c);
         cooldownTimer -= Time.deltaTime;
         DecrementTimers();
+
         if (current != null)
         {
             current.DoPhase(ref c);
@@ -136,9 +160,13 @@ public class PhaseManager : MonoBehaviour
         //Set the cooldown timer
         cooldownTimer = swapCooldown;
         c.GainBonusDamage();
+        //Gain a step towards eclipse mode
+        stepToEclipse++;
         //Exit
         current.PhaseExit(ref c);
         current.OnExit.Invoke();
+        //Store the previous phase
+        previous = current;
         //We do this outside of the OnExit so that if someone overrides it, it doesn't poop itself & so we can call OnExit
         //when exiting the eclipse mode to "deactivate" the phase without putting it on cooldown
         current.PutOnCooldown();
@@ -249,6 +277,62 @@ public class PhaseManager : MonoBehaviour
         //Return -1 because we failed to find a valid moonPhase
         return -1;
     }
+
+    public void EclipseMode(ref PlayerController c)
+    {
+        if (eclipse == null)
+        {
+            Debug.LogError("EclipsePhase not assigned");
+            ExitEclipse(ref c);
+            return;
+        }
+        if (!inEclipse)
+            EnterEclipse(ref c);
+        UpdateEclipse(ref c);
+        if (eclipseTimer <= 0)
+            ExitEclipse(ref c);
+    }
+
+    public void EnterEclipse(ref PlayerController c)
+    {
+        Debug.Log("Entering Eclipse Mode");
+        inEclipse = true;
+        eclipseTimer = eclipseDuration;
+
+        SwapPhase(eclipse, ref c);
+
+        for (int i = 0; i < everyMoonPhase.Length; i++)
+            if (c.ut.GetKeyValue(everyMoonPhase[i].phaseID))
+            {
+                everyMoonPhase[i].PhaseEnter(ref c);
+                everyMoonPhase[i].OnEnter.Invoke();
+            }
+    }
+
+    public void UpdateEclipse(ref PlayerController c)
+    {
+        eclipseTimer -= Time.deltaTime;
+        for (int i = 0; i < everyMoonPhase.Length; i++)
+            if (c.ut.GetKeyValue(everyMoonPhase[i].phaseID))
+                everyMoonPhase[i].PhaseUpdate(ref c);
+    }
+
+    public void ExitEclipse(ref PlayerController c)
+    {
+        Debug.Log("Exiting Eclipse Mode");
+        SwapPhase(previous, ref c);
+
+        inEclipse = false;
+        stepToEclipse = 0;
+
+        for (int i = 0; i < everyMoonPhase.Length; i++)
+            if (everyMoonPhase[i].Active)
+            {
+                everyMoonPhase[i].PhaseExit(ref c);
+                everyMoonPhase[i].OnExit.Invoke();
+            }
+    }
+
 #if UNITY_EDITOR
     private float timer = 0;
     [Range(0,2)]

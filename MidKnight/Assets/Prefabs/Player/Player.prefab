@@ -135,6 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swapCooldown: 0
+  swapsTillEclipse: 5
+  eclipseDuration: 5
   current: {fileID: 11400000, guid: b103358b5e0dae54cbc9c902e8343e0b, type: 2}
   OnSwap:
     m_PersistentCalls:
@@ -145,6 +147,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a6a6d065a228bc24283ecaed1ff67952, type: 2}
   - {fileID: 11400000, guid: 9f475ba111ca12d49b0913d3422490b4, type: 2}
   - {fileID: 11400000, guid: 1dd75ef63e8774f4089e0e7a56f8679e, type: 2}
+  eclipse: {fileID: 11400000, guid: e08ff9f7905ec2f41904b380aecad717, type: 2}
   attackIndexToDisplay: 0
   displayAttack: 0
 --- !u!95 &2594905443749488671
