@@ -7,13 +7,13 @@ public class EnemyHitbox : MonoBehaviour
     /// <summary>
     /// the hitbox of the enemies
     /// </summary>
-    PlayerController player;
+    Character player;
     Enemy enemy;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         enemy = GetComponentInParent<Enemy>();
     }
 

@@ -97,7 +97,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: -2213086342659496435}
   m_StateMachineBehaviours:
-  - {fileID: -4693773663009761684}
+  - {fileID: 874027531873845202}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -267,22 +267,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-4693773663009761684
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87565b502510a3843a0bc934490dfa9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minStartTimeTillIdle: 2
-  maxStartTimeTillIdle: 2
-  phase2MinStartTimeTillIdle: 0
-  phase2MaxStartTimeTillIdle: 0
 --- !u!114 &-4067000160597531810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,8 +289,8 @@ MonoBehaviour:
   attack: {fileID: 0}
   arenaUpYCoordinate: 0
   arenaDownYCoordinate: 0
-  arenaLeftXCoordinate: -24
-  arenaRightXCoordinate: 24
+  arenaLeftXCoordinate: -23
+  arenaRightXCoordinate: 23
   gravity: 5
   noOfDashesToUse: 5
 --- !u!114 &-4041794163867437341
@@ -620,6 +604,20 @@ MonoBehaviour:
   arenaRightXCoordinate: 24
   gravity: 5
   noOfLaserBeams: 4
+--- !u!114 &874027531873845202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144a6a608e3602347ac3b91ac367c170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFromPlayerToWake: 15
+  timeTillIdle: 2
 --- !u!1102 &900071883937044873
 AnimatorState:
   serializedVersion: 5

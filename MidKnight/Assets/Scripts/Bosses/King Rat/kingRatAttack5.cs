@@ -41,7 +41,7 @@ public class kingRatAttack5 : baseBossAttack
                     destination.Set(arenaLeftXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
                 }
             }
-            else if(Mathf.Abs(enemyTrans.position.x - destination.x) > 1)
+            else if(Mathf.Abs(enemyTrans.position.x - destination.x) > 1f)
             {
                 MoveToDestination(destination);
             }
