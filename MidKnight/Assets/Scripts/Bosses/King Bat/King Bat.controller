@@ -13,7 +13,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: -2059351816264715978}
   m_StateMachineBehaviours:
-  - {fileID: 294959225276554350}
+  - {fileID: -4785622422523284374}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -87,6 +87,20 @@ MonoBehaviour:
   startTimeTillAtk5: 1
   noOfRocks: 5
   rocks: {fileID: 2708561704105760038, guid: e8781a140e9f6204e8d96fc121c921a4, type: 3}
+--- !u!114 &-4785622422523284374
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144a6a608e3602347ac3b91ac367c170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFromPlayerToWake: 15
+  timeTillIdle: 2
 --- !u!1101 &-4020881739206492797
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -397,22 +411,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!114 &294959225276554350
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87565b502510a3843a0bc934490dfa9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minStartTimeTillIdle: 2
-  maxStartTimeTillIdle: 2
-  phase2MinStartTimeTillIdle: 0
-  phase2MaxStartTimeTillIdle: 0
 --- !u!1101 &425081428985430542
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

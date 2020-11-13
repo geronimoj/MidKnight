@@ -123,6 +123,20 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &-5815436982748703049
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 144a6a608e3602347ac3b91ac367c170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFromPlayerToWake: 15
+  timeTillIdle: 2
 --- !u!1101 &-5751441897635713206
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -319,7 +333,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: 3732400522189086819}
   m_StateMachineBehaviours:
-  - {fileID: -1600931928092689179}
+  - {fileID: -5815436982748703049}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -359,22 +373,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!114 &-1600931928092689179
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87565b502510a3843a0bc934490dfa9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minStartTimeTillIdle: 2
-  maxStartTimeTillIdle: 2
-  phase2MinStartTimeTillIdle: 0
-  phase2MaxStartTimeTillIdle: 0
 --- !u!1102 &-1441152612848554707
 AnimatorState:
   serializedVersion: 5
@@ -798,8 +796,8 @@ MonoBehaviour:
   maxStartTimeTillAtk: 0
   speed: 25
   gravity: 5
-  arenaLeftXCoordinate: -24
-  ArenaRightXCoordinate: 24
+  arenaLeftXCoordinate: -23
+  ArenaRightXCoordinate: 23
   phase2speed: 30
 --- !u!1101 &6850125736300755695
 AnimatorStateTransition:
