@@ -141,6 +141,7 @@ public class SavingManager : MonoBehaviour
                 if (readLine == "Player")
                 {
                     player.SetMaxHealth = reader.ReadInt32();
+                    player.TakeDamage(-player.MaxHealth);
                     currentRestPoint = reader.ReadInt32();
                 }
                 else if (readLine == "EntitiesToNotRespawn")
@@ -197,6 +198,7 @@ public class SavingManager : MonoBehaviour
                 if (readLine == "Player")
                 {
                     player.SetMaxHealth = int.Parse(reader.ReadLine());
+                    player.TakeDamage(-player.MaxHealth);
                     currentRestPoint = int.Parse(reader.ReadLine());
                 }
                 else if (readLine == "EntitiesToNotRespawn")
