@@ -91,7 +91,7 @@ public class MenuManager : MonoBehaviour
         #endregion
 
         #region UI Functions
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         eclipseFillImage.gameObject.SetActive(false);
         #endregion
     }
