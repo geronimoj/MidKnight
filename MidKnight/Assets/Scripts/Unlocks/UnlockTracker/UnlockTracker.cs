@@ -102,6 +102,7 @@ public class UnlockTracker : MonoBehaviour
             while (healthAdd >= 3)
             {
                 PC.SetMaxHealth = PC.MaxHealth + 1;
+                PC.TakeDamage(-1);
                 healthAdd -= 3;
             }
         }
