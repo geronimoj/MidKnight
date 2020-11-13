@@ -32,7 +32,7 @@ public class kingRatAttack1 : baseBossAttack
             {
                 spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
 
-                Instantiate(attack, spawnPos, enemyTrans.rotation);
+                Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
             }
         }
     }
