@@ -36,7 +36,7 @@ public class skeletonKingAtk5 : baseBossAttack
             //summon a meteor which changes speed depending on skeleton king's phase
             if(enemyTrans.position.x > playerTrans.position.x)
             {
-                GameObject meteor = Instantiate(attack, new Vector3(arenaRightXCoordinate, arenaUpYCoordinate, enemyTrans.position.z), enemyTrans.rotation);
+                GameObject meteor = Instantiate(attack, new Vector3(arenaRightXCoordinate, arenaUpYCoordinate, enemyTrans.position.z), enemyTrans.rotation, enemyTrans.parent);
 
                 if (animator.GetComponent<Enemy>().isPhase2)
                 {
@@ -45,7 +45,7 @@ public class skeletonKingAtk5 : baseBossAttack
             }
             else
             {
-                GameObject meteor = Instantiate(attack, new Vector3(arenaLeftXCoordinate, arenaUpYCoordinate, enemyTrans.position.z), enemyTrans.rotation);
+                GameObject meteor = Instantiate(attack, new Vector3(arenaLeftXCoordinate, arenaUpYCoordinate, enemyTrans.position.z), enemyTrans.rotation, enemyTrans.parent);
 
                 if (animator.GetComponent<Enemy>().isPhase2)
                 {

@@ -59,12 +59,12 @@ public class skeletonKingAtk2 : baseBossAttack
 
             if(isFacingRight())
             {
-                GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x + 2, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation);
+                GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x + 2, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation, enemyTrans.parent);
                 projectile.transform.localScale = new Vector3(projectileRadius, projectileRadius, projectileRadius);
             }
             else
             {
-                GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x - 2, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation);
+                GameObject projectile = Instantiate(attack, new Vector3(enemyTrans.position.x - 2, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation, enemyTrans.parent);
                 projectile.transform.localScale = new Vector3(projectileRadius, projectileRadius, projectileRadius);
             }
         }

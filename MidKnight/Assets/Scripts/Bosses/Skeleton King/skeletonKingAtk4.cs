@@ -36,7 +36,7 @@ public class skeletonKingAtk4 : baseBossAttack
         else if (!hasUsedMove)
         {
             hasUsedMove = true;
-            GameObject barrier = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            GameObject barrier = Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
             barrier.GetComponent<Transform>().localScale = new Vector3(barrierRadius, barrierRadius, barrierRadius);
         }
     }

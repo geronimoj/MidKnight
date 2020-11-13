@@ -28,7 +28,7 @@ public class kingBatAttack3 : baseBossAttack
         {
             hasUsedMove = true;
 
-            GameObject atk = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            GameObject atk = Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
             atk.GetComponent<largeBatSonicWave>().speed = sonicWaveSpeed;
             atk.GetComponent<Transform>().localScale = new Vector3(sonicWaveSize, sonicWaveSize, sonicWaveSize);
         }

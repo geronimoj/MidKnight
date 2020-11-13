@@ -27,7 +27,7 @@ public class largeBatAttack2 : baseEnemyAttack
         {
             hasUsedAtk = true;
 
-            Instantiate(atk, enemyTrans.position, enemyTrans.rotation);
+            Instantiate(atk, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
         }
     }
 

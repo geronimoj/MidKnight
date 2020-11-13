@@ -15,7 +15,7 @@ public class kingRatAttack4 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        Instantiate(attack, enemyTrans.position, Quaternion.Euler(0, 0, 90));
+        Instantiate(attack, enemyTrans.position, Quaternion.Euler(0, 0, 90), enemyTrans.parent);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -32,7 +32,7 @@ public class kingRatAttack4 : baseBossAttack
             for (int i = 0; i < noOfLaserBeams; i++)
             {
                 Vector3 spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), arenaDownYCoordinate, enemyTrans.position.z);
-                Instantiate(attack, spawnPos, Quaternion.Euler(0, 0, 90));
+                Instantiate(attack, spawnPos, Quaternion.Euler(0, 0, 90), enemyTrans.parent);
             }
         }
     }

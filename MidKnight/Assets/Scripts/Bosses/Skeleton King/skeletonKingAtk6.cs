@@ -31,7 +31,7 @@ public class skeletonKingAtk6 : baseBossAttack
         }
         else if(!hasUsedMove)
         {
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
             hasUsedMove = true;
         }
     }

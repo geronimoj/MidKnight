@@ -25,7 +25,7 @@ public class kingRatAttack5Part2 : baseBossAttack
         for (int i = 0; i < noOfRocks; i++)
         {
             spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
-            Instantiate(rocks, spawnPos, enemyTrans.rotation);
+            Instantiate(rocks, spawnPos, enemyTrans.rotation, enemyTrans.parent);
         }
     }
 
@@ -38,7 +38,7 @@ public class kingRatAttack5Part2 : baseBossAttack
         }
         else if(!hasUsedMove)
         {
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
             hasUsedMove = true;
             animator.SetTrigger("atk5");
         }

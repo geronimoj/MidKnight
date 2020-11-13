@@ -34,7 +34,7 @@ public class skeletonKingAtk1 : baseBossAttack
         {
             hasUsedMove = true;
 
-            GameObject laserBeam = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            GameObject laserBeam = Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
             laserBeam.GetComponent<Transform>().localScale = new Vector3(laserBeamHeight, laserBeamHeight, laserBeamHeight);
             laserBeam.GetComponentInChildren<basePrefab>().damage = 2;
         }

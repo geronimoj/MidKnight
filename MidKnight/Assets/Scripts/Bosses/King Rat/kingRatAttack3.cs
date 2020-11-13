@@ -26,7 +26,7 @@ public class kingRatAttack3 : baseBossAttack
         {
             hasUsedMove = true;
 
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
         }
     }
 

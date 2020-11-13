@@ -29,11 +29,11 @@ public class skeletonKingAtk3 : baseBossAttack
 
         if (isFacingRight())
         {
-            Instantiate(attack, new Vector3(enemyTrans.position.x + 3, enemyTrans.position.y - 2, enemyTrans.position.z), Quaternion.Euler(0, 0, 90));
+            Instantiate(attack, new Vector3(enemyTrans.position.x + 3, enemyTrans.position.y - 2, enemyTrans.position.z), Quaternion.Euler(0, 0, 90), enemyTrans.parent);
         }
         else
         {
-            Instantiate(attack, new Vector3(enemyTrans.position.x - 3, enemyTrans.position.y - 2, enemyTrans.position.z), Quaternion.Euler(0, 0, 90));
+            Instantiate(attack, new Vector3(enemyTrans.position.x - 3, enemyTrans.position.y - 2, enemyTrans.position.z), Quaternion.Euler(0, 0, 90), enemyTrans.parent);
         }
     }
 
@@ -51,7 +51,7 @@ public class skeletonKingAtk3 : baseBossAttack
             for (int i = 0; i < noOfLaserBeams; i++)
             {
                 Vector3 spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), arenaDownYCoordinate, enemyTrans.position.z);
-                Instantiate(attack, spawnPos, Quaternion.Euler(0, 0, 90));
+                Instantiate(attack, spawnPos, Quaternion.Euler(0, 0, 90), enemyTrans.parent);
             }
         }
     }

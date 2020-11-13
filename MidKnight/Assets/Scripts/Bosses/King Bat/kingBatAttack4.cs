@@ -37,7 +37,7 @@ public class kingBatAttack4 : baseBossAttack
                 for (int i = 0; i < noOfRocks; i++)
                 {
                     spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
-                    Instantiate(attack, spawnPos, enemyTrans.rotation);
+                    Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
                 }
             }
             else

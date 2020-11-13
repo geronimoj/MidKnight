@@ -26,7 +26,7 @@ public class kingBatAttack5Part2 : baseBossAttack
         for (int i = 0; i < noOfRocks; i++)
         {
             spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
-            Instantiate(rocks, spawnPos, enemyTrans.rotation);
+            Instantiate(rocks, spawnPos, enemyTrans.rotation, enemyTrans.parent);
         }
     }
 
@@ -40,7 +40,7 @@ public class kingBatAttack5Part2 : baseBossAttack
         else if (!hasUsedMove)
         {
             hasUsedMove = true;
-            GameObject atk = Instantiate(attack, enemyTrans.position, enemyTrans.rotation);
+            GameObject atk = Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
             atk.GetComponent<largeBatSonicWave>().speed = sonicWaveSpeed;
             atk.GetComponent<Transform>().localScale = new Vector3(sonicWaveSize, sonicWaveSize, sonicWaveSize);
         }
