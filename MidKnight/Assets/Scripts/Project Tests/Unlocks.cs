@@ -10,7 +10,7 @@ namespace Tests
     {
         // A Test behaves as an ordinary method
         [Test]
-        public void UnlocksSimplePasses()
+        public void UnlockTracker_Set_Get()
         {
             // Use the Assert class to test conditions
         }
