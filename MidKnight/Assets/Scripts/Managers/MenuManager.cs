@@ -41,13 +41,15 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI
+    public PlayerController PC;
     public Image healthFillImage;
+    public Image[] healthBaubles = new Image[3];
     public Image moonlightFillImage;
     public Image eclipseFillImage;
-    public Slider newMoonCooldownSlider;
-    public Slider crescentMoonCooldownSlider;
-    public Slider halfMoonCooldownSlider;
-    public Slider fullMoonCooldownSlider;
+    public Text newMoonCooldownText;
+    public Text crescentMoonCooldownText;
+    public Text halfMoonCooldownText;
+    public Text fullMoonCooldownText;
     public Text healthText;
     public Text moonlightText;
     public Text eclipseText;
@@ -58,12 +60,49 @@ public class MenuManager : MonoBehaviour
     public GameObject fullMoon;
     #endregion
 
-    #region Menu Functions
-    private void Update()
+    private void Start()
     {
-        Pause();
+        #region Option Functions
+        resolutionDropdown.ClearOptions();
+        List<string> options = new List<string>();
+        resolutions = Screen.resolutions;
+        int currentResolutionIndex = 0;
+
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.RefreshShownValue();
+        LoadSettings(currentResolutionIndex);
+        secretToggle.SetIsOnWithoutNotify(false);
+        secretObject.SetActive(false);
+        #endregion
+
+        #region UI Functions
+        PC = FindObjectOfType<PlayerController>();
+        #endregion
     }
 
+    private void Update()
+    {
+        #region Menu Functions
+        Pause();
+        #endregion
+
+        #region UI Functions
+        HealthUI();
+        #endregion
+    }
+
+    #region Menu Functions
     public void NewGame()
     {
         Time.timeScale = 1;
@@ -157,31 +196,6 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region Option Functions
-    private void Start()
-    {
-        resolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
-        resolutions = Screen.resolutions;
-        int currentResolutionIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.RefreshShownValue();
-        LoadSettings(currentResolutionIndex);
-        secretToggle.SetIsOnWithoutNotify(false);
-        secretObject.SetActive(false);
-    }
-
     public void SetDropdownHelper(int dropdownIndex, Dropdown dropdown)
     {
         QualitySettings.SetQualityLevel(7);
@@ -376,6 +390,24 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI Functions
+    public void HealthUI()
+    {
+        float health = PC.Health;
+        int i = 0;
 
+        for (int e = 0; e < healthBaubles.Length; e++)
+        {
+            healthBaubles[e].gameObject.SetActive(false);
+        }
+
+        while (health > 4)
+        {
+            health--;
+            healthBaubles[i].gameObject.SetActive(true);
+            i++;
+        }
+
+        healthFillImage.fillAmount = health / 4;
+    }
     #endregion
 }
