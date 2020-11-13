@@ -14,6 +14,13 @@ public class PhaseManager : MonoBehaviour
     /// The timer for the swapCooldown
     /// </summary>
     private float cooldownTimer = 0;
+    public float CooldownTimer
+    {
+        get
+        {
+            return cooldownTimer;
+        }
+    }
     /// <summary>
     /// How many swaps need to be made before eclipse is unlocked
     /// </summary>
@@ -206,8 +213,8 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     private void DecrementTimers()
     {
-        for (int i = 0; i < knownPhases.Count; i++)
-            knownPhases[i].DecrementCooldownTimer();
+        for (int i = 0; i < everyMoonPhase.Length; i++)
+            everyMoonPhase[i].DecrementCooldownTimer();
     }
     /// <summary>
     /// Checks if the player wants to cycle between moon phases & swaps them if they request to.

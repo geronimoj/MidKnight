@@ -18,6 +18,13 @@ public class MoonPhase : ScriptableObject
     /// The timer for the phases cooldown
     /// </summary>
     private float cooldownTimer = 0;
+    public float CooldownTimer
+    {
+        get
+        {
+            return cooldownTimer;
+        }
+    }
     /// <summary>
     /// The attacks to use for this phase
     /// </summary>

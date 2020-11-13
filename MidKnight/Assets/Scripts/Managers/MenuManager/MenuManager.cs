@@ -41,7 +41,7 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI
-    public GameObject player;
+    private GameObject player;
     public Image healthFillImage;
     public Image[] healthBaubles = new Image[3];
     public Image moonlightFillImage;
@@ -58,8 +58,7 @@ public class MenuManager : MonoBehaviour
     public GameObject crescentMoon;
     public GameObject halfMoon;
     public GameObject fullMoon;
-    public Text nextMoonCooldownText;
-    public Text previousMoonCooldownText;
+    public Text phaseSpawingCooldownText;
     #endregion
 
     private void Start()
@@ -91,6 +90,7 @@ public class MenuManager : MonoBehaviour
         #region UI Functions
         player = GameObject.FindGameObjectWithTag("Player");
         eclipseFillImage.gameObject.SetActive(false);
+        eclipseText.gameObject.SetActive(false);
         #endregion
     }
 
@@ -419,6 +419,7 @@ public class MenuManager : MonoBehaviour
     public void MoonlightUI()
     {
         moonlightFillImage.fillAmount = player.GetComponent<PlayerController>().MoonLight / 100;
+        eclipseText.text = $"{player.GetComponent<PlayerController>().MoonLight}";
     }
 
     public void EclipseUI()
@@ -426,6 +427,7 @@ public class MenuManager : MonoBehaviour
         if (player.GetComponent<UnlockTracker>().GetKeyValue("eclipse"))
         {
             eclipseFillImage.gameObject.SetActive(true);
+            eclipseText.gameObject.SetActive(true);
             eclipseFillImage.fillAmount = player.GetComponent<PhaseManager>().swapsTillEclipse / 10;
         }
         if (eclipseFillImage.fillAmount >= 1)
@@ -436,12 +438,47 @@ public class MenuManager : MonoBehaviour
         {
             eclipseFlourish.SetActive(false);
         }
+
+        eclipseText.text = $"{100 * eclipseFillImage.fillAmount}%";
     }
 
     //Incomplete
     public void PhasesUI()
     {
-        currentText.text = "Current Phase: " + player.GetComponent<PhaseManager>().CurrentPhase.name;
+        currentText.text = $"Current Phase: {player.GetComponent<PhaseManager>().CurrentPhase.name}";
+        float phaseCooldown = player.GetComponent<PhaseManager>().CooldownTimer;
+        float newMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[0].CooldownTimer;
+        float halfMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[1].CooldownTimer;
+        float crescentMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[2].CooldownTimer;
+        float fullMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[3].CooldownTimer;
+
+        if (phaseCooldown < 0)
+        {
+            phaseCooldown = 0;
+        }
+        if (newMoonCooldown < 0)
+        {
+            newMoonCooldown = 0;
+        }
+        if (crescentMoonCooldown < 0)
+        {
+            crescentMoonCooldown = 0;
+        }
+        if (halfMoonCooldown < 0)
+        {
+            halfMoonCooldown = 0;
+        }
+        if (fullMoonCooldown < 0)
+        {
+            fullMoonCooldown = 0;
+        }
+
+        phaseSpawingCooldownText.text = $"Phase Switch: {phaseCooldown}s\n" +
+            $"{(newMoonCooldown > 0 ? $"New Moon: {newMoonCooldown}s\n" : "")}" +
+            $"{(halfMoonCooldown > 0 ? $"Half Moon: {halfMoonCooldown}s\n" : "")}" +
+            $"{(crescentMoonCooldown > 0 ? $"Crescent Moon: {crescentMoonCooldown}s\n" : "")}" +
+            $"{(fullMoonCooldown > 0 ? $"Full Moon: {fullMoonCooldown}s\n" : "")}";
+
         if (player.GetComponent<PhaseManager>().swapToIndex == 0)
         {
             newMoon.transform.position = currentMoonTransform.position;
