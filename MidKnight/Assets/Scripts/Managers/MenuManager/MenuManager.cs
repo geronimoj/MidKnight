@@ -44,7 +44,6 @@ public class MenuManager : MonoBehaviour
     public GameObject player;
     public Image healthFillImage;
     public Image[] healthBaubles = new Image[3];
-    public Text healthText;
     public Image moonlightFillImage;
     public Text moonlightText;
     public Image eclipseFillImage;
@@ -58,10 +57,8 @@ public class MenuManager : MonoBehaviour
     public Image crescentMoon;
     public Image halfMoon;
     public Image fullMoon;
-    public Text newMoonCooldownText;
-    public Text crescentMoonCooldownText;
-    public Text halfMoonCooldownText;
-    public Text fullMoonCooldownText;
+    public Text nextMoonCooldownText;
+    public Text previousMoonCooldownText;
     #endregion
 
     private void Start()
@@ -404,13 +401,13 @@ public class MenuManager : MonoBehaviour
 
         for (int e = 0; e < healthBaubles.Length; e++)
         {
-            healthBaubles[e].gameObject.SetActive(false);
+            healthBaubles[e].color = Color.black;
         }
 
         while (health > 4)
         {
             health--;
-            healthBaubles[i].gameObject.SetActive(true);
+            healthBaubles[i].color = Color.white;
             i++;
         }
 
@@ -437,6 +434,11 @@ public class MenuManager : MonoBehaviour
         {
             eclipseFlourish.SetActive(false);
         }
+    }
+
+    public void PhasesUI()
+    {
+
     }
     #endregion
 }
