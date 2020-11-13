@@ -41,23 +41,27 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI
-    public PlayerController PC;
+    public GameObject player;
     public Image healthFillImage;
     public Image[] healthBaubles = new Image[3];
+    public Text healthText;
     public Image moonlightFillImage;
+    public Text moonlightText;
     public Image eclipseFillImage;
+    public Text eclipseText;
+    public GameObject eclipseFlourish;
+    public GameObject currentMoon;
+    public GameObject nextMoon;
+    public GameObject preivousMoon;
+    public GameObject offMoon;
+    public Image newMoon;
+    public Image crescentMoon;
+    public Image halfMoon;
+    public Image fullMoon;
     public Text newMoonCooldownText;
     public Text crescentMoonCooldownText;
     public Text halfMoonCooldownText;
     public Text fullMoonCooldownText;
-    public Text healthText;
-    public Text moonlightText;
-    public Text eclipseText;
-    public GameObject eclipse;
-    public GameObject newMoon;
-    public GameObject crescentMoon;
-    public GameObject halfMoon;
-    public GameObject fullMoon;
     #endregion
 
     private void Start()
@@ -87,7 +91,8 @@ public class MenuManager : MonoBehaviour
         #endregion
 
         #region UI Functions
-        PC = FindObjectOfType<PlayerController>();
+        player = GameObject.FindWithTag("Player");
+        eclipseFillImage.gameObject.SetActive(false);
         #endregion
     }
 
@@ -99,6 +104,8 @@ public class MenuManager : MonoBehaviour
 
         #region UI Functions
         HealthUI();
+        //MoonlightUI();
+        EclipseUI();
         #endregion
     }
 
@@ -392,7 +399,7 @@ public class MenuManager : MonoBehaviour
     #region UI Functions
     public void HealthUI()
     {
-        float health = PC.Health;
+        float health = player.GetComponent<PlayerController>().Health;
         int i = 0;
 
         for (int e = 0; e < healthBaubles.Length; e++)
@@ -408,6 +415,28 @@ public class MenuManager : MonoBehaviour
         }
 
         healthFillImage.fillAmount = health / 4;
+    }
+
+    public void MoonlightUI()
+    {
+        moonlightFillImage.fillAmount = player.GetComponent<PlayerController>().MoonLight / 100;
+    }
+
+    public void EclipseUI()
+    {
+        if (player.GetComponent<UnlockTracker>().GetKeyValue("eclipse"))
+        {
+            eclipseFillImage.gameObject.SetActive(true);
+            eclipseFillImage.fillAmount = player.GetComponent<PhaseManager>().swapsTillEclipse / 10;
+        }
+        if (eclipseFillImage.fillAmount >= 1)
+        {
+            eclipseFlourish.SetActive(true);
+        }
+        else
+        {
+            eclipseFlourish.SetActive(false);
+        }
     }
     #endregion
 }
