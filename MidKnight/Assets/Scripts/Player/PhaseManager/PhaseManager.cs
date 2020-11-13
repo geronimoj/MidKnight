@@ -56,8 +56,7 @@ public class PhaseManager : MonoBehaviour
     /// <summary>
     /// The index of the phase to swap too
     /// </summary>
-    [SerializeField]
-    private int swapToIndex = 0;
+    public int swapToIndex = 0;
     /// <summary>
     /// An array containing every moon phase, unlocked or not
     /// </summary>

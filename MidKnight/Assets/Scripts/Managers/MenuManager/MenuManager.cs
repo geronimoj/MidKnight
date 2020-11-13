@@ -49,14 +49,15 @@ public class MenuManager : MonoBehaviour
     public Image eclipseFillImage;
     public Text eclipseText;
     public GameObject eclipseFlourish;
-    public GameObject currentMoon;
-    public GameObject nextMoon;
-    public GameObject preivousMoon;
-    public GameObject offMoon;
-    public Image newMoon;
-    public Image crescentMoon;
-    public Image halfMoon;
-    public Image fullMoon;
+    public Text currentText;
+    public Transform currentMoonTransform;
+    public Transform nextMoonTransform;
+    public Transform previousMoonTransform;
+    public Transform offMoonTransform;
+    public GameObject newMoon;
+    public GameObject crescentMoon;
+    public GameObject halfMoon;
+    public GameObject fullMoon;
     public Text nextMoonCooldownText;
     public Text previousMoonCooldownText;
     #endregion
@@ -103,6 +104,7 @@ public class MenuManager : MonoBehaviour
         HealthUI();
         //MoonlightUI();
         EclipseUI();
+        PhasesUI();
         #endregion
     }
 
@@ -436,9 +438,38 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    //Incomplete
     public void PhasesUI()
     {
-
+        currentText.text = "Current Phase: " + player.GetComponent<PhaseManager>().CurrentPhase.name;
+        if (player.GetComponent<PhaseManager>().swapToIndex == 0)
+        {
+            newMoon.transform.position = currentMoonTransform.position;
+            halfMoon.transform.position = nextMoonTransform.position;
+            crescentMoon.transform.position = offMoonTransform.position;
+            fullMoon.transform.position = previousMoonTransform.position;
+        }
+        if (player.GetComponent<PhaseManager>().swapToIndex == 1)
+        {
+            halfMoon.transform.position = currentMoonTransform.position;
+            crescentMoon.transform.position = nextMoonTransform.position;
+            fullMoon.transform.position = offMoonTransform.position;
+            newMoon.transform.position = previousMoonTransform.position;
+        }
+        if (player.GetComponent<PhaseManager>().swapToIndex == 2)
+        {
+            crescentMoon.transform.position = currentMoonTransform.position;
+            fullMoon.transform.position = nextMoonTransform.position;
+            newMoon.transform.position = offMoonTransform.position;
+            halfMoon.transform.position = previousMoonTransform.position;
+        }
+        if (player.GetComponent<PhaseManager>().swapToIndex == 3)
+        {
+            fullMoon.transform.position = currentMoonTransform.position;
+            newMoon.transform.position = nextMoonTransform.position;
+            halfMoon.transform.position = offMoonTransform.position;
+            crescentMoon.transform.position = previousMoonTransform.position;
+        }
     }
     #endregion
 }
