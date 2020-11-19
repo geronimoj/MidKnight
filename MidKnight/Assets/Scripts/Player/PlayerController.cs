@@ -540,12 +540,12 @@ public class PlayerController : Character
         cc.Move(moveVec);
         Vector3 pos = transform.position + Vector3.down * (cc.height / 2 - cc.radius + cc.radius / 3);
         Debug.DrawLine(pos, pos + transform.right);
-        if (Physics.Raycast(pos, transform.right, out hit, cc.radius))
+        if (Physics.Raycast(pos, transform.right, out hit, cc.radius, ground))
         {
             float f = Vector3.Distance(pos, hit.point);
             cc.Move(-transform.right * (cc.radius - f));
         }
-        else if (Physics.Raycast(pos, -transform.right, out hit, cc.radius))
+        else if (Physics.Raycast(pos, -transform.right, out hit, cc.radius, ground))
         {
             float f = Vector3.Distance(pos, hit.point);
             cc.Move(transform.right * (cc.radius - f));
