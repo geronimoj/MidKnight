@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// destroy the object after this timer
+/// </summary>
 public class timeTillDestroy : MonoBehaviour
 {
     /// <summary>
-    /// destroy the object after this timer
+    /// count until the object is destroyed
     /// </summary>
     public float startTimeTillDestroy;
 

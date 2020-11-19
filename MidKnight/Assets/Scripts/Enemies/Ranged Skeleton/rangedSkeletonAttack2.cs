@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the script for the magic bolt attack animation
+/// </summary>
 public class rangedSkeletonAttack2 : baseEnemyAttack
 {
     /// <summary>
-    /// the script for the magic bolt attack animation
+    /// a reference to the ranged skeleton's second attack
     /// </summary>
     public GameObject atk;
 

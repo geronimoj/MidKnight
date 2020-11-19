@@ -2,20 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// all prefabs will derive from this
+/// </summary>
 public class basePrefab : MonoBehaviour
 {
     /// <summary>
-    /// all prefabs will derive from this
+    /// a reference to the player's transform
     /// </summary>
-    /// 
     [HideInInspector] public Transform playerTrans;
+    /// <summary>
+    /// a reference to the prefab's transform
+    /// </summary>
     [HideInInspector] public Transform prefabTrans;
+    /// <summary>
+    /// the prefab's destination
+    /// </summary>
     [HideInInspector] public Vector3 destination = new Vector3(0,0,0);
+    /// <summary>
+    /// a reference to the player
+    /// </summary>
     Character player;
+    /// <summary>
+    /// a reference to the prefab's timetilldestroy script
+    /// </summary>
     timeTillDestroy timeTillDestroy;
+    /// <summary>
+    /// the prefab's speed
+    /// </summary>
     public int speed = 1;
+    /// <summary>
+    /// the prefab's damage
+    /// </summary>
     public int damage = 1;
+    /// <summary>
+    /// returns true if the prefab is breakable
+    /// </summary>
     public bool isBreakable = false;
+    /// <summary>
+    /// a reference to the prefab's collider
+    /// </summary>
     Collider prefabCol;
 
     // Start is called before the first frame update

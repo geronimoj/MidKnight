@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Return to idle after x seconds
+/// </summary>
 public class returnToIdle : StateMachineBehaviour
 {
     /// <summary>
-    /// Return to idle after x seconds
+    /// the minimum start time it takes for the enemy to return to idle
     /// </summary>
-
-
     public float minStartTimeTillIdle;
+    /// <summary>
+    /// the maximum start time it takes for the enemy to return to idle
+    /// </summary>
     public float maxStartTimeTillIdle;
+    /// <summary>
+    /// a random number taken from the min and max
+    /// </summary>
     float timeTillIdle;
+    /// <summary>
+    /// the minimum start time it takes for the enemy to return to idle if it's in phase 2
+    /// </summary>
     public float phase2MinStartTimeTillIdle;
+    /// <summary>
+    /// the maximum start time it takes for the enemy to return to idle if it's in phase 2
+    /// </summary>
     public float phase2MaxStartTimeTillIdle;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Baby rat's idle script
+/// </summary>
 public class ratIdle : baseEnemyIdle
 {
     /// <summary>
-    /// Baby rat's idle script
+    /// returns true if the rat is moving to the right
     /// </summary>
-
     bool isMovingRight;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

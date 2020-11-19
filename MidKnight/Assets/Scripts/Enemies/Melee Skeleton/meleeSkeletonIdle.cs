@@ -2,19 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Melee AND ranged skeleton idle 
+/// </summary>
 public class meleeSkeletonIdle : baseEnemyIdle
 {
     /// <summary>
-    /// Melee AND ranged skeleton idle 
+    /// the skeleton's attack range
     /// </summary>
-    
     public int atkRange;
+    /// <summary>
+    /// the minimum start time it takes for the skeleton to walk
+    /// </summary>
     public float minStartTimeTillWalk;
+    /// <summary>
+    /// the maximum start time it takes for the skeleton to walk
+    /// </summary>
     public float maxStartTimeTillWalk;
+    /// <summary>
+    /// a random time taken from the minimum and maximum for the skeleton to walk
+    /// </summary>
     float timeTillWalk;
+    /// <summary>
+    /// returns true if he has chosen to walk
+    /// </summary>
     bool hasChosenWalk;
+    /// <summary>
+    /// the maximum distance for the skeleton to walk
+    /// </summary>
     public float maxDistToWalk;
+    /// <summary>
+    /// a random distance for the skeleton to walk, taken from the maximum distance
+    /// </summary>
     float distToWalk;
+    /// <summary>
+    /// the skeleton chooses which use to move
+    /// </summary>
     int moveToUse;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Check if this object is colliding with a wall 
+/// </summary>
 public class wallCheck : MonoBehaviour
 {
     /// <summary>
-    /// Check if this object is colliding with a wall 
+    /// returns true if there is a wall colliding with this game object
     /// </summary>
-
     public bool isThereAWall;
 
     // Start is called before the first frame update

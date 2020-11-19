@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// the bat's attack
+/// </summary>
 public class batChase : baseEnemyIdle
 {
     /// <summary>
-    /// the bat's attack
+    /// returns true if this enemy is a large bat
     /// </summary>
-
     bool isLargeBat;
+    /// <summary>
+    /// the attack range of the bat
+    /// </summary>
     public float distFromPlayerToAtk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
