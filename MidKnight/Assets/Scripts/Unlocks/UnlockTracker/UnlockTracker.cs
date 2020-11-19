@@ -18,7 +18,7 @@ public class UnlockTracker : MonoBehaviour
 #endif
     #endregion
 
-    private void Start()
+    public void Start()
     {
         PC = GetComponent<PlayerController>();
     }
@@ -26,6 +26,7 @@ public class UnlockTracker : MonoBehaviour
     //Set a certain key to true or false and if it doesn't exist adds it
     public void SetKey(string key, bool value)
     {
+        key = key.ToLower();
         foreach (KeyValuePair<string, bool> KVP in unlocks)
         {
             if (key == KVP.Key)
@@ -93,10 +94,11 @@ public class UnlockTracker : MonoBehaviour
 
     private void CheckHealthAndEclipse()
     {
+        if (PC == null)
+            PC = GetComponent<PlayerController>();
         if (GetKeyValue("health"))
         {
             healthAdd++;
-            SetKey("health", false);
             unlocks.Remove("health");
 
             while (healthAdd >= 3)
@@ -109,7 +111,6 @@ public class UnlockTracker : MonoBehaviour
         if (GetKeyValue("eclipse shard") && !GetKeyValue("eclipse"))
         {
             eclipseAdd++;
-            SetKey("eclipse shard", false);
             unlocks.Remove("eclipse shard");
 
             if (eclipseAdd >= 4)
