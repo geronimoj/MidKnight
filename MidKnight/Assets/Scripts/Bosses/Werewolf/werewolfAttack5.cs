@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// werewolf's transition to phase 2 animation
+/// </summary>
 public class werewolfAttack5 : baseBossAttack
 {
-    /// <summary>
-    /// werewolf's transition to phase 2 animation
-    /// </summary>
-
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

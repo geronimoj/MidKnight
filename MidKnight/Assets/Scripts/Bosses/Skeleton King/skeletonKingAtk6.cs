@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// skeleton king's sixth attack.
+/// it summons a barrier on him
+/// </summary>
 public class skeletonKingAtk6 : baseBossAttack
 {
     /// <summary>
-    /// skeleton king's sixth attack.
-    /// it summons a barrier on him
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
 

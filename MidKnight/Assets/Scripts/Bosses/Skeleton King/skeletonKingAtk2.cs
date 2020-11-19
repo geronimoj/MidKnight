@@ -2,19 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the skeleton king's first attack
+/// it summons homing orbs
+/// </summary>
 public class skeletonKingAtk2 : baseBossAttack
 {
     /// <summary>
-    /// the skeleton king's first attack
-    /// it summons homing orbs
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
+    /// <summary>
+    /// the current time between each attack
+    /// </summary>
     float timeBetweenAttacks;
+    /// <summary>
+    /// the start time between each attack
+    /// </summary>
     public float startTimeBetweenAttacks;
+    /// <summary>
+    /// the number of orbs to spawn
+    /// </summary>
     int noOfOrbs;
+    /// <summary>
+    /// the number of orbs spawned
+    /// </summary>
     int count;
+    /// <summary>
+    /// the number of orbs to spawn in phase 1
+    /// </summary>
     public int phase1NoOfOrbs;
+    /// <summary>
+    /// the number of orbs to spawn in phase 2
+    /// </summary>
     public int phase2NoOfOrbs;
+    /// <summary>
+    /// the radius of the orbs
+    /// </summary>
     public int projectileRadius;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the meteor's script
+/// it flies towards the player
+/// </summary>
 public class skeletonKingMeteor : basePrefab
 {
     /// <summary>
-    /// the meteor's script
-    /// it flies towards the player
+    /// the coordinate of the floor
     /// </summary>
     public int floorCoordinate;
 

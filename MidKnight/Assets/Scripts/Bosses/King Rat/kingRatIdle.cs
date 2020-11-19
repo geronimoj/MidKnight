@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// idle state of king rat
+/// </summary>
 public class kingRatIdle : baseBossIdle
 {
     /// <summary>
-    /// idle state of king rat
+    /// returns true if the rat has used its boss move once
     /// </summary>
     bool hasUsedBossMove1;
+    /// <summary>
+    /// returns true if the rat has used its boss move twice
+    /// </summary>
     bool hasUsedBossMove2;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

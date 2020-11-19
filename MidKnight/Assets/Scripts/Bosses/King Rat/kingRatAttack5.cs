@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king rat's fifth attack
+/// it dashes to the other side of the arena then calls the second part of its attack
+/// </summary>
 public class kingRatAttack5 : baseBossAttack
 {
     /// <summary>
-    /// king rat's fifth attack
-    /// it dashes to the other side of the arena then calls the second part of its attack
+    /// the number of dashes to use
     /// </summary>
     public int noOfDashesToUse;
+    /// <summary>
+    /// the amount of dashes that has been used
+    /// </summary>
     int dashCount = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

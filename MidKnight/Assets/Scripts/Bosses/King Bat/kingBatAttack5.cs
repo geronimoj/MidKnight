@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the king bat's fifth attack
+/// it dashes to a random spot in the arena
+/// </summary>
 public class kingBatAttack5 : baseBossAttack
 {
     /// <summary>
-    /// the king bat's fifth attack
-    /// it dashes to a random spot in the arena
+    /// the amount of times this has been called
     /// </summary>
     int count = 0;
+    /// <summary>
+    /// the number of times this will be called
+    /// </summary>
     public int noOfSonicWaves;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
