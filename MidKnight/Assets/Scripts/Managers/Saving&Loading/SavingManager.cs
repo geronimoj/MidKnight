@@ -43,13 +43,13 @@ public class SavingManager : MonoBehaviour
             writer.Write("Player");
             writer.Write(player.MaxHealth);
             writer.Write(currentRestPoint);
-            writer.Write("EntitiesToNotRespawn");
-            writer.Write(EM.EntitiesToNotRespawn.Count);
+            writer.Write("EntitiesToNeverRespawn");
+            writer.Write(EM.EntitiesToNeverRespawn.Count);
 
-            for (int i = 0; i < EM.EntitiesToNotRespawn.Count; i++)
+            for (int i = 0; i < EM.EntitiesToNeverRespawn.Count; i++)
             {
-                writer.Write(EM.EntitiesToNotRespawn[i].index);
-                writer.Write(EM.EntitiesToNotRespawn[i].thisRoom);
+                writer.Write(EM.EntitiesToNeverRespawn[i].index);
+                writer.Write(EM.EntitiesToNeverRespawn[i].thisRoom);
             }
 
             writer.Write("Unlocks");
@@ -82,13 +82,13 @@ public class SavingManager : MonoBehaviour
             writer.WriteLine("Player");
             writer.WriteLine(player.MaxHealth);
             writer.WriteLine(currentRestPoint);
-            writer.WriteLine("EntitiesToNotRespawn");
-            writer.WriteLine(EM.EntitiesToNotRespawn.Count);
+            writer.WriteLine("EntitiesToNeverRespawn");
+            writer.WriteLine(EM.EntitiesToNeverRespawn.Count);
 
-            for (int i = 0; i < EM.EntitiesToNotRespawn.Count; i++)
+            for (int i = 0; i < EM.EntitiesToNeverRespawn.Count; i++)
             {
-                writer.WriteLine(EM.EntitiesToNotRespawn[i].index);
-                writer.WriteLine(EM.EntitiesToNotRespawn[i].thisRoom);
+                writer.WriteLine(EM.EntitiesToNeverRespawn[i].index);
+                writer.WriteLine(EM.EntitiesToNeverRespawn[i].thisRoom);
             }
 
             writer.WriteLine("Unlocks");
@@ -144,7 +144,7 @@ public class SavingManager : MonoBehaviour
                     player.TakeDamage(-player.MaxHealth);
                     currentRestPoint = reader.ReadInt32();
                 }
-                else if (readLine == "EntitiesToNotRespawn")
+                else if (readLine == "EntitiesToNeverRespawn")
                 {
                     int count = reader.ReadInt32();
 
@@ -154,7 +154,8 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
-                    EM.EntitiesToNotRespawn = tempEntities;
+                    EM.EntitiesToNeverRespawn = tempEntities;
+                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -201,7 +202,7 @@ public class SavingManager : MonoBehaviour
                     player.TakeDamage(-player.MaxHealth);
                     currentRestPoint = int.Parse(reader.ReadLine());
                 }
-                else if (readLine == "EntitiesToNotRespawn")
+                else if (readLine == "EntitiesToNeverRespawn")
                 {
                     int count = int.Parse(reader.ReadLine());
 
@@ -211,7 +212,8 @@ public class SavingManager : MonoBehaviour
                         tempEntities.Add(tempEntity);
                     }
 
-                    EM.EntitiesToNotRespawn = tempEntities;
+                    EM.EntitiesToNeverRespawn = tempEntities;
+                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {

@@ -4,7 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(GameManager))]
 public class EntitiesManager : MonoBehaviour
 {
-    public List<Entities> EntitiesToNotRespawn = new List<Entities>();
+    public List<Entities> EntitiesToNeverRespawn = new List<Entities>();
+    public List<Entities> EntitiesToNotRespawnUntillRest = new List<Entities>();
 }
 
 [System.Serializable]

@@ -55,7 +55,7 @@ public class Room : MonoBehaviour
         }
         Room r = Instantiate(gameObject).GetComponent<Room>();
         gm.room = r;
-        foreach (Entities obj in EM.EntitiesToNotRespawn)
+        foreach (Entities obj in EM.EntitiesToNotRespawnUntillRest)
         {
             if (obj.thisRoom == r.roomID)
             {
