@@ -538,6 +538,18 @@ public class PlayerController : Character
             moveVec.y = (hit.point.y + (Height / 2)) - transform.position.y;
         //Move the player
         cc.Move(moveVec);
+        Vector3 pos = transform.position + Vector3.down * (cc.height / 2 - cc.radius + cc.radius / 3);
+        Debug.DrawLine(pos, pos + transform.right);
+        if (Physics.Raycast(pos, transform.right, out hit, cc.radius))
+        {
+            float f = Vector3.Distance(pos, hit.point);
+            cc.Move(-transform.right * (cc.radius - f));
+        }
+        else if (Physics.Raycast(pos, -transform.right, out hit, cc.radius))
+        {
+            float f = Vector3.Distance(pos, hit.point);
+            cc.Move(transform.right * (cc.radius - f));
+        }
         //Ensure the player has not escaped the map just in case moving did such a thing
         //Disable the character controller to allow for teleportation. It has an internal
         //sence of motion and stuffs up teleportation
