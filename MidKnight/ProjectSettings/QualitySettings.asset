@@ -243,7 +243,7 @@ QualitySettings:
     skinWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
-    antiAliasing: 0
+    antiAliasing: 8
     softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
@@ -302,4 +302,8 @@ QualitySettings:
     customRenderPipeline: {fileID: 11400000, guid: 4220364e8a2061141845d3cc019c622d,
       type: 2}
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Android: 0
+    Standalone: 0
+    WebGL: 0
+    Windows Store Apps: 0

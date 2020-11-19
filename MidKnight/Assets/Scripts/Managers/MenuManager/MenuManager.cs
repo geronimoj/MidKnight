@@ -49,16 +49,23 @@ public class MenuManager : MonoBehaviour
     public Image eclipseFillImage;
     public Text eclipseText;
     public GameObject eclipseFlourish;
-    public Text currentText;
-    public Transform currentMoonTransform;
+    public Transform currentSelectedMoonTransform;
     public Transform nextMoonTransform;
     public Transform previousMoonTransform;
-    public Transform offMoonTransform;
+    public Transform currentMoonTransform;
     public GameObject newMoon;
+    public Image newMoonImage;
     public GameObject crescentMoon;
+    public Image crescentMoonImage;
     public GameObject halfMoon;
+    public Image halfMoonImage;
     public GameObject fullMoon;
+    public Image fullMoonImage;
     public Text phaseSpawingCooldownText;
+    private float newMoonCooldown = 0;
+    private float halfMoonCooldown = 0;
+    private float crescentMoonCooldown = 0;
+    private float fullMoonCooldown = 0;
     #endregion
 
     private void Start()
@@ -445,67 +452,198 @@ public class MenuManager : MonoBehaviour
     //Incomplete
     public void PhasesUI()
     {
-        currentText.text = $"Current Phase: {player.GetComponent<PhaseManager>().CurrentPhase.name}";
-        float phaseCooldown = player.GetComponent<PhaseManager>().CooldownTimer;
-        float newMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[0].CooldownTimer;
-        float halfMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[1].CooldownTimer;
-        float crescentMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[2].CooldownTimer;
-        float fullMoonCooldown = player.GetComponent<PhaseManager>().everyMoonPhase[3].CooldownTimer;
-
-        if (phaseCooldown < 0)
+        if (newMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
         {
-            phaseCooldown = 0;
+            newMoonImage.fillAmount = newMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown;
         }
-        if (newMoonCooldown < 0)
+        if (crescentMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
         {
-            newMoonCooldown = 0;
+            crescentMoon.GetComponent<Image>().fillAmount = crescentMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown;
         }
-        if (crescentMoonCooldown < 0)
+        if (halfMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
         {
-            crescentMoonCooldown = 0;
+            halfMoon.GetComponent<Image>().fillAmount = halfMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown;
         }
-        if (halfMoonCooldown < 0)
+        if (fullMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
         {
-            halfMoonCooldown = 0;
-        }
-        if (fullMoonCooldown < 0)
-        {
-            fullMoonCooldown = 0;
+            fullMoon.GetComponent<Image>().fillAmount = fullMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown;
         }
 
-        phaseSpawingCooldownText.text = $"Phase Switch: {phaseCooldown}s\n" +
-            $"{(newMoonCooldown > 0 ? $"New Moon: {newMoonCooldown}s\n" : "")}" +
-            $"{(halfMoonCooldown > 0 ? $"Half Moon: {halfMoonCooldown}s\n" : "")}" +
-            $"{(crescentMoonCooldown > 0 ? $"Crescent Moon: {crescentMoonCooldown}s\n" : "")}" +
-            $"{(fullMoonCooldown > 0 ? $"Full Moon: {fullMoonCooldown}s\n" : "")}";
+        newMoonCooldown += Time.deltaTime;
+        crescentMoonCooldown += Time.deltaTime;
+        halfMoonCooldown += Time.deltaTime;
+        fullMoonCooldown += Time.deltaTime;
+        float phaseCooldown = player.GetComponent<PhaseManager>().CooldownTimer < 0 ? 0 : player.GetComponent<PhaseManager>().CooldownTimer;
+        phaseSpawingCooldownText.text = $"Phase Switch: {phaseCooldown}s";
 
-        if (player.GetComponent<PhaseManager>().swapToIndex == 0)
+        if (player.GetComponent<PhaseManager>().CooldownTimer < 0 && Input.GetAxis("SelectPhase") > 0)
         {
-            newMoon.transform.position = currentMoonTransform.position;
-            halfMoon.transform.position = nextMoonTransform.position;
-            crescentMoon.transform.position = offMoonTransform.position;
-            fullMoon.transform.position = previousMoonTransform.position;
+            if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0])
+            {
+                newMoon.transform.position = currentMoonTransform.position;
+                crescentMoon.transform.position = nextMoonTransform.position;
+                halfMoon.transform.position = currentSelectedMoonTransform.position;
+                fullMoon.transform.position = previousMoonTransform.position;
+                newMoonCooldown = 0;
+            }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1])
+            {
+                crescentMoon.transform.position = currentMoonTransform.position;
+                halfMoon.transform.position = nextMoonTransform.position;
+                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                newMoon.transform.position = previousMoonTransform.position;
+                crescentMoonCooldown = 0;
+            }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2])
+            {
+                halfMoon.transform.position = currentMoonTransform.position;
+                fullMoon.transform.position = nextMoonTransform.position;
+                newMoon.transform.position = currentSelectedMoonTransform.position;
+                crescentMoon.transform.position = previousMoonTransform.position;
+                halfMoonCooldown = 0;
+            }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3])
+            {
+                fullMoon.transform.position = currentMoonTransform.position;
+                newMoon.transform.position = nextMoonTransform.position;
+                crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                halfMoon.transform.position = previousMoonTransform.position;
+                fullMoonCooldown = 0;
+            }
         }
-        if (player.GetComponent<PhaseManager>().swapToIndex == 1)
+        if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0])
         {
-            halfMoon.transform.position = currentMoonTransform.position;
-            crescentMoon.transform.position = nextMoonTransform.position;
-            fullMoon.transform.position = offMoonTransform.position;
-            newMoon.transform.position = previousMoonTransform.position;
+            switch (player.GetComponent<PhaseManager>().swapToIndex)
+            {
+                case 0:
+                    crescentMoon.transform.position = new Vector3(-50, -50, 0);
+                    halfMoon.transform.position = nextMoonTransform.position;
+                    fullMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 1:
+                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                    halfMoon.transform.position = nextMoonTransform.position;
+                    fullMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 2:
+                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                    fullMoon.transform.position = nextMoonTransform.position;
+                    crescentMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 3:
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    crescentMoon.transform.position = nextMoonTransform.position;
+                    halfMoon.transform.position = previousMoonTransform.position;
+                    break;
+            }
         }
-        if (player.GetComponent<PhaseManager>().swapToIndex == 2)
+        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1])
         {
-            crescentMoon.transform.position = currentMoonTransform.position;
-            fullMoon.transform.position = nextMoonTransform.position;
-            newMoon.transform.position = offMoonTransform.position;
-            halfMoon.transform.position = previousMoonTransform.position;
+            switch (player.GetComponent<PhaseManager>().swapToIndex)
+            {
+                case 0:
+                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                    halfMoon.transform.position = nextMoonTransform.position;
+                    fullMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 1:
+                    fullMoon.transform.position = new Vector3(-50, -50, 0);
+                    halfMoon.transform.position = nextMoonTransform.position;
+                    newMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 2:
+                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                    fullMoon.transform.position = nextMoonTransform.position;
+                    newMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 3:
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    newMoon.transform.position = nextMoonTransform.position;
+                    halfMoon.transform.position = previousMoonTransform.position;
+                    break;
+            }
         }
-        if (player.GetComponent<PhaseManager>().swapToIndex == 3)
+        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2])
         {
-            fullMoon.transform.position = currentMoonTransform.position;
-            newMoon.transform.position = nextMoonTransform.position;
-            halfMoon.transform.position = offMoonTransform.position;
-            crescentMoon.transform.position = previousMoonTransform.position;
+            switch (player.GetComponent<PhaseManager>().swapToIndex)
+            {
+                case 0:
+                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                    crescentMoon.transform.position = nextMoonTransform.position;
+                    fullMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 1:
+                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                    fullMoon.transform.position = nextMoonTransform.position;
+                    newMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 2:
+                    newMoon.transform.position = new Vector3(-50, -50, 0);
+                    fullMoon.transform.position = nextMoonTransform.position;
+                    crescentMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 3:
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    newMoon.transform.position = nextMoonTransform.position;
+                    crescentMoon.transform.position = previousMoonTransform.position;
+                    break;
+            }
+        }
+        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3])
+        {
+            switch (player.GetComponent<PhaseManager>().swapToIndex)
+            {
+                case 0:
+                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                    crescentMoon.transform.position = nextMoonTransform.position;
+                    halfMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 1:
+                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                    halfMoon.transform.position = nextMoonTransform.position;
+                    newMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 2:
+                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                    newMoon.transform.position = nextMoonTransform.position;
+                    crescentMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 3:
+                    crescentMoon.transform.position = new Vector3(-50, -50, 0);
+                    newMoon.transform.position = nextMoonTransform.position;
+                    halfMoon.transform.position = previousMoonTransform.position;
+                    break;
+            }
+        }
+        else
+        {
+            switch (player.GetComponent<PhaseManager>().swapToIndex)
+            {
+                case 0:
+                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                    crescentMoon.transform.position = nextMoonTransform.position;
+                    halfMoon.transform.position = currentMoonTransform.position;
+                    fullMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 1:
+                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                    halfMoon.transform.position = nextMoonTransform.position;
+                    fullMoon.transform.position = currentMoonTransform.position;
+                    newMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 2:
+                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                    fullMoon.transform.position = nextMoonTransform.position;
+                    newMoon.transform.position = currentMoonTransform.position;
+                    crescentMoon.transform.position = previousMoonTransform.position;
+                    break;
+                case 3:
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    newMoon.transform.position = nextMoonTransform.position;
+                    crescentMoon.transform.position = currentMoonTransform.position;
+                    halfMoon.transform.position = previousMoonTransform.position;
+                    break;
+            }
         }
     }
     #endregion
