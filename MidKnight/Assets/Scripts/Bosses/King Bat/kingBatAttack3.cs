@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king bat's third attack
+/// it fires a sonic wave at the player
+/// </summary>
 public class kingBatAttack3 : baseBossAttack
 {
     /// <summary>
-    /// king bat's third attack
-    /// it fires a sonic wave at the player
+    /// the speed of the sonic wave
     /// </summary>
     public int sonicWaveSpeed;
+    /// <summary>
+    /// the size of the sonic wave
+    /// </summary>
     public float sonicWaveSize;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

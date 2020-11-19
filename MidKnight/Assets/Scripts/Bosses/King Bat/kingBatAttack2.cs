@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king bat's second attack.
+/// it dashes to the player
+/// </summary>
 public class kingBatAttack2 : baseBossAttack
 {
     /// <summary>
-    /// king bat's second attack.
-    /// it dashes to the player
+    /// the amount of times the bat has reached its destination
     /// </summary>
     int count;
 

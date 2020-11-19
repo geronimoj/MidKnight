@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the skeleton king's third attack
+/// it summons some laser beams
+/// </summary>
 public class skeletonKingAtk3 : baseBossAttack
 {
     /// <summary>
-    /// the skeleton king's third attack
-    /// it summons some laser beams
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
+    /// <summary>
+    /// the number of laser beams
+    /// </summary>
     int noOfLaserBeams;
+    /// <summary>
+    /// the number of laser beams to spawn in phase 1
+    /// </summary>
     public int phase1NoOfLaserBeams;
+    /// <summary>
+    /// the number of lasre beams to spawn in phase 2
+    /// </summary>
     public int phase2NoOfLaserBeams;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

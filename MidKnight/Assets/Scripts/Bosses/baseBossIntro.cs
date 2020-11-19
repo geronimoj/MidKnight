@@ -2,15 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base boss intro script
+/// </summary>
 public class baseBossIntro : StateMachineBehaviour
 {
     /// <summary>
-    /// Base boss intro script
+    /// the vision range of the boss
     /// </summary>
     public float distanceFromPlayerToWake;
+    /// <summary>
+    /// a reference to the player's transform
+    /// </summary>
     Transform playerTrans;
+    /// <summary>
+    /// a reference to the boss' transform
+    /// </summary>
     Transform enemyTrans;
+    /// <summary>
+    /// returns true if the boss is awake
+    /// </summary>
     bool isAwake = false;
+    /// <summary>
+    /// the time till the boss changes to idle animation
+    /// </summary>
     public float timeTillIdle;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

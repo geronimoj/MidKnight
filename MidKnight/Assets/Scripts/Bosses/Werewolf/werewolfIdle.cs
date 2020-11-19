@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// werewolf's idle state.
+/// it runs to one side of the arena then uses its move
+/// </summary>
 public class werewolfIdle : baseBossIdle
 {
     /// <summary>
-    /// werewolf's idle state.
-    /// it runs to one side of the arena then uses its move
+    /// the left x coordinate of the arena
     /// </summary>
     public int arenaLeftXCoordinate;
+    /// <summary>
+    /// the right x coordinate of the arena
+    /// </summary>
     public int ArenaRightXCoordinate;
+    /// <summary>
+    /// the speed in phase 2
+    /// </summary>
     public int phase2speed;
+    /// <summary>
+    /// returns true if its used its boss move 
+    /// </summary>
     bool hasUsedBossMove = false;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -2,18 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king bat's fifth attack part 2
+/// it shoots a sonic wave at the player and drops rocks
+/// </summary>
 public class kingBatAttack5Part2 : baseBossAttack
 {
     /// <summary>
-    /// king bat's fifth attack part 2
-    /// it shoots a sonic wave at the player and drops rocks
+    /// the speed of the sonic wave
     /// </summary>
     public int sonicWaveSpeed;
+    /// <summary>
+    /// the size of the sonic wave
+    /// </summary>
     public float sonicWaveSize;
+    /// <summary>
+    /// the start time till the boss will go to the previous animatino
+    /// </summary>
     public float startTimeTillAtk5;
+    /// <summary>
+    /// the current time till the boss will go to the previous animatino
+    /// </summary>
     float timeTillAtk5;
+    /// <summary>
+    /// the number of rocks to drop
+    /// </summary>
     public int noOfRocks;
+    /// <summary>
+    /// the spawn position of each rock
+    /// </summary>
     Vector3 spawnPos;
+    /// <summary>
+    /// a reference to the rock prefab
+    /// </summary>
     public GameObject rocks;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

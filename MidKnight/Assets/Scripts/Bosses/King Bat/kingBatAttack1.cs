@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king bat's first attack
+/// It spawns 2 small bats
+/// </summary>
 public class kingBatAttack1 : baseBossAttack
 {
     /// <summary>
-    /// king bat's first attack
-    /// It spawns 2 small bats
+    /// the spawn position of the bats
     /// </summary>
     Vector3 spawnPos;
 

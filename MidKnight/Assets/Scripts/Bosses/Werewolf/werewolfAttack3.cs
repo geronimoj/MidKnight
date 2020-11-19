@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// werewolf's third attack.
+/// it jumps into the air aiming to land on the player
+/// </summary>
 public class werewolfAttack3 : baseBossAttack
 {
     /// <summary>
-    /// werewolf's third attack.
-    /// it jumps into the air aiming to land on the player
+    /// the speed in phase 2
     /// </summary>
     public int phase2speed;
+    /// <summary>
+    /// returns true if the werewolf is moving to the right
+    /// </summary>
     bool isMovingRight;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

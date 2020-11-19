@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king bat's fourth attack.
+/// it flies up and drops rocks at the player
+/// </summary>
 public class kingBatAttack4 : baseBossAttack
 {
     /// <summary>
-    /// king bat's fourth attack.
-    /// it flies up and drops rocks at the player
+    /// the number of rocks that the bat drops
     /// </summary>
     public int noOfRocks;
+    /// <summary>
+    /// the spawn position of each rock
+    /// </summary>
     Vector3 spawnPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

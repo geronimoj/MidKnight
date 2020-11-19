@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king rat's fourth attack
+/// it shoots a laser beam into the sky, and multiple more rain down shortly after
+/// </summary>
 public class kingRatAttack4 : baseBossAttack
 {
     /// <summary>
-    /// king rat's fourth attack
-    /// it shoots a laser beam into the sky, and multiple more rain down shortly after
+    /// the number of laser beams
     /// </summary>
     public int noOfLaserBeams;
 

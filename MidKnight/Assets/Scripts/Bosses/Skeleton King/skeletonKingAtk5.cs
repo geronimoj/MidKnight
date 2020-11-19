@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// skeleton kings fifth attack
+/// it summons a giant meteor at the player
+/// </summary>
 public class skeletonKingAtk5 : baseBossAttack
 {
     /// <summary>
-    /// skeleton kings fifth attack
-    /// it summons a giant meteor at the player
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
+    /// <summary>
+    /// the speed in phase 2
+    /// </summary>
     public int phase2Speed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king rat's second attack
+/// it dashes to the other side of the arena then drops some rocks
+/// </summary>
 public class kingRatAttack2 : baseBossAttack
 {
     /// <summary>
-    /// king rat's second attack
-    /// it dashes to the other side of the arena then drops some rocks
+    /// the spawn position of each rock
     /// </summary>
     Vector3 spawnPos;
+    /// <summary>
+    /// the number of rocks to spawn
+    /// </summary>
     public int noOfRocks;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

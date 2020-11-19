@@ -2,25 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// all boss idle states derives from this
+/// </summary>
 public class baseBossIdle : StateMachineBehaviour
 {
     /// <summary>
-    /// all boss idle states derives from this
+    /// a reference to the boss' transform
     /// </summary>
     [HideInInspector] public Transform enemyTrans;
+    /// <summary>
+    /// a reference to the players' transform
+    /// </summary>
     [HideInInspector] public Transform playerTrans;
+    /// <summary>
+    /// the boss' destination
+    /// </summary>
     [HideInInspector] public Vector3 destination;
+    /// <summary>
+    /// a reference to the enemy script
+    /// </summary>
     [HideInInspector] public Enemy enemy;
+    /// <summary>
+    /// the move which the boss will move
+    /// </summary>
     [HideInInspector] public int moveToUse;
+    /// <summary>
+    /// the second last move the boss used
+    /// </summary>
     [HideInInspector] public int secondLastMove = 0;
+    /// <summary>
+    /// the last move the boss used
+    /// </summary>
     [HideInInspector] public int lastMove = 0;
+    /// <summary>
+    /// the time till the boss uses its move
+    /// </summary>
     [HideInInspector] public float timeTillAtk;
+    /// <summary>
+    /// a reference to the boss' character controller
+    /// </summary>
     [HideInInspector] public CharacterController cc;
+    /// <summary>
+    /// the number of moves that the boss has
+    /// </summary>
     [Range(1,7)] public int noOfMoves = 5;
+    /// <summary>
+    /// the minimum time till the boss attacks
+    /// </summary>
     public float minStartTimeTillAtk;
+    /// <summary>
+    /// the maximum time till the boss attacks
+    /// </summary>
     public float maxStartTimeTillAtk;
+    /// <summary>
+    /// the boss' speed
+    /// </summary>
     public int speed;
+    /// <summary>
+    /// the boss' gravity
+    /// </summary>
     public float gravity = 5;
+    /// <summary>
+    /// the boss' vertical speed
+    /// </summary>
     private float vertSpeed = 0;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

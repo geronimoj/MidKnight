@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the skeleton king's idle animation
+/// </summary>
 public class skeletonKingIdle : baseBossIdle
 {
     /// <summary>
-    /// the skeleton king's idle animation
+    /// returns true if its used its boss move
     /// </summary>
     bool hasUsedBossMove = false;
+    /// <summary>
+    /// the speed when the boss is in phase 2
+    /// </summary>
     public int phase2speed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

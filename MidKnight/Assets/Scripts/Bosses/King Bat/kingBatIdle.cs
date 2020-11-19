@@ -2,17 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// idle state for the king bat
+/// </summary>
 public class kingBatIdle : baseBossIdle
 {
     /// <summary>
-    /// idle state for the king bat
+    /// the up y coordinate of the arena that the boss is in
     /// </summary>
     public float arenaUpYCoordinate;
+    /// <summary>
+    /// the down y coordinate of the arena that the boss is in
+    /// </summary>
     public float arenaDownYCoordinate;
+    /// <summary>
+    /// the left x coordinate of the arena that the boss is in
+    /// </summary>
     public float arenaLeftXCoordinate;
+    /// <summary>
+    /// the right x coordinate of the arena that the boss is in
+    /// </summary>
     public float arenaRightXCoordinate;
+    /// <summary>
+    /// the minimum distance that the boss will travel
+    /// </summary>
     public int minDistFromDestination;
+    /// <summary>
+    /// returns true if the boss has used its special move once
+    /// </summary>
     bool hasUsedBossMove1;
+    /// <summary>
+    /// returns true if the boss has used its special move twice
+    /// </summary>
     bool hasUsedBossMove2;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

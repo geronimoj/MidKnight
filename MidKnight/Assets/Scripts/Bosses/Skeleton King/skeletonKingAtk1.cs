@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// skeleton kings first attack.
+/// it shoots a laser beam at the player
+/// </summary>
 public class skeletonKingAtk1 : baseBossAttack
 {
     /// <summary>
-    /// skeleton kings first attack.
-    /// it shoots a laser beam at the player
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
+    /// <summary>
+    /// the height of the laser beams
+    /// </summary>
     public int laserBeamHeight;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
