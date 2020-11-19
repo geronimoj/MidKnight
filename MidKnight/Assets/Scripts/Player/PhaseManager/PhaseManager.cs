@@ -206,6 +206,8 @@ public class PhaseManager : MonoBehaviour
     /// <returns>Returns true if the string matches the current phases ID</returns>
     public bool CorrectPhase(string phaseID)
     {
+        if (current == null)
+            return false;
         return current.phaseID.Equals(phaseID);
     }
     /// <summary>
@@ -213,8 +215,9 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     private void DecrementTimers()
     {
-        for (int i = 0; i < everyMoonPhase.Length; i++)
-            everyMoonPhase[i].DecrementCooldownTimer();
+        if (everyMoonPhase != null)
+            for (int i = 0; i < everyMoonPhase.Length; i++)
+                everyMoonPhase[i].DecrementCooldownTimer();
     }
     /// <summary>
     /// Checks if the player wants to cycle between moon phases & swaps them if they request to.

@@ -42,11 +42,13 @@ public class StateManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     private void SwapState(ref PlayerController c)
     {   //If we are already in the state don't both
-        if (target == current)
+        if (target == current || target == null)
             return;
-        current.StateEnd(ref c);
-        current.OnExit.Invoke();
-
+        if (current != null)
+        {
+            current.StateEnd(ref c);
+            current.OnExit.Invoke();
+        }
         current = target;
 
         current.StateStart(ref c);
