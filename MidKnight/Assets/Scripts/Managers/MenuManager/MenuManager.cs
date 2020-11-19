@@ -449,7 +449,6 @@ public class MenuManager : MonoBehaviour
         eclipseText.text = $"{100 * eclipseFillImage.fillAmount}%";
     }
 
-    //Incomplete
     public void PhasesUI()
     {
         if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
