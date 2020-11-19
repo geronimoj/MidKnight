@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Check if this object is colliding with the floor 
+/// </summary> 
 public class floorCheck : MonoBehaviour
 {
     /// <summary>
-    /// Check if this object is colliding with the floor 
-    /// </summary> 
-    
+    /// returns true if there is floor colliding with this gameobject
+    /// </summary>
     public bool isThereFloor;
 
     // Start is called before the first frame update

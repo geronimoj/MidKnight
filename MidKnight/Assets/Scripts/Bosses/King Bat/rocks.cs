@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// a prefab that drops downwards
+/// </summary>
 public class rocks : basePrefab
-{
-    /// <summary>
-    /// a prefab that drops downwards
-    /// </summary>
-    /// 
+{ 
     // Start is called before the first frame update
     public override void Start()
     {

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// skeleton king's transition phase.
+/// </summary>
 public class skeletonKingAtk7 : baseBossAttack
 {
     /// <summary>
-    /// skeleton king's transition phase.
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
 

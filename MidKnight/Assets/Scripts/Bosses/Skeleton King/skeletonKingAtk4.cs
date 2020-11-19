@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// skeleton king's fourth attack
+/// </summary>
 public class skeletonKingAtk4 : baseBossAttack
 {
     /// <summary>
-    /// skeleton king's fourth attack
+    /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
+    /// <summary>
+    /// the radius of the barrier
+    /// </summary>
     int barrierRadius;
+    /// <summary>
+    /// the radius of the barrier in phase 1
+    /// </summary>
     public int phase1BarrierRadius;
+    /// <summary>
+    /// the radius of the barrier in phase 2
+    /// </summary>
     public int phase2BarrierRadius;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

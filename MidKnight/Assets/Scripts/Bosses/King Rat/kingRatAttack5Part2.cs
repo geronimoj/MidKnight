@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king rat's fifth attack part 2
+/// he shoots a laser beam and rains rocks
+/// </summary>
 public class kingRatAttack5Part2 : baseBossAttack
 {
     /// <summary>
-    /// king rat's fifth attack part 2
-    /// he shoots a laser beam and rains rocks
+    /// the number of rocks to drop
     /// </summary>
     public int noOfRocks;
+    /// <summary>
+    /// a reference to the rock prefab
+    /// </summary>
     public GameObject rocks;
+    /// <summary>
+    /// the spawn position of each rock
+    /// </summary>
     Vector3 spawnPos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

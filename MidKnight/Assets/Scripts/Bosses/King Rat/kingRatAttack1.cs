@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// king rat's first attack
+/// it spawns 2 rats
+/// </summary>
 public class kingRatAttack1 : baseBossAttack
 {
     /// <summary>
-    /// king rat's first attack
-    /// it spawns 2 rats
+    /// the spawn position of the rats
     /// </summary>
     Vector3 spawnPos;
 

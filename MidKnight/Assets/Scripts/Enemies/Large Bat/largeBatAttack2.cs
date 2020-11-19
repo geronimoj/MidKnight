@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the script for the bat's sonic wave attack animation
+/// </summary>
 public class largeBatAttack2 : baseEnemyAttack
 {
     /// <summary>
-    /// the script for the bat's sonic wave attack animation
+    /// a reference the large bat's second attack
     /// </summary>
     public GameObject atk;
 

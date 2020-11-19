@@ -2,19 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// All basic enemies attack animations will derive from this
+/// </summary>
 public class baseEnemyAttack : StateMachineBehaviour
 {
     /// <summary>
-    /// All basic enemies attack animations will derive from this
+    /// the start time the enemy takes until it uses its attack
     /// </summary>
-
     public float startTimeTillAtk;
+    /// <summary>
+    /// the current time the enemy takes until it uses its attack
+    /// </summary>
     [HideInInspector] public float timeTillAtk;
+    /// <summary>
+    /// returns false until the enemy uses its attack. ensures enemies will only use their attack once
+    /// </summary>
     [HideInInspector] public bool hasUsedAtk;
+    /// <summary>
+    /// a reference to the enemy's transform
+    /// </summary>
     [HideInInspector] public Transform enemyTrans;
+    /// <summary>
+    /// a reference to the player's trasnform
+    /// </summary>
     [HideInInspector] public Transform playerTrans;
+    /// <summary>
+    /// the enemy's destination
+    /// </summary>
     [HideInInspector] public Vector3 destination;
+    /// <summary>
+    /// a reference to the character controller
+    /// </summary>
     CharacterController cc;
+    /// <summary>
+    /// the enemy's speed
+    /// </summary>
     public float speed;
     
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the script for the bat's sonic wave
+/// </summary>
 public class largeBatSonicWave : basePrefab
 {
-    /// <summary>
-    /// the script for the bat's sonic wave
-    /// </summary>
+
 
     // Start is called before the first frame update
     public override void Start()

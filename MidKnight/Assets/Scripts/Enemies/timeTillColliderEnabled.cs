@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// turn on the collider after this timer
+/// </summary>
 public class timeTillColliderEnabled : MonoBehaviour
 {
     /// <summary>
-    /// turn on the collider after this timer
+    /// reference to a collider of the prefab
     /// </summary>
     Collider prefabCol;
+    /// <summary>
+    /// enable the collider after this time
+    /// </summary>
     public float timeTillEnabled;
 
     // Start is called before the first frame update

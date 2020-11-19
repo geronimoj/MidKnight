@@ -2,22 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// All basic enemies idle animations will derive from this
+/// </summary>
 public class baseEnemyIdle : StateMachineBehaviour
 {
     /// <summary>
-    /// All basic enemies idle animations will derive from this
+    /// a reference to the enemy's transform
     /// </summary>
-    /// 
     [HideInInspector] public Transform enemyTrans;
+    /// <summary>
+    /// a reference to the player's transform
+    /// </summary>
     [HideInInspector] public Transform playerTrans;
+    /// <summary>
+    /// the destination of the enemy 
+    /// </summary>
     [HideInInspector] public Vector3 destination;
+    /// <summary>
+    /// a reference to the floorcheck
+    /// </summary>
     floorCheck floorCheck;
+    /// <summary>
+    /// a reference to the wallcheck
+    /// </summary>
     wallCheck wallCheck;
+    /// <summary>
+    /// a reference to the character controller
+    /// </summary>
     CharacterController cc;
+    /// <summary>
+    /// the speed of the enemy
+    /// </summary>
     public int speed = 1;
+    /// <summary>
+    /// the vision range of the enemy to the left and right
+    /// </summary>
     public int xVisionRange;
+    /// <summary>
+    /// the upwards vision range
+    /// </summary>
     public int yUpVisionRange;
+    /// <summary>
+    /// the downwards vision range
+    /// </summary>
     public int yDownVisionRange;
+    /// <summary>
+    /// the amount of downward force applied
+    /// </summary>
     public float gravity = 5;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

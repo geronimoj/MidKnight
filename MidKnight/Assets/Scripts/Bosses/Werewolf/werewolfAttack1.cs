@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// werewolf's first attack.
+/// it summons rocks from the sky
+/// </summary>
 public class werewolfAttack1 : baseBossAttack
 {
     /// <summary>
-    /// werewolf's first attack.
-    /// it summons rocks from the sky
+    /// number of rocks to spawn
     /// </summary>
     public int noOfRocks;
+    /// <summary>
+    /// the spawn position of each rock
+    /// </summary>
     Vector3 spawnPos;
+    /// <summary>
+    /// the speed in phase 2
+    /// </summary>
     public int phase2speed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

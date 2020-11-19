@@ -2,15 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// script for the ranged skeleton's magic bolt
+/// </summary>
 public class rangedSkeletonProjectile : basePrefab
 {
     /// <summary>
-    /// script for the ranged skeleton's magic bolt
+    /// the speed after it reaches its first destination
     /// </summary>
-
     public int newSpeed;
+    /// <summary>
+    /// a reference to the prefab's rigidbody
+    /// </summary>
     Rigidbody prefabRB;
+    /// <summary>
+    /// the prefab's force
+    /// </summary>
     Vector3 force;
+    /// <summary>
+    /// returns true if it has reached its destination
+    /// </summary>
     bool hasReachedDestination;
 
     // Start is called before the first frame update

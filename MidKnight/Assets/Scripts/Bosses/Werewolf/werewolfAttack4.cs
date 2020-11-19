@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// werewolf's fourth attack. it jumps high in the air and lands on the player
+/// </summary>
 public class werewolfAttack4 : baseBossAttack
 {
     /// <summary>
-    /// werewolf's fourth attack. it jumps high in the air and lands on the player
+    /// the speed in phase 2
     /// </summary>
     public int phase2speed;
 

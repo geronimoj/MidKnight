@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the script for the bat's swoop attack
+/// </summary>
 public class largeBatAttack1 : baseEnemyAttack
 {
-    /// <summary>
-    /// the script for the bat's swoop attack
-    /// </summary>
-    /// 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

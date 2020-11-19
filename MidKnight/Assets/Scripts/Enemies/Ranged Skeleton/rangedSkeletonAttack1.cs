@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the script for the laser beam attack animation
+/// </summary>
 public class rangedSkeletonAttack1 : baseEnemyAttack
 {
     /// <summary>
-    /// the script for the laser beam attack animation
+    /// a reference to the ranged skeleton's first attack
     /// </summary>
-
     public GameObject atk;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

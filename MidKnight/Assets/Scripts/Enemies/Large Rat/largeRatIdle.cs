@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Large rat's idle script
+/// </summary>
 public class largeRatIdle : baseEnemyIdle
 {
+
     /// <summary>
-    /// Large rat's idle script
+    /// returns true if the rat is moving right
     /// </summary>
-     
     bool isMovingRight;
+    /// <summary>
+    /// the speed the rat uses when it's chasing the player
+    /// </summary>
     public int chaseSpeed;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

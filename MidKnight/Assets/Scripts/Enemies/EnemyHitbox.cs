@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// the hitbox of the enemies
+/// </summary>
 public class EnemyHitbox : MonoBehaviour
 {
     /// <summary>
-    /// the hitbox of the enemies
+    /// returns a reference to the player
     /// </summary>
     Character player;
+    /// <summary>
+    /// returns a reference to the eneny
+    /// </summary>
     Enemy enemy;
 
     // Start is called before the first frame update

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// werewolfs second attack
+/// it runs to the player then attacks him
+/// </summary>
 public class werewolfAttack2 : baseBossAttack
 {
     /// <summary>
-    /// werewolfs second attack
-    /// it runs to the player then attacks him
+    /// the speed in phase 2
     /// </summary>
     public int phase2speed;
 
