@@ -40,6 +40,8 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// </summary>
     int moveToUse;
 
+    public bool isRangedSkeleton = false;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -127,7 +129,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
     void AttackPlayer(Animator animator)
     {
         //do extra stuff on the ranged skeletons
-        if (animator.name == "Ranged Skeleton")
+        if (isRangedSkeleton)
         {
             moveToUse = Random.Range(1, 3);
         }
