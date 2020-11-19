@@ -39,7 +39,7 @@ public class baseEnemyAttack : StateMachineBehaviour
     /// the enemy's speed
     /// </summary>
     public float speed;
-    
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timeTillAtk = startTimeTillAtk;
@@ -53,13 +53,21 @@ public class baseEnemyAttack : StateMachineBehaviour
         {
             Debug.LogError("cc not found");
         }
+
+        destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+    }
+
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        MoveToDestination(destination);
+
     }
 
     /// <summary>
     /// Make the enemy move to this destination
     /// </summary>
     /// <param name="destination"></param>
-    public void MoveToDestination(Vector3 destination)
+    public virtual void MoveToDestination(Vector3 destination)
     {
         Enemy e = enemyTrans.GetComponent<Enemy>();
         e.vertSpeed = -e.gravity;
@@ -85,7 +93,21 @@ public class baseEnemyAttack : StateMachineBehaviour
     /// <param name="speed"></param>
     public void MoveToDestination(Vector3 destination, int speed)
     {
-        cc.Move((destination - enemyTrans.position).normalized * speed * Time.deltaTime);
+        Enemy e = enemyTrans.GetComponent<Enemy>();
+        e.vertSpeed = -e.gravity;
+        Vector3 dir = (destination - enemyTrans.position).normalized * speed * Time.deltaTime;
+
+        if (e.gravity != 0)
+        {
+            dir.y = e.vertSpeed * Time.deltaTime;
+        }
+
+        if (e.BeingKnockedBack)
+        {
+            dir = e.knockBackDir * e.knockBackForce * Time.deltaTime;
+        }
+
+        cc.Move(dir);
     }
 
     /// <summary>
