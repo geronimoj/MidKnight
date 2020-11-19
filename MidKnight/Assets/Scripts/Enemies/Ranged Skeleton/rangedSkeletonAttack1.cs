@@ -16,6 +16,8 @@ public class rangedSkeletonAttack1 : baseEnemyAttack
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+        destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -32,6 +34,9 @@ public class rangedSkeletonAttack1 : baseEnemyAttack
 
             Instantiate(atk, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
         }
+
+        MoveToDestination(destination);
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -11,7 +11,7 @@ public class batChase : baseEnemyIdle
     /// <summary>
     /// returns true if this enemy is a large bat
     /// </summary>
-    bool isLargeBat;
+    public bool isLargeBat;
     /// <summary>
     /// the attack range of the bat
     /// </summary>
@@ -23,12 +23,6 @@ public class batChase : baseEnemyIdle
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
         //custom stuff for bat
-
-        //check if this is bat or large bat
-        if(animator.name == "Large Bat")
-        {
-            isLargeBat = true;
-        }
     }
     
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
