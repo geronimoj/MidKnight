@@ -39,7 +39,8 @@ public class Unlockable : MonoBehaviour
             }
         }
 
-        EM.EntitiesToNotRespawn.Add(e);
+        EM.EntitiesToNeverRespawn.Add(e);
+        EM.EntitiesToNotRespawnUntillRest.Add(e);
         gameObject.SetActive(false);
     }
 }
