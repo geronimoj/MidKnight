@@ -52,6 +52,9 @@ public class Enemy : Character
     public float damagedFlashDuration = 1.5f;
     private float damagedTimer;
     public float damagedFlashSpeed = 0.25f;
+    [Range(0,1)]
+    public float alphaLimit = 1;
+
     private float flashTimer;
     private bool flashDirection = false;
 
@@ -111,7 +114,7 @@ public class Enemy : Character
             flashTimer += Time.deltaTime;
             flashDirection = flashTimer < damagedFlashSpeed;
 
-            col.a = flashTimer / damagedFlashSpeed;
+            col.a = (flashTimer / damagedFlashSpeed) * alphaLimit;
         }
         else
         {
@@ -120,7 +123,7 @@ public class Enemy : Character
             flashTimer -= Time.deltaTime;
             flashDirection = flashTimer <= 0;
 
-            col.a = flashTimer / damagedFlashSpeed;
+            col.a = (flashTimer / damagedFlashSpeed) * alphaLimit;
         }
 
         smr.materials[0].SetColor("_BaseColor", col);
