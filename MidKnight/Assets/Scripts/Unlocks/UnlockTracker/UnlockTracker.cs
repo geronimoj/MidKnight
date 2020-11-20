@@ -27,6 +27,7 @@ public class UnlockTracker : MonoBehaviour
     public void SetKey(string key, bool value)
     {
         key = key.ToLower();
+
         foreach (KeyValuePair<string, bool> KVP in unlocks)
         {
             if (key == KVP.Key)
