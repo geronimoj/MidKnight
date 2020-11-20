@@ -5,9 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(UnlockTracker))]
 [RequireComponent(typeof(PhaseManager))]
 public class PlayerController : Character
-{
+{   
+    /// <summary>
+    /// A storage location for a reference to the player
+    /// </summary>
     private static PlayerController player;
-
+    /// <summary>
+    /// A Get for the player
+    /// </summary>
     public static PlayerController Player
     {
         get
@@ -450,6 +455,24 @@ public class PlayerController : Character
         get
         {
             return moonBeamTimer < 0;
+        }
+    }
+    /// <summary>
+    /// A point in the world which the player can safely stand
+    /// </summary>
+    private Vector3 safePoint;
+    /// <summary>
+    /// A Get/Set for safePoint
+    /// </summary>
+    public Vector3 SafePoint
+    {
+        get
+        {
+            return safePoint;
+        }
+        set
+        {
+            safePoint = value;
         }
     }
     /// <summary>
