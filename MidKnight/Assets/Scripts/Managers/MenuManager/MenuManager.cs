@@ -70,25 +70,6 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        #region Menu Functions
-        SM = FindObjectOfType<SavingManager>();
-        GM = FindObjectOfType<GameManager>();
-        startMenu.SetActive(true);
-        pauseMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        secretObject.SetActive(false);
-        UIObject.SetActive(false);
-        menuOpened = true;
-
-        if (GM.room != null)
-        {
-            Destroy(GM.room.gameObject);
-        }
-        #endregion
-
         #region Option Functions
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -121,6 +102,26 @@ public class MenuManager : MonoBehaviour
         crescentMoon.SetActive(false);
         halfMoon.SetActive(false);
         fullMoon.SetActive(false);
+        #endregion
+
+        #region Menu Functions
+        SM = FindObjectOfType<SavingManager>();
+        GM = FindObjectOfType<GameManager>();
+        startMenu.SetActive(true);
+        pauseMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        secretObject.SetActive(false);
+        UIObject.SetActive(false);
+        menuOpened = true;
+        player.SetActive(false);
+
+        if (GM.room != null)
+        {
+            Destroy(GM.room.gameObject);
+        }
         #endregion
     }
 
@@ -170,6 +171,7 @@ public class MenuManager : MonoBehaviour
         controlPauseMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(true);
+        player.SetActive(true);
 
         if (GM.room != null)
         {
@@ -188,6 +190,7 @@ public class MenuManager : MonoBehaviour
         controlPauseMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(false);
+        player.SetActive(false);
 
         if (GM.room != null)
         {
