@@ -43,7 +43,6 @@ public class Character : MonoBehaviour
     /// <summary>
     /// How quickly the knockback moves the cahracter
     /// </summary>
-    [SerializeField]
     [Range(0, 100)]
     public float knockBackForce = 0;
     /// <summary>

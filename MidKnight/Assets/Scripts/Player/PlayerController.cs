@@ -475,6 +475,12 @@ public class PlayerController : Character
             safePoint = value;
         }
     }
+    public float damagedFlashSpeed = 0.25f;
+    [Range(0, 1)]
+    public float alphaLimit = 1;
+
+    private float flashTimer;
+    private bool flashDirection = false;
     /// <summary>
     /// Gets a reference to the State & Game Managers
     /// </summary>
@@ -526,10 +532,14 @@ public class PlayerController : Character
             return;
         //Decrement the timers
         if (!CanTakeDamage)
+        {
             iFrameTimer -= Time.deltaTime;
+            Flash();
+        }
         dashTimer -= Time.deltaTime;
         bonusDamageTimer -= Time.deltaTime;
         moonBeamTimer -= Time.deltaTime;
+
         
         //If the timer for bonus damage is finished, set bonus damage to 0
         if (bonusDamageTimer < 0)
@@ -603,6 +613,59 @@ public class PlayerController : Character
         cc.enabled = true;
     }
 
+    public void Flash()
+    {
+        if (flashDirection)
+            //Increment the flash timer
+            flashTimer += Time.deltaTime;
+        else
+            //Decrement the flash timer
+            flashTimer -= Time.deltaTime;
+
+        SkinnedMeshRenderer smr;
+        //Loop over the children and set the alpha to the expected value. We subtract one to avoid touching the sword
+        for (int i = 0; i < animator.transform.GetChild(0).childCount - 1; i++)
+        {
+            if (animator.transform.GetChild(0).GetChild(i).childCount != 0)
+                for (int index = 0; index < animator.transform.GetChild(0).GetChild(i).childCount; index++)
+                {
+                    smr = animator.transform.GetChild(0).GetChild(i).GetChild(index).GetComponent<SkinnedMeshRenderer>();
+                    DoFlash(smr);
+                }
+            else
+            {
+                smr = animator.transform.GetChild(0).GetChild(i).GetComponent<SkinnedMeshRenderer>();
+                DoFlash(smr);
+            }
+        }
+    }
+
+    private void DoFlash(SkinnedMeshRenderer smr)
+    {
+        if (smr.materials.Length < 2)
+        {
+            Debug.LogError("Flash Texture not assigned");
+            return;
+        }
+        Color col = smr.materials[0].color;
+
+        if (flashDirection)
+        {
+            //We are brightening
+            flashDirection = flashTimer < damagedFlashSpeed;
+
+            col.a = (flashTimer / damagedFlashSpeed) * alphaLimit;
+        }
+        else
+        {
+            //We are darkening
+            flashDirection = flashTimer <= 0;
+
+            col.a = (flashTimer / damagedFlashSpeed) * alphaLimit;
+        }
+
+        smr.materials[0].SetColor("_BaseColor", col);
+    }
     /// <summary>
     /// Called when the dash is performed
     /// </summary>
@@ -661,6 +724,7 @@ public class PlayerController : Character
 #if UNITY_EDITOR
             Debug.Log("Took Damage");
 #endif
+            flashTimer = 0;
 
             if (Health <= 0)
                 OnDeath();

@@ -14,13 +14,13 @@ public class Enemy : Character
     /// </summary>
     EnemyHitbox enemyHitbox;
     /// <summary>
-    /// a reference to this enemy's collider
-    /// </summary>
-    Collider enemyCol;
-    /// <summary>
     /// a reference to this enemy's character controller
     /// </summary>
     CharacterController enemyCC;
+    /// <summary>
+    /// A reference to the skinned mesh renderer for models
+    /// </summary>
+    SkinnedMeshRenderer smr;
     /// <summary>
     /// the damage this enemy deals
     /// </summary>
@@ -49,6 +49,15 @@ public class Enemy : Character
     private EntitiesManager EM;
     public bool isBoss = false;
 
+    public float damagedFlashDuration = 1.5f;
+    private float damagedTimer;
+    public float damagedFlashSpeed = 0.25f;
+    [Range(0,1)]
+    public float alphaLimit = 1;
+
+    private float flashTimer;
+    private bool flashDirection = false;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -58,11 +67,22 @@ public class Enemy : Character
         enemyCC = GetComponent<CharacterController>();
         health = MaxHealth;
         EM = FindObjectOfType<EntitiesManager>();
+
+        if (GetComponentInChildren<SkinnedMeshRenderer>() != null)
+            smr = GetComponentInChildren<SkinnedMeshRenderer>();
+
+        Flash();
     }
 
     // Update is called once per frame
     protected override void ExtraUpdate()
     {
+        damagedTimer -= Time.deltaTime;
+        if (damagedTimer > 0)
+            Flash();
+        else if (smr != null)
+            smr.materials[0].SetColor("_BaseColor", new Color(1, 1, 1, 0));
+
         if(isDead)
         {
             timeTillDestroy -= Time.deltaTime;
@@ -73,6 +93,40 @@ public class Enemy : Character
             LogEntity();
             Destroy(gameObject);
         }
+    }
+
+    private void Flash()
+    {   //Check that we got a renderer
+        if (smr == null)
+            return;
+        //Check that we have enough materials
+        if (smr.materials.Length < 2)
+        {
+            Debug.LogWarning("Flash Matterial not assigned. Assign flash to element 0.");
+            return;
+        }
+        Color col = smr.materials[0].color;
+
+        if (flashDirection)
+        {
+            //We are brightening
+            //Increment the flash timer
+            flashTimer += Time.deltaTime;
+            flashDirection = flashTimer < damagedFlashSpeed;
+
+            col.a = (flashTimer / damagedFlashSpeed) * alphaLimit;
+        }
+        else
+        {
+            //We are darkening
+            //Decrement the flash timer
+            flashTimer -= Time.deltaTime;
+            flashDirection = flashTimer <= 0;
+
+            col.a = (flashTimer / damagedFlashSpeed) * alphaLimit;
+        }
+
+        smr.materials[0].SetColor("_BaseColor", col);
     }
 
     /// <summary>
@@ -109,5 +163,14 @@ public class Enemy : Character
 
         EM.EntitiesToNotRespawnUntillRest.Add(e);
         gameObject.SetActive(false);
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+
+        damagedTimer = damagedFlashDuration;
+        flashTimer = 0;
+        flashDirection = true;
     }
 }

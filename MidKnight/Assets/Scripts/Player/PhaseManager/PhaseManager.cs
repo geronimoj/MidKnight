@@ -56,6 +56,18 @@ public class PhaseManager : MonoBehaviour
     /// A list of preivously active phases
     /// </summary>
     private List<MoonPhase> knownPhases;
+    //For saving purposes
+    public List<MoonPhase> KnownPhases
+    {
+        get
+        {
+            return knownPhases;
+        }
+        set
+        {
+            knownPhases = value;
+        }
+    }
     /// <summary>
     /// Called when the phase is swapped
     /// </summary>

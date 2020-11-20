@@ -22,13 +22,6 @@ public class EnemyHitbox : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         enemy = GetComponentInParent<Enemy>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// deal damage to the player when they come into contact with the enemy
     /// </summary>
