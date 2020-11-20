@@ -458,6 +458,24 @@ public class PlayerController : Character
         }
     }
     /// <summary>
+    /// A point in the world which the player can safely stand
+    /// </summary>
+    private Vector3 safePoint;
+    /// <summary>
+    /// A Get/Set for safePoint
+    /// </summary>
+    public Vector3 SafePoint
+    {
+        get
+        {
+            return safePoint;
+        }
+        set
+        {
+            safePoint = value;
+        }
+    }
+    /// <summary>
     /// Gets a reference to the State & Game Managers
     /// </summary>
     protected override void AwakeExtra()
