@@ -5,8 +5,8 @@ using UnityEngine;
 public class Scroll : MonoBehaviour
 {
     
-    public float ScrollX = 0f;
-    public float ScrollY = 0f;
+    public float xMultiplier = 0.1f;
+    public float yMultiplier = 0f;
     Renderer rend;
 
     void Start()
@@ -16,8 +16,12 @@ public class Scroll : MonoBehaviour
 
     void Update()
     {
-        float OffsetX = Time.time * ScrollX;
-        float OffsetY = Time.time * ScrollY;
-        rend.material.mainTextureOffset = new Vector2(OffsetX, OffsetY);
+        PlayerController pc = PlayerController.Player;
+
+        Vector2 pos = pc.transform.position;
+        pos.x *= -xMultiplier;
+        pos.y *= -yMultiplier;
+
+        rend.material.SetTextureOffset("_BaseMap",pos);
     }
 }
