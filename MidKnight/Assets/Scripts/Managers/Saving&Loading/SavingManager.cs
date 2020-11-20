@@ -15,34 +15,48 @@ public class SavingManager : MonoBehaviour
     private PlayerController player;
     [SerializeField]
     private EntitiesManager EM;
+    [SerializeField]
+    private GameManager GM;
 
     private void Start()
     {
         EM = GetComponent<EntitiesManager>();
+        GM = GetComponent<GameManager>();
         player = FindObjectOfType<PlayerController>();
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
     }
 
-    public bool Save(bool binary)
+    public bool Save(bool binary = false, string filename = "")
     {
+        if (filename == "")
+        {
+            filename = binary ? filenameBinary : filenameTxt;
+        }
         if (binary)
         {
-            return SaveBinary();
+            return SaveBinary(filename);
         }
         else
         {
-            return SaveTxt();
+            return SaveTxt(filename);
         }
     }
 
-    private bool SaveBinary()
+    private bool SaveBinary(string filename)
     {
         try
         {
-            BinaryWriter writer = new BinaryWriter(File.OpenWrite(filenameBinary));
+            BinaryWriter writer = new BinaryWriter(File.OpenWrite(filename));
             writer.Write("Player");
             writer.Write(player.MaxHealth);
             writer.Write(currentRestPoint);
+            writer.Write(player.GetComponent<PhaseManager>().KnownPhases.Count);
+
+            for (int i = 0; i < player.GetComponent<PhaseManager>().KnownPhases.Count; i++)
+            {
+                writer.Write(player.GetComponent<PhaseManager>().KnownPhases[i].phaseID);
+            }
+
             writer.Write("EntitiesToNeverRespawn");
             writer.Write(EM.EntitiesToNeverRespawn.Count);
 
@@ -74,14 +88,21 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    private bool SaveTxt()
+    private bool SaveTxt(string filename)
     {
         try
         {
-            StreamWriter writer = new StreamWriter(filenameTxt);
+            StreamWriter writer = new StreamWriter(filename);
             writer.WriteLine("Player");
             writer.WriteLine(player.MaxHealth);
             writer.WriteLine(currentRestPoint);
+            writer.WriteLine(player.GetComponent<PhaseManager>().KnownPhases.Count);
+
+            for (int i = 0; i < player.GetComponent<PhaseManager>().KnownPhases.Count; i++)
+            {
+                writer.WriteLine(player.GetComponent<PhaseManager>().KnownPhases[i].phaseID);
+            }
+
             writer.WriteLine("EntitiesToNeverRespawn");
             writer.WriteLine(EM.EntitiesToNeverRespawn.Count);
 
@@ -113,23 +134,48 @@ public class SavingManager : MonoBehaviour
         }
     }
 
-    public bool Load(bool binary)
+    public bool Load(bool binary = false, bool instantiate = false, string filename = "")
     {
+        bool result;
+
+        if (filename == "")
+        {
+            filename = binary ? filenameBinary : filenameTxt;
+        }
         if (binary)
         {
-            return LoadBinary();
+            result = LoadBinary(filename);
         }
         else
         {
-            return LoadTxt();
+            result = LoadTxt(filename);
         }
+        if (instantiate)
+        {
+            RestPoints[currentRestPoint].thisRoom.InstantiateRoom(ref GM);
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = RestPoints[currentRestPoint].spawnPoint;
+            player.GetComponent<CharacterController>().enabled = true;
+        }
+
+        return result;
     }
 
-    private bool LoadBinary()
+    public bool LoadDefaultBinary()
+    {
+        return LoadBinary("default.bin");
+    }
+
+    public bool LoadDefaultTxt()
+    {
+        return LoadBinary("default.txt");
+    }
+
+    private bool LoadBinary(string filename)
     {
         try
         {
-            BinaryReader reader = new BinaryReader(File.OpenRead(filenameBinary));
+            BinaryReader reader = new BinaryReader(File.OpenRead(filename));
             List<Entities> tempEntities = new List<Entities>();
             Dictionary<string, bool> tempUnlocks = new Dictionary<string, bool>();
             bool done = false;
@@ -143,6 +189,21 @@ public class SavingManager : MonoBehaviour
                     player.SetMaxHealth = reader.ReadInt32();
                     player.TakeDamage(-player.MaxHealth);
                     currentRestPoint = reader.ReadInt32();
+                    int count = reader.ReadInt32();
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        string phaseID = reader.ReadString(); 
+
+                        for (int e = 0; e < player.GetComponent<PhaseManager>().everyMoonPhase.Length; e++)
+                        {
+                            if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
+                            {
+                                player.GetComponent<PhaseManager>().KnownPhases[i] = player.GetComponent<PhaseManager>().everyMoonPhase[e];
+                                break;
+                            }
+                        }
+                    }
                 }
                 else if (readLine == "EntitiesToNeverRespawn")
                 {
@@ -178,17 +239,16 @@ public class SavingManager : MonoBehaviour
         }
         catch (IOException ioe)
         {
-            Debug.LogError($"Load failed: {ioe.Message}");
-            Debug.Break();
-            return false;
+            Debug.LogError($"Load failed: {ioe.Message}, Loading Default.");
+            return LoadDefaultBinary();
         }
     }
 
-    private bool LoadTxt()
+    private bool LoadTxt(string filename)
     {
         try
         {
-            StreamReader reader = new StreamReader(filenameTxt);
+            StreamReader reader = new StreamReader(filename);
             List<Entities> tempEntities = new List<Entities>();
             Dictionary<string, bool> tempUnlocks = new Dictionary<string, bool>();
 
@@ -201,6 +261,21 @@ public class SavingManager : MonoBehaviour
                     player.SetMaxHealth = int.Parse(reader.ReadLine());
                     player.TakeDamage(-player.MaxHealth);
                     currentRestPoint = int.Parse(reader.ReadLine());
+                    int count = int.Parse(reader.ReadLine());
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        string phaseID = reader.ReadLine();
+
+                        for (int e = 0; e < player.GetComponent<PhaseManager>().everyMoonPhase.Length; e++)
+                        {
+                            if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
+                            {
+                                player.GetComponent<PhaseManager>().KnownPhases[i] = player.GetComponent<PhaseManager>().everyMoonPhase[e];
+                                break;
+                            }
+                        }
+                    }
                 }
                 else if (readLine == "EntitiesToNeverRespawn")
                 {
@@ -235,9 +310,8 @@ public class SavingManager : MonoBehaviour
         }
         catch (IOException ioe)
         {
-            Debug.LogError($"Load failed: {ioe.Message}");
-            Debug.Break();
-            return false;
+            Debug.LogError($"Load failed: {ioe.Message}, Loading Default.");
+            return LoadDefaultTxt();
         }
     }
 }
@@ -246,5 +320,5 @@ public class SavingManager : MonoBehaviour
 public struct RestPoint
 {
     public Vector3 spawnPoint;
-    public string thisRoom;
+    public Room thisRoom;
 }

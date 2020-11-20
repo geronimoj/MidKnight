@@ -29,12 +29,12 @@ public class TempSaveItem : MonoBehaviour
 
             if (saving)
             {
-                Debug.Log("Save Text: " + SM.Save(false));
-                Debug.Log("Save Binary: " + SM.Save(true));
+                Debug.Log("Save Text: " + SM.Save(false, "default.txt"));
+                Debug.Log("Save Binary: " + SM.Save(true, "default.bin"));
             }
             else if (!saving)
             {
-                Debug.Log("Load Text: " + SM.Load(false));
+                Debug.Log("Load Text: " + SM.Load());
                 Debug.Log("Load Binary: " + SM.Load(true));
             }
         }

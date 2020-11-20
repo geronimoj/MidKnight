@@ -13,14 +13,23 @@ public class Unlockable : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {   //Make sure the player is the one that touched it
+    {
+        //Make sure the player is the one that touched it
         if (other.CompareTag("Player"))
+        {
+            bool loged = false;
             //Sets key you put in sets the value and adds the key if it doesn't exist
             foreach (string powerUP in powerUP)
             {
                 other.gameObject.GetComponent<UnlockTracker>().SetKey(powerUP.ToLower(), true);
-                LogEntity();
+
+                if (!loged)
+                {
+                    LogEntity();
+                    loged = true;
+                }
             }
+        }
     }
     
     private void LogEntity()

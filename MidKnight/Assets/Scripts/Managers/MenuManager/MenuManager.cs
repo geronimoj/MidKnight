@@ -9,15 +9,17 @@ public class MenuManager : MonoBehaviour
 {
     #region Menus
     [SerializeField]
-    private bool menuOpened = false;
-    public GameObject mainMenu;
+    private bool menuOpened = true;
+    public GameObject startMenu;
+    public GameObject pauseMenu;
     public GameObject optionsMenu;
     public GameObject controlMenu;
-    public GameObject background;
+    public GameObject UIObject;
+    private SavingManager SM;
+    private GameManager GM;
     #endregion
 
     #region Options
-    public string gameSceneName;
     public AudioMixer audioMixer;
     private Resolution[] resolutions;
     public Dropdown resolutionDropdown;
@@ -66,6 +68,23 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
+        #region Menu Functions
+        SM = FindObjectOfType<SavingManager>();
+        GM = FindObjectOfType<GameManager>();
+        startMenu.SetActive(true);
+        pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
+        secretObject.SetActive(false);
+        UIObject.SetActive(false);
+        menuOpened = true;
+
+        if (GM.room != null)
+        {
+            Destroy(GM.room.gameObject);
+        }
+        #endregion
+
         #region Option Functions
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -108,29 +127,58 @@ public class MenuManager : MonoBehaviour
         #endregion
 
         #region UI Functions
-        HealthUI();
-        //MoonlightUI();
-        EclipseUI();
-        PhasesUI();
+        if (!menuOpened)
+        {
+            HealthUI();
+            //MoonlightUI();
+            EclipseUI();
+            PhasesUI();
+        }
         #endregion
     }
 
     #region Menu Functions
     public void NewGame()
     {
+        StartGame();
+        //Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin"));
+        Debug.Log("Load Binary Default: " + SM.Load(true, true, "default.bin"));
+    }
+
+    public void Continue()
+    {
+        StartGame();
+        //Debug.Log("Load Text: " + SM.Load(false, true));
+        Debug.Log("Load Binary: " + SM.Load(true, true));
+    }
+
+    public void StartGame()
+    {
         Time.timeScale = 1;
-        LoadScene(gameSceneName);
+        menuOpened = false;
+        startMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+        UIObject.SetActive(true);
+
+        if (GM.room != null)
+        {
+            Destroy(GM.room.gameObject);
+        }
     }
 
     public void MainMenu()
     {
         Time.timeScale = 1;
-        LoadScene("MainMenu");
-    }
+        startMenu.SetActive(true);
+        pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
+        secretObject.SetActive(false);
 
-    private void LoadScene(string scene)
-    {
-        SceneManager.LoadScene(scene);
+        if (GM.room != null)
+        {
+            Destroy(GM.room.gameObject);
+        }
     }
 
     public void Pause()
@@ -139,7 +187,7 @@ public class MenuManager : MonoBehaviour
         {
             Time.timeScale = 0;
             menuOpened = true;
-            OpenMain();
+            OpenPause();
         }
     }
 
@@ -150,12 +198,11 @@ public class MenuManager : MonoBehaviour
         CloseMenu();
     }
 
-    public void OpenMain()
+    public void OpenPause()
     {
-        mainMenu.SetActive(true);
+        pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
-        background.SetActive(true);
 
         if (secretBool)
         {
@@ -165,10 +212,9 @@ public class MenuManager : MonoBehaviour
 
     public void OpenOptions()
     {
-        mainMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         optionsMenu.SetActive(true);
         controlMenu.SetActive(false);
-        background.SetActive(true);
 
         if (secretBool)
         {
@@ -178,10 +224,9 @@ public class MenuManager : MonoBehaviour
 
     public void OpenControl()
     {
-        mainMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(true);
-        background.SetActive(true);
 
         if (secretBool)
         {
@@ -191,10 +236,9 @@ public class MenuManager : MonoBehaviour
 
     public void CloseMenu()
     {
-        mainMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
-        background.SetActive(false);
 
         if (secretBool)
         {
