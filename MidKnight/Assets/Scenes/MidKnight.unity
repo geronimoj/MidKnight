@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 6c2a1a31e3963cd4bb98f42e80c2d7b4,
+  m_LightingDataAsset: {fileID: 112000000, guid: 84ab32b726245f74b9434d224a382f73,
     type: 2}
   m_UseShadowmask: 0
 --- !u!196 &4
@@ -214,6 +214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524624498413077416, guid: 03f3fe11abec50c419e79d1d8b746989,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -40.42334
       objectReference: {fileID: 0}
     - target: {fileID: 6061088767038573227, guid: 03f3fe11abec50c419e79d1d8b746989,
         type: 3}
@@ -333,6 +338,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1811952148}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &831645894 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8157829046915209018, guid: 4b64a47f2736c074ab76651aa759197f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8157829046956369985}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddffa7a0ba3c26c45a9f39ffb49a24f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &946460283
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +500,16 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 830704175}
+    - target: {fileID: 5621838866953961340, guid: 4724971e1b4d5c34589944ed9202a6b9,
+        type: 3}
+      propertyPath: xMultiplier
+      value: -0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5621838866953961340, guid: 4724971e1b4d5c34589944ed9202a6b9,
+        type: 3}
+      propertyPath: yMultiplier
+      value: -0.001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4724971e1b4d5c34589944ed9202a6b9, type: 3}
 --- !u!1 &1802394712
@@ -513,7 +540,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.4764151, g: 0.72043216, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -658,6 +685,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 166549952, guid: f1302e08eaeabec45bb2ece6ace84f52, type: 3}
+      propertyPath: EM
+      value: 
+      objectReference: {fileID: 831645894}
     - target: {fileID: 1243173265116924908, guid: f1302e08eaeabec45bb2ece6ace84f52,
         type: 3}
       propertyPath: m_LocalPosition.x
