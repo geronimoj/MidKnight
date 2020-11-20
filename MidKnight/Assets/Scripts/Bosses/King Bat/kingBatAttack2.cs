@@ -20,7 +20,7 @@ public class kingBatAttack2 : baseBossAttack
 
         FacePlayer();
         count = 0;
-        destination.Set(playerTrans.position.x, playerTrans.position.y + 1, enemyTrans.position.z);
+        destination.Set(playerTrans.position.x, playerTrans.position.y - 1, enemyTrans.position.z);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
