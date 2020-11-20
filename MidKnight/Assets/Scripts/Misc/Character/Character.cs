@@ -171,7 +171,7 @@ public class Character : MonoBehaviour
         cc.Move(moveVec);
     }
 
-    public virtual void OnDeath()
+    protected virtual void OnDeath()
     {
         Debug.Log("I am dead");
     }

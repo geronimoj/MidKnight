@@ -661,7 +661,7 @@ public class PlayerController : Character
         return tookDamageThisLoop;
     }
 
-    public override void OnDeath()
+    protected override void OnDeath()
     {
         animator.SetTrigger("Dead");
         Debug.Log("Player is dead");
