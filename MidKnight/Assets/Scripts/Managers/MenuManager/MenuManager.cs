@@ -145,15 +145,17 @@ public class MenuManager : MonoBehaviour
     public void NewGame()
     {
         StartGame();
-        //Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin"));
-        Debug.Log("Load Binary Default: " + SM.Load(true, true, "default.bin"));
+        bool LoadFail;
+        Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadFail = false : LoadFail = true));
+        if (LoadFail) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
     }
 
     public void Continue()
     {
         StartGame();
-        //Debug.Log("Load Text: " + SM.Load(false, true));
-        Debug.Log("Load Binary: " + SM.Load(true, true));
+        bool LoadFail;
+        Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadFail = false : LoadFail = true));
+        if (LoadFail) { Debug.Log("Load Text: " + SM.Load(false, true)); }
     }
 
     public void StartGame()
