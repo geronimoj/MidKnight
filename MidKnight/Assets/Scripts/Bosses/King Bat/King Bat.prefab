@@ -83,8 +83,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1831613003218963959}
-  - component: {fileID: 6187053280644513011}
-  - component: {fileID: 7422622562222554886}
   m_Layer: 10
   m_Name: King Bat
   m_TagString: Enemy
@@ -107,53 +105,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6187053280644513011
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2481530346075154322}
-  m_Mesh: {fileID: 0}
---- !u!23 &7422622562222554886
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2481530346075154322}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 1a9d87b392aaf974eb42308a8e5e6b40, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!143 &5389312735843515212
 CharacterController:
   m_ObjectHideFlags: 0
@@ -213,6 +164,9 @@ MonoBehaviour:
   gravity: 0
   vertSpeed: 0
   isBoss: 0
+  damagedFlashDuration: 1.5
+  damagedFlashSpeed: 0.25
+  alphaLimit: 1
 --- !u!1001 &6517410070959377462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -305,6 +259,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4035659702556761185, guid: 029ca345bfcaf3f4497481978043e66f,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4035659702556761185, guid: 029ca345bfcaf3f4497481978043e66f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 916f9264d72a2e4458c73ce801580c3d, type: 2}
+    - target: {fileID: 4035659702556761185, guid: 029ca345bfcaf3f4497481978043e66f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fd0de0f839db9a947985f9b6b240b395, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 029ca345bfcaf3f4497481978043e66f, type: 3}
 --- !u!1 &2977883189170214207 stripped

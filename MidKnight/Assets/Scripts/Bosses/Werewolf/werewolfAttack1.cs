@@ -20,6 +20,14 @@ public class werewolfAttack1 : baseBossAttack
     /// the speed in phase 2
     /// </summary>
     public int phase2speed;
+    /// <summary>
+    /// the size of the rocks
+    /// </summary>
+    public float rockRadius;
+    /// <summary>
+    /// the vector3 to set the rock size
+    /// </summary>
+    Vector3 rockRadiusVector;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -34,6 +42,8 @@ public class werewolfAttack1 : baseBossAttack
         {
             speed = phase2speed;
         }
+
+        rockRadiusVector = new Vector3(rockRadius, rockRadius, rockRadius);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -53,7 +63,8 @@ public class werewolfAttack1 : baseBossAttack
             for (int i = 0; i < noOfRocks; i++)
             {
                 spawnPos = new Vector3(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
-                Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+                GameObject rock = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+                rock.GetComponent<Transform>().localScale = rockRadiusVector;
             }
         }
     }
