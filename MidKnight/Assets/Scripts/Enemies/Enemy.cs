@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// every enemy has this script
@@ -52,7 +50,7 @@ public class Enemy : Character
     public bool isBoss = false;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         //initialise stuff
         enemyAnim = GetComponent<Animator>();
@@ -73,20 +71,21 @@ public class Enemy : Character
         if(timeTillDestroy < 0)
         {
             LogEntity();
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
     /// <summary>
     /// Call this when the enemy dies
     /// </summary>
-    public override void OnDeath()
+    protected override void OnDeath()
     {
         enemyAnim.SetTrigger("death");
         enemyCC.enabled = false;
         Destroy(enemyHitbox);
         isDead = true;  
     }
+
     private void LogEntity()
     {
         Entities e;

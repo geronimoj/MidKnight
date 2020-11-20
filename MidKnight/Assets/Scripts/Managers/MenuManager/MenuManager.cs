@@ -54,13 +54,9 @@ public class MenuManager : MonoBehaviour
     public Transform previousMoonTransform;
     public Transform currentMoonTransform;
     public GameObject newMoon;
-    public Image newMoonImage;
     public GameObject crescentMoon;
-    public Image crescentMoonImage;
     public GameObject halfMoon;
-    public Image halfMoonImage;
     public GameObject fullMoon;
-    public Image fullMoonImage;
     public Text phaseSpawingCooldownText;
     private float newMoonCooldown = 0;
     private float halfMoonCooldown = 0;
@@ -98,6 +94,10 @@ public class MenuManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         eclipseFillImage.gameObject.SetActive(false);
         eclipseText.gameObject.SetActive(false);
+        newMoon.SetActive(false);
+        crescentMoon.SetActive(false);
+        halfMoon.SetActive(false);
+        fullMoon.SetActive(false);
         #endregion
     }
 
@@ -449,12 +449,27 @@ public class MenuManager : MonoBehaviour
         eclipseText.text = $"{100 * eclipseFillImage.fillAmount}%";
     }
 
-    //Incomplete
     public void PhasesUI()
     {
+        if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+        {
+            newMoon.SetActive(true);
+        }
+        if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+        {
+            crescentMoon.SetActive(true);
+        }
+        if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+        {
+            halfMoon.SetActive(true);
+        }
+        if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+        {
+            fullMoon.SetActive(true);
+        }
         if (newMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
         {
-            newMoonImage.fillAmount = newMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown;
+            newMoon.GetComponent<Image>().fillAmount = newMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown;
         }
         if (crescentMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
         {
@@ -478,7 +493,7 @@ public class MenuManager : MonoBehaviour
 
         if (player.GetComponent<PhaseManager>().CooldownTimer < 0 && Input.GetAxis("SelectPhase") > 0)
         {
-            if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0])
+            if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && newMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
             {
                 newMoon.transform.position = currentMoonTransform.position;
                 crescentMoon.transform.position = nextMoonTransform.position;
@@ -486,7 +501,7 @@ public class MenuManager : MonoBehaviour
                 fullMoon.transform.position = previousMoonTransform.position;
                 newMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1])
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && crescentMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
             {
                 crescentMoon.transform.position = currentMoonTransform.position;
                 halfMoon.transform.position = nextMoonTransform.position;
@@ -494,7 +509,7 @@ public class MenuManager : MonoBehaviour
                 newMoon.transform.position = previousMoonTransform.position;
                 crescentMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2])
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && halfMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
             {
                 halfMoon.transform.position = currentMoonTransform.position;
                 fullMoon.transform.position = nextMoonTransform.position;
@@ -502,7 +517,7 @@ public class MenuManager : MonoBehaviour
                 crescentMoon.transform.position = previousMoonTransform.position;
                 halfMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3])
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3] && fullMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
             {
                 fullMoon.transform.position = currentMoonTransform.position;
                 newMoon.transform.position = nextMoonTransform.position;
@@ -516,9 +531,7 @@ public class MenuManager : MonoBehaviour
             switch (player.GetComponent<PhaseManager>().swapToIndex)
             {
                 case 0:
-                    crescentMoon.transform.position = new Vector3(-50, -50, 0);
-                    halfMoon.transform.position = nextMoonTransform.position;
-                    fullMoon.transform.position = previousMoonTransform.position;
+                    player.GetComponent<PhaseManager>().swapToIndex++;
                     break;
                 case 1:
                     crescentMoon.transform.position = currentSelectedMoonTransform.position;
@@ -547,9 +560,7 @@ public class MenuManager : MonoBehaviour
                     fullMoon.transform.position = previousMoonTransform.position;
                     break;
                 case 1:
-                    fullMoon.transform.position = new Vector3(-50, -50, 0);
-                    halfMoon.transform.position = nextMoonTransform.position;
-                    newMoon.transform.position = previousMoonTransform.position;
+                    player.GetComponent<PhaseManager>().swapToIndex++;
                     break;
                 case 2:
                     halfMoon.transform.position = currentSelectedMoonTransform.position;
@@ -578,9 +589,7 @@ public class MenuManager : MonoBehaviour
                     newMoon.transform.position = previousMoonTransform.position;
                     break;
                 case 2:
-                    newMoon.transform.position = new Vector3(-50, -50, 0);
-                    fullMoon.transform.position = nextMoonTransform.position;
-                    crescentMoon.transform.position = previousMoonTransform.position;
+                    player.GetComponent<PhaseManager>().swapToIndex++;
                     break;
                 case 3:
                     fullMoon.transform.position = currentSelectedMoonTransform.position;
@@ -609,9 +618,7 @@ public class MenuManager : MonoBehaviour
                     crescentMoon.transform.position = previousMoonTransform.position;
                     break;
                 case 3:
-                    crescentMoon.transform.position = new Vector3(-50, -50, 0);
-                    newMoon.transform.position = nextMoonTransform.position;
-                    halfMoon.transform.position = previousMoonTransform.position;
+                    player.GetComponent<PhaseManager>().swapToIndex = 0;
                     break;
             }
         }

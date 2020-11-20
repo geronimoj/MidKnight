@@ -5,7 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(UnlockTracker))]
 [RequireComponent(typeof(PhaseManager))]
 public class PlayerController : Character
-{   //Its up here so it looks good in the inspector
+{
+    private static PlayerController player;
+
+    public static PlayerController Player
+    {
+        get
+        {
+            return player;
+        }
+    }
+    //Its up here so it looks good in the inspector
     /// <summary>
     /// The angle of the knockback
     /// </summary>
@@ -108,6 +118,16 @@ public class PlayerController : Character
     /// Is true when the player dies
     /// </summary>
     private bool dead = false;
+    /// <summary>
+    /// Returns true if the player is dead
+    /// </summary>
+    public bool Dead
+    {
+        get
+        {
+            return dead;
+        }
+    }
     /// <summary>
     /// A Get for moveSpeed
     /// </summary>
@@ -472,6 +492,7 @@ public class PlayerController : Character
         cc.stepOffset = 0;
         actualKnockback = knockBack;
         dead = false;
+        player = this;
     }
     /// <summary>
     /// Decrements the timer and calls update on the state
@@ -661,7 +682,7 @@ public class PlayerController : Character
         return tookDamageThisLoop;
     }
 
-    public override void OnDeath()
+    protected override void OnDeath()
     {
         animator.SetTrigger("Dead");
         Debug.Log("Player is dead");
