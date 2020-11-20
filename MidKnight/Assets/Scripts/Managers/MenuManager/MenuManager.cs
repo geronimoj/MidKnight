@@ -12,8 +12,10 @@ public class MenuManager : MonoBehaviour
     private bool menuOpened = true;
     public GameObject startMenu;
     public GameObject pauseMenu;
-    public GameObject optionsMenu;
-    public GameObject controlMenu;
+    public GameObject optionsPauseMenu;
+    public GameObject optionsStartMenu;
+    public GameObject controlPauseMenu;
+    public GameObject controlStartMenu;
     public GameObject UIObject;
     private SavingManager SM;
     private GameManager GM;
@@ -68,23 +70,6 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        #region Menu Functions
-        SM = FindObjectOfType<SavingManager>();
-        GM = FindObjectOfType<GameManager>();
-        startMenu.SetActive(true);
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        controlMenu.SetActive(false);
-        secretObject.SetActive(false);
-        UIObject.SetActive(false);
-        menuOpened = true;
-
-        if (GM.room != null)
-        {
-            Destroy(GM.room.gameObject);
-        }
-        #endregion
-
         #region Option Functions
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -118,6 +103,26 @@ public class MenuManager : MonoBehaviour
         halfMoon.SetActive(false);
         fullMoon.SetActive(false);
         #endregion
+
+        #region Menu Functions
+        SM = FindObjectOfType<SavingManager>();
+        GM = FindObjectOfType<GameManager>();
+        startMenu.SetActive(true);
+        pauseMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        secretObject.SetActive(false);
+        UIObject.SetActive(false);
+        menuOpened = true;
+        player.SetActive(false);
+
+        if (GM.room != null)
+        {
+            Destroy(GM.room.gameObject);
+        }
+        #endregion
     }
 
     private void Update()
@@ -141,15 +146,17 @@ public class MenuManager : MonoBehaviour
     public void NewGame()
     {
         StartGame();
-        //Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin"));
-        Debug.Log("Load Binary Default: " + SM.Load(true, true, "default.bin"));
+        bool LoadFail;
+        Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadFail = false : LoadFail = true));
+        if (LoadFail) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
     }
 
     public void Continue()
     {
         StartGame();
-        //Debug.Log("Load Text: " + SM.Load(false, true));
-        Debug.Log("Load Binary: " + SM.Load(true, true));
+        bool LoadFail;
+        Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadFail = false : LoadFail = true));
+        if (LoadFail) { Debug.Log("Load Text: " + SM.Load(false, true)); }
     }
 
     public void StartGame()
@@ -158,7 +165,13 @@ public class MenuManager : MonoBehaviour
         menuOpened = false;
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        secretObject.SetActive(false);
         UIObject.SetActive(true);
+        player.SetActive(true);
 
         if (GM.room != null)
         {
@@ -171,9 +184,13 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1;
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        controlMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
         secretObject.SetActive(false);
+        UIObject.SetActive(false);
+        player.SetActive(false);
 
         if (GM.room != null)
         {
@@ -195,14 +212,34 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1;
         menuOpened = false;
-        CloseMenu();
+        ClosePause();
+    }
+
+    public void OpenStart()
+    {
+        startMenu.SetActive(true);
+        pauseMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        UIObject.SetActive(false);
+
+        if (secretBool)
+        {
+            secretObject.SetActive(true);
+        }
     }
 
     public void OpenPause()
     {
+        startMenu.SetActive(false);
         pauseMenu.SetActive(true);
-        optionsMenu.SetActive(false);
-        controlMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        UIObject.SetActive(false);
 
         if (secretBool)
         {
@@ -210,11 +247,27 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenOptions()
+    public void OpenPauseOptions()
     {
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(true);
+        OpenOptions();
+    }
+
+    public void OpenStartOptions()
+    {
+        optionsStartMenu.SetActive(true);
+        optionsPauseMenu.SetActive(false);
+        OpenOptions();
+    }
+
+    private void OpenOptions()
+    {
+        startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        optionsMenu.SetActive(true);
-        controlMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        UIObject.SetActive(false);
 
         if (secretBool)
         {
@@ -222,11 +275,27 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenControl()
+    public void OpenPauseControl()
     {
+        controlStartMenu.SetActive(true);
+        controlPauseMenu.SetActive(false);
+        OpenControl();
+    }
+
+    public void OpenStartControl()
+    {
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(true);
+        OpenControl();
+    }
+
+    private void OpenControl()
+    {
+        startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        controlMenu.SetActive(true);
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        UIObject.SetActive(false);
 
         if (secretBool)
         {
@@ -234,11 +303,15 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void CloseMenu()
+    private void ClosePause()
     {
+        startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        controlMenu.SetActive(false);
+        optionsStartMenu.SetActive(false);
+        optionsPauseMenu.SetActive(false);
+        controlStartMenu.SetActive(false);
+        controlPauseMenu.SetActive(false);
+        UIObject.SetActive(true);
 
         if (secretBool)
         {
