@@ -18,6 +18,9 @@ public class Scroll : MonoBehaviour
     {
         PlayerController pc = PlayerController.Player;
 
+        if (pc == null)
+            return;
+
         Vector2 pos = pc.transform.position;
         pos.x *= -xMultiplier;
         pos.y *= -yMultiplier;

@@ -116,7 +116,7 @@ public class MenuManager : MonoBehaviour
         secretObject.SetActive(false);
         UIObject.SetActive(false);
         menuOpened = true;
-        player.SetActive(false);
+        //player.SetActive(false);
 
         if (GM.room != null)
         {
