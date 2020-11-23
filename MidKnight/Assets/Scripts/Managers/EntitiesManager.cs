@@ -5,7 +5,26 @@ using UnityEngine;
 public class EntitiesManager : MonoBehaviour
 {
     public List<Entities> EntitiesToNeverRespawn = new List<Entities>();
-    public List<Entities> EntitiesToNotRespawnUntillRest = new List<Entities>();
+    public List<Entities> entitiesToNotRespawnUntillRest = new List<Entities>();
+
+    public List<Entities> EntitiesToNotRespawnUntillRest
+    {
+        get
+        {
+            return entitiesToNotRespawnUntillRest;
+        }
+        set
+        {
+            entitiesToNotRespawnUntillRest = value;
+        }
+    }
+
+
+    private void Start()
+    {
+        EntitiesToNeverRespawn = new List<Entities>();
+        EntitiesToNotRespawnUntillRest = new List<Entities>();
+    }
 }
 
 [System.Serializable]

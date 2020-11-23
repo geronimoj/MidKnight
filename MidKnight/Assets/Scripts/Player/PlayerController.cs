@@ -132,6 +132,11 @@ public class PlayerController : Character
         {
             return dead;
         }
+        set
+        {
+            animator.SetBool("Dead", value);
+            dead = value;
+        }
     }
     /// <summary>
     /// A Get for moveSpeed
@@ -520,7 +525,7 @@ public class PlayerController : Character
         Attacking = false;
         cc.stepOffset = 0;
         actualKnockback = knockBack;
-        dead = false;
+        Dead = false;
         player = this;
     }
     /// <summary>
@@ -773,7 +778,7 @@ public class PlayerController : Character
     {
         animator.SetTrigger("Dead");
         Debug.Log("Player is dead");
-        dead = true;
+        Dead = true;
     }
 
     public override void SetKnockBackDirection(Vector3 dir)
