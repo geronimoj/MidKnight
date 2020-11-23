@@ -158,10 +158,10 @@ public class Enemy : Character
 
         if (isBoss)
         {
-            EM.EntitiesToNeverRespawn.Add(e);
+            EM.EntitiesToNeverRespawn.Add(new Entities { thisRoom = R.roomID, index = e.index });
         }
 
-        EM.EntitiesToNotRespawnUntillRest.Add(e);
+        EM.EntitiesToNotRespawnUntillRest.Add(new Entities { thisRoom = R.roomID, index = e.index });
         gameObject.SetActive(false);
     }
 

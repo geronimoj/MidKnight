@@ -26,6 +26,15 @@ public class SavingManager : MonoBehaviour
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
     }
 
+    private void Update()
+    {
+        if (player.Dead)
+        {
+            LoadRestRoom();
+            player.Dead = false;
+        }
+    }
+
     public bool Save(bool binary = false, string filename = "")
     {
         if (filename == "")
@@ -212,11 +221,9 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
-                        tempEntities.Add(tempEntity);
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
-
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -284,11 +291,9 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
-                        tempEntities.Add(tempEntity);
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
-
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -313,6 +318,29 @@ public class SavingManager : MonoBehaviour
             Debug.LogError($"Load failed: {ioe.Message}, Loading Default.");
             return LoadDefaultTxt();
         }
+    }
+
+    public void EnterRestPoint()
+    {
+        EM.EntitiesToNotRespawnUntillRest.Clear();
+
+        foreach (Entities entity in EM.EntitiesToNeverRespawn)
+        {
+            EM.EntitiesToNotRespawnUntillRest.Add(entity);
+        }
+
+        player.GetComponent<CharacterController>().enabled = false;
+        player.GetComponent<PlayerController>().TakeDamage(-player.GetComponent<PlayerController>().MaxHealth);
+        player.GetComponent<PlayerController>().transform.position = RestPoints[currentRestPoint].spawnPoint;
+        //Debug.Log("Save Text: " + SM.Save());
+        Debug.Log("Save Binary: " + Save(true));
+    }
+
+    public void LoadRestRoom()
+    {
+        Destroy(GM.room.gameObject);
+        EnterRestPoint();
+        RestPoints[currentRestPoint].thisRoom.InstantiateRoom(ref GM);
     }
 }
 
