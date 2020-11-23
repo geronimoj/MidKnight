@@ -340,7 +340,7 @@ public class SavingManager : MonoBehaviour
     {
         Destroy(GM.room.gameObject);
         EnterRestPoint();
-        GM.room = Instantiate(RestPoints[currentRestPoint].thisRoom).GetComponent<Room>();
+        RestPoints[currentRestPoint].thisRoom.InstantiateRoom(ref GM);
     }
 }
 
