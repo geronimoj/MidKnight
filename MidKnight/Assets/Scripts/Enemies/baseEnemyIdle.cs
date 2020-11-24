@@ -32,6 +32,10 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// </summary>
     CharacterController cc;
     /// <summary>
+    /// A reference to the game manager
+    /// </summary>
+    GameManager gm;
+    /// <summary>
     /// the speed of the enemy
     /// </summary>
     public int speed = 1;
@@ -67,6 +71,7 @@ public class baseEnemyIdle : StateMachineBehaviour
         {
             Debug.LogError("cc not found");
         }
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     /// <summary>
@@ -175,6 +180,7 @@ public class baseEnemyIdle : StateMachineBehaviour
         {
             dir = e.knockBackDir * e.knockBackForce * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }
@@ -199,6 +205,7 @@ public class baseEnemyIdle : StateMachineBehaviour
         {
             dir = e.knockBackDir * e.knockBackForce * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }

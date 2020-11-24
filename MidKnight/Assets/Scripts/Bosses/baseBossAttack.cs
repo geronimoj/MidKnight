@@ -33,6 +33,10 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     CharacterController cc;
     /// <summary>
+    /// A reference to the game manager
+    /// </summary>
+    GameManager gm;
+    /// <summary>
     /// the boss' speed
     /// </summary>
     public int speed;
@@ -78,6 +82,7 @@ public class baseBossAttack : StateMachineBehaviour
         enemyTrans = animator.GetComponent<Transform>();
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
 
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         cc = animator.GetComponent<CharacterController>();
         if (cc == null)
         {
@@ -98,7 +103,8 @@ public class baseBossAttack : StateMachineBehaviour
         {
             dir.y = vertSpeed * Time.deltaTime;
         }
-        
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
+
         cc.Move(dir);
     }
 
@@ -116,6 +122,7 @@ public class baseBossAttack : StateMachineBehaviour
         {
             dir.y = vertSpeed * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }

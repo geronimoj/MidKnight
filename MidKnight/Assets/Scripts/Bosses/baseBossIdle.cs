@@ -44,6 +44,10 @@ public class baseBossIdle : StateMachineBehaviour
     /// </summary>
     [HideInInspector] public CharacterController cc;
     /// <summary>
+    /// A reference to the game manager
+    /// </summary>
+    GameManager gm;
+    /// <summary>
     /// the number of moves that the boss has
     /// </summary>
     [Range(1,7)] public int noOfMoves = 5;
@@ -78,6 +82,8 @@ public class baseBossIdle : StateMachineBehaviour
         timeTillAtk = Random.Range(minStartTimeTillAtk, maxStartTimeTillAtk);
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
         cc = animator.GetComponent<CharacterController>();
+
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         moveToUse = Random.Range(1, noOfMoves + 1);
         //ensures no boss will use the same move three times in a row
@@ -195,6 +201,7 @@ public class baseBossIdle : StateMachineBehaviour
         {
             dir.y = vertSpeed * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }
