@@ -133,6 +133,11 @@ public class MenuManager : MonoBehaviour
     {
         #region Menu Functions
         Pause();
+
+        if (playerGraphics.activeSelf == false)
+        {
+            player.GetComponent<PlayerController>().Move(new Vector3(0.007f, 0, 0));
+        }
         #endregion
 
         #region UI Functions
