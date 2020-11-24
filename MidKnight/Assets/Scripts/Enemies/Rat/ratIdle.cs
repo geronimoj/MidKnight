@@ -42,6 +42,8 @@ public class ratIdle : baseEnemyIdle
 
         //Move to it's destination
         MoveToDestination(destination);
+
+        FacePlayer(isMovingRight);
     }
 
     //If there's a wall or no floor in front of the rat, it changes directions
@@ -51,13 +53,13 @@ public class ratIdle : baseEnemyIdle
         {
             if (isMovingRight)
             {
-                FaceLeft();
+                FacePlayer(false);
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                FaceRight();
+                FacePlayer(true);
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }
