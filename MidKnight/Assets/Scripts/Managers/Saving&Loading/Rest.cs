@@ -22,6 +22,7 @@ public class Rest : MonoBehaviour
                 inRest = true;
                 SM.EnterRestPoint();
                 other.GetComponent<CharacterController>().enabled = false;
+                other.GetComponent<PlayerController>().animator.SetTrigger("EnterRest");
             }
             else if (inRest && Input.GetAxis("Vertical") < 0)
             {
