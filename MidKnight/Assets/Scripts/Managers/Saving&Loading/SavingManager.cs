@@ -221,9 +221,13 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
-                        EM.EntitiesToNeverRespawn.Add(tempEntity);
-                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
+                        tempEntities.Add(tempEntity);
                     }
+
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
+                    EM.EntitiesToNeverRespawn = tempEntities;
+                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -236,6 +240,7 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadString(), reader.ReadBoolean());
                     }
 
+                    player.GetComponent<UnlockTracker>().unlocks.Clear();
                     player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                     done = true;
                 }
@@ -256,6 +261,7 @@ public class SavingManager : MonoBehaviour
         try
         {
             StreamReader reader = new StreamReader(filename);
+            List<MoonPhase> tempMoonPhases = new List<MoonPhase>();
             List<Entities> tempEntities = new List<Entities>();
             Dictionary<string, bool> tempUnlocks = new Dictionary<string, bool>();
 
@@ -278,11 +284,14 @@ public class SavingManager : MonoBehaviour
                         {
                             if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
                             {
-                                player.GetComponent<PhaseManager>().KnownPhases[i] = player.GetComponent<PhaseManager>().everyMoonPhase[e];
+                                tempMoonPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
                                 break;
                             }
                         }
                     }
+
+                    player.GetComponent<PhaseManager>().KnownPhases.Clear();
+                    player.GetComponent<PhaseManager>().KnownPhases = tempMoonPhases;
                 }
                 else if (readLine == "EntitiesToNeverRespawn")
                 {
@@ -291,9 +300,13 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
-                        EM.EntitiesToNeverRespawn.Add(tempEntity);
-                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
+                        tempEntities.Add(tempEntity);
                     }
+
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
+                    EM.EntitiesToNeverRespawn = tempEntities;
+                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -306,6 +319,7 @@ public class SavingManager : MonoBehaviour
                         tempUnlocks.Add(reader.ReadLine(), bool.Parse(reader.ReadLine()));
                     }
 
+                    player.GetComponent<UnlockTracker>().unlocks.Clear();
                     player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                 }
             }

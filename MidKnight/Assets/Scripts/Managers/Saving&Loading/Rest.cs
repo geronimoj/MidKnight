@@ -21,7 +21,6 @@ public class Rest : MonoBehaviour
                 SM.currentRestPoint = currentRestPoint;
                 inRest = true;
                 SM.EnterRestPoint();
-                other.GetComponent<CharacterController>().enabled = false;
             }
             else if (inRest && Input.GetAxis("Vertical") < 0)
             {
