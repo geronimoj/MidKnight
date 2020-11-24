@@ -147,7 +147,11 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     public void FaceRight()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+        //Get the direction to look along the path
+        Vector3 dir = gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
@@ -155,7 +159,11 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     public void FaceLeft()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+        //Get the direction to look along the path
+        Vector3 dir = -gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
