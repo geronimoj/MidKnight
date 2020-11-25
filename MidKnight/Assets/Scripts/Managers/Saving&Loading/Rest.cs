@@ -2,7 +2,7 @@
 
 public class Rest : MonoBehaviour
 {
-    public int currentRestPoint = 0;
+    public int thisRestPoint = 0;
     private SavingManager SM;
     private bool inRest = false;
 
@@ -18,13 +18,15 @@ public class Rest : MonoBehaviour
         {
             if (!inRest && Input.GetAxis("Vertical") > 0)
             {
-                SM.currentRestPoint = currentRestPoint;
+                SM.currentRestPoint = thisRestPoint;
                 inRest = true;
                 SM.EnterRestPoint();
             }
             else if (inRest && Input.GetAxis("Vertical") < 0)
             {
-                other.GetComponent<CharacterController>().enabled = true;
+                other.GetComponent<PlayerController>().enabled = true;
+                other.GetComponent<PlayerController>().animator.SetTrigger("ExitRest");
+                inRest = false;
             }
         }
     }
