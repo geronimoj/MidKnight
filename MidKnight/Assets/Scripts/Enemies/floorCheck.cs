@@ -12,16 +12,20 @@ public class floorCheck : MonoBehaviour
     /// </summary>
     public bool isThereFloor;
 
+    int numOfFloor = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         isThereFloor = true;
+        numOfFloor = 0;
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Floor"))
         {
             isThereFloor = true;
+            numOfFloor++;
         }
     }
 
@@ -29,7 +33,9 @@ public class floorCheck : MonoBehaviour
     {
         if (other.CompareTag("Floor"))
         {
-            isThereFloor = false;
+            numOfFloor--;
+            if (numOfFloor <= 0)
+                isThereFloor = false;
         }
     }
 }

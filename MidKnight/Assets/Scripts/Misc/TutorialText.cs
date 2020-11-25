@@ -33,6 +33,14 @@ public class TutorialText : MonoBehaviour
     {
         textMesh = GetComponent<TextMesh>();
         col = GetComponent<BoxCollider>();
+
+        if (textMesh == null)
+            Debug.LogError("TextMesh not found on: " + gameObject.name);
+
+        if (col == null)
+            Debug.LogError("BoxCollider not found on: " + gameObject.name);
+        else
+            col.isTrigger = true;
     }
 
     void Update()
