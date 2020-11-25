@@ -22,7 +22,7 @@ public class SavingManager : MonoBehaviour
     {
         EM = GetComponent<EntitiesManager>();
         GM = GetComponent<GameManager>();
-        player = FindObjectOfType<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
     }
 
@@ -343,9 +343,11 @@ public class SavingManager : MonoBehaviour
             EM.EntitiesToNotRespawnUntillRest.Add(entity);
         }
 
-        player.GetComponent<CharacterController>().enabled = false;
-        player.GetComponent<PlayerController>().TakeDamage(-player.GetComponent<PlayerController>().MaxHealth);
-        player.GetComponent<PlayerController>().transform.position = RestPoints[currentRestPoint].spawnPoint;
+        //player.GetComponent<CharacterController>().enabled = false;
+        player.animator.SetTrigger("EnterRest");
+        player.TakeDamage(-player.GetComponent<PlayerController>().MaxHealth);
+        player.transform.position = RestPoints[currentRestPoint].spawnPoint;
+        player.enabled = false;
         //Debug.Log("Save Text: " + SM.Save());
         Debug.Log("Save Binary: " + Save(true));
     }
