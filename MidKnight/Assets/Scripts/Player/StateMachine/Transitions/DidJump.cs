@@ -23,7 +23,6 @@ public class DidJump : Transition
             c.OnJump();
             newInput = false;
             c.Audio.PlayOneShot(c.jump);
-            c.Walk.Stop();
 #if UNITY_EDITOR
             //Debug that we jumped for the editor
             Debug.Log("Jump");

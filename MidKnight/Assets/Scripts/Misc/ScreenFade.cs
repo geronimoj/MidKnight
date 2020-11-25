@@ -37,7 +37,7 @@ public class ScreenFade : MonoBehaviour
     private Image i;
 
     private void Start()
-    {
+    {   //Set the screen fade
         screenFader = this;
         i = GetComponent<Image>();
         if (i == null)
@@ -45,16 +45,18 @@ public class ScreenFade : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   //Are we fading in or out
         if (fadeIn)
             fadeTimer += Time.deltaTime;
         else
             fadeTimer -= Time.deltaTime;
-
+        //Clamp the timer since we use it for the alpha
         fadeTimer = Mathf.Clamp(fadeTimer, 0, fadeTime);
-
+        //Get a reference to the colour so we can change it
         Color col = i.color;
+        //Adjust the alpha
         col.a = fadeTimer / fadeTime;
+        //Overried the original colour with our updated colour
         i.color = col;
     }
     /// <summary>
@@ -62,11 +64,13 @@ public class ScreenFade : MonoBehaviour
     /// </summary>
     /// <returns>Returns true when the fading is complete</returns>
     public bool FadeFinished()
-    {
+    {   //If we are fading in and the timer is fadeTime, we have completed fading in
         if (fadeIn && fadeTimer >= fadeTime)
             return true;
+        //If we are fading out and the timer is <= 0, we have completed fading out
         else if (!fadeIn && fadeTimer <= 0)
             return true;
+        //Otherwise we are not complete so we should return false
         return false;
     }
     /// <summary>

@@ -68,6 +68,7 @@ public class AirborneMove : State
         }
 
         c.animator.SetBool("Airborne", true);
+        c.Walk.Stop();
     }
     /// <summary>
     /// Moves the player with gravity

@@ -68,7 +68,8 @@ public class GroundMove : State
             c.movement.HozSpeed = LerpTo(c.MoveSpeed, c.movement.HozSpeed, ref accelTimer);
             if (accelToMaxTime != 0)
                 decelTimer = (1 - (accelTimer / accelToMaxTime)) * decelToZeroTime;
-            c.Walk.PlayOneShot(c.walk);
+            if (!c.Walk.isPlaying)
+                c.Walk.PlayOneShot(c.walk);
         }
         //Move the character
         c.Move(c.movement.MoveVec * Time.deltaTime);
