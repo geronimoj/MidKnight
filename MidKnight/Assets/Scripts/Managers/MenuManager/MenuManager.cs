@@ -751,6 +751,11 @@ public class MenuManager : MonoBehaviour
                 Destroy(obj);
             }
 
+            TempNewMoons.Clear();
+            TempHalfMoons.Clear();
+            TempCrescentMoons.Clear();
+            TempFullMoons.Clear();
+
             if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
             {
                 newMoon.transform.position = currentMoonTransform.position;
