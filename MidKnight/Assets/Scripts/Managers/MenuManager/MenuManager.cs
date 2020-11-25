@@ -592,6 +592,7 @@ public class MenuManager : MonoBehaviour
         if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
         {
             newMoon.SetActive(true);
+            firstSwap = true;
         }
         else
         {
@@ -600,6 +601,7 @@ public class MenuManager : MonoBehaviour
         if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
         {
             crescentMoon.SetActive(true);
+            firstSwap = true;
         }
         else
         {
@@ -608,6 +610,7 @@ public class MenuManager : MonoBehaviour
         if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
         {
             halfMoon.SetActive(true);
+            firstSwap = true;
         }
         else
         {
@@ -616,6 +619,7 @@ public class MenuManager : MonoBehaviour
         if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
         {
             fullMoon.SetActive(true);
+            firstSwap = true;
         }
         else
         {
@@ -800,7 +804,7 @@ public class MenuManager : MonoBehaviour
                         TempHalfMoons.Add(tempHalfMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                 {
                     if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
@@ -833,7 +837,7 @@ public class MenuManager : MonoBehaviour
                         TempCrescentMoons.Add(tempCrescentMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                 {
                     fullMoon.transform.position = currentSelectedMoonTransform.position;
                     GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
@@ -906,7 +910,7 @@ public class MenuManager : MonoBehaviour
                             }
                         }
                     }
-                    if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
@@ -937,7 +941,7 @@ public class MenuManager : MonoBehaviour
                         TempNewMoons.Add(tempNewMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                 {
                     if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
@@ -970,7 +974,7 @@ public class MenuManager : MonoBehaviour
                         TempCrescentMoons.Add(tempCrescentMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                 {
                     fullMoon.transform.position = currentSelectedMoonTransform.position;
                     GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
@@ -1043,7 +1047,7 @@ public class MenuManager : MonoBehaviour
                             }
                         }
                     }
-                    if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
@@ -1074,7 +1078,7 @@ public class MenuManager : MonoBehaviour
                         TempNewMoons.Add(tempNewMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
                 {
                     if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
@@ -1107,7 +1111,7 @@ public class MenuManager : MonoBehaviour
                         TempHalfMoons.Add(tempHalfMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                 {
                     fullMoon.transform.position = currentSelectedMoonTransform.position;
                     GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
@@ -1180,7 +1184,7 @@ public class MenuManager : MonoBehaviour
                             }
                         }
                     }
-                    if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
@@ -1211,7 +1215,7 @@ public class MenuManager : MonoBehaviour
                         TempNewMoons.Add(tempNewMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
                 {
                     if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                     {
@@ -1244,7 +1248,7 @@ public class MenuManager : MonoBehaviour
                         TempHalfMoons.Add(tempHalfMoon2);
                     }
                 }
-                if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                 {
                     crescentMoon.transform.position = currentSelectedMoonTransform.position;
                     GameObject tempCrescentMoon1 = Instantiate(crescentMoon, nextMoonTransform);
