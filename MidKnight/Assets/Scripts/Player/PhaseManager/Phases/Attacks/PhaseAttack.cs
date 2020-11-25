@@ -23,8 +23,6 @@ public class PhaseAttack : ScriptableObject
     public virtual void DefaultAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(0, ref c);
-        //play attack audio
-        c.Audio.PlayOneShot(c.attackOne);
         //Apply other affects
         ApplyKnockback(ref hits, ref c, c.transform.right);
         //Check if the attack has finished
@@ -39,8 +37,6 @@ public class PhaseAttack : ScriptableObject
     {
         //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(1, ref c);
-        //play attack audio
-        c.Audio.PlayOneShot(c.attackTwo);
         //Apply other affects
         ApplyKnockback(ref hits, ref c, Vector3.up);
         //Did the attack finish?
@@ -54,8 +50,6 @@ public class PhaseAttack : ScriptableObject
     public virtual void DownAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(2, ref c);
-        //play attack audio
-        c.Audio.PlayOneShot(c.attackThree);
         //Apply other affects
         ApplyKnockback(ref hits, ref c, Vector3.down);
         //Do a pogo on the enemies hit

@@ -150,7 +150,6 @@ public class PlayerController : Character
         {
             animator.SetBool("Dead", value);
             dead = value;
-            Audio.PlayOneShot(deathSound);
         }
     }
     /// <summary>
@@ -709,6 +708,7 @@ public class PlayerController : Character
     {
         canJumpAgain = true;
         CanDash = true;
+        Audio.PlayOneShot(land);
     }
     /// <summary>
     /// Called when moonBeam is casted
@@ -795,6 +795,7 @@ public class PlayerController : Character
         animator.SetTrigger("Dead");
         Debug.Log("Player is dead");
         Dead = true;
+        Audio.PlayOneShot(deathSound);
     }
 
     public override void SetKnockBackDirection(Vector3 dir)
