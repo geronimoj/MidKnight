@@ -33,6 +33,10 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     CharacterController cc;
     /// <summary>
+    /// A reference to the game manager
+    /// </summary>
+    GameManager gm;
+    /// <summary>
     /// the boss' speed
     /// </summary>
     public int speed;
@@ -78,6 +82,7 @@ public class baseBossAttack : StateMachineBehaviour
         enemyTrans = animator.GetComponent<Transform>();
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
 
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         cc = animator.GetComponent<CharacterController>();
         if (cc == null)
         {
@@ -98,7 +103,8 @@ public class baseBossAttack : StateMachineBehaviour
         {
             dir.y = vertSpeed * Time.deltaTime;
         }
-        
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
+
         cc.Move(dir);
     }
 
@@ -116,6 +122,7 @@ public class baseBossAttack : StateMachineBehaviour
         {
             dir.y = vertSpeed * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }
@@ -140,7 +147,11 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     public void FaceRight()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+        //Get the direction to look along the path
+        Vector3 dir = gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
@@ -148,7 +159,11 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     public void FaceLeft()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+        //Get the direction to look along the path
+        Vector3 dir = -gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>

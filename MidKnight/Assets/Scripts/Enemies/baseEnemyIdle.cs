@@ -32,6 +32,10 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// </summary>
     CharacterController cc;
     /// <summary>
+    /// A reference to the game manager
+    /// </summary>
+    GameManager gm;
+    /// <summary>
     /// the speed of the enemy
     /// </summary>
     public int speed = 1;
@@ -67,6 +71,7 @@ public class baseEnemyIdle : StateMachineBehaviour
         {
             Debug.LogError("cc not found");
         }
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     /// <summary>
@@ -83,13 +88,32 @@ public class baseEnemyIdle : StateMachineBehaviour
             FaceLeft();
         }
     }
+    /// <summary>
+    /// Force the enemy to face a specific direction
+    /// </summary>
+    /// <param name="right">The direction to face</param>
+    public void FacePlayer(bool right)
+    {
+        if (right)
+        {
+            FaceRight();
+        }
+        else
+        {
+            FaceLeft();
+        }
+    }
 
     /// <summary>
     /// Makes the enemy turn to the right
     /// </summary>
     public void FaceRight()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+        //Get the direction to look along the path
+        Vector3 dir = gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
@@ -97,7 +121,11 @@ public class baseEnemyIdle : StateMachineBehaviour
     /// </summary>
     public void FaceLeft()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+        //Get the direction to look along the path
+        Vector3 dir = -gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
@@ -175,6 +203,7 @@ public class baseEnemyIdle : StateMachineBehaviour
         {
             dir = e.knockBackDir * e.knockBackForce * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }
@@ -199,6 +228,7 @@ public class baseEnemyIdle : StateMachineBehaviour
         {
             dir = e.knockBackDir * e.knockBackForce * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }

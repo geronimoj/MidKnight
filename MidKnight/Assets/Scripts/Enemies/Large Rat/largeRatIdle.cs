@@ -46,9 +46,6 @@ public class largeRatIdle : baseEnemyIdle
         //If the player is nearby, it changes direction to run into the player
         if (PlayerCheck())
         {
-            //face the player if hes in range and run towards it
-            FacePlayer();
-
             if (PlayerOnRight())
             {
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
@@ -59,9 +56,11 @@ public class largeRatIdle : baseEnemyIdle
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
+            //face the player if hes in range and run towards it
+            FacePlayer(isMovingRight);
 
             //stop if theres a wall or the platform ends
-            if(WallAndFloorCheck())
+            if (WallAndFloorCheck())
             {
                 destination.Set(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
             }
@@ -86,13 +85,12 @@ public class largeRatIdle : baseEnemyIdle
         {
             if (isMovingRight)
             {
-                FaceLeft();
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                FaceRight();
+                FacePlayer(true);
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }
@@ -101,15 +99,14 @@ public class largeRatIdle : baseEnemyIdle
         {
             if (isMovingRight)
             {
-                FaceRight();
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
             }
             else
             {
-                FaceLeft();
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
             }
         }
+        FacePlayer(isMovingRight);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

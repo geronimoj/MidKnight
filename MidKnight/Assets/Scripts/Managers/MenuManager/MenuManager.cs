@@ -46,6 +46,7 @@ public class MenuManager : MonoBehaviour
 
     #region UI
     private GameObject player;
+    private GameObject playerGraphics;
     public Image healthFillImage;
     public Image[] healthBaubles = new Image[3];
     public Image moonlightFillImage;
@@ -96,6 +97,8 @@ public class MenuManager : MonoBehaviour
 
         #region UI Functions
         player = GameObject.FindGameObjectWithTag("Player");
+        playerGraphics = GameObject.FindGameObjectWithTag("PlayerGraphics");
+        playerGraphics.SetActive(false);
         eclipseFillImage.gameObject.SetActive(false);
         eclipseText.gameObject.SetActive(false);
         newMoon.SetActive(false);
@@ -105,6 +108,7 @@ public class MenuManager : MonoBehaviour
         #endregion
 
         #region Menu Functions
+        Time.timeScale = 0;
         SM = FindObjectOfType<SavingManager>();
         GM = FindObjectOfType<GameManager>();
         startMenu.SetActive(true);
@@ -129,6 +133,11 @@ public class MenuManager : MonoBehaviour
     {
         #region Menu Functions
         Pause();
+
+        if (playerGraphics.activeSelf == false)
+        {
+            player.GetComponent<PlayerController>().Move(new Vector3(0.007f, 0, 0));
+        }
         #endregion
 
         #region UI Functions
@@ -146,17 +155,17 @@ public class MenuManager : MonoBehaviour
     public void NewGame()
     {
         StartGame();
-        bool LoadFail;
-        Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadFail = false : LoadFail = true));
-        if (LoadFail) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
+        bool LoadSucceed;
+        Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadSucceed = true : LoadSucceed = false));
+        if (!LoadSucceed) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
     }
 
     public void Continue()
     {
         StartGame();
-        bool LoadFail;
-        Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadFail = false : LoadFail = true));
-        if (LoadFail) { Debug.Log("Load Text: " + SM.Load(false, true)); }
+        bool LoadSucceed;
+        Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadSucceed = true : LoadSucceed = false));
+        if (!LoadSucceed) { Debug.Log("Load Text: " + SM.Load(false, true)); }
     }
 
     public void StartGame()
@@ -171,7 +180,7 @@ public class MenuManager : MonoBehaviour
         controlPauseMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(true);
-        player.SetActive(true);
+        playerGraphics.SetActive(true);
 
         if (GM.room != null)
         {
@@ -181,7 +190,7 @@ public class MenuManager : MonoBehaviour
 
     public void MainMenu()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 0;
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
         optionsStartMenu.SetActive(false);
@@ -190,7 +199,7 @@ public class MenuManager : MonoBehaviour
         controlPauseMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(false);
-        player.SetActive(false);
+        playerGraphics.SetActive(false);
 
         if (GM.room != null)
         {
@@ -643,12 +652,15 @@ public class MenuManager : MonoBehaviour
                 fullMoonCooldown = 0;
             }
         }
-        if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0])
+        if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
         {
             switch (player.GetComponent<PhaseManager>().swapToIndex)
             {
                 case 0:
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 2)
+                    {
+                        player.GetComponent<PhaseManager>().swapToIndex++;
+                    }
                     break;
                 case 1:
                     crescentMoon.transform.position = currentSelectedMoonTransform.position;
@@ -667,7 +679,7 @@ public class MenuManager : MonoBehaviour
                     break;
             }
         }
-        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1])
+        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
         {
             switch (player.GetComponent<PhaseManager>().swapToIndex)
             {
@@ -677,7 +689,10 @@ public class MenuManager : MonoBehaviour
                     fullMoon.transform.position = previousMoonTransform.position;
                     break;
                 case 1:
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 3)
+                    {
+                        player.GetComponent<PhaseManager>().swapToIndex++;
+                    }
                     break;
                 case 2:
                     halfMoon.transform.position = currentSelectedMoonTransform.position;
@@ -691,7 +706,7 @@ public class MenuManager : MonoBehaviour
                     break;
             }
         }
-        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2])
+        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
         {
             switch (player.GetComponent<PhaseManager>().swapToIndex)
             {
@@ -706,7 +721,10 @@ public class MenuManager : MonoBehaviour
                     newMoon.transform.position = previousMoonTransform.position;
                     break;
                 case 2:
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 4)
+                    {
+                        player.GetComponent<PhaseManager>().swapToIndex++;
+                    }
                     break;
                 case 3:
                     fullMoon.transform.position = currentSelectedMoonTransform.position;
@@ -715,7 +733,7 @@ public class MenuManager : MonoBehaviour
                     break;
             }
         }
-        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3])
+        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3] && player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
         {
             switch (player.GetComponent<PhaseManager>().swapToIndex)
             {
@@ -735,7 +753,10 @@ public class MenuManager : MonoBehaviour
                     crescentMoon.transform.position = previousMoonTransform.position;
                     break;
                 case 3:
-                    player.GetComponent<PhaseManager>().swapToIndex = 0;
+                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 5)
+                    {
+                        player.GetComponent<PhaseManager>().swapToIndex = 0;
+                    }
                     break;
             }
         }

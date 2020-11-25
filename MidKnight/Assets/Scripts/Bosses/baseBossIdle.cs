@@ -44,6 +44,10 @@ public class baseBossIdle : StateMachineBehaviour
     /// </summary>
     [HideInInspector] public CharacterController cc;
     /// <summary>
+    /// A reference to the game manager
+    /// </summary>
+    GameManager gm;
+    /// <summary>
     /// the number of moves that the boss has
     /// </summary>
     [Range(1,7)] public int noOfMoves = 5;
@@ -78,6 +82,8 @@ public class baseBossIdle : StateMachineBehaviour
         timeTillAtk = Random.Range(minStartTimeTillAtk, maxStartTimeTillAtk);
         destination = new Vector3(enemyTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
         cc = animator.GetComponent<CharacterController>();
+
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 
         moveToUse = Random.Range(1, noOfMoves + 1);
         //ensures no boss will use the same move three times in a row
@@ -155,7 +161,11 @@ public class baseBossIdle : StateMachineBehaviour
     /// </summary>
     public void FaceRight()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 0, 0);
+        //Get the direction to look along the path
+        Vector3 dir = gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
@@ -163,7 +173,11 @@ public class baseBossIdle : StateMachineBehaviour
     /// </summary>
     public void FaceLeft()
     {
-        enemyTrans.eulerAngles = new Vector3(0, 180, 0);
+        //Get the direction to look along the path
+        Vector3 dir = -gm.GetPathDirectionRight(enemyTrans.position);
+        //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
+        if (dir != Vector3.zero)
+            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
     }
 
     /// <summary>
@@ -195,6 +209,7 @@ public class baseBossIdle : StateMachineBehaviour
         {
             dir.y = vertSpeed * Time.deltaTime;
         }
+        dir = gm.MoveAlongPath(enemyTrans.position, dir);
 
         cc.Move(dir);
     }

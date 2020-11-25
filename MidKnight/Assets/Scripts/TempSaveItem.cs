@@ -34,8 +34,8 @@ public class TempSaveItem : MonoBehaviour
             }
             else if (!saving)
             {
-                Debug.Log("Load Text: " + SM.Load());
-                Debug.Log("Load Binary: " + SM.Load(true));
+                Debug.Log("Load Text: " + SM.Load(false, false, "default.txt"));
+                Debug.Log("Load Binary: " + SM.Load(true, false, "default.bin"));
             }
         }
     }
