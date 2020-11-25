@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -160,23 +161,50 @@ public class MenuManager : MonoBehaviour
     #region Menu Functions
     public void NewGame()
     {
+        Time.timeScale = 1;
+        StartCoroutine(NewGameEnumerator());
+    }
+
+    private IEnumerator NewGameEnumerator()
+    {
+        ScreenFade.ScreenFader.FadeIn();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+
         StartGame();
         bool LoadSucceed;
         Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadSucceed = true : LoadSucceed = false));
         if (!LoadSucceed) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
+
+        ScreenFade.ScreenFader.FadeOut();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
     }
 
     public void Continue()
     {
+        Time.timeScale = 1;
+        StartCoroutine(ContinueIEnumerator());
+    }
+
+    private IEnumerator ContinueIEnumerator()
+    {
+        ScreenFade.ScreenFader.FadeIn();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+
         StartGame();
         bool LoadSucceed;
         Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadSucceed = true : LoadSucceed = false));
         if (!LoadSucceed) { Debug.Log("Load Text: " + SM.Load(false, true)); }
+
+        ScreenFade.ScreenFader.FadeOut();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
     }
 
     public void StartGame()
     {
-        Time.timeScale = 1;
         menuOpened = false;
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
