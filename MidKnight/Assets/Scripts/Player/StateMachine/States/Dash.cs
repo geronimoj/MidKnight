@@ -53,6 +53,8 @@ public class Dash : State
         c.animator.SetBool("Dashing", true);
         //The player cannot attack while dashing
         c.CanAttack = false;
+
+        c.Audio.PlayOneShot(c.dash);
     }
 
     public override void StateUpdate(ref PlayerController c)

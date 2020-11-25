@@ -8,6 +8,8 @@ public class FullMoonAttack : PhaseAttack
     public override void DefaultAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(0, ref c);
+        //play attack audio
+        c.Audio.PlayOneShot(c.attackOne);
         //Apply other affects
         ApplyKnockback(ref hits, ref c, c.transform.right);
         //Check if the hit objects are skills
@@ -27,6 +29,8 @@ public class FullMoonAttack : PhaseAttack
     public override void DownAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(2, ref c);
+        //play attack audio
+        c.Audio.PlayOneShot(c.attackTwo);
         //Apply other affects
         ApplyKnockback(ref hits, ref c, Vector3.down);
         //Do a pogo on the enemies hit
@@ -55,6 +59,8 @@ public class FullMoonAttack : PhaseAttack
     public override void UpAttack(ref PlayerController c)
     {   //Calls the raycast & does damage.
         RaycastHit[] hits = GetAttackHit(0, ref c);
+        //play attack audio
+        c.Audio.PlayOneShot(c.attackThree);
         //Apply other affects
         ApplyKnockback(ref hits, ref c, Vector3.up);
         //Check if the hit objects are skills

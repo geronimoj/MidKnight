@@ -14,6 +14,7 @@ public class HealSpell : CastSpell
         c.animator.SetBool("FinishHeal", true);
         c.MoonLight -= spellCost;
         c.TakeDamage(-healAmount);
+        c.Audio.PlayOneShot(c.heal);
     }
     /// <summary>
     /// Make sure the player hasn't taken damage
