@@ -188,7 +188,7 @@ public class baseBossAttack : StateMachineBehaviour
     /// <returns></returns>
    public bool isFacingRight()
     {
-        if(enemyTrans.eulerAngles == new Vector3(0,0,0))
+        if(Vector3.Dot(enemyTrans.forward, gm.GetPathDirectionRight(enemyTrans.position)) > 0)
         {
             return true;
         }
