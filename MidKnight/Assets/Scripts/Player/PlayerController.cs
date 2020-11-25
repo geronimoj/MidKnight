@@ -119,6 +119,20 @@ public class PlayerController : Character
     /// </summary>
     private bool tookDamageThisLoop = false;
 
+    public AudioSource Audio;
+    public AudioSource Walk;
+    public AudioClip walk;
+    public AudioClip jump;
+    public AudioClip heal;
+    public AudioClip dash;
+    public AudioClip magic;
+    public AudioClip attackOne;
+    public AudioClip attackTwo;
+    public AudioClip attackThree;
+    public AudioClip land;
+    public AudioClip deathSound;
+    public AudioClip damageSound;
+
     /// <summary>
     /// Is true when the player dies
     /// </summary>
@@ -694,6 +708,7 @@ public class PlayerController : Character
     {
         canJumpAgain = true;
         CanDash = true;
+        Audio.PlayOneShot(land);
     }
     /// <summary>
     /// Called when moonBeam is casted
@@ -725,6 +740,7 @@ public class PlayerController : Character
             tookDamageThisLoop = true;
             //Trigger the damage animation
             animator.SetTrigger("TookDamage");
+            Audio.PlayOneShot(damageSound);
             //Log that damage was dealt
 #if UNITY_EDITOR
             Debug.Log("Took Damage");
@@ -779,6 +795,7 @@ public class PlayerController : Character
         animator.SetTrigger("Dead");
         Debug.Log("Player is dead");
         Dead = true;
+        Audio.PlayOneShot(deathSound);
     }
 
     public override void SetKnockBackDirection(Vector3 dir)

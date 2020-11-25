@@ -175,14 +175,20 @@ public class MoonPhase : ScriptableObject
                             c.Attacking = false;
                             break;
                         }
+                        //play attack audio
+                        c.Audio.PlayOneShot(c.attackThree);
                         Attacks.DownAttack(ref c);
                         attackIndex = -1;
                         break;
                     case 0:
+                        //play attack audio
+                        c.Audio.PlayOneShot(c.attackOne);
                         Attacks.DefaultAttack(ref c);
                         attackIndex = 0;
                         break;
                     case 1:
+                        //play attack audio
+                        c.Audio.PlayOneShot(c.attackTwo);
                         Attacks.UpAttack(ref c);
                         attackIndex = 1;
                         break;

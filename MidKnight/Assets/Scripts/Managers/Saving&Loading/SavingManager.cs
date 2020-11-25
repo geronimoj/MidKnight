@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.IO;
 
@@ -18,6 +19,9 @@ public class SavingManager : MonoBehaviour
     [SerializeField]
     private GameManager GM;
 
+    public bool loadRoomFinished = false;
+    public bool loadRoomStarted = false;
+
     private void Start()
     {
         EM = GetComponent<EntitiesManager>();
@@ -30,8 +34,10 @@ public class SavingManager : MonoBehaviour
     {
         if (player.Dead)
         {
-            LoadRestRoom();
-            player.Dead = false;
+            if (!loadRoomStarted)
+                StartCoroutine(LoadRestRoom());
+            if (loadRoomFinished)
+                player.Dead = false;
         }
     }
 
@@ -352,11 +358,32 @@ public class SavingManager : MonoBehaviour
         Debug.Log("Save Binary: " + Save(true));
     }
 
-    public void LoadRestRoom()
+    public IEnumerator LoadRestRoom()
     {
+        loadRoomStarted = true;
+        loadRoomFinished = false;
+        //Start fading in
+        ScreenFade.ScreenFader.FadeIn();
+        //Wait till we have finished fading in
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+        //Destroy the room
         Destroy(GM.room.gameObject);
+        //Enter the rest point
         EnterRestPoint();
+        player.enabled = true;
+        //Load the next room
         RestPoints[currentRestPoint].thisRoom.InstantiateRoom(ref GM);
+        //Start fading back out
+        ScreenFade.ScreenFader.FadeOut();
+        //Wait till we have faded back out
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+
+        loadRoomFinished = true;
+        //Wait a frame before we say this has finished so loadRoomFinished can be read without loadRoomStarted being false
+        yield return null;
+        loadRoomStarted = false;
     }
 }
 

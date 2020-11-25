@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -45,6 +46,10 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI
+    private List<GameObject> TempNewMoons = new List<GameObject>();
+    private List<GameObject> TempHalfMoons = new List<GameObject>();
+    private List<GameObject> TempCrescentMoons = new List<GameObject>();
+    private List<GameObject> TempFullMoons = new List<GameObject>();
     private GameObject player;
     private GameObject playerGraphics;
     public Image healthFillImage;
@@ -67,6 +72,8 @@ public class MenuManager : MonoBehaviour
     private float halfMoonCooldown = 0;
     private float crescentMoonCooldown = 0;
     private float fullMoonCooldown = 0;
+    private int swapIndex = -1;
+    private bool firstSwap = false;
     #endregion
 
     private void Start()
@@ -154,23 +161,50 @@ public class MenuManager : MonoBehaviour
     #region Menu Functions
     public void NewGame()
     {
+        Time.timeScale = 1;
+        StartCoroutine(NewGameEnumerator());
+    }
+
+    private IEnumerator NewGameEnumerator()
+    {
+        ScreenFade.ScreenFader.FadeIn();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+
         StartGame();
         bool LoadSucceed;
         Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadSucceed = true : LoadSucceed = false));
         if (!LoadSucceed) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
+
+        ScreenFade.ScreenFader.FadeOut();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
     }
 
     public void Continue()
     {
+        Time.timeScale = 1;
+        StartCoroutine(ContinueIEnumerator());
+    }
+
+    private IEnumerator ContinueIEnumerator()
+    {
+        ScreenFade.ScreenFader.FadeIn();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+
         StartGame();
         bool LoadSucceed;
         Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadSucceed = true : LoadSucceed = false));
         if (!LoadSucceed) { Debug.Log("Load Text: " + SM.Load(false, true)); }
+
+        ScreenFade.ScreenFader.FadeOut();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
     }
 
     public void StartGame()
     {
-        Time.timeScale = 1;
         menuOpened = false;
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
@@ -577,37 +611,83 @@ public class MenuManager : MonoBehaviour
 
     public void PhasesUI()
     {
+        if (!firstSwap && swapIndex != player.GetComponent<PhaseManager>().swapToIndex)
+        {
+            swapIndex = player.GetComponent<PhaseManager>().swapToIndex;
+            firstSwap = true;
+        }
+
         if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
         {
             newMoon.SetActive(true);
+            firstSwap = true;
+        }
+        else
+        {
+            newMoon.SetActive(false);
         }
         if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
         {
             crescentMoon.SetActive(true);
+            firstSwap = true;
+        }
+        else
+        {
+            crescentMoon.SetActive(false);
         }
         if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
         {
             halfMoon.SetActive(true);
+            firstSwap = true;
+        }
+        else
+        {
+            halfMoon.SetActive(false);
         }
         if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
         {
             fullMoon.SetActive(true);
+            firstSwap = true;
+        }
+        else
+        {
+            fullMoon.SetActive(false);
         }
         if (newMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
         {
             newMoon.GetComponent<Image>().fillAmount = newMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown;
+
+            foreach (GameObject obj in TempNewMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = newMoon.GetComponent<Image>().fillAmount;
+            }
         }
-        if (crescentMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
+        if (halfMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
         {
-            crescentMoon.GetComponent<Image>().fillAmount = crescentMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown;
+            halfMoon.GetComponent<Image>().fillAmount = halfMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown;
+
+            foreach (GameObject obj in TempHalfMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = halfMoon.GetComponent<Image>().fillAmount;
+            }
         }
-        if (halfMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
+        if (crescentMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
         {
-            halfMoon.GetComponent<Image>().fillAmount = halfMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown;
+            crescentMoon.GetComponent<Image>().fillAmount = crescentMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown;
+
+            foreach (GameObject obj in TempCrescentMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = crescentMoon.GetComponent<Image>().fillAmount;
+            }
         }
         if (fullMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
         {
             fullMoon.GetComponent<Image>().fillAmount = fullMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown;
+
+            foreach (GameObject obj in TempFullMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = fullMoon.GetComponent<Image>().fillAmount;
+            }
         }
 
         newMoonCooldown += Time.deltaTime;
@@ -652,143 +732,926 @@ public class MenuManager : MonoBehaviour
                 fullMoonCooldown = 0;
             }
         }
-        if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+        if (firstSwap)
         {
-            switch (player.GetComponent<PhaseManager>().swapToIndex)
+            foreach (GameObject obj in TempNewMoons)
             {
-                case 0:
-                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 2)
+                Destroy(obj);
+            }
+            foreach (GameObject obj in TempHalfMoons)
+            {
+                Destroy(obj);
+            }
+            foreach (GameObject obj in TempCrescentMoons)
+            {
+                Destroy(obj);
+            }
+            foreach (GameObject obj in TempFullMoons)
+            {
+                Destroy(obj);
+            }
+
+            TempNewMoons.Clear();
+            TempHalfMoons.Clear();
+            TempCrescentMoons.Clear();
+            TempFullMoons.Clear();
+
+            if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+            {
+                newMoon.transform.position = currentMoonTransform.position;
+
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                     {
-                        player.GetComponent<PhaseManager>().swapToIndex++;
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 3:
+                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    crescentMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    GameObject tempCrescentMoon = Instantiate(crescentMoon, previousMoonTransform);
+                                    tempCrescentMoon.transform.position = previousMoonTransform.position;
+                                    TempCrescentMoons.Add(tempCrescentMoon);
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    GameObject tempHalfMoon = Instantiate(halfMoon, nextMoonTransform);
+                                    tempHalfMoon.transform.position = nextMoonTransform.position;
+                                    TempHalfMoons.Add(tempHalfMoon);
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
                     }
-                    break;
-                case 1:
-                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                    halfMoon.transform.position = nextMoonTransform.position;
-                    fullMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 2:
-                    halfMoon.transform.position = currentSelectedMoonTransform.position;
-                    fullMoon.transform.position = nextMoonTransform.position;
-                    crescentMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 3:
-                    fullMoon.transform.position = currentSelectedMoonTransform.position;
-                    crescentMoon.transform.position = nextMoonTransform.position;
-                    halfMoon.transform.position = previousMoonTransform.position;
-                    break;
-            }
-        }
-        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
-        {
-            switch (player.GetComponent<PhaseManager>().swapToIndex)
-            {
-                case 0:
-                    newMoon.transform.position = currentSelectedMoonTransform.position;
-                    halfMoon.transform.position = nextMoonTransform.position;
-                    fullMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 1:
-                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 3)
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
-                        player.GetComponent<PhaseManager>().swapToIndex++;
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 1:
+                                halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon, nextMoonTransform);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                fullMoon.transform.position = previousMoonTransform.position;
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                halfMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempHalfMoon = Instantiate(halfMoon, previousMoonTransform);
+                                tempHalfMoon.transform.position = previousMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon);
+                                break;
+                        }
                     }
-                    break;
-                case 2:
-                    halfMoon.transform.position = currentSelectedMoonTransform.position;
-                    fullMoon.transform.position = nextMoonTransform.position;
-                    newMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 3:
-                    fullMoon.transform.position = currentSelectedMoonTransform.position;
-                    newMoon.transform.position = nextMoonTransform.position;
-                    halfMoon.transform.position = previousMoonTransform.position;
-                    break;
-            }
-        }
-        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
-        {
-            switch (player.GetComponent<PhaseManager>().swapToIndex)
-            {
-                case 0:
-                    newMoon.transform.position = currentSelectedMoonTransform.position;
-                    crescentMoon.transform.position = nextMoonTransform.position;
-                    fullMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 1:
-                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                    fullMoon.transform.position = nextMoonTransform.position;
-                    newMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 2:
-                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 4)
+                    else
                     {
-                        player.GetComponent<PhaseManager>().swapToIndex++;
+                        halfMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempHalfMoon1 = Instantiate(halfMoon, nextMoonTransform);
+                        tempHalfMoon1.transform.position = nextMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon1);
+                        GameObject tempHalfMoon2 = Instantiate(halfMoon, previousMoonTransform);
+                        tempHalfMoon2.transform.position = previousMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon2);
                     }
-                    break;
-                case 3:
-                    fullMoon.transform.position = currentSelectedMoonTransform.position;
-                    newMoon.transform.position = nextMoonTransform.position;
-                    crescentMoon.transform.position = previousMoonTransform.position;
-                    break;
-            }
-        }
-        else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3] && player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
-        {
-            switch (player.GetComponent<PhaseManager>().swapToIndex)
-            {
-                case 0:
-                    newMoon.transform.position = currentSelectedMoonTransform.position;
-                    crescentMoon.transform.position = nextMoonTransform.position;
-                    halfMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 1:
-                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                    halfMoon.transform.position = nextMoonTransform.position;
-                    newMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 2:
-                    halfMoon.transform.position = currentSelectedMoonTransform.position;
-                    newMoon.transform.position = nextMoonTransform.position;
-                    crescentMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 3:
-                    if (player.GetComponent<PhaseManager>().KnownPhases.Count > 5)
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                     {
-                        player.GetComponent<PhaseManager>().swapToIndex = 0;
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 2:
+                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                fullMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon, previousMoonTransform);
+                                tempFullMoon.transform.position = previousMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempCrescentMoon = Instantiate(crescentMoon, nextMoonTransform);
+                                tempCrescentMoon.transform.position = nextMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon);
+                                crescentMoon.transform.position = previousMoonTransform.position;
+                                break;
+                        }
                     }
-                    break;
-            }
-        }
-        else
-        {
-            switch (player.GetComponent<PhaseManager>().swapToIndex)
-            {
-                case 0:
-                    newMoon.transform.position = currentSelectedMoonTransform.position;
-                    crescentMoon.transform.position = nextMoonTransform.position;
-                    halfMoon.transform.position = currentMoonTransform.position;
-                    fullMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 1:
-                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                    halfMoon.transform.position = nextMoonTransform.position;
-                    fullMoon.transform.position = currentMoonTransform.position;
-                    newMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 2:
-                    halfMoon.transform.position = currentSelectedMoonTransform.position;
-                    fullMoon.transform.position = nextMoonTransform.position;
-                    newMoon.transform.position = currentMoonTransform.position;
-                    crescentMoon.transform.position = previousMoonTransform.position;
-                    break;
-                case 3:
+                    else
+                    {
+                        crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempCrescentMoon1 = Instantiate(crescentMoon, nextMoonTransform);
+                        tempCrescentMoon1.transform.position = nextMoonTransform.position;
+                        TempCrescentMoons.Add(tempCrescentMoon1);
+                        GameObject tempCrescentMoon2 = Instantiate(crescentMoon, previousMoonTransform);
+                        tempCrescentMoon2.transform.position = previousMoonTransform.position;
+                        TempCrescentMoons.Add(tempCrescentMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
                     fullMoon.transform.position = currentSelectedMoonTransform.position;
-                    newMoon.transform.position = nextMoonTransform.position;
-                    crescentMoon.transform.position = currentMoonTransform.position;
-                    halfMoon.transform.position = previousMoonTransform.position;
-                    break;
+                    GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
+                    tempFullMoon1.transform.position = nextMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon1);
+                    GameObject tempFullMoon2 = Instantiate(fullMoon, previousMoonTransform);
+                    tempFullMoon2.transform.position = previousMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon2);
+                }
+                else
+                {
+                    GameObject tempNewMoon1 = Instantiate(newMoon, currentSelectedMoonTransform);
+                    tempNewMoon1.transform.position = currentSelectedMoonTransform.position;
+                    TempNewMoons.Add(tempNewMoon1);
+                    GameObject tempNewMoon2 = Instantiate(newMoon, nextMoonTransform);
+                    tempNewMoon2.transform.position = nextMoonTransform.position;
+                    TempNewMoons.Add(tempNewMoon2);
+                    GameObject tempNewMoon3 = Instantiate(newMoon, previousMoonTransform);
+                    tempNewMoon3.transform.position = previousMoonTransform.position;
+                    TempNewMoons.Add(tempNewMoon3);
+                }
             }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+            {
+                halfMoon.transform.position = currentMoonTransform.position;
+
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                    {
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 3:
+                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    crescentMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    GameObject tempCrescentMoon = Instantiate(crescentMoon, previousMoonTransform);
+                                    tempCrescentMoon.transform.position = previousMoonTransform.position;
+                                    TempCrescentMoons.Add(tempCrescentMoon);
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    GameObject tempNewMoon = Instantiate(newMoon, nextMoonTransform);
+                                    tempNewMoon.transform.position = nextMoonTransform.position;
+                                    TempNewMoons.Add(tempNewMoon);
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                    }
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 0:
+                                newMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon, nextMoonTransform);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                fullMoon.transform.position = previousMoonTransform.position;
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                newMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempNewMoon = Instantiate(newMoon, previousMoonTransform);
+                                tempNewMoon.transform.position = previousMoonTransform.position;
+                                TempNewMoons.Add(tempNewMoon);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        newMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempNewMoon1 = Instantiate(newMoon, nextMoonTransform);
+                        tempNewMoon1.transform.position = nextMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon1);
+                        GameObject tempNewMoon2 = Instantiate(newMoon, previousMoonTransform);
+                        tempNewMoon2.transform.position = previousMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 2:
+                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                fullMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon);
+                                tempFullMoon.transform.position = previousMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempCrescentMoon = Instantiate(crescentMoon, nextMoonTransform);
+                                tempCrescentMoon.transform.position = nextMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon);
+                                crescentMoon.transform.position = previousMoonTransform.position;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempCrescentMoon1 = Instantiate(crescentMoon, nextMoonTransform);
+                        tempCrescentMoon1.transform.position = nextMoonTransform.position;
+                        TempCrescentMoons.Add(tempCrescentMoon1);
+                        GameObject tempCrescentMoon2 = Instantiate(crescentMoon, previousMoonTransform);
+                        tempCrescentMoon2.transform.position = previousMoonTransform.position;
+                        TempCrescentMoons.Add(tempCrescentMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
+                    tempFullMoon1.transform.position = nextMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon1);
+                    GameObject tempFullMoon2 = Instantiate(fullMoon, previousMoonTransform);
+                    tempFullMoon2.transform.position = previousMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon2);
+                }
+                else
+                {
+                    GameObject tempHalfMoon1 = Instantiate(halfMoon, currentSelectedMoonTransform);
+                    tempHalfMoon1.transform.position = currentSelectedMoonTransform.position;
+                    TempHalfMoons.Add(tempHalfMoon1);
+                    GameObject tempHalfMoon2 = Instantiate(halfMoon, nextMoonTransform);
+                    tempHalfMoon2.transform.position = nextMoonTransform.position;
+                    TempHalfMoons.Add(tempHalfMoon2);
+                    GameObject tempHalfMoon3 = Instantiate(halfMoon, previousMoonTransform);
+                    tempHalfMoon3.transform.position = previousMoonTransform.position;
+                    TempHalfMoons.Add(tempHalfMoon3);
+                }
+            }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+            {
+                crescentMoon.transform.position = currentMoonTransform.position;
+
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                    {
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 3:
+                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    GameObject tempHalfMoon = Instantiate(halfMoon, previousMoonTransform);
+                                    tempHalfMoon.transform.position = previousMoonTransform.position;
+                                    TempHalfMoons.Add(tempHalfMoon);
+                                    break;
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    GameObject tempNewMoon = Instantiate(newMoon, nextMoonTransform);
+                                    tempNewMoon.transform.position = nextMoonTransform.position;
+                                    TempNewMoons.Add(tempNewMoon);
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                    }
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 0:
+                                newMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon, nextMoonTransform);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                fullMoon.transform.position = previousMoonTransform.position;
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                newMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempNewMoon = Instantiate(newMoon, previousMoonTransform);
+                                tempNewMoon.transform.position = previousMoonTransform.position;
+                                TempNewMoons.Add(tempNewMoon);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        newMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempNewMoon1 = Instantiate(newMoon, nextMoonTransform);
+                        tempNewMoon1.transform.position = nextMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon1);
+                        GameObject tempNewMoon2 = Instantiate(newMoon, previousMoonTransform);
+                        tempNewMoon2.transform.position = previousMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 1:
+                                halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                fullMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon, previousMoonTransform);
+                                tempFullMoon.transform.position = previousMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempHalfMoon = Instantiate(halfMoon, nextMoonTransform);
+                                tempHalfMoon.transform.position = nextMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon);
+                                halfMoon.transform.position = previousMoonTransform.position;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        halfMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempHalfMoon1 = Instantiate(halfMoon, nextMoonTransform);
+                        tempHalfMoon1.transform.position = nextMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon1);
+                        GameObject tempHalfMoon2 = Instantiate(halfMoon, previousMoonTransform);
+                        tempHalfMoon2.transform.position = previousMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
+                    tempFullMoon1.transform.position = nextMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon1);
+                    GameObject tempFullMoon2 = Instantiate(fullMoon, previousMoonTransform);
+                    tempFullMoon2.transform.position = previousMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon2);
+                }
+                else
+                {
+                    GameObject tempCrescentMoon1 = Instantiate(crescentMoon, currentSelectedMoonTransform);
+                    tempCrescentMoon1.transform.position = currentSelectedMoonTransform.position;
+                    TempCrescentMoons.Add(tempCrescentMoon1);
+                    GameObject tempCrescentMoon2 = Instantiate(crescentMoon, nextMoonTransform);
+                    tempCrescentMoon2.transform.position = nextMoonTransform.position;
+                    TempCrescentMoons.Add(tempCrescentMoon2);
+                    GameObject tempCrescentMoon3 = Instantiate(crescentMoon, previousMoonTransform);
+                    tempCrescentMoon3.transform.position = previousMoonTransform.position;
+                    TempCrescentMoons.Add(tempCrescentMoon3);
+                }
+            }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3] && player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+            {
+                fullMoon.transform.position = currentMoonTransform.position;
+
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                    {
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    crescentMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    GameObject tempHalfMoon = Instantiate(halfMoon, nextMoonTransform);
+                                    tempHalfMoon.transform.position = nextMoonTransform.position;
+                                    TempHalfMoons.Add(tempHalfMoon);
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    GameObject tempNewMoon = Instantiate(newMoon, previousMoonTransform);
+                                    tempNewMoon.transform.position = previousMoonTransform.position;
+                                    TempNewMoons.Add(tempNewMoon);
+                                    break;
+                            }
+                        }
+                    }
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 0:
+                                newMoon.transform.position = currentSelectedMoonTransform.position;
+                                crescentMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempCrescentMoon = Instantiate(crescentMoon, previousMoonTransform);
+                                tempCrescentMoon.transform.position = previousMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon);
+                                break;
+                            case 2:
+                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempNewMoon = Instantiate(newMoon, nextMoonTransform);
+                                tempNewMoon.transform.position = nextMoonTransform.position;
+                                TempNewMoons.Add(tempNewMoon);
+                                newMoon.transform.position = previousMoonTransform.position;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        newMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempNewMoon1 = Instantiate(newMoon, nextMoonTransform);
+                        tempNewMoon1.transform.position = nextMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon1);
+                        GameObject tempNewMoon2 = Instantiate(newMoon, previousMoonTransform);
+                        tempNewMoon2.transform.position = previousMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 1:
+                                halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempCrescentMoon = Instantiate(crescentMoon, nextMoonTransform);
+                                tempCrescentMoon.transform.position = nextMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon);
+                                crescentMoon.transform.position = previousMoonTransform.position;
+                                break;
+                            case 2:
+                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                halfMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempHalfMoon = Instantiate(halfMoon, previousMoonTransform);
+                                tempHalfMoon.transform.position = previousMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        halfMoon.transform.position = currentSelectedMoonTransform.position;
+                        GameObject tempHalfMoon1 = Instantiate(halfMoon, nextMoonTransform);
+                        tempHalfMoon1.transform.position = nextMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon1);
+                        GameObject tempHalfMoon2 = Instantiate(halfMoon, previousMoonTransform);
+                        tempHalfMoon2.transform.position = previousMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                    GameObject tempCrescentMoon1 = Instantiate(crescentMoon, nextMoonTransform);
+                    tempCrescentMoon1.transform.position = nextMoonTransform.position;
+                    TempCrescentMoons.Add(tempCrescentMoon1);
+                    GameObject tempCrescentMoon2 = Instantiate(crescentMoon, previousMoonTransform);
+                    tempCrescentMoon2.transform.position = previousMoonTransform.position;
+                    TempCrescentMoons.Add(tempCrescentMoon2);
+                }
+                else
+                {
+                    GameObject tempFullMoon1 = Instantiate(fullMoon, currentSelectedMoonTransform);
+                    tempFullMoon1.transform.position = currentSelectedMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon1);
+                    GameObject tempFullMoon2 = Instantiate(fullMoon, nextMoonTransform);
+                    tempFullMoon2.transform.position = nextMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon2);
+                    GameObject tempFullMoon3 = Instantiate(fullMoon, previousMoonTransform);
+                    tempFullMoon3.transform.position = previousMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon3);
+                }
+            }
+            else
+            {
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                    {
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                        {
+                            if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                            {
+                                switch (player.GetComponent<PhaseManager>().swapToIndex)
+                                {
+                                    case 0:
+                                        newMoon.transform.position = currentSelectedMoonTransform.position;
+                                        halfMoon.transform.position = nextMoonTransform.position;
+                                        crescentMoon.transform.position = new Vector3(-100, -100);
+                                        fullMoon.transform.position = previousMoonTransform.position;
+                                        break;
+                                    case 1:
+                                        halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                        crescentMoon.transform.position = nextMoonTransform.position;
+                                        fullMoon.transform.position = new Vector3(-100, -100);
+                                        newMoon.transform.position = previousMoonTransform.position;
+                                        break;
+                                    case 2:
+                                        crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                        fullMoon.transform.position = nextMoonTransform.position;
+                                        newMoon.transform.position = new Vector3(-100, -100);
+                                        halfMoon.transform.position = previousMoonTransform.position;
+                                        break;
+                                    case 3:
+                                        fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                        newMoon.transform.position = nextMoonTransform.position;
+                                        halfMoon.transform.position = new Vector3(-100, -100);
+                                        crescentMoon.transform.position = previousMoonTransform.position;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                switch (player.GetComponent<PhaseManager>().swapToIndex)
+                                {
+                                    case 0:
+                                        newMoon.transform.position = currentSelectedMoonTransform.position;
+                                        halfMoon.transform.position = nextMoonTransform.position;
+                                        crescentMoon.transform.position = previousMoonTransform.position;
+                                        fullMoon.transform.position = new Vector3(-100, -100);
+                                        break;
+                                    case 1:
+                                        halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                        crescentMoon.transform.position = nextMoonTransform.position;
+                                        fullMoon.transform.position = new Vector3(-100, -100);
+                                        newMoon.transform.position = previousMoonTransform.position;
+                                        break;
+                                    case 2:
+                                        crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                        fullMoon.transform.position = new Vector3(-100, -100);
+                                        newMoon.transform.position = nextMoonTransform.position;
+                                        halfMoon.transform.position = previousMoonTransform.position;
+                                        break;
+                                }
+                            }
+                        }
+                        else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    crescentMoon.transform.position = new Vector3(-100, -100);
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = new Vector3(-100, -100);
+                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 3:
+                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    crescentMoon.transform.position = new Vector3(-100, -100);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    crescentMoon.transform.position = new Vector3(-100, -100);
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempHalfMoon = Instantiate(halfMoon, previousMoonTransform);
+                                    tempHalfMoon.transform.position = previousMoonTransform.position;
+                                    TempHalfMoons.Add(tempHalfMoon);
+                                    break;
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    GameObject tempNewMoon = Instantiate(newMoon, nextMoonTransform);
+                                    tempNewMoon.transform.position = nextMoonTransform.position;
+                                    TempNewMoons.Add(tempNewMoon);
+                                    crescentMoon.transform.position = new Vector3(-100, -100);
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                    }
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                    {
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = new Vector3(-100, -100);
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    newMoon.transform.position = previousMoonTransform.position;
+                                    halfMoon.transform.position = new Vector3(-100, -100);
+                                    break;
+                                case 3:
+                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    halfMoon.transform.position = new Vector3(-100, -100);
+                                    crescentMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 0:
+                                    newMoon.transform.position = currentSelectedMoonTransform.position;
+                                    halfMoon.transform.position = new Vector3(-100, -100);
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempCrescentMoon = Instantiate(crescentMoon, previousMoonTransform);
+                                    tempCrescentMoon.transform.position = previousMoonTransform.position;
+                                    TempCrescentMoons.Add(tempCrescentMoon);
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    newMoon.transform.position = nextMoonTransform.position;
+                                    halfMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempNewMoon = Instantiate(newMoon, previousMoonTransform);
+                                    tempNewMoon.transform.position = previousMoonTransform.position;
+                                    TempNewMoons.Add(tempNewMoon);
+                                    break;
+                            }
+                        }
+                    }
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 0:
+                                newMoon.transform.position = currentSelectedMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon, nextMoonTransform);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                halfMoon.transform.position = new Vector3(-100, -100);
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                fullMoon.transform.position = previousMoonTransform.position;
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                newMoon.transform.position = nextMoonTransform.position;
+                                halfMoon.transform.position = new Vector3(-100, -100);
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempNewMoon = Instantiate(newMoon, previousMoonTransform);
+                                tempNewMoon.transform.position = previousMoonTransform.position;
+                                TempNewMoons.Add(tempNewMoon);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        newMoon.transform.position = currentSelectedMoonTransform.position;
+                        halfMoon.transform.position = new Vector3(-100, -100);
+                        crescentMoon.transform.position = new Vector3(-100, -100);
+                        fullMoon.transform.position = new Vector3(-100, -100);
+                        GameObject tempNewMoon1 = Instantiate(newMoon, nextMoonTransform);
+                        tempNewMoon1.transform.position = nextMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon1);
+                        GameObject tempNewMoon2 = Instantiate(newMoon, previousMoonTransform);
+                        tempNewMoon2.transform.position = previousMoonTransform.position;
+                        TempNewMoons.Add(tempNewMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                    {
+                        if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                                case 3:
+                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    halfMoon.transform.position = nextMoonTransform.position;
+                                    crescentMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (player.GetComponent<PhaseManager>().swapToIndex)
+                            {
+                                case 1:
+                                    halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                    crescentMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempCrescentmoon = Instantiate(crescentMoon, previousMoonTransform);
+                                    tempCrescentmoon.transform.position = previousMoonTransform.position;
+                                    TempCrescentMoons.Add(tempCrescentmoon);
+                                    break;
+                                case 2:
+                                    crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempHalfMoon = Instantiate(halfMoon, nextMoonTransform);
+                                    tempHalfMoon.transform.position = nextMoonTransform.position;
+                                    TempHalfMoons.Add(tempHalfMoon);
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    halfMoon.transform.position = previousMoonTransform.position;
+                                    break;
+                            }
+                        }
+                    }
+                    else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 1:
+                                halfMoon.transform.position = currentSelectedMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempFullMoon = Instantiate(fullMoon, nextMoonTransform);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                fullMoon.transform.position = previousMoonTransform.position;
+                                newMoon.transform.position = new Vector3(-100, -100);
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                newMoon.transform.position = new Vector3(-100, -100);
+                                halfMoon.transform.position = nextMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempHalfMoon = Instantiate(halfMoon, previousMoonTransform);
+                                tempHalfMoon.transform.position = previousMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        halfMoon.transform.position = currentSelectedMoonTransform.position;
+                        crescentMoon.transform.position = new Vector3(-100, -100);
+                        fullMoon.transform.position = new Vector3(-100, -100);
+                        newMoon.transform.position = new Vector3(-100, -100);
+                        GameObject tempHalfMoon1 = Instantiate(halfMoon, nextMoonTransform);
+                        tempHalfMoon1.transform.position = nextMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon1);
+                        GameObject tempHalfMoon2 = Instantiate(halfMoon, previousMoonTransform);
+                        tempHalfMoon2.transform.position = previousMoonTransform.position;
+                        TempHalfMoons.Add(tempHalfMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                    {
+                        switch (player.GetComponent<PhaseManager>().swapToIndex)
+                        {
+                            case 2:
+                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                                fullMoon.transform.position = nextMoonTransform.position;
+                                newMoon.transform.position = new Vector3(-100, -100);
+                                halfMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempFullMoon = Instantiate(fullMoon, previousMoonTransform);
+                                tempFullMoon.transform.position = previousMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                break;
+                            case 3:
+                                fullMoon.transform.position = currentSelectedMoonTransform.position;
+                                newMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempCrescentMoon = Instantiate(crescentMoon, nextMoonTransform);
+                                tempCrescentMoon.transform.position = nextMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon);
+                                halfMoon.transform.position = new Vector3(-100, -100);
+                                crescentMoon.transform.position = previousMoonTransform.position;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        crescentMoon.transform.position = currentSelectedMoonTransform.position;
+                        fullMoon.transform.position = new Vector3(-100, -100);
+                        newMoon.transform.position = new Vector3(-100, -100);
+                        halfMoon.transform.position = new Vector3(-100, -100);
+                        GameObject tempCrescentMoon1 = Instantiate(crescentMoon, nextMoonTransform);
+                        tempCrescentMoon1.transform.position = nextMoonTransform.position;
+                        TempCrescentMoons.Add(tempCrescentMoon1);
+                        GameObject tempCrescentMoon2 = Instantiate(crescentMoon, previousMoonTransform);
+                        tempCrescentMoon2.transform.position = previousMoonTransform.position;
+                        TempCrescentMoons.Add(tempCrescentMoon2);
+                    }
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
+                    fullMoon.transform.position = currentSelectedMoonTransform.position;
+                    newMoon.transform.position = new Vector3(-100, -100);
+                    halfMoon.transform.position = new Vector3(-100, -100);
+                    crescentMoon.transform.position = new Vector3(-100, -100);
+                    GameObject tempFullMoon1 = Instantiate(fullMoon, nextMoonTransform);
+                    tempFullMoon1.transform.position = nextMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon1);
+                    GameObject tempFullMoon2 = Instantiate(fullMoon, previousMoonTransform);
+                    tempFullMoon2.transform.position = previousMoonTransform.position;
+                    TempFullMoons.Add(tempFullMoon2);
+                }
+            }
+
+            firstSwap = false;
         }
     }
     #endregion

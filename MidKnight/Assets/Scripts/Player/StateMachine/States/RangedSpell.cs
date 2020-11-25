@@ -16,6 +16,7 @@ public class RangedSpell : CastSpell
         //Call the spell animation
         c.animator.SetTrigger("MoonBeam");
         c.movement.VertSpeed = 0;
+        c.Audio.PlayOneShot(c.magic);
     }
 
     protected override void DoSpell(ref PlayerController c)
