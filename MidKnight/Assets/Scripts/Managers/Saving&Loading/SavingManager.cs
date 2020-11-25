@@ -356,6 +356,7 @@ public class SavingManager : MonoBehaviour
     {
         Destroy(GM.room.gameObject);
         EnterRestPoint();
+        player.enabled = true;
         RestPoints[currentRestPoint].thisRoom.InstantiateRoom(ref GM);
     }
 }
