@@ -42,25 +42,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!114 &-5402133733998522236
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20dc56324c85c8943b64a4da15a47a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTimeTillAtk: 0
-  timeTillAtk: 0
-  hasUsedAtk: 0
-  enemyTrans: {fileID: 0}
-  playerTrans: {fileID: 0}
-  destination: {x: 0, y: 0, z: 0}
-  speed: 0
 --- !u!1107 &-3575556660840916852
 AnimatorStateMachine:
   serializedVersion: 5
@@ -114,6 +95,7 @@ MonoBehaviour:
   minStartTimeTillWalk: 0
   maxStartTimeTillWalk: 10
   maxDistToWalk: 5
+  isRangedSkeleton: 0
 --- !u!1102 &-2531968061985823907
 AnimatorState:
   serializedVersion: 5
@@ -128,7 +110,7 @@ AnimatorState:
   - {fileID: 2834904181066812779}
   m_StateMachineBehaviours:
   - {fileID: -8886922939492309912}
-  - {fileID: -5402133733998522236}
+  - {fileID: 6018865728462297927}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -258,6 +240,25 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &6018865728462297927
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ba59afa36dee3499749370992d1574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTimeTillAtk: 0.2
+  timeTillAtk: 0
+  hasUsedAtk: 0
+  enemyTrans: {fileID: 0}
+  playerTrans: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
+  speed: 0
 --- !u!1102 &6630580745232726088
 AnimatorState:
   serializedVersion: 5
