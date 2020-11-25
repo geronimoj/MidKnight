@@ -45,7 +45,10 @@ public class MenuManager : MonoBehaviour
     #endregion
 
     #region UI
-    private List<GameObject> InstantiatedMoonImages = new List<GameObject>();
+    private List<GameObject> TempNewMoons = new List<GameObject>();
+    private List<GameObject> TempHalfMoons = new List<GameObject>();
+    private List<GameObject> TempCrescentMoons = new List<GameObject>();
+    private List<GameObject> TempFullMoons = new List<GameObject>();
     private GameObject player;
     private GameObject playerGraphics;
     public Image healthFillImage;
@@ -68,8 +71,8 @@ public class MenuManager : MonoBehaviour
     private float halfMoonCooldown = 0;
     private float crescentMoonCooldown = 0;
     private float fullMoonCooldown = 0;
-    private int swapIndex = 0;
-    private bool firstSwap = true;
+    private int swapIndex = -1;
+    private bool firstSwap = false;
     #endregion
 
     private void Start()
@@ -621,18 +624,38 @@ public class MenuManager : MonoBehaviour
         if (newMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
         {
             newMoon.GetComponent<Image>().fillAmount = newMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown;
+
+            foreach (GameObject obj in TempNewMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = newMoon.GetComponent<Image>().fillAmount;
+            }
         }
         if (halfMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
         {
             halfMoon.GetComponent<Image>().fillAmount = halfMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown;
+
+            foreach (GameObject obj in TempHalfMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = halfMoon.GetComponent<Image>().fillAmount;
+            }
         }
         if (crescentMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
         {
             crescentMoon.GetComponent<Image>().fillAmount = crescentMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown;
+
+            foreach (GameObject obj in TempCrescentMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = crescentMoon.GetComponent<Image>().fillAmount;
+            }
         }
         if (fullMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
         {
             fullMoon.GetComponent<Image>().fillAmount = fullMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown;
+
+            foreach (GameObject obj in TempFullMoons)
+            {
+                obj.GetComponent<Image>().fillAmount = fullMoon.GetComponent<Image>().fillAmount;
+            }
         }
 
         newMoonCooldown += Time.deltaTime;
@@ -679,7 +702,19 @@ public class MenuManager : MonoBehaviour
         }
         if (firstSwap)
         {
-            foreach (GameObject obj in InstantiatedMoonImages)
+            foreach (GameObject obj in TempNewMoons)
+            {
+                Destroy(obj);
+            }
+            foreach (GameObject obj in TempHalfMoons)
+            {
+                Destroy(obj);
+            }
+            foreach (GameObject obj in TempCrescentMoons)
+            {
+                Destroy(obj);
+            }
+            foreach (GameObject obj in TempFullMoons)
             {
                 Destroy(obj);
             }
@@ -886,13 +921,13 @@ public class MenuManager : MonoBehaviour
                                     fullMoon.transform.position = new Vector3(-100, -100);
                                     GameObject tempHalfMoon = Instantiate(halfMoon);
                                     tempHalfMoon.transform.position = previousMoonTransform.position;
-                                    InstantiatedMoonImages.Add(tempHalfMoon);
+                                    TempHalfMoons.Add(tempHalfMoon);
                                     break;
                                 case 1:
                                     halfMoon.transform.position = currentSelectedMoonTransform.position;
                                     GameObject tempNewMoon = Instantiate(newMoon);
                                     tempNewMoon.transform.position = nextMoonTransform.position;
-                                    InstantiatedMoonImages.Add(tempNewMoon);
+                                    TempNewMoons.Add(tempNewMoon);
                                     crescentMoon.transform.position = new Vector3(-100, -100);
                                     fullMoon.transform.position = new Vector3(-100, -100);
                                     newMoon.transform.position = previousMoonTransform.position;
@@ -937,7 +972,7 @@ public class MenuManager : MonoBehaviour
                                     fullMoon.transform.position = new Vector3(-100, -100);
                                     GameObject tempCrescentMoon = Instantiate(crescentMoon);
                                     tempCrescentMoon.transform.position = previousMoonTransform.position;
-                                    InstantiatedMoonImages.Add(tempCrescentMoon);
+                                    TempCrescentMoons.Add(tempCrescentMoon);
                                     break;
                                 case 2:
                                     crescentMoon.transform.position = currentSelectedMoonTransform.position;
@@ -946,7 +981,7 @@ public class MenuManager : MonoBehaviour
                                     halfMoon.transform.position = new Vector3(-100, -100);
                                     GameObject tempNewMoon = Instantiate(newMoon);
                                     tempNewMoon.transform.position = previousMoonTransform.position;
-                                    InstantiatedMoonImages.Add(tempNewMoon);
+                                    TempNewMoons.Add(tempNewMoon);
                                     break;
                             }
                         }
@@ -957,21 +992,21 @@ public class MenuManager : MonoBehaviour
                         {
                             case 0:
                                 newMoon.transform.position = currentSelectedMoonTransform.position;
-                                halfMoon.transform.position = nextMoonTransform.position;
+                                GameObject tempFullMoon = Instantiate(fullMoon);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                halfMoon.transform.position = new Vector3(-100, -100);
                                 crescentMoon.transform.position = new Vector3(-100, -100);
                                 fullMoon.transform.position = previousMoonTransform.position;
-                                GameObject tempNewMoon = Instantiate(newMoon);
-                                tempNewMoon.transform.position = previousMoonTransform.position;
-                                InstantiatedMoonImages.Add(tempNewMoon);
                                 break;
                             case 3:
                                 fullMoon.transform.position = currentSelectedMoonTransform.position;
                                 newMoon.transform.position = nextMoonTransform.position;
                                 halfMoon.transform.position = new Vector3(-100, -100);
-                                crescentMoon.transform.position = previousMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
                                 GameObject tempNewMoon = Instantiate(newMoon);
                                 tempNewMoon.transform.position = previousMoonTransform.position;
-                                InstantiatedMoonImages.Add(tempNewMoon);
+                                TempNewMoons.Add(tempNewMoon);
                                 break;
                         }
                     }
@@ -981,27 +1016,15 @@ public class MenuManager : MonoBehaviour
                         {
                             case 0:
                                 newMoon.transform.position = currentSelectedMoonTransform.position;
-                                halfMoon.transform.position = nextMoonTransform.position;
-                                crescentMoon.transform.position = new Vector3(-100, -100);
-                                fullMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 1:
-                                halfMoon.transform.position = currentSelectedMoonTransform.position;
-                                crescentMoon.transform.position = nextMoonTransform.position;
-                                fullMoon.transform.position = new Vector3(-100, -100);
-                                newMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 2:
-                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                                fullMoon.transform.position = nextMoonTransform.position;
-                                newMoon.transform.position = new Vector3(-100, -100);
-                                halfMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 3:
-                                fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                newMoon.transform.position = nextMoonTransform.position;
                                 halfMoon.transform.position = new Vector3(-100, -100);
-                                crescentMoon.transform.position = previousMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                fullMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempNewMoon1 = Instantiate(newMoon, nextMoonTransform);
+                                tempNewMoon1.transform.position = nextMoonTransform.position;
+                                TempNewMoons.Add(tempNewMoon1);
+                                GameObject tempNewMoon2 = Instantiate(newMoon, previousMoonTransform);
+                                tempNewMoon2.transform.position = previousMoonTransform.position;
+                                TempNewMoons.Add(tempNewMoon2);
                                 break;
                         }
                     }
@@ -1014,17 +1037,11 @@ public class MenuManager : MonoBehaviour
                         {
                             switch (player.GetComponent<PhaseManager>().swapToIndex)
                             {
-                                case 0:
-                                    newMoon.transform.position = currentSelectedMoonTransform.position;
-                                    halfMoon.transform.position = nextMoonTransform.position;
-                                    crescentMoon.transform.position = new Vector3(-100, -100);
-                                    fullMoon.transform.position = previousMoonTransform.position;
-                                    break;
                                 case 1:
                                     halfMoon.transform.position = currentSelectedMoonTransform.position;
                                     crescentMoon.transform.position = nextMoonTransform.position;
-                                    fullMoon.transform.position = new Vector3(-100, -100);
-                                    newMoon.transform.position = previousMoonTransform.position;
+                                    fullMoon.transform.position = previousMoonTransform.position;
+                                    newMoon.transform.position = new Vector3(-100, -100);
                                     break;
                                 case 2:
                                     crescentMoon.transform.position = currentSelectedMoonTransform.position;
@@ -1034,8 +1051,8 @@ public class MenuManager : MonoBehaviour
                                     break;
                                 case 3:
                                     fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                    newMoon.transform.position = nextMoonTransform.position;
-                                    halfMoon.transform.position = new Vector3(-100, -100);
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    halfMoon.transform.position = nextMoonTransform.position;
                                     crescentMoon.transform.position = previousMoonTransform.position;
                                     break;
                             }
@@ -1044,29 +1061,23 @@ public class MenuManager : MonoBehaviour
                         {
                             switch (player.GetComponent<PhaseManager>().swapToIndex)
                             {
-                                case 0:
-                                    newMoon.transform.position = currentSelectedMoonTransform.position;
-                                    halfMoon.transform.position = nextMoonTransform.position;
-                                    crescentMoon.transform.position = new Vector3(-100, -100);
-                                    fullMoon.transform.position = previousMoonTransform.position;
-                                    break;
                                 case 1:
                                     halfMoon.transform.position = currentSelectedMoonTransform.position;
                                     crescentMoon.transform.position = nextMoonTransform.position;
                                     fullMoon.transform.position = new Vector3(-100, -100);
-                                    newMoon.transform.position = previousMoonTransform.position;
+                                    newMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempCrescentmoon = Instantiate(crescentMoon);
+                                    tempCrescentmoon.transform.position = previousMoonTransform.position;
+                                    TempCrescentMoons.Add(tempCrescentmoon);
                                     break;
                                 case 2:
                                     crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                                    fullMoon.transform.position = nextMoonTransform.position;
+                                    fullMoon.transform.position = new Vector3(-100, -100);
+                                    GameObject tempHalfMoon = Instantiate(halfMoon);
+                                    tempHalfMoon.transform.position = nextMoonTransform.position;
+                                    TempHalfMoons.Add(tempHalfMoon);
                                     newMoon.transform.position = new Vector3(-100, -100);
                                     halfMoon.transform.position = previousMoonTransform.position;
-                                    break;
-                                case 3:
-                                    fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                    newMoon.transform.position = nextMoonTransform.position;
-                                    halfMoon.transform.position = new Vector3(-100, -100);
-                                    crescentMoon.transform.position = previousMoonTransform.position;
                                     break;
                             }
                         }
@@ -1075,29 +1086,23 @@ public class MenuManager : MonoBehaviour
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
-                            case 0:
-                                newMoon.transform.position = currentSelectedMoonTransform.position;
-                                halfMoon.transform.position = nextMoonTransform.position;
-                                crescentMoon.transform.position = new Vector3(-100, -100);
-                                fullMoon.transform.position = previousMoonTransform.position;
-                                break;
                             case 1:
                                 halfMoon.transform.position = currentSelectedMoonTransform.position;
-                                crescentMoon.transform.position = nextMoonTransform.position;
-                                fullMoon.transform.position = new Vector3(-100, -100);
-                                newMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 2:
-                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                                fullMoon.transform.position = nextMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempFullMoon = Instantiate(fullMoon);
+                                tempFullMoon.transform.position = nextMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
+                                fullMoon.transform.position = previousMoonTransform.position;
                                 newMoon.transform.position = new Vector3(-100, -100);
-                                halfMoon.transform.position = previousMoonTransform.position;
                                 break;
                             case 3:
                                 fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                newMoon.transform.position = nextMoonTransform.position;
-                                halfMoon.transform.position = new Vector3(-100, -100);
-                                crescentMoon.transform.position = previousMoonTransform.position;
+                                newMoon.transform.position = new Vector3(-100, -100);
+                                halfMoon.transform.position = nextMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempHalfMoon = Instantiate(halfMoon);
+                                tempHalfMoon.transform.position = previousMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon);
                                 break;
                         }
                     }
@@ -1105,29 +1110,17 @@ public class MenuManager : MonoBehaviour
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
-                            case 0:
-                                newMoon.transform.position = currentSelectedMoonTransform.position;
-                                halfMoon.transform.position = nextMoonTransform.position;
-                                crescentMoon.transform.position = new Vector3(-100, -100);
-                                fullMoon.transform.position = previousMoonTransform.position;
-                                break;
                             case 1:
                                 halfMoon.transform.position = currentSelectedMoonTransform.position;
-                                crescentMoon.transform.position = nextMoonTransform.position;
+                                crescentMoon.transform.position = new Vector3(-100, -100);
                                 fullMoon.transform.position = new Vector3(-100, -100);
-                                newMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 2:
-                                crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                                fullMoon.transform.position = nextMoonTransform.position;
                                 newMoon.transform.position = new Vector3(-100, -100);
-                                halfMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 3:
-                                fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                newMoon.transform.position = nextMoonTransform.position;
-                                halfMoon.transform.position = new Vector3(-100, -100);
-                                crescentMoon.transform.position = previousMoonTransform.position;
+                                GameObject tempHalfMoon1 = Instantiate(halfMoon);
+                                tempHalfMoon1.transform.position = nextMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon1);
+                                GameObject tempHalfMoon2 = Instantiate(halfMoon);
+                                tempHalfMoon2.transform.position = previousMoonTransform.position;
+                                TempHalfMoons.Add(tempHalfMoon2);
                                 break;
                         }
                     }
@@ -1138,27 +1131,21 @@ public class MenuManager : MonoBehaviour
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
-                            case 0:
-                                newMoon.transform.position = currentSelectedMoonTransform.position;
-                                halfMoon.transform.position = nextMoonTransform.position;
-                                crescentMoon.transform.position = new Vector3(-100, -100);
-                                fullMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 1:
-                                halfMoon.transform.position = currentSelectedMoonTransform.position;
-                                crescentMoon.transform.position = nextMoonTransform.position;
-                                fullMoon.transform.position = new Vector3(-100, -100);
-                                newMoon.transform.position = previousMoonTransform.position;
-                                break;
                             case 2:
                                 crescentMoon.transform.position = currentSelectedMoonTransform.position;
                                 fullMoon.transform.position = nextMoonTransform.position;
                                 newMoon.transform.position = new Vector3(-100, -100);
-                                halfMoon.transform.position = previousMoonTransform.position;
+                                halfMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempFullMoon = Instantiate(fullMoon);
+                                tempFullMoon.transform.position = previousMoonTransform.position;
+                                TempFullMoons.Add(tempFullMoon);
                                 break;
                             case 3:
                                 fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                newMoon.transform.position = nextMoonTransform.position;
+                                newMoon.transform.position = new Vector3(-100, -100);
+                                GameObject tempCrescentMoon = Instantiate(crescentMoon);
+                                tempCrescentMoon.transform.position = nextMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon);
                                 halfMoon.transform.position = new Vector3(-100, -100);
                                 crescentMoon.transform.position = previousMoonTransform.position;
                                 break;
@@ -1168,29 +1155,17 @@ public class MenuManager : MonoBehaviour
                     {
                         switch (player.GetComponent<PhaseManager>().swapToIndex)
                         {
-                            case 0:
-                                newMoon.transform.position = currentSelectedMoonTransform.position;
-                                halfMoon.transform.position = nextMoonTransform.position;
-                                crescentMoon.transform.position = new Vector3(-100, -100);
-                                fullMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 1:
-                                halfMoon.transform.position = currentSelectedMoonTransform.position;
-                                crescentMoon.transform.position = nextMoonTransform.position;
-                                fullMoon.transform.position = new Vector3(-100, -100);
-                                newMoon.transform.position = previousMoonTransform.position;
-                                break;
                             case 2:
                                 crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                                fullMoon.transform.position = nextMoonTransform.position;
+                                fullMoon.transform.position = new Vector3(-100, -100);
                                 newMoon.transform.position = new Vector3(-100, -100);
-                                halfMoon.transform.position = previousMoonTransform.position;
-                                break;
-                            case 3:
-                                fullMoon.transform.position = currentSelectedMoonTransform.position;
-                                newMoon.transform.position = nextMoonTransform.position;
                                 halfMoon.transform.position = new Vector3(-100, -100);
-                                crescentMoon.transform.position = previousMoonTransform.position;
+                                GameObject tempCrescentMoon1 = Instantiate(crescentMoon);
+                                tempCrescentMoon1.transform.position = nextMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon1);
+                                GameObject tempCrescentMoon2 = Instantiate(crescentMoon);
+                                tempCrescentMoon2.transform.position = previousMoonTransform.position;
+                                TempCrescentMoons.Add(tempCrescentMoon2);
                                 break;
                         }
                     }
@@ -1199,33 +1174,23 @@ public class MenuManager : MonoBehaviour
                 {
                     switch (player.GetComponent<PhaseManager>().swapToIndex)
                     {
-                        case 0:
-                            newMoon.transform.position = currentSelectedMoonTransform.position;
-                            halfMoon.transform.position = nextMoonTransform.position;
-                            crescentMoon.transform.position = new Vector3(-100, -100);
-                            fullMoon.transform.position = previousMoonTransform.position;
-                            break;
-                        case 1:
-                            halfMoon.transform.position = currentSelectedMoonTransform.position;
-                            crescentMoon.transform.position = nextMoonTransform.position;
-                            fullMoon.transform.position = new Vector3(-100, -100);
-                            newMoon.transform.position = previousMoonTransform.position;
-                            break;
-                        case 2:
-                            crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                            fullMoon.transform.position = nextMoonTransform.position;
-                            newMoon.transform.position = new Vector3(-100, -100);
-                            halfMoon.transform.position = previousMoonTransform.position;
-                            break;
                         case 3:
                             fullMoon.transform.position = currentSelectedMoonTransform.position;
-                            newMoon.transform.position = nextMoonTransform.position;
+                            newMoon.transform.position = new Vector3(-100, -100);
                             halfMoon.transform.position = new Vector3(-100, -100);
-                            crescentMoon.transform.position = previousMoonTransform.position;
+                            crescentMoon.transform.position = new Vector3(-100, -100);
+                            GameObject tempFullMoon1 = Instantiate(fullMoon);
+                            tempFullMoon1.transform.position = nextMoonTransform.position;
+                            TempFullMoons.Add(tempFullMoon1);
+                            GameObject tempFullMoon2 = Instantiate(fullMoon);
+                            tempFullMoon2.transform.position = previousMoonTransform.position;
+                            TempFullMoons.Add(tempFullMoon2);
                             break;
                     }
                 }
             }
+
+            firstSwap = false;
         }
     }
     #endregion
