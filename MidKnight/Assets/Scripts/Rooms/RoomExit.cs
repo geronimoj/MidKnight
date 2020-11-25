@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System.Collections;
 public class RoomExit : MonoBehaviour
 {
     //Rooms
@@ -19,14 +19,24 @@ public class RoomExit : MonoBehaviour
     //On trigger, moves the player to the entrance of the next room, sets the next room active and destroys the old one
     private void OnTriggerEnter(Collider other)
     {
+        StartCoroutine(LoadNextRoom(other));
+    }
+
+    private IEnumerator LoadNextRoom(Collider other)
+    {
+        
+        ScreenFade.ScreenFader.FadeIn();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
+
         if (!other.gameObject.CompareTag("Player"))
-            return;
+            yield break;
         Room currentRoom = GM.room;
 
-        if(currentRoom == null)
+        if (currentRoom == null)
         {
             Debug.LogError("GameManager room null. Set it to something");
-            return;
+            yield break;
         }
 
         if (nextRoom == null || nextRoom.entrances.Length == 0 || entranceIndex >= nextRoom.entrances.Length)
@@ -35,12 +45,16 @@ public class RoomExit : MonoBehaviour
             other.transform.position = currentRoom.entrances[0];
             other.GetComponent<CharacterController>().enabled = true;
             Debug.LogWarning("Next room unassigned, has no entrances or the entranceIndex is invalid. Entering current room.");
-            return;
+            yield break;
         }
         other.GetComponent<CharacterController>().enabled = false;
         other.transform.position = nextRoom.entrances[entranceIndex];
         other.GetComponent<CharacterController>().enabled = true;
         nextRoom.InstantiateRoom(ref GM);
         Destroy(currentRoom.gameObject);
+
+        ScreenFade.ScreenFader.FadeOut();
+        while (!ScreenFade.ScreenFader.FadeFinished())
+            yield return null;
     }
 }
