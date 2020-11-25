@@ -20,11 +20,11 @@ public class meleeSkeletonAttack : baseEnemyAttack
 
         if(PlayerOnRight())
         {
-            spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 3f, enemyTrans.position.z);
+            spawnPos = new Vector3(enemyTrans.position.x + 2f, enemyTrans.position.y, enemyTrans.position.z);
         }
         else
         {
-            spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y - 3f, enemyTrans.position.z);
+            spawnPos = new Vector3(enemyTrans.position.x - 2f, enemyTrans.position.y, enemyTrans.position.z);
         }
     }
 
@@ -38,7 +38,7 @@ public class meleeSkeletonAttack : baseEnemyAttack
         else if(!hasUsedAtk)
         {
             hasUsedAtk = true;
-            Instantiate(attack, spawnPos, enemyTrans.rotation);
+            Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
         }
     }
 

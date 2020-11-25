@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4519434507130084301}
   - component: {fileID: 6569584469550026043}
   - component: {fileID: -7663674113822771491}
+  - component: {fileID: 8589047781027716045}
   m_Layer: 13
   m_Name: meleeSkeletonAttack
   m_TagString: Skill
@@ -29,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7226723524469832943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.52873766, y: 13.481691, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 1, z: 4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -124,3 +125,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTimeTillDestroy: 0.2
+--- !u!114 &8589047781027716045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7226723524469832943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50e0ddf9a661f814bb98add8ad190680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTrans: {fileID: 0}
+  prefabTrans: {fileID: 0}
+  destination: {x: 0, y: 0, z: 0}
+  speed: 1
+  damage: 1
+  isBreakable: 0
