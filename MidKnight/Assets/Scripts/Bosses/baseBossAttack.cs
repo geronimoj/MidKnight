@@ -151,7 +151,7 @@ public class baseBossAttack : StateMachineBehaviour
         Vector3 dir = gm.GetPathDirectionRight(enemyTrans.position);
         //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
         if (dir != Vector3.zero)
-            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
+            enemyTrans.rotation = Quaternion.LookRotation(dir, Vector3.up);
     }
 
     /// <summary>
@@ -163,7 +163,7 @@ public class baseBossAttack : StateMachineBehaviour
         Vector3 dir = -gm.GetPathDirectionRight(enemyTrans.position);
         //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
         if (dir != Vector3.zero)
-            enemyTrans.rotation = Quaternion.LookRotation(new Vector3(-dir.z, dir.y, dir.x), Vector3.up);
+            enemyTrans.rotation = Quaternion.LookRotation(dir, Vector3.up);
     }
 
     /// <summary>
@@ -188,7 +188,7 @@ public class baseBossAttack : StateMachineBehaviour
     /// <returns></returns>
    public bool isFacingRight()
     {
-        if(enemyTrans.eulerAngles == new Vector3(0,0,0))
+        if(Vector3.Dot(enemyTrans.forward, gm.GetPathDirectionRight(enemyTrans.position)) > 0)
         {
             return true;
         }
