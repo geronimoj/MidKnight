@@ -58,6 +58,10 @@ public class Enemy : Character
     private float flashTimer;
     private bool flashDirection = false;
 
+    public AudioSource Audio;
+    public AudioClip attackAudio;
+    public AudioClip deathAudio;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -137,7 +141,8 @@ public class Enemy : Character
         enemyAnim.SetTrigger("death");
         enemyCC.enabled = false;
         Destroy(enemyHitbox);
-        isDead = true;  
+        isDead = true;
+        Audio.PlayOneShot(deathAudio);
     }
 
     private void LogEntity()
