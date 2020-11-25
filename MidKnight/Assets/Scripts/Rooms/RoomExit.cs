@@ -19,18 +19,17 @@ public class RoomExit : MonoBehaviour
     //On trigger, moves the player to the entrance of the next room, sets the next room active and destroys the old one
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.CompareTag("Player"))
+            return;
         StartCoroutine(LoadNextRoom(other));
     }
 
     private IEnumerator LoadNextRoom(Collider other)
     {
-        
         ScreenFade.ScreenFader.FadeIn();
         while (!ScreenFade.ScreenFader.FadeFinished())
             yield return null;
 
-        if (!other.gameObject.CompareTag("Player"))
-            yield break;
         Room currentRoom = GM.room;
 
         if (currentRoom == null)
