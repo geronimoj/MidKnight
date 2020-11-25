@@ -35,7 +35,7 @@ public class werewolfAttack4 : baseBossAttack
         //change its gravity to make it fall faster
         if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
         {
-            gravity = 15;
+            gravity = 30;
         }
 
         MoveToDestination(destination);  

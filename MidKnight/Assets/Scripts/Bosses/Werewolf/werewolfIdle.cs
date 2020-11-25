@@ -53,6 +53,8 @@ public class werewolfIdle : baseBossIdle
         {
             speed = phase2speed;
         }
+
+        moveToUse = 4;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -61,7 +63,7 @@ public class werewolfIdle : baseBossIdle
         MoveToDestination(destination);
 
         //use its move at the end of the arena
-        if (Vector3.Distance(destination, enemyTrans.position) < 2f)
+        if (Vector3.Distance(destination, enemyTrans.position) < 0.2f)
         {
             switch (moveToUse)
             {

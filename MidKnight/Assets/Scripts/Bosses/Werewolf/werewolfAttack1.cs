@@ -51,11 +51,7 @@ public class werewolfAttack1 : baseBossAttack
     {
         MoveToDestination(destination);
 
-        if (timeTillAtk > 0)
-        {
-            timeTillAtk -= Time.deltaTime;
-        }
-        else if (!hasUsedMove)
+        if (Vector3.Distance(enemyTrans.position, destination) < 0.2f && !hasUsedMove)
         {
             hasUsedMove = true;
 
@@ -66,6 +62,8 @@ public class werewolfAttack1 : baseBossAttack
                 GameObject rock = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
                 rock.GetComponent<Transform>().localScale = rockRadiusVector;
             }
+
+            animator.SetTrigger("idle");
         }
     }
 

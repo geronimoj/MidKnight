@@ -18,16 +18,9 @@ public class werewolfAttack2 : baseBossAttack
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
 
-        //face the player
-        if(PlayerOnRight())
-        {
-            destination.Set(playerTrans.position.x - 2, enemyTrans.position.y, enemyTrans.position.z);
-        }
-        else
-        {
-            destination.Set(playerTrans.position.x + 2, enemyTrans.position.y, enemyTrans.position.z);
+        destination.Set(playerTrans.position.x, enemyTrans.position.y, enemyTrans.position.z);
 
-        }
+        FacePlayer();
 
         //change its speed if its phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
@@ -42,9 +35,9 @@ public class werewolfAttack2 : baseBossAttack
         MoveToDestination(destination);
 
         //attack the player when in range
-        if(Vector3.Distance(enemyTrans.position, destination) < 0.1f)
+        if (Vector3.Distance(enemyTrans.position, destination) < 0.1f)
         {
-            animator.SetTrigger("atk2part2");
+            animator.SetTrigger("idle");
         }
     }
 

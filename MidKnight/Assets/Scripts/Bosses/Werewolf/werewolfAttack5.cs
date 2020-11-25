@@ -21,6 +21,11 @@ public class werewolfAttack5 : baseBossAttack
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         MoveToDestination(destination);
+
+        if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
+        {
+            animator.SetTrigger("idle");
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
