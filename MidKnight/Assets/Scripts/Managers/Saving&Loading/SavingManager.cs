@@ -225,16 +225,17 @@ public class SavingManager : MonoBehaviour
                 {
                     int count = reader.ReadInt32();
 
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
+
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
-                        tempEntities.Add(tempEntity);
+
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
 
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -305,16 +306,15 @@ public class SavingManager : MonoBehaviour
                 {
                     int count = int.Parse(reader.ReadLine());
 
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
-                        tempEntities.Add(tempEntity);
-                    }
 
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
+                    }
                 }
                 else if (readLine == "Unlocks")
                 {
