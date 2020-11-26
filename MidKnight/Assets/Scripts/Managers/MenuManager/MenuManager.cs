@@ -10,13 +10,11 @@ public class MenuManager : MonoBehaviour
 {
     #region Menus
     [SerializeField]
-    private bool menuOpened = true;
+    private bool menuOpened = false;
     public GameObject startMenu;
     public GameObject pauseMenu;
-    public GameObject optionsPauseMenu;
-    public GameObject optionsStartMenu;
-    public GameObject controlPauseMenu;
-    public GameObject controlStartMenu;
+    public GameObject optionsMenu;
+    public GameObject controlMenu;
     public GameObject UIObject;
     private SavingManager SM;
     private GameManager GM;
@@ -36,9 +34,15 @@ public class MenuManager : MonoBehaviour
     //public Toggle softParticlesToogle;
     public Toggle realtimeReflectionProbesToggle;
     public Toggle textureStreamingToggle;
-    public Slider volumeSlider;
-    public Text volumeText;
-    private float currentVolume;
+    public Slider masterVolumeSlider;
+    public Text masterVolumeText;
+    private float currentMasterVolume;
+    public Slider musicVolumeSlider;
+    public Text musicVolumeText;
+    private float currentMusicVolume;
+    public Slider soundFXVolumeSlider;
+    public Text soundFXVolumeText;
+    private float currentSoundFXVolume;
     //Secret
     public Toggle secretToggle;
     public GameObject secretObject;
@@ -55,9 +59,11 @@ public class MenuManager : MonoBehaviour
     public Image healthFillImage;
     public Image[] healthBaubles = new Image[3];
     public Image moonlightFillImage;
-    public Text moonlightText;
     public Image eclipseFillImage;
     public Text eclipseText;
+    public GameObject dashObject;
+    public Image dashFillImage;
+    private float dashCooldown = 0;
     public GameObject eclipseFlourish;
     public Transform currentSelectedMoonTransform;
     public Transform nextMoonTransform;
@@ -120,10 +126,8 @@ public class MenuManager : MonoBehaviour
         GM = FindObjectOfType<GameManager>();
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(false);
         menuOpened = true;
@@ -151,7 +155,8 @@ public class MenuManager : MonoBehaviour
         if (!menuOpened)
         {
             HealthUI();
-            //MoonlightUI();
+            MoonlightUI();
+            DashUI();
             EclipseUI();
             PhasesUI();
         }
@@ -208,10 +213,8 @@ public class MenuManager : MonoBehaviour
         menuOpened = false;
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(true);
         playerGraphics.SetActive(true);
@@ -227,10 +230,8 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(false);
         playerGraphics.SetActive(false);
@@ -262,10 +263,8 @@ public class MenuManager : MonoBehaviour
     {
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -278,10 +277,8 @@ public class MenuManager : MonoBehaviour
     {
         startMenu.SetActive(false);
         pauseMenu.SetActive(true);
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -290,26 +287,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenPauseOptions()
-    {
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(true);
-        OpenOptions();
-    }
-
-    public void OpenStartOptions()
-    {
-        optionsStartMenu.SetActive(true);
-        optionsPauseMenu.SetActive(false);
-        OpenOptions();
-    }
-
-    private void OpenOptions()
+    public  void OpenOptions()
     {
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+        controlMenu.SetActive(false);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -318,26 +301,24 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenPauseControl()
+    public void CloseOptions()
     {
-        controlStartMenu.SetActive(true);
-        controlPauseMenu.SetActive(false);
-        OpenControl();
+        if (!menuOpened)
+        {
+            MainMenu();
+        }
+        else
+        {
+            OpenPause();
+        }
     }
 
-    public void OpenStartControl()
-    {
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(true);
-        OpenControl();
-    }
-
-    private void OpenControl()
+    public void OpenControl()
     {
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(true);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -350,10 +331,8 @@ public class MenuManager : MonoBehaviour
     {
         startMenu.SetActive(false);
         pauseMenu.SetActive(false);
-        optionsStartMenu.SetActive(false);
-        optionsPauseMenu.SetActive(false);
-        controlStartMenu.SetActive(false);
-        controlPauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
         UIObject.SetActive(true);
 
         if (secretBool)
@@ -476,11 +455,25 @@ public class MenuManager : MonoBehaviour
         QualitySettings.streamingMipmapsActive = isTextureStreaming;
     }
 
-    public void SetVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
-        currentVolume = volume;
-        volumeText.text = $"{currentVolume + 100}";
+        audioMixer.SetFloat("MasterVolume", volume);
+        currentMasterVolume = volume;
+        masterVolumeText.text = $"{currentMasterVolume + 100}";
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        audioMixer.SetFloat("MusicVolume", volume);
+        currentMusicVolume = volume;
+        musicVolumeText.text = $"{currentMusicVolume + 100}";
+    }
+
+    public void SetSoundFXVolume(float volume)
+    {
+        audioMixer.SetFloat("SoundEffectsVolume", volume);
+        currentSoundFXVolume = volume;
+        soundFXVolumeText.text = $"{currentSoundFXVolume + 100}";
     }
 
     public void SetSecret(bool isSecret)
@@ -502,7 +495,9 @@ public class MenuManager : MonoBehaviour
         //PlayerPrefs.SetInt("SoftParticles", Convert.ToInt32(QualitySettings.softParticles));
         PlayerPrefs.SetInt("RealtimeReflectionProbes", Convert.ToInt32(QualitySettings.realtimeReflectionProbes));
         PlayerPrefs.SetInt("TextureStreaming", Convert.ToInt32(QualitySettings.streamingMipmapsActive));
-        PlayerPrefs.SetFloat("Volume", currentVolume);
+        PlayerPrefs.SetFloat("MasterVolume", currentMasterVolume);
+        PlayerPrefs.SetFloat("MusicVolume", currentMusicVolume);
+        PlayerPrefs.SetFloat("SoundEffectsVolume", currentSoundFXVolume);
     }
 
     public void LoadSettings(int currentResolutionIndex)
@@ -555,10 +550,18 @@ public class MenuManager : MonoBehaviour
         { textureStreamingToggle.SetIsOnWithoutNotify(Convert.ToBoolean(PlayerPrefs.GetInt("TextureStreaming"))); }
         else
         { textureStreamingToggle.SetIsOnWithoutNotify(QualitySettings.streamingMipmapsActive); }
-        if (PlayerPrefs.HasKey("Volume"))
-        { volumeSlider.value = PlayerPrefs.GetFloat("Volume"); }
+        if (PlayerPrefs.HasKey("MasterVolume"))
+        { masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume"); }
         else
-        { volumeSlider.value = currentVolume; }
+        { masterVolumeSlider.value = currentMasterVolume; }
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        { musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume"); }
+        else
+        { musicVolumeSlider.value = currentMusicVolume; }
+        if (PlayerPrefs.HasKey("SoundEffectsVolume"))
+        { soundFXVolumeSlider.value = PlayerPrefs.GetFloat("SoundEffectsVolume"); }
+        else
+        { soundFXVolumeSlider.value = currentSoundFXVolume; }
     }
     #endregion
 
@@ -586,7 +589,31 @@ public class MenuManager : MonoBehaviour
     public void MoonlightUI()
     {
         moonlightFillImage.fillAmount = player.GetComponent<PlayerController>().MoonLight / 100;
-        eclipseText.text = $"{player.GetComponent<PlayerController>().MoonLight}";
+        eclipseText.text = player.GetComponent<PlayerController>().MoonLight.ToString();
+    }
+
+    public void DashUI()
+    {
+        if (player.GetComponent<UnlockTracker>().GetKeyValue("dash"))
+        {
+            dashObject.SetActive(true);
+            dashCooldown += Time.deltaTime;
+
+            if (dashCooldown >= player.GetComponent<PlayerController>().DashCooldown)
+            {
+                dashCooldown = player.GetComponent<PlayerController>().DashCooldown;
+            }
+            if (player.GetComponent<PlayerController>().DashTimer == player.GetComponent<PlayerController>().DashCooldown)
+            {
+                dashCooldown = 0;
+            }
+
+            dashFillImage.fillAmount = dashCooldown / player.GetComponent<PlayerController>().DashCooldown;
+        }
+        else
+        {
+            dashObject.SetActive(false);
+        }
     }
 
     public void EclipseUI()

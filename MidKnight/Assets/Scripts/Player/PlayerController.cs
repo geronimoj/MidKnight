@@ -80,6 +80,14 @@ public class PlayerController : Character
     [SerializeField]
     [Range(0, 100)]
     private float dashCooldown = 0;
+    //For UI
+    public float DashCooldown
+    {
+        get
+        {
+            return dashCooldown;
+        }
+    }
     /// <summary>
     /// How long the players i-Frames last after taking damage
     /// </summary>
@@ -206,6 +214,14 @@ public class PlayerController : Character
     /// The timer for if the player can dash
     /// </summary>
     private float dashTimer = 0;
+    //For UI
+    public float DashTimer
+    {
+        get
+        {
+            return dashTimer;
+        }
+    }
     /// <summary>
     /// Is true if we are allowed to dash
     /// </summary>
