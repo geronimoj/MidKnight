@@ -35,10 +35,19 @@ public class werewolfAttack4 : baseBossAttack
         //change its gravity to make it fall faster
         if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
         {
+            destination.Set(enemyTrans.position.x, arenaDownYCoordinate + 1, enemyTrans.position.z);
+
             gravity = 30;
+
+            if (Vector3.Distance(enemyTrans.position, destination) < 0.2f)
+            {
+                animator.SetTrigger("idle");
+            }
         }
 
         MoveToDestination(destination);  
+
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

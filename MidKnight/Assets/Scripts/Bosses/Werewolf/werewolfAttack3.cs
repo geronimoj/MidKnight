@@ -16,11 +16,18 @@ public class werewolfAttack3 : baseBossAttack
     /// returns true if the werewolf is moving to the right
     /// </summary>
     bool isMovingRight;
+    /// <summary>
+    /// counts the amount of times the destination is reached
+    /// </summary>
+    int count;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
+
+        //set count to 0
+        count = 0;
 
         //change its speed when its in phase 2
         if (animator.GetComponent<Enemy>().isPhase2)
@@ -47,13 +54,21 @@ public class werewolfAttack3 : baseBossAttack
         //when it reaches its destination switch it once
         if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
         {
-            if (isMovingRight)
+            if (count == 0)
             {
-                destination.Set(arenaRightXCoordinate / 2, enemyTrans.position.y -5f, enemyTrans.position.z);
+                if (isMovingRight)
+                {
+                    destination.Set(arenaRightXCoordinate / 2, enemyTrans.position.y - 5f, enemyTrans.position.z);
+                }
+                else
+                {
+                    destination.Set(arenaLeftXCoordinate / 2, enemyTrans.position.y - 5f, enemyTrans.position.z);
+                }
+                count++;
             }
-            else
+            else if (count == 1)
             {
-                destination.Set(arenaLeftXCoordinate / 2, enemyTrans.position.y - 5f, enemyTrans.position.z);
+                animator.SetTrigger("idle");
             }
         }
 

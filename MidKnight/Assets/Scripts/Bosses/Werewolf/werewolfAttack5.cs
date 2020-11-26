@@ -22,10 +22,11 @@ public class werewolfAttack5 : baseBossAttack
     {
         MoveToDestination(destination);
 
-        if(Vector3.Distance(enemyTrans.position, destination) < 0.2f)
+        if(Vector3.Distance(enemyTrans.position, destination) < 0.1f)
         {
             animator.SetTrigger("idle");
         }
+
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

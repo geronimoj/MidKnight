@@ -59,7 +59,8 @@ public class kingRatAttack2 : baseBossAttack
         for (int i = 0; i < noOfRocks; i++)
         {
             spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
-            Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            GameObject rocks = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            rocks.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         }
     }
 

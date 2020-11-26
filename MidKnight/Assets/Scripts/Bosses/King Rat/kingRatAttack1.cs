@@ -30,13 +30,10 @@ public class kingRatAttack1 : baseBossAttack
         {
             hasUsedMove = true;
 
-            //spawn 2 rats
-            for (int i = 0; i < 2; i++)
-            {
-                spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
-
-                Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
-            }
+            //spawn a rat
+            spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaUpYCoordinate), arenaUpYCoordinate - 1f, enemyTrans.position.z);
+            GameObject rat = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            rat.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
     }
 
