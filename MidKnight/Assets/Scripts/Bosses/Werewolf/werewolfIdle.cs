@@ -61,7 +61,7 @@ public class werewolfIdle : baseBossIdle
         MoveToDestination(destination);
 
         //use its move at the end of the arena
-        if (Vector3.Distance(destination, enemyTrans.position) < 0.2f)
+        if (Vector3.Distance(destination, enemyTrans.position) < 2f)
         {
             switch (moveToUse)
             {
