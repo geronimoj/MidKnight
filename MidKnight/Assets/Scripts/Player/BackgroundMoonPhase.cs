@@ -10,12 +10,12 @@ public class BackgroundMoonPhase : MonoBehaviour
     public Material fullMoon;
     private GameObject player;
 
-    void Start()
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void Update()
+    public void SwapPhaseMaterial()
     {
         if (player.GetComponent<PhaseManager>().CurrentPhase.phaseID.ToLower() == "new moon")
         {
