@@ -174,11 +174,15 @@ public class MenuManager : MonoBehaviour
         StartGame();
         bool LoadSucceed;
         Debug.Log("Load Binary Default: " + (SM.Load(true, true, "default.bin") ? LoadSucceed = true : LoadSucceed = false));
-        if (!LoadSucceed) { Debug.Log("Load Text Default: " + SM.Load(false, true, "default.bin")); }
+        if (!LoadSucceed) { Debug.Log("Load Text Default: " + (SM.Load(false, true, "default.bin") ? LoadSucceed = true : LoadSucceed = false)); }
+        if (!LoadSucceed) { Debug.Log("Load Failed: Returning to menu."); MainMenu(); Time.timeScale = 1; }
 
         ScreenFade.ScreenFader.FadeOut();
         while (!ScreenFade.ScreenFader.FadeFinished())
             yield return null;
+
+        if(!LoadSucceed)
+        { Time.timeScale = 0; }
     }
 
     public void Continue()
@@ -196,11 +200,15 @@ public class MenuManager : MonoBehaviour
         StartGame();
         bool LoadSucceed;
         Debug.Log("Load Binary: " + (SM.Load(true, true) ? LoadSucceed = true : LoadSucceed = false));
-        if (!LoadSucceed) { Debug.Log("Load Text: " + SM.Load(false, true)); }
+        if (!LoadSucceed) { Debug.Log("Load Text: " + (SM.Load(false, true) ? LoadSucceed = true : LoadSucceed = false)); }
+        if (!LoadSucceed) { Debug.Log("Load Failed: Returning to menu."); MainMenu(); Time.timeScale = 1; }
 
         ScreenFade.ScreenFader.FadeOut();
         while (!ScreenFade.ScreenFader.FadeFinished())
             yield return null;
+
+        if (!LoadSucceed)
+        { Time.timeScale = 0; }
     }
 
     public void StartGame()
