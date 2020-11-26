@@ -33,6 +33,7 @@ public class EnemyHitbox : MonoBehaviour
             player.SetKnockBackDirection(player.transform.position - enemy.transform.position);
             player.TakeDamage(enemy.damage);
             Debug.Log("Enemy did damage");
+            enemy.Audio.PlayOneShot(enemy.attackAudio);
         }
     }
 }
