@@ -3,16 +3,16 @@
 public class Unlockable : MonoBehaviour
 {
     [SerializeField]
-    private string[] powerUP = { "new moon" };
+    protected string[] powerUP = { "new moon" };
     [SerializeField]
     private EntitiesManager EM;
 
-    private void Start()
+    protected void Start()
     {
         EM = FindObjectOfType<EntitiesManager>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         //Make sure the player is the one that touched it
         if (other.CompareTag("Player"))

@@ -214,7 +214,7 @@ public class SavingManager : MonoBehaviour
                         {
                             if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
                             {
-                                player.GetComponent<PhaseManager>().KnownPhases[i] = player.GetComponent<PhaseManager>().everyMoonPhase[e];
+                                player.GetComponent<PhaseManager>().KnownPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
                                 break;
                             }
                         }
@@ -354,7 +354,7 @@ public class SavingManager : MonoBehaviour
         player.TakeDamage(-player.GetComponent<PlayerController>().MaxHealth);
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
         player.enabled = false;
-        //Debug.Log("Save Text: " + SM.Save());
+        Debug.Log("Save Text: " + Save());
         Debug.Log("Save Binary: " + Save(true));
     }
 
