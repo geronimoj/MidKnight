@@ -41,12 +41,13 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   speed: 0
   startTimeTillAtk: 0.5
-  attack: {fileID: 6868960977462822073, guid: 49c8a8f2defc13e45af40df73a9e4205, type: 3}
+  attack: {fileID: 721694928917309804, guid: 973a68598b9ebed43b3a6124deaa6cc7, type: 3}
   arenaUpYCoordinate: 25
   arenaDownYCoordinate: 7
   arenaLeftXCoordinate: -21
   arenaRightXCoordinate: 21
   gravity: 0
+  invertOrientation: 0
   sonicWaveSpeed: 15
   sonicWaveSize: 3
   startTimeTillAtk5: 1
@@ -78,6 +79,7 @@ MonoBehaviour:
   maxStartTimeTillAtk: 0
   speed: 10
   gravity: 0
+  invertOrientation: 0
   arenaUpYCoordinate: 5
   arenaDownYCoordinate: 3
   arenaLeftXCoordinate: -21
@@ -215,12 +217,13 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   speed: 0
   startTimeTillAtk: 1.5
-  attack: {fileID: 6868960977462822073, guid: 49c8a8f2defc13e45af40df73a9e4205, type: 3}
+  attack: {fileID: 721694928917309804, guid: 973a68598b9ebed43b3a6124deaa6cc7, type: 3}
   arenaUpYCoordinate: 15
   arenaDownYCoordinate: 7
   arenaLeftXCoordinate: -21
   arenaRightXCoordinate: 21
   gravity: 0
+  invertOrientation: 0
   sonicWaveSpeed: 15
   sonicWaveSize: 3
 --- !u!1102 &-5474119227638300698
@@ -382,6 +385,7 @@ MonoBehaviour:
   arenaLeftXCoordinate: -21
   arenaRightXCoordinate: 21
   gravity: 0
+  invertOrientation: 0
   noOfRocks: 15
 --- !u!1101 &-2419291690076521345
 AnimatorStateTransition:
@@ -610,6 +614,7 @@ MonoBehaviour:
   arenaLeftXCoordinate: -21
   arenaRightXCoordinate: 21
   gravity: 0
+  invertOrientation: 0
   noOfSonicWaves: 0
 --- !u!1101 &813735572072878173
 AnimatorStateTransition:
@@ -713,6 +718,7 @@ MonoBehaviour:
   arenaLeftXCoordinate: -21
   arenaRightXCoordinate: 21
   gravity: 0
+  invertOrientation: 0
 --- !u!1101 &2637899828260199744
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -871,6 +877,7 @@ MonoBehaviour:
   arenaLeftXCoordinate: -21
   arenaRightXCoordinate: 21
   gravity: 0
+  invertOrientation: 0
 --- !u!1101 &4457318792900860080
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
