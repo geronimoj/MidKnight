@@ -40,7 +40,7 @@ public class kingRatAttack3 : baseBossAttack
             }
 
             GameObject laser = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
-            laser.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            laser.transform.localScale = new Vector3(0.1f, 0.25f, 0.1f);
         }
     }
 

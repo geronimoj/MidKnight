@@ -36,7 +36,7 @@ public class kingRatAttack2 : baseBossAttack
         }
         else if(!hasUsedMove)
         {
-            if(isFacingRight())
+            if(!isFacingRight())
             {
                 destination.Set(arenaRightXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
             }
