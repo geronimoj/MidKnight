@@ -49,7 +49,7 @@ public class skeletonKingAtk4 : baseBossAttack
         {
             hasUsedMove = true;
             GameObject barrier = Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
-            barrier.GetComponent<Transform>().localScale = new Vector3(barrierRadius, barrierRadius, barrierRadius);
+            barrier.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
     }
 

@@ -23,7 +23,7 @@ public class SkeletonKingLaserStorage : basePrefab
     /// <summary>
     /// the max radius the sphere will reach
     /// </summary>
-    public int maxRadius;
+    public float maxRadius;
     /// <summary>
     /// returns true if it's spawned lsaer
     /// </summary>
@@ -101,11 +101,11 @@ public class SkeletonKingLaserStorage : basePrefab
 
                     if(playerTrans.position.x < 0)
                     {
-                        laserZRotation = (0.047f * Mathf.Pow(playerTrans.position.x, 2)) + 3.3f * playerTrans.position.x + 270;
+                        laserZRotation = (-0.0542f * Mathf.Pow(playerTrans.position.x, 2)) - 3.45f * playerTrans.position.x + 269;
                     }
                     else
                     {
-                        laserZRotation = -(0.047f * Mathf.Pow(playerTrans.position.x, 2)) + 3.3f * playerTrans.position.x + 270;
+                        laserZRotation = -(-0.0542f * Mathf.Pow(playerTrans.position.x, 2)) - 3.45f * playerTrans.position.x + 269;
                     }
                     timeBetweenAttacks = startTimeBetweenAttacks;
                 }
@@ -117,7 +117,7 @@ public class SkeletonKingLaserStorage : basePrefab
                     timeBetweenAttacks = startTimeBetweenAttacks;
                     count++;
 
-                    Instantiate(laser, prefabTrans.position, Quaternion.Euler(0, 0, laserZRotation));
+                    Instantiate(laser, prefabTrans.position, Quaternion.Euler(laserZRotation, 90, 0));
                 }
             }
             else

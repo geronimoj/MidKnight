@@ -34,7 +34,16 @@ public class skeletonKingAtk6 : baseBossAttack
         }
         else if(!hasUsedMove)
         {
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
+            if(isFacingRight())
+            {
+                GameObject laser = Instantiate(attack, new Vector3(enemyTrans.position.x + 4, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation, enemyTrans.parent);
+                laser.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            }
+            else
+            {
+                GameObject laser = Instantiate(attack, new Vector3(enemyTrans.position.x - 4, enemyTrans.position.y + 2, enemyTrans.position.z), enemyTrans.rotation, enemyTrans.parent);
+                laser.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            }
             hasUsedMove = true;
         }
     }
