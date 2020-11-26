@@ -52,7 +52,8 @@ public class Attack : ScriptableObject
         {
             complete = false;
             targetsHit.Clear();
-            OnStart.Invoke();
+            if (OnStart != null)
+                OnStart.Invoke();
         }
         //Make sure deltaTime is consitent
         float f = Time.deltaTime;
@@ -87,7 +88,8 @@ public class Attack : ScriptableObject
         //Has the attack finished?
         if (timer >= duration)
         {
-            OnEnd.Invoke();
+            if (OnEnd != null)
+                OnEnd.Invoke();
             complete = true;
             timer = 0;
         }

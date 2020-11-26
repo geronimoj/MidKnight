@@ -34,8 +34,7 @@ namespace Tests
         public IEnumerator Player_Static_Assign()
         {
             Debug.Assert(PlayerController.Player == null);
-
-            PlayerController player = CreatePlayer();
+            CreatePlayer();
             yield return null;
 
             Debug.Assert(PlayerController.Player != null);
@@ -64,7 +63,7 @@ namespace Tests
             Debug.Assert(Approximate(player.transform.position.x, dash.distance, 0.5f));
         }
 
-        private PlayerController CreatePlayer()
+        public static PlayerController CreatePlayer()
         {
             GameObject manager = GameObject.Instantiate(new GameObject());
             manager.tag = "GameManager";
