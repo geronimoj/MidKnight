@@ -51,6 +51,7 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 0
+  invertOrientation: 0
   atk: {fileID: 6868960977462822073, guid: 49c8a8f2defc13e45af40df73a9e4205, type: 3}
 --- !u!1101 &-5672233323385937940
 AnimatorStateTransition:
@@ -97,6 +98,7 @@ MonoBehaviour:
   yUpVisionRange: 1
   yDownVisionRange: 10
   gravity: 0
+  invertOrientation: 0
 --- !u!1102 &-4706565073894906109
 AnimatorState:
   serializedVersion: 5
@@ -257,6 +259,7 @@ MonoBehaviour:
   yUpVisionRange: 100
   yDownVisionRange: 100
   gravity: 0
+  invertOrientation: 0
   isLargeBat: 1
   distFromPlayerToAtk: 5
 --- !u!1101 &-610291335987975034
@@ -298,31 +301,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: death
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attack1
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: attack2
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: idle
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -440,3 +443,4 @@ MonoBehaviour:
   playerTrans: {fileID: 0}
   destination: {x: 0, y: 0, z: 0}
   speed: 15
+  invertOrientation: 0

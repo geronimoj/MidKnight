@@ -14,18 +14,6 @@ public class meleeSkeletonIdle : baseEnemyIdle
     /// <summary>
     /// the minimum start time it takes for the skeleton to walk
     /// </summary>
-    public float minStartTimeTillWalk;
-    /// <summary>
-    /// the maximum start time it takes for the skeleton to walk
-    /// </summary>
-    public float maxStartTimeTillWalk;
-    /// <summary>
-    /// a random time taken from the minimum and maximum for the skeleton to walk
-    /// </summary>
-    float timeTillWalk;
-    /// <summary>
-    /// returns true if he has chosen to walk
-    /// </summary>
     bool hasChosenWalk;
     /// <summary>
     /// the maximum distance for the skeleton to walk
@@ -85,14 +73,9 @@ public class meleeSkeletonIdle : baseEnemyIdle
         //if the player isnt in vision, walk randomly
         else if(!hasChosenWalk)
         {
-            timeTillWalk = Random.Range(minStartTimeTillWalk, maxStartTimeTillWalk);
             distToWalk = Random.Range(-maxDistToWalk, maxDistToWalk);
             destination.Set(enemyTrans.position.x + distToWalk, enemyTrans.position.y, enemyTrans.position.z);
             hasChosenWalk = true;
-        }
-        else if(timeTillWalk > 0)
-        {
-            timeTillWalk -= Time.deltaTime;
         }
         else
         {
@@ -115,7 +98,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
             }
 
             //choose somewhere else to walk after reaching its destination
-            if (enemyTrans.position == destination)
+            if (Vector3.Distance(enemyTrans.position, destination) < 1f) 
             {
                 hasChosenWalk = false;
             }

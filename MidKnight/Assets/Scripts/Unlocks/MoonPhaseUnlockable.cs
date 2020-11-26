@@ -24,15 +24,15 @@ public class MoonPhaseUnlockable : Unlockable
             }
             else if (powerUP.ToLower() == "half moon")
             {
-                player.GetComponent<PhaseManager>().swapToIndex = 0;
+                player.GetComponent<PhaseManager>().swapToIndex = 1;
             }
             else if (powerUP.ToLower() == "crescent")
             {
-                player.GetComponent<PhaseManager>().swapToIndex = 0;
+                player.GetComponent<PhaseManager>().swapToIndex = 2;
             }
             else if (powerUP.ToLower() == "full moon")
             {
-                player.GetComponent<PhaseManager>().swapToIndex = 0;
+                player.GetComponent<PhaseManager>().swapToIndex = 3;
             }
         }
     }

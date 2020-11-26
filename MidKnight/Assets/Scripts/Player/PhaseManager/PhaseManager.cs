@@ -94,6 +94,8 @@ public class PhaseManager : MonoBehaviour
             return current;
         }
     }
+    //For Background Moon
+    public BackgroundMoonPhase BMP;
 
     public void Start()
     {
@@ -218,6 +220,8 @@ public class PhaseManager : MonoBehaviour
         //Add the phase to the list of known phases if its not already there
         if (!knownPhases.Contains(current))
             knownPhases.Add(current);
+
+        BMP.SwapPhaseMaterial();
     }
     /// <summary>
     /// Returns true if the string given matches the phase ID of the current phase

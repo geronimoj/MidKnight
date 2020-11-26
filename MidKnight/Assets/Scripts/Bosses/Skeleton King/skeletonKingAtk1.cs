@@ -12,10 +12,7 @@ public class skeletonKingAtk1 : baseBossAttack
     /// the start time till attack in phase 2
     /// </summary>
     public float phase2StartTimeTillAtk;
-    /// <summary>
-    /// the height of the laser beams
-    /// </summary>
-    public int laserBeamHeight;
+
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -40,9 +37,21 @@ public class skeletonKingAtk1 : baseBossAttack
         {
             hasUsedMove = true;
 
-            GameObject laserBeam = Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
-            laserBeam.GetComponent<Transform>().localScale = new Vector3(laserBeamHeight, laserBeamHeight, laserBeamHeight);
-            laserBeam.GetComponentInChildren<basePrefab>().damage = 2;
+            if(PlayerOnRight())
+            {
+                Vector3 spawnPos = new Vector3(enemyTrans.position.x + 4, enemyTrans.position.y + 4, enemyTrans.position.z);
+                GameObject laserBeam = Instantiate(attack, spawnPos, Quaternion.Euler(180, 90, 0), enemyTrans.parent);
+                laserBeam.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.1f, 0.05f);
+                laserBeam.GetComponentInChildren<basePrefab>().damage = 2;
+            }
+            else
+            {
+                Vector3 spawnPos = new Vector3(enemyTrans.position.x - 4, enemyTrans.position.y + 4, enemyTrans.position.z);
+                GameObject laserBeam = Instantiate(attack, spawnPos, Quaternion.Euler(0, 90, 0), enemyTrans.parent);
+                laserBeam.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.1f, 0.05f);
+                laserBeam.GetComponentInChildren<basePrefab>().damage = 2;
+            }
+
         }
     }
 
