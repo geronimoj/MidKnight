@@ -64,6 +64,7 @@ public class SavingManager : MonoBehaviour
             BinaryWriter writer = new BinaryWriter(File.OpenWrite(filename));
             writer.Write("Player");
             writer.Write(player.MaxHealth);
+            writer.Write(player.MoonLight);
             writer.Write(currentRestPoint);
             writer.Write(player.GetComponent<PhaseManager>().KnownPhases.Count);
 
@@ -110,6 +111,7 @@ public class SavingManager : MonoBehaviour
             StreamWriter writer = new StreamWriter(filename);
             writer.WriteLine("Player");
             writer.WriteLine(player.MaxHealth);
+            writer.WriteLine(player.MoonLight);
             writer.WriteLine(currentRestPoint);
             writer.WriteLine(player.GetComponent<PhaseManager>().KnownPhases.Count);
 
@@ -165,7 +167,7 @@ public class SavingManager : MonoBehaviour
         {
             result = LoadTxt(filename);
         }
-        if (instantiate)
+        if (instantiate && result)
         {
             RestPoints[currentRestPoint].thisRoom.InstantiateRoom(ref GM);
             player.GetComponent<CharacterController>().enabled = false;
@@ -176,21 +178,26 @@ public class SavingManager : MonoBehaviour
         return result;
     }
 
-    public bool LoadDefaultBinary()
-    {
-        return LoadBinary("default.bin");
-    }
-
-    public bool LoadDefaultTxt()
-    {
-        return LoadBinary("default.txt");
-    }
-
     private bool LoadBinary(string filename)
     {
+        int tempMaxHealth = 4;
+        int tempEndMaxHealth = 4;
+        float tempMoonlight = 100;
+        float tempEndMoonlight = 100;
+        int tempRestPoint = 0;
+        int tempEndRestPoint = 0;
+        List<MoonPhase> tempEndKnownPhases = new List<MoonPhase>();
+        List<Entities> tempEndEntities = new List<Entities>();
+        int tempHealthAdd = 0;
+        int tempEndHealthAdd = 0;
+        int tempEclipseAdd = 0;
+        int tempEndEclipseAdd = 0;
+        Dictionary<string, bool> tempEndUnlocks = new Dictionary<string, bool>();
+
         try
         {
             BinaryReader reader = new BinaryReader(File.OpenRead(filename));
+            List<MoonPhase> tempKnownPhases = new List<MoonPhase>();
             List<Entities> tempEntities = new List<Entities>();
             Dictionary<string, bool> tempUnlocks = new Dictionary<string, bool>();
             bool done = false;
@@ -201,10 +208,9 @@ public class SavingManager : MonoBehaviour
 
                 if (readLine == "Player")
                 {
-                    player.SetMaxHealth = reader.ReadInt32();
-                    player.TakeDamage(-player.MaxHealth);
-                    player.MoonLight = 0;
-                    currentRestPoint = reader.ReadInt32();
+                    tempMaxHealth = reader.ReadInt32();
+                    tempMoonlight = reader.ReadInt32();
+                    tempRestPoint = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
                     for (int i = 0; i < count; i++)
@@ -215,7 +221,7 @@ public class SavingManager : MonoBehaviour
                         {
                             if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
                             {
-                                player.GetComponent<PhaseManager>().KnownPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
+                                tempKnownPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
                                 break;
                             }
                         }
@@ -228,53 +234,116 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
-
-                        EM.EntitiesToNeverRespawn.Add(tempEntity);
-                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
-                    }
-
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-
-                    foreach (Entities entity in tempEntities)
-                    {
-                        EM.EntitiesToNeverRespawn.Add(entity);
-                        EM.EntitiesToNotRespawnUntillRest.Add(entity);
+                        tempEntities.Add(tempEntity);
                     }
                 }
                 else if (readLine == "Unlocks")
                 {
-                    player.GetComponent<UnlockTracker>().HealthAdd = reader.ReadInt32();
-                    player.GetComponent<UnlockTracker>().EclipseAdd = reader.ReadInt32();
+                    tempHealthAdd = reader.ReadInt32();
+                    tempEclipseAdd = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
                     for (int i = 0; i < count; i++)
                     {
                         tempUnlocks.Add(reader.ReadString(), reader.ReadBoolean());
                     }
-
-                    player.GetComponent<UnlockTracker>().unlocks.Clear();
-                    player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                     done = true;
                 }
             }
 
+            foreach (MoonPhase phase in player.GetComponent<PhaseManager>().KnownPhases)
+            {
+                tempEndKnownPhases.Add(phase);
+            }
+            foreach (Entities entity in EM.EntitiesToNeverRespawn)
+            {
+                tempEndEntities.Add(entity);
+            }
+            foreach (KeyValuePair<string, bool> KVPSB in player.GetComponent<UnlockTracker>().unlocks)
+            {
+                tempEndUnlocks.Add(KVPSB.Key, KVPSB.Value);
+            }
+
+            tempEndMaxHealth = player.GetComponent<PlayerController>().MaxHealth;
+            tempEndMoonlight = player.GetComponent<PlayerController>().MoonLight;
+            tempEndRestPoint = GM.GetComponent<SavingManager>().currentRestPoint;
+            tempEndHealthAdd = player.GetComponent<UnlockTracker>().HealthAdd;
+            tempEndEclipseAdd = player.GetComponent<UnlockTracker>().EclipseAdd;
+            player.GetComponent<PhaseManager>().KnownPhases.Clear();
+            EM.EntitiesToNeverRespawn.Clear();
+            EM.EntitiesToNotRespawnUntillRest.Clear();
+            player.GetComponent<UnlockTracker>().unlocks.Clear();
+
+            foreach (MoonPhase phase in tempKnownPhases)
+            {
+                player.GetComponent<PhaseManager>().KnownPhases.Add(phase);
+            }
+            foreach (Entities entity in tempEntities)
+            {
+                EM.EntitiesToNeverRespawn.Add(entity);
+                EM.EntitiesToNotRespawnUntillRest.Add(entity);
+            }
+            foreach (KeyValuePair<string, bool> KVPSB in tempUnlocks)
+            {
+                player.GetComponent<UnlockTracker>().unlocks.Add(KVPSB.Key, KVPSB.Value);
+            }
+
+            player.GetComponent<PlayerController>().SetMaxHealth = tempMaxHealth;
+            player.TakeDamage(-player.MaxHealth);
+            player.GetComponent<PlayerController>().MoonLight = tempMoonlight;
+            currentRestPoint = tempRestPoint;
+            player.GetComponent<UnlockTracker>().HealthAdd = tempHealthAdd;
+            player.GetComponent<UnlockTracker>().EclipseAdd = tempEclipseAdd;
             reader.Close();
             return true;
         }
         catch (IOException ioe)
         {
-            Debug.LogError($"Load failed: {ioe.Message}, Loading Default.");
-            return LoadDefaultBinary();
+            foreach (MoonPhase phase in tempEndKnownPhases)
+            {
+                player.GetComponent<PhaseManager>().KnownPhases.Add(phase);
+            }
+            foreach (Entities entity in tempEndEntities)
+            {
+                EM.EntitiesToNeverRespawn.Add(entity);
+                EM.EntitiesToNotRespawnUntillRest.Add(entity);
+            }
+            foreach (KeyValuePair<string, bool> KVPSB in tempEndUnlocks)
+            {
+                player.GetComponent<UnlockTracker>().unlocks.Add(KVPSB.Key, KVPSB.Value);
+            }
+
+            player.GetComponent<PlayerController>().SetMaxHealth = tempEndMaxHealth;
+            player.TakeDamage(-player.MaxHealth);
+            player.GetComponent<PlayerController>().MoonLight = tempEndMoonlight;
+            currentRestPoint = tempEndRestPoint;
+            player.GetComponent<UnlockTracker>().HealthAdd = tempEndHealthAdd;
+            player.GetComponent<UnlockTracker>().EclipseAdd = tempEndEclipseAdd;
+            Debug.LogError($"Load failed: {ioe.Message}.");
+            return false;
         }
     }
 
     private bool LoadTxt(string filename)
     {
+        int tempMaxHealth = 4;
+        int tempEndMaxHealth = 4;
+        float tempMoonlight = 100;
+        float tempEndMoonlight = 100;
+        int tempRestPoint = 0;
+        int tempEndRestPoint = 0;
+        List<MoonPhase> tempEndKnownPhases = new List<MoonPhase>();
+        List<Entities> tempEndEntities = new List<Entities>();
+        int tempHealthAdd = 0;
+        int tempEndHealthAdd = 0;
+        int tempEclipseAdd = 0;
+        int tempEndEclipseAdd = 0;
+        Dictionary<string, bool> tempEndUnlocks = new Dictionary<string, bool>();
+
         try
         {
             StreamReader reader = new StreamReader(filename);
-            List<MoonPhase> tempMoonPhases = new List<MoonPhase>();
+            List<MoonPhase> tempKnownPhases = new List<MoonPhase>();
             List<Entities> tempEntities = new List<Entities>();
             Dictionary<string, bool> tempUnlocks = new Dictionary<string, bool>();
 
@@ -284,10 +353,9 @@ public class SavingManager : MonoBehaviour
 
                 if (readLine == "Player")
                 {
-                    player.SetMaxHealth = int.Parse(reader.ReadLine());
-                    player.TakeDamage(-player.MaxHealth);
-                    player.MoonLight = 0;
-                    currentRestPoint = int.Parse(reader.ReadLine());
+                    tempMaxHealth = int.Parse(reader.ReadLine());
+                    tempMoonlight = int.Parse(reader.ReadLine());
+                    tempRestPoint = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
                     for (int i = 0; i < count; i++)
@@ -298,14 +366,11 @@ public class SavingManager : MonoBehaviour
                         {
                             if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
                             {
-                                tempMoonPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
+                                tempKnownPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
                                 break;
                             }
                         }
                     }
-
-                    player.GetComponent<PhaseManager>().KnownPhases.Clear();
-                    player.GetComponent<PhaseManager>().KnownPhases = tempMoonPhases;
                 }
                 else if (readLine == "EntitiesToNeverRespawn")
                 {
@@ -314,43 +379,92 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
-
-                        EM.EntitiesToNeverRespawn.Add(tempEntity);
-                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
-                    }
-
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-
-                    foreach (Entities entity in tempEntities)
-                    {
-                        EM.EntitiesToNeverRespawn.Add(entity);
-                        EM.EntitiesToNotRespawnUntillRest.Add(entity);
+                        tempEntities.Add(tempEntity);
                     }
                 }
                 else if (readLine == "Unlocks")
                 {
-                    player.GetComponent<UnlockTracker>().HealthAdd = int.Parse(reader.ReadLine());
-                    player.GetComponent<UnlockTracker>().EclipseAdd = int.Parse(reader.ReadLine());
+                    tempHealthAdd = int.Parse(reader.ReadLine());
+                    tempEclipseAdd = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
                     for (int i = 0; i < count; i++)
                     {
                         tempUnlocks.Add(reader.ReadLine(), bool.Parse(reader.ReadLine()));
                     }
-
-                    player.GetComponent<UnlockTracker>().unlocks.Clear();
-                    player.GetComponent<UnlockTracker>().unlocks = tempUnlocks;
                 }
             }
 
+            foreach (MoonPhase phase in player.GetComponent<PhaseManager>().KnownPhases)
+            {
+                tempEndKnownPhases.Add(phase);
+            }
+            foreach (Entities entity in EM.EntitiesToNeverRespawn)
+            {
+                tempEndEntities.Add(entity);
+            }
+            foreach (KeyValuePair<string, bool> KVPSB in player.GetComponent<UnlockTracker>().unlocks)
+            {
+                tempEndUnlocks.Add(KVPSB.Key, KVPSB.Value);
+            }
+
+            tempEndMaxHealth = player.GetComponent<PlayerController>().MaxHealth;
+            tempEndMoonlight = player.GetComponent<PlayerController>().MoonLight;
+            tempEndRestPoint = GM.GetComponent<SavingManager>().currentRestPoint;
+            tempEndHealthAdd = player.GetComponent<UnlockTracker>().HealthAdd;
+            tempEndEclipseAdd = player.GetComponent<UnlockTracker>().EclipseAdd;
+            player.GetComponent<PhaseManager>().KnownPhases.Clear();
+            EM.EntitiesToNeverRespawn.Clear();
+            EM.EntitiesToNotRespawnUntillRest.Clear();
+            player.GetComponent<UnlockTracker>().unlocks.Clear();
+
+            foreach (MoonPhase phase in tempKnownPhases)
+            {
+                player.GetComponent<PhaseManager>().KnownPhases.Add(phase);
+            }
+            foreach (Entities entity in tempEntities)
+            {
+                EM.EntitiesToNeverRespawn.Add(entity);
+                EM.EntitiesToNotRespawnUntillRest.Add(entity);
+            }
+            foreach (KeyValuePair<string, bool> KVPSB in tempUnlocks)
+            {
+                player.GetComponent<UnlockTracker>().unlocks.Add(KVPSB.Key, KVPSB.Value);
+            }
+
+            player.GetComponent<PlayerController>().SetMaxHealth = tempMaxHealth;
+            player.TakeDamage(-player.MaxHealth);
+            player.GetComponent<PlayerController>().MoonLight = tempMoonlight;
+            currentRestPoint = tempRestPoint;
+            player.GetComponent<UnlockTracker>().HealthAdd = tempHealthAdd;
+            player.GetComponent<UnlockTracker>().EclipseAdd = tempEclipseAdd;
             reader.Close();
             return true;
         }
         catch (IOException ioe)
         {
-            Debug.LogError($"Load failed: {ioe.Message}, Loading Default.");
-            return LoadDefaultTxt();
+            foreach (MoonPhase phase in tempEndKnownPhases)
+            {
+                player.GetComponent<PhaseManager>().KnownPhases.Add(phase);
+            }
+            foreach (Entities entity in tempEndEntities)
+            {
+                EM.EntitiesToNeverRespawn.Add(entity);
+                EM.EntitiesToNotRespawnUntillRest.Add(entity);
+            }
+            foreach (KeyValuePair<string, bool> KVPSB in tempEndUnlocks)
+            {
+                player.GetComponent<UnlockTracker>().unlocks.Add(KVPSB.Key, KVPSB.Value);
+            }
+
+            player.GetComponent<PlayerController>().SetMaxHealth = tempEndMaxHealth;
+            player.TakeDamage(-player.MaxHealth);
+            player.GetComponent<PlayerController>().MoonLight = tempEndMoonlight;
+            currentRestPoint = tempEndRestPoint;
+            player.GetComponent<UnlockTracker>().HealthAdd = tempEndHealthAdd;
+            player.GetComponent<UnlockTracker>().EclipseAdd = tempEndEclipseAdd;
+            Debug.LogError($"Load failed: {ioe.Message}.");
+            return false;
         }
     }
 
