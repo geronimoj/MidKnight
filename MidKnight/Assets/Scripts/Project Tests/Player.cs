@@ -64,7 +64,7 @@ namespace Tests
             Debug.Assert(Approximate(player.transform.position.x, dash.distance, 0.5f));
         }
 
-        private PlayerController CreatePlayer()
+        public static PlayerController CreatePlayer()
         {
             GameObject manager = GameObject.Instantiate(new GameObject());
             manager.tag = "GameManager";

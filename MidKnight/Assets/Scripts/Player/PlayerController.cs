@@ -665,6 +665,9 @@ public class PlayerController : Character
             flashTimer -= Time.deltaTime;
 
         SkinnedMeshRenderer smr;
+
+        if (animator.transform.childCount == 0)
+            return;
         //Loop over the children and set the alpha to the expected value. We subtract one to avoid touching the sword
         for (int i = 0; i < animator.transform.GetChild(0).childCount - 1; i++)
         {
