@@ -34,8 +34,7 @@ namespace Tests
         public IEnumerator Player_Static_Assign()
         {
             Debug.Assert(PlayerController.Player == null);
-
-            PlayerController player = CreatePlayer();
+            CreatePlayer();
             yield return null;
 
             Debug.Assert(PlayerController.Player != null);

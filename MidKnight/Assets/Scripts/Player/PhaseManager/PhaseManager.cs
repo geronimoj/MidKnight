@@ -116,7 +116,7 @@ public class PhaseManager : MonoBehaviour
         //Increment the timer
         timer += Time.deltaTime;
 #endif  //Perform the custom functions for eclipse mode
-        if (stepToEclipse >= swapsTillEclipse && Input.GetAxis("Eclipse") != 0)
+        if (stepToEclipse >= swapsTillEclipse && Input.GetAxis("Eclipse") != 0 || inEclipse)
             EclipseMode(ref c);
         else
             CyclePhase(ref c);
@@ -183,7 +183,7 @@ public class PhaseManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     public void SwapPhase(MoonPhase target, ref PlayerController c)
     {   //Make sure the target is valid vand we can swap to it
-        if (cooldownTimer > 0 || target == null || target.OnCooldown)
+        if ((cooldownTimer > 0 || target == null || target.OnCooldown) && !CorrectPhase("Eclipse"))
             return;
         //Set the cooldown timer
         cooldownTimer = swapCooldown;
@@ -207,10 +207,12 @@ public class PhaseManager : MonoBehaviour
         current = target;
         if (OnSwap != null)
             OnSwap.Invoke();
-        //Enter
-        current.PhaseEnter(ref c);
-        current.OnEnter.Invoke();
 
+        if (current != null)
+        {   //Enter
+            current.PhaseEnter(ref c);
+            current.OnEnter.Invoke();
+        }
         if (knownPhases == null)
             knownPhases = new List<MoonPhase>();
         //Add the phase to the list of known phases if its not already there
@@ -350,7 +352,7 @@ public class PhaseManager : MonoBehaviour
     /// The Start function for Eclipse
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public void EnterEclipse(ref PlayerController c)
+    private void EnterEclipse(ref PlayerController c)
     {
         inEclipse = true;
         eclipseTimer = eclipseDuration;
@@ -361,7 +363,7 @@ public class PhaseManager : MonoBehaviour
     /// The Exit function for Eclipse
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public void ExitEclipse(ref PlayerController c)
+    private void ExitEclipse(ref PlayerController c)
     {
         SwapPhase(previous, ref c);
         inEclipse = false;
