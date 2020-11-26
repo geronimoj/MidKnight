@@ -25,7 +25,9 @@ public class kingRatAttack3 : baseBossAttack
         {
             hasUsedMove = true;
 
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
+            Vector3 spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 3, enemyTrans.position.z);
+            GameObject laser = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            laser.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         }
     }
 

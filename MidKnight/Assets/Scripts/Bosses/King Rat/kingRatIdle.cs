@@ -32,6 +32,8 @@ public class kingRatIdle : baseBossIdle
             moveToUse = 5;
             hasUsedBossMove2 = true;
         }
+
+        moveToUse = 3;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

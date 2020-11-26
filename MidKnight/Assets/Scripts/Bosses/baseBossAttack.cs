@@ -73,6 +73,8 @@ public class baseBossAttack : StateMachineBehaviour
     /// </summary>
     private float vertSpeed = 0;
 
+    public bool invertOrientation;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //initialise stuff
@@ -149,6 +151,9 @@ public class baseBossAttack : StateMachineBehaviour
     {
         //Get the direction to look along the path
         Vector3 dir = gm.GetPathDirectionRight(enemyTrans.position);
+
+        if (invertOrientation)
+            dir = -dir;
         //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
         if (dir != Vector3.zero)
             enemyTrans.rotation = Quaternion.LookRotation(dir, Vector3.up);
@@ -161,6 +166,9 @@ public class baseBossAttack : StateMachineBehaviour
     {
         //Get the direction to look along the path
         Vector3 dir = -gm.GetPathDirectionRight(enemyTrans.position);
+
+        if (invertOrientation)
+            dir = -dir;
         //Rotate dir 90 degrees and use LookRotation to turn it into a quaternion
         if (dir != Vector3.zero)
             enemyTrans.rotation = Quaternion.LookRotation(dir, Vector3.up);
