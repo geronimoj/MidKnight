@@ -236,7 +236,18 @@ public class PhaseManager : MonoBehaviour
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
     private void CyclePhase(ref PlayerController c)
-    {
+    {   //If we don't have a moon phase yet, cycle through the moon phases until we can assign one
+        if (current.phaseID == "NULL")
+        {   //Cycle through the moon phases
+            swapToIndex = SetSwapIndex(swapToIndex, true, ref c);
+            //Make sure we have a valid index return
+            if (swapToIndex != -1)
+                SwapPhase(everyMoonPhase[swapToIndex], ref c);
+            else
+                swapToIndex = 0;
+            //Return because we don't want the other calls hitting this
+            return;
+        }
         float cycleDir = Input.GetAxis("CyclePhase");
 
         if (cycleDir > 0 && newCycleInput)
@@ -372,7 +383,7 @@ public class PhaseManager : MonoBehaviour
         //Loop through the hitboxes of the attack
         for (int i = 0; i < a.hitboxes.Length; i++)
         {   //Check if the hitbox is active and, if so, where it is
-            if (!a.GetHitBoxInfo(a.hitboxes[i], transform, timer, Time.deltaTime, out Vector3 origin, out Vector3 secOrigin, out Vector3 dir, out float dist))
+            if (!a.GetHitBoxInfo(a.hitboxes[i], transform, timer, Time.deltaTime, out Vector3 origin, out Vector3 secOrigin, out _, out _))
                 continue;
             //Draw the front and end of the capsual hitbox
             Gizmos.DrawWireSphere(origin, a.hitboxes[i].radius);
