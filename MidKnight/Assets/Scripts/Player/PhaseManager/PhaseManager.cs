@@ -237,7 +237,7 @@ public class PhaseManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     private void CyclePhase(ref PlayerController c)
     {   //If we don't have a moon phase yet, cycle through the moon phases until we can assign one
-        if (current.phaseID == "NULL")
+        if (CorrectPhase("NULL"))
         {   //Cycle through the moon phases
             swapToIndex = SetSwapIndex(swapToIndex, true, ref c);
             //Make sure we have a valid index return
