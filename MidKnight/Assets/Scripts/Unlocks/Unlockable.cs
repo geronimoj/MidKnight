@@ -48,8 +48,8 @@ public class Unlockable : MonoBehaviour
             }
         }
 
-        EM.EntitiesToNeverRespawn.Add(new Entities { thisRoom = R.roomID, index = e.index });
-        EM.EntitiesToNotRespawnUntillRest.Add(new Entities { thisRoom = R.roomID, index = e.index });
+        EM.EntitiesToNeverRespawn.Add(new Entities(e.index, R.roomID)); //{ thisRoom = R.roomID, index = e.index });
+        EM.EntitiesToNotRespawnUntillRest.Add(new Entities(e.index, R.roomID)); //{ thisRoom = R.roomID, index = e.index });
         gameObject.SetActive(false);
     }
 }
