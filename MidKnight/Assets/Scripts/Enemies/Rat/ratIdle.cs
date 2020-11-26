@@ -53,13 +53,13 @@ public class ratIdle : baseEnemyIdle
         {
             if (isMovingRight)
             {
-                FacePlayer(false);
+                FacePlayer(true);
                 destination.Set(enemyTrans.position.x - 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = false;
             }
             else
             {
-                FacePlayer(true);
+                FacePlayer(false);
                 destination.Set(enemyTrans.position.x + 500, enemyTrans.position.y, enemyTrans.position.z);
                 isMovingRight = true;
             }
