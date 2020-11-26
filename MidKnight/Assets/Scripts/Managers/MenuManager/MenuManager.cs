@@ -73,10 +73,6 @@ public class MenuManager : MonoBehaviour
     public GameObject halfMoon;
     public GameObject fullMoon;
     public Text phaseSpawingCooldownText;
-    private float newMoonCooldown = 0;
-    private float halfMoonCooldown = 0;
-    private float crescentMoonCooldown = 0;
-    private float fullMoonCooldown = 0;
     private int swapIndex = -1;
     private bool firstSwap = false;
     #endregion
@@ -678,36 +674,36 @@ public class MenuManager : MonoBehaviour
         {
             fullMoon.SetActive(false);
         }
-        if (newMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
+        if (player.GetComponent<PhaseManager>().everyMoonPhase[0].CooldownTimer >= 0)
         {
-            newMoon.GetComponent<Image>().fillAmount = newMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown;
+            newMoon.GetComponent<Image>().fillAmount = 1 - (player.GetComponent<PhaseManager>().everyMoonPhase[0].CooldownTimer / player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown);
 
             foreach (GameObject obj in TempNewMoons)
             {
                 obj.GetComponent<Image>().fillAmount = newMoon.GetComponent<Image>().fillAmount;
             }
         }
-        if (halfMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
+        if (player.GetComponent<PhaseManager>().everyMoonPhase[1].CooldownTimer >= 0)
         {
-            halfMoon.GetComponent<Image>().fillAmount = halfMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown;
+            halfMoon.GetComponent<Image>().fillAmount = 1 - (player.GetComponent<PhaseManager>().everyMoonPhase[1].CooldownTimer / player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown);
 
             foreach (GameObject obj in TempHalfMoons)
             {
                 obj.GetComponent<Image>().fillAmount = halfMoon.GetComponent<Image>().fillAmount;
             }
         }
-        if (crescentMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
+        if (player.GetComponent<PhaseManager>().everyMoonPhase[2].CooldownTimer >= 0)
         {
-            crescentMoon.GetComponent<Image>().fillAmount = crescentMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown;
+            crescentMoon.GetComponent<Image>().fillAmount = 1 - (player.GetComponent<PhaseManager>().everyMoonPhase[2].CooldownTimer / player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown);
 
             foreach (GameObject obj in TempCrescentMoons)
             {
                 obj.GetComponent<Image>().fillAmount = crescentMoon.GetComponent<Image>().fillAmount;
             }
         }
-        if (fullMoonCooldown <= player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
+        if (player.GetComponent<PhaseManager>().everyMoonPhase[3].CooldownTimer >= 0)
         {
-            fullMoon.GetComponent<Image>().fillAmount = fullMoonCooldown / player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown;
+            fullMoon.GetComponent<Image>().fillAmount = 1 - (player.GetComponent<PhaseManager>().everyMoonPhase[3].CooldownTimer / player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown);
 
             foreach (GameObject obj in TempFullMoons)
             {
@@ -715,20 +711,16 @@ public class MenuManager : MonoBehaviour
             }
         }
 
-        newMoonCooldown += Time.deltaTime;
-        crescentMoonCooldown += Time.deltaTime;
-        halfMoonCooldown += Time.deltaTime;
-        fullMoonCooldown += Time.deltaTime;
         float phaseCooldown = player.GetComponent<PhaseManager>().CooldownTimer < 0 ? 0 : player.GetComponent<PhaseManager>().CooldownTimer;
         phaseSpawingCooldownText.text = $"Phase Switch: {phaseCooldown}s";
 
         if (player.GetComponent<PhaseManager>().CooldownTimer < 0 && Input.GetAxis("SelectPhase") > 0)
         {
-            if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && newMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
+            if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0])
             {
                 if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
                 {
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    player.GetComponent<PhaseManager>().swapToIndex = 1;
                 }
                 else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                 {
@@ -736,16 +728,14 @@ public class MenuManager : MonoBehaviour
                 }
                 else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                 {
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    player.GetComponent<PhaseManager>().swapToIndex = 3;
                 }
-
-                newMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && halfMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1])
             {
                 if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
                 {
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    player.GetComponent<PhaseManager>().swapToIndex = 2;
                 }
                 else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                 {
@@ -755,14 +745,12 @@ public class MenuManager : MonoBehaviour
                 {
                     player.GetComponent<PhaseManager>().swapToIndex = 0;
                 }
-
-                halfMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && crescentMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2])
             {
                 if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
                 {
-                    player.GetComponent<PhaseManager>().swapToIndex++;
+                    player.GetComponent<PhaseManager>().swapToIndex = 3;
                 }
                 else if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
                 {
@@ -772,10 +760,8 @@ public class MenuManager : MonoBehaviour
                 {
                     player.GetComponent<PhaseManager>().swapToIndex = 1;
                 }
-
-                crescentMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3] && fullMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3])
             {
                 if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
                 {
@@ -789,8 +775,6 @@ public class MenuManager : MonoBehaviour
                 {
                     player.GetComponent<PhaseManager>().swapToIndex = 2;
                 }
-
-                fullMoonCooldown = 0;
             }
         }
         if (firstSwap)
