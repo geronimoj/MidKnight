@@ -203,6 +203,7 @@ public class SavingManager : MonoBehaviour
                 {
                     player.SetMaxHealth = reader.ReadInt32();
                     player.TakeDamage(-player.MaxHealth);
+                    player.MoonLight = 0;
                     currentRestPoint = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
@@ -214,7 +215,7 @@ public class SavingManager : MonoBehaviour
                         {
                             if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
                             {
-                                player.GetComponent<PhaseManager>().KnownPhases[i] = player.GetComponent<PhaseManager>().everyMoonPhase[e];
+                                player.GetComponent<PhaseManager>().KnownPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
                                 break;
                             }
                         }
@@ -227,13 +228,19 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
-                        tempEntities.Add(tempEntity);
+
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
 
                     EM.EntitiesToNeverRespawn.Clear();
                     EM.EntitiesToNotRespawnUntillRest.Clear();
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
+
+                    foreach (Entities entity in tempEntities)
+                    {
+                        EM.EntitiesToNeverRespawn.Add(entity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(entity);
+                    }
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -279,6 +286,7 @@ public class SavingManager : MonoBehaviour
                 {
                     player.SetMaxHealth = int.Parse(reader.ReadLine());
                     player.TakeDamage(-player.MaxHealth);
+                    player.MoonLight = 0;
                     currentRestPoint = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
@@ -306,13 +314,19 @@ public class SavingManager : MonoBehaviour
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
-                        tempEntities.Add(tempEntity);
+
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
 
                     EM.EntitiesToNeverRespawn.Clear();
                     EM.EntitiesToNotRespawnUntillRest.Clear();
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
+
+                    foreach (Entities entity in tempEntities)
+                    {
+                        EM.EntitiesToNeverRespawn.Add(entity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(entity);
+                    }
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -354,7 +368,7 @@ public class SavingManager : MonoBehaviour
         player.TakeDamage(-player.GetComponent<PlayerController>().MaxHealth);
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
         player.enabled = false;
-        //Debug.Log("Save Text: " + SM.Save());
+        Debug.Log("Save Text: " + Save());
         Debug.Log("Save Binary: " + Save(true));
     }
 

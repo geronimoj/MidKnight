@@ -18,6 +18,7 @@ public class KillBarrier : MonoBehaviour
             return;
 
         PlayerController p = PlayerController.Player;
+        p.SetKnockBackDirection(Vector3.zero);
         p.TakeDamage(barrierDamage);
         CharacterController c = p.GetComponent<CharacterController>();
         c.enabled = false;
