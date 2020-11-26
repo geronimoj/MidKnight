@@ -38,7 +38,7 @@ public class kingRatAttack5 : baseBossAttack
             {
                 hasUsedMove = true;
 
-                if (isFacingRight())
+                if (!isFacingRight())
                 {
                     destination.Set(arenaRightXCoordinate, enemyTrans.position.y, enemyTrans.position.z);
                 }

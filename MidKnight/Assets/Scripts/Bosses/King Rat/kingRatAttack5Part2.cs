@@ -20,6 +20,14 @@ public class kingRatAttack5Part2 : baseBossAttack
     /// the spawn position of each rock
     /// </summary>
     Vector3 spawnPos;
+    /// <summary>
+    /// start time until attack 5 animation
+    /// </summary>
+    public float startTimeTillAtk5;
+    /// <summary>
+    /// current time until attack 5 animation
+    /// </summary>
+    float timeTillAtk5;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -29,12 +37,14 @@ public class kingRatAttack5Part2 : baseBossAttack
         //initialise stuff
         FacePlayer();
         spawnPos = new Vector3(0, 0, 0);
+        timeTillAtk5 = startTimeTillAtk5;
 
         //rain down some rocks
         for (int i = 0; i < noOfRocks; i++)
         {
             spawnPos.Set(Random.Range(arenaLeftXCoordinate, arenaRightXCoordinate), Random.Range(arenaUpYCoordinate + 5, arenaUpYCoordinate + 20), enemyTrans.position.z);
-            Instantiate(rocks, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            GameObject rock = Instantiate(rocks, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            rock.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         }
     }
 
@@ -47,8 +57,27 @@ public class kingRatAttack5Part2 : baseBossAttack
         }
         else if(!hasUsedMove)
         {
-            Instantiate(attack, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
+            if(isFacingRight())
+            {
+                spawnPos.Set(enemyTrans.position.x -3, enemyTrans.position.y + 3, enemyTrans.position.z);
+            }
+            else
+            {
+                spawnPos.Set(enemyTrans.position.x + 3, enemyTrans.position.y + 3, enemyTrans.position.z);
+            }
+
+            GameObject laser = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            laser.transform.localScale = new Vector3(0.05f, 0.25f, 0.05f);
+
             hasUsedMove = true;
+        }
+
+        if(timeTillAtk5 > 0)
+        {
+            timeTillAtk5 -= Time.deltaTime;
+        }
+        else
+        {
             animator.SetTrigger("atk5");
         }
     }
