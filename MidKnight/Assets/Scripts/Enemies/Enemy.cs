@@ -152,6 +152,19 @@ public class Enemy : Character
         e.thisRoom = R.roomID;
         e.index = -1;
 
+        if (R == null)
+        {
+            Debug.LogError("Could not find Room in parent. Searching entire scene");
+            R = FindObjectOfType<Room>();
+
+            if (R == null)
+            {
+                Debug.LogError("Could not find Room in entire scene. Destroying myself now");
+                OnDeath();
+            }
+        }
+
+
         for (int i = 0; i < R.NonRespawningRoomObjects.Count; i++)
         {
             if (R.NonRespawningRoomObjects[i] == gameObject)

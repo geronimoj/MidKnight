@@ -32,7 +32,18 @@ public class rangedSkeletonAttack1 : baseEnemyAttack
         {
             hasUsedAtk = true;
 
-            Instantiate(atk, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
+            Vector3 spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 1.3f, enemyTrans.position.z);
+
+            if(PlayerOnRight())
+            {
+                GameObject laser = Instantiate(atk, spawnPos, Quaternion.Euler(180, 90, 0), enemyTrans.parent);
+                laser.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            }
+            else
+            {
+                GameObject laser = Instantiate(atk, spawnPos, Quaternion.Euler(0, 90, 0), enemyTrans.parent);
+                laser.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            }
         }
 
         MoveToDestination(destination);

@@ -31,7 +31,10 @@ public class rangedSkeletonAttack2 : baseEnemyAttack
         {
             hasUsedAtk = true;
 
-            Instantiate(atk, enemyTrans.position, enemyTrans.rotation, enemyTrans.parent);
+            Vector3 spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 3, enemyTrans.position.z);
+            GameObject magic = Instantiate(atk, spawnPos, enemyTrans.rotation, enemyTrans.parent);
+            magic.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+
         }
 
         MoveToDestination(destination);
