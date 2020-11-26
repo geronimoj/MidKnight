@@ -61,6 +61,7 @@ public class CastSpell : State
         if (windUpTimer <= 0 && !spellCasted)
         {   //Don't recast the spell
             spellCasted = true;
+            c.MoonLight -= spellCost;
             DoSpell(ref c);
         }
         //If endLag is done, re-enable to ongroundelseairborne transition

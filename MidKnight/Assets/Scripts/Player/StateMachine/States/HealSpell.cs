@@ -12,7 +12,6 @@ public class HealSpell : CastSpell
     protected override void DoSpell(ref PlayerController c)
     {
         c.animator.SetBool("FinishHeal", true);
-        c.MoonLight -= spellCost;
         c.TakeDamage(-healAmount);
         c.Audio.PlayOneShot(c.heal);
     }

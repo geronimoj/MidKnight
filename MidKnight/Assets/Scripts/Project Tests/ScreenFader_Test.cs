@@ -22,7 +22,7 @@ namespace Tests
         }
 
         [UnityTest]
-        public IEnumerator ScreenFader_Fade_In()
+        public IEnumerator ScreenFader_Fade_In_Out()
         {
             ScreenFade sf = CreateScreenFader();
 
@@ -34,6 +34,10 @@ namespace Tests
 
             yield return new WaitForSeconds(sf.fadeTime / 2);
 
+            Debug.Assert(sf.FadeFinished());
+
+            sf.FadeOut();
+            yield return new WaitForSeconds(sf.fadeTime);
             Debug.Assert(sf.FadeFinished());
         }
 
