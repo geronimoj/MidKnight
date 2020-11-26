@@ -203,6 +203,7 @@ public class SavingManager : MonoBehaviour
                 {
                     player.SetMaxHealth = reader.ReadInt32();
                     player.TakeDamage(-player.MaxHealth);
+                    player.MoonLight = 0;
                     currentRestPoint = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
@@ -224,16 +225,17 @@ public class SavingManager : MonoBehaviour
                 {
                     int count = reader.ReadInt32();
 
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
+
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
-                        tempEntities.Add(tempEntity);
+
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
 
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -279,6 +281,7 @@ public class SavingManager : MonoBehaviour
                 {
                     player.SetMaxHealth = int.Parse(reader.ReadLine());
                     player.TakeDamage(-player.MaxHealth);
+                    player.MoonLight = 0;
                     currentRestPoint = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
@@ -303,16 +306,15 @@ public class SavingManager : MonoBehaviour
                 {
                     int count = int.Parse(reader.ReadLine());
 
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
-                        tempEntities.Add(tempEntity);
-                    }
 
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-                    EM.EntitiesToNeverRespawn = tempEntities;
-                    EM.EntitiesToNotRespawnUntillRest = tempEntities;
+                        EM.EntitiesToNeverRespawn.Add(tempEntity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
+                    }
                 }
                 else if (readLine == "Unlocks")
                 {
