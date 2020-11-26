@@ -116,7 +116,7 @@ public class PhaseManager : MonoBehaviour
         //Increment the timer
         timer += Time.deltaTime;
 #endif  //Perform the custom functions for eclipse mode
-        if (stepToEclipse >= swapsTillEclipse && Input.GetAxis("Eclipse") != 0)
+        if (stepToEclipse >= swapsTillEclipse && Input.GetAxis("Eclipse") != 0 || inEclipse)
             EclipseMode(ref c);
         else
             CyclePhase(ref c);
@@ -183,7 +183,7 @@ public class PhaseManager : MonoBehaviour
     /// <param name="c">A reference to the player controller</param>
     public void SwapPhase(MoonPhase target, ref PlayerController c)
     {   //Make sure the target is valid vand we can swap to it
-        if (cooldownTimer > 0 || target == null || target.OnCooldown)
+        if ((cooldownTimer > 0 || target == null || target.OnCooldown) && !CorrectPhase("Eclipse"))
             return;
         //Set the cooldown timer
         cooldownTimer = swapCooldown;
@@ -193,19 +193,28 @@ public class PhaseManager : MonoBehaviour
             //Gain a step towards eclipse mode
             stepToEclipse++;
         //Exit
-        current.PhaseExit(ref c);
-        current.OnExit.Invoke();
+        if (current != null)
+        {
+            current.PhaseExit(ref c);
+            current.OnExit.Invoke();
+            //We do this outside of the OnExit so that if someone overrides it and doesn't add the timer & active checks, it doesn't poop itself & so we can call OnExit
+            //when exiting the eclipse mode to "deactivate" the phase without putting it on cooldown
+            current.PutOnCooldown();
+        }
         //Store the previous phase
         previous = current;
-        //We do this outside of the OnExit so that if someone overrides it and doesn't add the timer & active checks, it doesn't poop itself & so we can call OnExit
-        //when exiting the eclipse mode to "deactivate" the phase without putting it on cooldown
-        current.PutOnCooldown();
         //Swap
         current = target;
-        OnSwap.Invoke();
-        //Enter
-        current.PhaseEnter(ref c);
-        current.OnEnter.Invoke();
+        if (OnSwap != null)
+            OnSwap.Invoke();
+
+        if (current != null)
+        {   //Enter
+            current.PhaseEnter(ref c);
+            current.OnEnter.Invoke();
+        }
+        if (knownPhases == null)
+            knownPhases = new List<MoonPhase>();
         //Add the phase to the list of known phases if its not already there
         if (!knownPhases.Contains(current))
             knownPhases.Add(current);
@@ -343,7 +352,7 @@ public class PhaseManager : MonoBehaviour
     /// The Start function for Eclipse
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public void EnterEclipse(ref PlayerController c)
+    private void EnterEclipse(ref PlayerController c)
     {
         inEclipse = true;
         eclipseTimer = eclipseDuration;
@@ -354,7 +363,7 @@ public class PhaseManager : MonoBehaviour
     /// The Exit function for Eclipse
     /// </summary>
     /// <param name="c">A reference to the player controller</param>
-    public void ExitEclipse(ref PlayerController c)
+    private void ExitEclipse(ref PlayerController c)
     {
         SwapPhase(previous, ref c);
         inEclipse = false;
