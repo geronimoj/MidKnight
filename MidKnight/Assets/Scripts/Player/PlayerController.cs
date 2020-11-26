@@ -565,12 +565,19 @@ public class PlayerController : Character
     {   //Is the player dead
         if (dead)
             return;
-        //Decrement the timers
+        //If the player is in Iframes, cause them to flash
         if (!CanTakeDamage)
         {
             iFrameTimer -= Time.deltaTime;
             Flash();
         }
+        //If they are no-longer in Iframes, go back to regular colour
+        else
+        {
+            flashDirection = false;
+            Flash();
+        }
+        //Decrement the timers
         dashTimer -= Time.deltaTime;
         bonusDamageTimer -= Time.deltaTime;
         moonBeamTimer -= Time.deltaTime;
@@ -683,6 +690,8 @@ public class PlayerController : Character
             return;
         }
         Color col = smr.materials[0].color;
+
+        flashTimer = Mathf.Clamp(flashTimer, 0, damagedFlashSpeed);
 
         if (flashDirection)
         {
