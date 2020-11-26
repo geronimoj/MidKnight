@@ -8,6 +8,11 @@ using UnityEngine;
 /// </summary>
 public class kingRatAttack3 : baseBossAttack
 {
+    /// <summary>
+    /// the spawn position of the laser
+    /// </summary>
+    Vector3 spawnPos;
+
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,7 +30,15 @@ public class kingRatAttack3 : baseBossAttack
         {
             hasUsedMove = true;
 
-            Vector3 spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 3, enemyTrans.position.z);
+            if(isFacingRight())
+            {
+                spawnPos = new Vector3(enemyTrans.position.x - 3, enemyTrans.position.y + 3, enemyTrans.position.z);
+            }
+            else
+            {
+                spawnPos = new Vector3(enemyTrans.position.x + 3, enemyTrans.position.y + 3, enemyTrans.position.z);
+            }
+
             GameObject laser = Instantiate(attack, spawnPos, enemyTrans.rotation, enemyTrans.parent);
             laser.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         }
