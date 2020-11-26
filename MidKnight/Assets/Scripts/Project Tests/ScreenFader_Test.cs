@@ -41,7 +41,7 @@ namespace Tests
             Debug.Assert(sf.FadeFinished());
         }
 
-        public ScreenFade CreateScreenFader()
+        public static ScreenFade CreateScreenFader()
         {
             //Create the screen fader
             GameObject g = GameObject.Instantiate(new GameObject());

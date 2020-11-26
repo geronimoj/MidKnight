@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+[RequireComponent(typeof(BoxCollider))]
 public class RoomExit : MonoBehaviour
 {
     //Rooms
