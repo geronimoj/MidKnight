@@ -98,7 +98,7 @@ public class meleeSkeletonIdle : baseEnemyIdle
             }
 
             //choose somewhere else to walk after reaching its destination
-            if (enemyTrans.position == destination)
+            if (Vector3.Distance(enemyTrans.position, destination) < 1f) 
             {
                 hasChosenWalk = false;
             }

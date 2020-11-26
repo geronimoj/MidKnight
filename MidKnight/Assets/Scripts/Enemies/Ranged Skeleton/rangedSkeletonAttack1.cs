@@ -32,7 +32,7 @@ public class rangedSkeletonAttack1 : baseEnemyAttack
         {
             hasUsedAtk = true;
 
-            Vector3 spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 2, enemyTrans.position.z);
+            Vector3 spawnPos = new Vector3(enemyTrans.position.x, enemyTrans.position.y + 1.3f, enemyTrans.position.z);
 
             if(PlayerOnRight())
             {
