@@ -69,6 +69,8 @@ namespace Tests
             manager.tag = "GameManager";
             manager.AddComponent<GameManager>();
             GameObject ut = GameObject.Instantiate(new GameObject(), new Vector3(0, 0, 0), Quaternion.identity);
+            ut.name = "Player";
+            ut.tag = "Player";
             GameObject child = GameObject.Instantiate(new GameObject(), ut.transform);
             child.AddComponent<Animator>();
             return ut.AddComponent<PlayerController>();

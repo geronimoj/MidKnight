@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     /// <returns>The new position of the object</returns>
     public Vector3 SnapToPath(Vector3 position)
     {   //Make sure we have a room with enough nodes to create a path
-        if (room == null || room.pathNodes.Length < 2)
+        if (room == null || room.pathNodes == null || room.pathNodes.Length < 2)
         {
             position.z = 0;
             return position;
@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private int GetSegmentIndex(Vector3 position)
     {
-        if (room == null || room.pathNodes.Length < 2)
+        if (room == null || room.pathNodes == null || room.pathNodes.Length < 2)
             return -1;
         //Store the bestSegment
         int bestSegment = 0;
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
     /// <returns>A unit vector pointing along the path to the right along the horizontal plane</returns>
     public Vector3 GetPathDirectionRight(Vector3 position)
     {
-        if (room == null || room.pathNodes.Length < 2)
+        if (room == null || room.pathNodes == null || room.pathNodes.Length < 2)
             return Vector3.right;
         //Get the index of the segment we are in
         int segIndex = GetSegmentIndex(position);
@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour
     /// <returns>The new movement vector</returns>
     public Vector3 MoveAlongPath(Vector3 position, Vector3 moveVector)
     {
-        if (room == null || room.pathNodes.Length < 2)
+        if (room == null || room.pathNodes == null || room.pathNodes.Length < 2)
         {
             moveVector.z = 0;
             return moveVector;
