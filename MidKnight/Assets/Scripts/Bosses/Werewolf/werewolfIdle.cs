@@ -53,8 +53,6 @@ public class werewolfIdle : baseBossIdle
         {
             speed = phase2speed;
         }
-
-        moveToUse = 4;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
