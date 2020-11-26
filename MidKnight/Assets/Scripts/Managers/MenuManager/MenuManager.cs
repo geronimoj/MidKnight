@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
@@ -643,7 +642,6 @@ public class MenuManager : MonoBehaviour
             swapIndex = player.GetComponent<PhaseManager>().swapToIndex;
             firstSwap = true;
         }
-
         if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
         {
             newMoon.SetActive(true);
@@ -728,34 +726,70 @@ public class MenuManager : MonoBehaviour
         {
             if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[0] && newMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[0].phaseCooldown)
             {
-                newMoon.transform.position = currentMoonTransform.position;
-                crescentMoon.transform.position = nextMoonTransform.position;
-                halfMoon.transform.position = currentSelectedMoonTransform.position;
-                fullMoon.transform.position = previousMoonTransform.position;
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex++;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 2;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex++;
+                }
+
                 newMoonCooldown = 0;
             }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && crescentMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[1] && halfMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[1].phaseCooldown)
             {
-                crescentMoon.transform.position = currentMoonTransform.position;
-                halfMoon.transform.position = nextMoonTransform.position;
-                fullMoon.transform.position = currentSelectedMoonTransform.position;
-                newMoon.transform.position = previousMoonTransform.position;
-                crescentMoonCooldown = 0;
-            }
-            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && halfMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
-            {
-                halfMoon.transform.position = currentMoonTransform.position;
-                fullMoon.transform.position = nextMoonTransform.position;
-                newMoon.transform.position = currentSelectedMoonTransform.position;
-                crescentMoon.transform.position = previousMoonTransform.position;
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex++;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 3;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 0;
+                }
+
                 halfMoonCooldown = 0;
+            }
+            else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[2] && crescentMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[2].phaseCooldown)
+            {
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("full moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex++;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 0;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 1;
+                }
+
+                crescentMoonCooldown = 0;
             }
             else if (player.GetComponent<PhaseManager>().CurrentPhase == player.GetComponent<PhaseManager>().everyMoonPhase[3] && fullMoonCooldown > player.GetComponent<PhaseManager>().everyMoonPhase[3].phaseCooldown)
             {
-                fullMoon.transform.position = currentMoonTransform.position;
-                newMoon.transform.position = nextMoonTransform.position;
-                crescentMoon.transform.position = currentSelectedMoonTransform.position;
-                halfMoon.transform.position = previousMoonTransform.position;
+                if (player.GetComponent<UnlockTracker>().GetKeyValue("new moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 0;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("half moon"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 1;
+                }
+                else if (player.GetComponent<UnlockTracker>().GetKeyValue("crescent"))
+                {
+                    player.GetComponent<PhaseManager>().swapToIndex = 2;
+                }
+
                 fullMoonCooldown = 0;
             }
         }

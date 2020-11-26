@@ -215,7 +215,7 @@ public class SavingManager : MonoBehaviour
                         {
                             if (phaseID == player.GetComponent<PhaseManager>().everyMoonPhase[e].phaseID)
                             {
-                                player.GetComponent<PhaseManager>().KnownPhases[i] = player.GetComponent<PhaseManager>().everyMoonPhase[e];
+                                player.GetComponent<PhaseManager>().KnownPhases.Add(player.GetComponent<PhaseManager>().everyMoonPhase[e]);
                                 break;
                             }
                         }
@@ -225,9 +225,6 @@ public class SavingManager : MonoBehaviour
                 {
                     int count = reader.ReadInt32();
 
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
-
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(reader.ReadInt32(), reader.ReadString());
@@ -236,6 +233,14 @@ public class SavingManager : MonoBehaviour
                         EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
                     }
 
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
+
+                    foreach (Entities entity in tempEntities)
+                    {
+                        EM.EntitiesToNeverRespawn.Add(entity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(entity);
+                    }
                 }
                 else if (readLine == "Unlocks")
                 {
@@ -306,14 +311,21 @@ public class SavingManager : MonoBehaviour
                 {
                     int count = int.Parse(reader.ReadLine());
 
-                    EM.EntitiesToNeverRespawn.Clear();
-                    EM.EntitiesToNotRespawnUntillRest.Clear();
                     for (int i = 0; i < count; i++)
                     {
                         Entities tempEntity = new Entities(int.Parse(reader.ReadLine()), reader.ReadLine());
 
                         EM.EntitiesToNeverRespawn.Add(tempEntity);
                         EM.EntitiesToNotRespawnUntillRest.Add(tempEntity);
+                    }
+
+                    EM.EntitiesToNeverRespawn.Clear();
+                    EM.EntitiesToNotRespawnUntillRest.Clear();
+
+                    foreach (Entities entity in tempEntities)
+                    {
+                        EM.EntitiesToNeverRespawn.Add(entity);
+                        EM.EntitiesToNotRespawnUntillRest.Add(entity);
                     }
                 }
                 else if (readLine == "Unlocks")
@@ -356,7 +368,7 @@ public class SavingManager : MonoBehaviour
         player.TakeDamage(-player.GetComponent<PlayerController>().MaxHealth);
         player.transform.position = RestPoints[currentRestPoint].spawnPoint;
         player.enabled = false;
-        //Debug.Log("Save Text: " + SM.Save());
+        Debug.Log("Save Text: " + Save());
         Debug.Log("Save Binary: " + Save(true));
     }
 
