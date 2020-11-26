@@ -203,6 +203,7 @@ public class SavingManager : MonoBehaviour
                 {
                     player.SetMaxHealth = reader.ReadInt32();
                     player.TakeDamage(-player.MaxHealth);
+                    player.MoonLight = 0;
                     currentRestPoint = reader.ReadInt32();
                     int count = reader.ReadInt32();
 
@@ -279,6 +280,7 @@ public class SavingManager : MonoBehaviour
                 {
                     player.SetMaxHealth = int.Parse(reader.ReadLine());
                     player.TakeDamage(-player.MaxHealth);
+                    player.MoonLight = 0;
                     currentRestPoint = int.Parse(reader.ReadLine());
                     int count = int.Parse(reader.ReadLine());
 
