@@ -37,13 +37,13 @@ public class MenuManager : MonoBehaviour
     public Toggle textureStreamingToggle;
     public Slider masterVolumeSlider;
     public Text masterVolumeText;
-    private float currentMasterVolume;
+    private float currentMasterVolume = -20;
     public Slider musicVolumeSlider;
     public Text musicVolumeText;
-    private float currentMusicVolume;
+    private float currentMusicVolume = -20;
     public Slider soundFXVolumeSlider;
     public Text soundFXVolumeText;
-    private float currentSoundFXVolume;
+    private float currentSoundFXVolume = -20;
     //Secret
     public Toggle secretToggle;
     public GameObject secretObject;
@@ -157,6 +157,17 @@ public class MenuManager : MonoBehaviour
             DashUI();
             EclipseUI();
             PhasesUI();
+        }
+        #endregion
+
+        #region Option Functions
+        if (!music.isPlaying)
+        {
+            System.Random randy = new System.Random();
+            float pitch = randy.Next(50, 251);
+            pitch /= 100;
+            music.pitch = pitch;
+            music.Play();
         }
         #endregion
     }
@@ -494,21 +505,21 @@ public class MenuManager : MonoBehaviour
     {
         audioMixer.SetFloat("MasterVolume", volume);
         currentMasterVolume = volume;
-        masterVolumeText.text = $"{currentMasterVolume + 100}";
+        masterVolumeText.text = (currentMasterVolume > 0) ? $"+{currentMasterVolume}" : $"{currentMasterVolume}";
     }
 
     public void SetMusicVolume(float volume)
     {
         audioMixer.SetFloat("MusicVolume", volume);
         currentMusicVolume = volume;
-        musicVolumeText.text = $"{currentMusicVolume + 100}";
+        musicVolumeText.text = (currentMusicVolume > 0) ? $"+{currentMusicVolume}" : $"{currentMusicVolume}";
     }
 
     public void SetSoundFXVolume(float volume)
     {
         audioMixer.SetFloat("SoundEffectsVolume", volume);
         currentSoundFXVolume = volume;
-        soundFXVolumeText.text = $"{currentSoundFXVolume + 100}";
+        soundFXVolumeText.text = (currentSoundFXVolume > 0) ? $"+{currentSoundFXVolume}" : $"{currentSoundFXVolume}";
     }
 
     public void SetSecret(bool isSecret)
