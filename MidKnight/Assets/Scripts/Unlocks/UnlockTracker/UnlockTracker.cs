@@ -102,11 +102,11 @@ public class UnlockTracker : MonoBehaviour
             healthAdd++;
             unlocks.Remove("health");
 
-            while (healthAdd >= 3)
+            while (healthAdd >= 1)
             {
                 PC.SetMaxHealth = PC.MaxHealth + 1;
                 PC.TakeDamage(-1);
-                healthAdd -= 3;
+                healthAdd -= 1;
             }
         }
         if (GetKeyValue("eclipse shard") && !GetKeyValue("eclipse"))
@@ -114,7 +114,7 @@ public class UnlockTracker : MonoBehaviour
             eclipseAdd++;
             unlocks.Remove("eclipse shard");
 
-            if (eclipseAdd >= 4)
+            if (eclipseAdd >= 1)
             {
                 SetKey("eclipse", true);
             }
