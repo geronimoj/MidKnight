@@ -9,9 +9,11 @@ public class Room : MonoBehaviour
     public List<GameObject> NonRespawningRoomObjects;
     public Vector3[] entrances;
     public Vector2[] pathNodes;
+    public AudioSource music;
 
     private void Start()
     {
+        music.Play();
         bool Break = false;
         //if the roomID isn't set there are potential spawning problems
         if (roomID == "")
