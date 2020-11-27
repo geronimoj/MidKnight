@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
     public GameObject UIObject;
     private SavingManager SM;
     private GameManager GM;
+    public AudioSource music;
     #endregion
 
     #region Options
@@ -76,7 +77,6 @@ public class MenuManager : MonoBehaviour
     public Text phaseSpawingCooldownText;
     private int swapIndex = -1;
     private bool firstSwap = false;
-    public AudioSource music;
     #endregion
 
     private void Start()
@@ -86,7 +86,6 @@ public class MenuManager : MonoBehaviour
         List<string> options = new List<string>();
         resolutions = Screen.resolutions;
         int currentResolutionIndex = 0;
-        music.Play();
 
         for (int i = 0; i < resolutions.Length; i++)
         {
@@ -129,6 +128,7 @@ public class MenuManager : MonoBehaviour
         secretObject.SetActive(false);
         UIObject.SetActive(false);
         menuOpened = true;
+        music.Play();
         //player.SetActive(false);
 
         if (GM.room != null)
