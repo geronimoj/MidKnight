@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     #region Menus
-    [SerializeField]
     private bool menuOpened = false;
     public GameObject startMenu;
     public GameObject pauseMenu;
@@ -127,7 +126,7 @@ public class MenuManager : MonoBehaviour
         controlMenu.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(false);
-        menuOpened = true;
+        menuOpened = false;
         music.Play();
         //player.SetActive(false);
 
@@ -252,6 +251,7 @@ public class MenuManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 0;
+        menuOpened = false;
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
@@ -596,15 +596,15 @@ public class MenuManager : MonoBehaviour
         else
         { textureStreamingToggle.SetIsOnWithoutNotify(QualitySettings.streamingMipmapsActive); }
         if (PlayerPrefs.HasKey("MasterVolume"))
-        { masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume"); }
+        { masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume"); audioMixer.SetFloat("MasterVolume", masterVolumeSlider.value); }
         else
         { masterVolumeSlider.value = currentMasterVolume; }
         if (PlayerPrefs.HasKey("MusicVolume"))
-        { musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume"); }
+        { musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume"); audioMixer.SetFloat("MusicVolume", musicVolumeSlider.value); }
         else
         { musicVolumeSlider.value = currentMusicVolume; }
         if (PlayerPrefs.HasKey("SoundEffectsVolume"))
-        { soundFXVolumeSlider.value = PlayerPrefs.GetFloat("SoundEffectsVolume"); }
+        { soundFXVolumeSlider.value = PlayerPrefs.GetFloat("SoundEffectsVolume"); audioMixer.SetFloat("SoundEffectsVolume", soundFXVolumeSlider.value); }
         else
         { soundFXVolumeSlider.value = currentSoundFXVolume; }
     }
