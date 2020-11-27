@@ -186,6 +186,7 @@ public class MenuManager : MonoBehaviour
 
         if(!LoadSucceed)
         { Time.timeScale = 0; }
+        music.Stop();
     }
 
     public void Continue()
