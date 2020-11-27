@@ -142,6 +142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3467638986318756206}
+  - component: {fileID: 5906621408328618942}
   m_Layer: 0
   m_Name: Items
   m_TagString: Untagged
@@ -164,6 +165,20 @@ Transform:
   m_Father: {fileID: 6353688153363041107}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5906621408328618942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5625589814394107075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c3d88b71c98184418fb95b99b01ffa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockID: kingBatDead
+  roomExit: {fileID: 1279480174320348703}
 --- !u!1 &6353688153363041106
 GameObject:
   m_ObjectHideFlags: 0
@@ -6489,6 +6504,12 @@ PrefabInstance:
 --- !u!4 &1279480174320348696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5611088266265775135, guid: 7394abab11edd9c4bb217487f51bb2c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6638085382114550279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1279480174320348703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5611088266265775128, guid: 7394abab11edd9c4bb217487f51bb2c8,
     type: 3}
   m_PrefabInstance: {fileID: 6638085382114550279}
   m_PrefabAsset: {fileID: 0}
