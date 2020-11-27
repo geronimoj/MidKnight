@@ -221,7 +221,8 @@ public class PhaseManager : MonoBehaviour
         if (!knownPhases.Contains(current))
             knownPhases.Add(current);
 
-        BMP.SwapPhaseMaterial();
+        if (BMP != null)
+            BMP.SwapPhaseMaterial();
     }
     /// <summary>
     /// Returns true if the string given matches the phase ID of the current phase
