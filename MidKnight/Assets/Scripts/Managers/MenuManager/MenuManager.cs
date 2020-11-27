@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject optionsMenu;
     public GameObject controlMenu;
+    public GameObject mapObject;
     public GameObject UIObject;
     private SavingManager SM;
     private GameManager GM;
@@ -211,6 +212,12 @@ public class MenuManager : MonoBehaviour
         { Time.timeScale = 0; }
     }
 
+    public void Restart()
+    {
+        UnPause();
+        player.GetComponent<PlayerController>().TakeDamage(player.GetComponent<PlayerController>().MaxHealth);
+    }
+
     public void StartGame()
     {
         menuOpened = false;
@@ -218,6 +225,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        mapObject.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(true);
         playerGraphics.SetActive(true);
@@ -235,6 +243,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        mapObject.SetActive(false);
         secretObject.SetActive(false);
         UIObject.SetActive(false);
         playerGraphics.SetActive(false);
@@ -268,6 +277,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        mapObject.SetActive(false);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -282,6 +292,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        mapObject.SetActive(false);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -296,6 +307,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(true);
         controlMenu.SetActive(false);
+        mapObject.SetActive(false);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -304,7 +316,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void CloseOptions()
+    public void CloseToMainPause()
     {
         if (!menuOpened)
         {
@@ -322,6 +334,22 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(true);
+        mapObject.SetActive(false);
+        UIObject.SetActive(false);
+
+        if (secretBool)
+        {
+            secretObject.SetActive(true);
+        }
+    }
+
+    public void OpenMap()
+    {
+        startMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        controlMenu.SetActive(false);
+        mapObject.SetActive(true);
         UIObject.SetActive(false);
 
         if (secretBool)
@@ -336,6 +364,7 @@ public class MenuManager : MonoBehaviour
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         controlMenu.SetActive(false);
+        mapObject.SetActive(false);
         UIObject.SetActive(true);
 
         if (secretBool)
