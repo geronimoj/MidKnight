@@ -20,11 +20,11 @@ public class meleeSkeletonAttack : baseEnemyAttack
 
         if(PlayerOnRight())
         {
-            spawnPos = new Vector3(enemyTrans.position.x + 2f, enemyTrans.position.y, enemyTrans.position.z);
+            spawnPos = new Vector3(enemyTrans.position.x + 1f, enemyTrans.position.y +1, enemyTrans.position.z);
         }
         else
         {
-            spawnPos = new Vector3(enemyTrans.position.x - 2f, enemyTrans.position.y, enemyTrans.position.z);
+            spawnPos = new Vector3(enemyTrans.position.x - 1f, enemyTrans.position.y +1, enemyTrans.position.z);
         }
     }
 
