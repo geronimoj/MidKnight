@@ -13,7 +13,8 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        music.Play();
+        if (music != null)
+            music.Play();
         bool Break = false;
         //if the roomID isn't set there are potential spawning problems
         if (roomID == "")
