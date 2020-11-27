@@ -138,6 +138,8 @@ public class PlayerController : Character
     public AudioClip attackTwo;
     public AudioClip attackThree;
     public AudioClip land;
+    [Range(0,1)]
+    public float landLoundness = 0.1f;
     public AudioClip deathSound;
     public AudioClip damageSound;
 
@@ -736,7 +738,7 @@ public class PlayerController : Character
     {
         canJumpAgain = true;
         CanDash = true;
-        Audio.PlayOneShot(land);
+        Audio.PlayOneShot(land, landLoundness);
     }
     /// <summary>
     /// Called when moonBeam is casted
