@@ -75,6 +75,7 @@ public class MenuManager : MonoBehaviour
     public Text phaseSpawingCooldownText;
     private int swapIndex = -1;
     private bool firstSwap = false;
+    public AudioSource music;
     #endregion
 
     private void Start()
@@ -84,6 +85,7 @@ public class MenuManager : MonoBehaviour
         List<string> options = new List<string>();
         resolutions = Screen.resolutions;
         int currentResolutionIndex = 0;
+        music.Play();
 
         for (int i = 0; i < resolutions.Length; i++)
         {
