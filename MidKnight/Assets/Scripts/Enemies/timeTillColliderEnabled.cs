@@ -32,6 +32,7 @@ public class timeTillColliderEnabled : MonoBehaviour
         else
         {
             prefabCol.enabled = true;
+            prefabCol.transform.localScale = new Vector3(1, 1, 30);
         }
     }
 }

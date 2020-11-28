@@ -18,53 +18,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.1, z: 0}
---- !u!95 &8938241556088705274
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17324484992121916}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3cad93139c0b6224c92a235578305e42, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4813050102971376315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17324484992121916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2252bd468b92a764bbe226cfa35ec6a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 20
-  hitstunDuration: 0.1
-  knockBackDuration: 0.1
-  knockBackDir: {x: 0, y: 0, z: 0}
-  knockBackForce: 5
-  damage: 1
-  isPhase2: 0
-  gravity: 0
-  vertSpeed: 0
-  isBoss: 0
-  damagedFlashDuration: 1.5
-  damagedFlashSpeed: 0.25
-  alphaLimit: 1
-  Audio: {fileID: 8071769393115524126}
-  attackAudio: {fileID: 0}
-  deathAudio: {fileID: 8300000, guid: b75f9a385ccfbe546a38d54d45291493, type: 3}
 --- !u!82 &8071769393115524126
 AudioSource:
   m_ObjectHideFlags: 0
@@ -162,6 +115,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &8938241556088705274
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17324484992121916}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3cad93139c0b6224c92a235578305e42, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4813050102971376315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17324484992121916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2252bd468b92a764bbe226cfa35ec6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 16
+  hitstunDuration: 0.1
+  knockBackDuration: 0.1
+  knockBackDir: {x: 0, y: 0, z: 0}
+  knockBackForce: 5
+  damage: 1
+  isPhase2: 0
+  gravity: 0
+  vertSpeed: 0
+  isBoss: 0
+  damagedFlashDuration: 1.5
+  damagedFlashSpeed: 0.25
+  alphaLimit: 1
+  Audio: {fileID: 8071769393115524126}
+  attackAudio: {fileID: 0}
+  deathAudio: {fileID: 8300000, guid: b75f9a385ccfbe546a38d54d45291493, type: 3}
 --- !u!1 &4773626804178263679
 GameObject:
   m_ObjectHideFlags: 0
