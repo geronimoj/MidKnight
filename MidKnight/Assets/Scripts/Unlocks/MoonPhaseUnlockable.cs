@@ -6,13 +6,13 @@ public class MoonPhaseUnlockable : Unlockable
 {
     private GameObject player;
 
-    protected void Start()
+    protected new void Start()
     {
         base.Start();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected new void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 

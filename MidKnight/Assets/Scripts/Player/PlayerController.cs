@@ -636,18 +636,26 @@ public class PlayerController : Character
             moveVec.y = (hit.point.y + (Height / 2)) - transform.position.y;
         //Move the player
         cc.Move(moveVec);
-        Vector3 pos = transform.position + Vector3.down * (cc.height / 2 - cc.radius + cc.radius / 3);
+        Vector3 pos = transform.position + Vector3.down * (cc.height / 2 - cc.radius);
         Debug.DrawLine(pos, pos + transform.right);
-        if (Physics.Raycast(pos, transform.right, out hit, cc.radius, ground))
-        {
-            float f = Vector3.Distance(pos, hit.point);
-            cc.Move(-transform.right * (cc.radius - f));
+        //Do a sphere cast down to check for terrain
+        if (Physics.SphereCast(pos, cc.radius, Vector3.down, out hit, cc.radius, ground))
+        {   //Get a vector to the hit point
+            Vector3 toPoint = hit.point - pos;
+            //If we are moving down & the hit point is close enough, move us away from the surface
+            if (movement.VertSpeed < 0 && toPoint.y > -cc.radius)
+            {
+                float dot = Vector3.Dot(toPoint, transform.right);
+                if (dot > cc.radius - 0.01f)
+                {
+                    if (dot > 0)
+                        cc.Move(-transform.right * (cc.radius - dot));
+                    else
+                        cc.Move(transform.right * (cc.radius + dot));
+                }
+            }
         }
-        else if (Physics.Raycast(pos, -transform.right, out hit, cc.radius, ground))
-        {
-            float f = Vector3.Distance(pos, hit.point);
-            cc.Move(transform.right * (cc.radius - f));
-        }
+
         //Ensure the player has not escaped the map just in case moving did such a thing
         //Disable the character controller to allow for teleportation. It has an internal
         //sence of motion and stuffs up teleportation

@@ -15,12 +15,9 @@ public class GroundMove : State
     /// </summary>
     [Range(0, 100)]
     public float decelToZeroTime = 0;
-    [Range(0,5)]
-    public float safePointRefreshTime = 1f;
 
     private float accelTimer = 0;
     private float decelTimer = 0;
-    private float safePointTimer = 0;
 
     public override void StateStart(ref PlayerController c)
     {   //Remove the players vertical speed
@@ -28,7 +25,7 @@ public class GroundMove : State
         c.animator.SetBool("Airborne",false);
         accelTimer = 0;
         decelTimer = 0;
-        safePointTimer = safePointRefreshTime;
+        c.SafePoint = c.transform.position;
         c.OnLand();
     }
 
@@ -36,11 +33,9 @@ public class GroundMove : State
     {   //Get the input
         float x = Input.GetAxisRaw("Horizontal");
         //Update the safe point if the point is safe
-        safePointTimer -= Time.deltaTime;
-        if (safePointTimer < 0 && !c.Attacking && !c.InHitStun)
+        if (!c.Attacking && !c.InHitStun)
         {
             c.SafePoint = c.transform.position;
-            safePointTimer = safePointRefreshTime;
         }
         //Don't move at all if there is no input
         if (x == 0)

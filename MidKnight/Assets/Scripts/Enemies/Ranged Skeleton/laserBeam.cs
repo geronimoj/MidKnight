@@ -9,11 +9,6 @@ public class laserBeam : basePrefab
     /// </summary>
     public float timeTillSizeIncrease;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
