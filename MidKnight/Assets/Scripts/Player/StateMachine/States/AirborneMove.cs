@@ -155,8 +155,8 @@ public class AirborneMove : State
         c.movement.Direction = right;
         //Set the players speed
         c.movement.HozSpeed = speed;
-
-        if (!holdingJump && !earlyJumpRelease)
+        //Do gravity stuff
+        if (!earlyJumpRelease)
             c.movement.VertSpeed -= c.Gravity * Time.deltaTime;
         //Cap the players fall speed if necessary
         if (maxFallSpeed > 0)
