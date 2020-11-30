@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4f9bef916012024385a9000fdd66cad, type: 3}
   m_Name: Attack
   m_EditorClassIdentifier: 
-  duration: 0.3
+  duration: 0.1
   hitboxes:
   - startTime: 0
     endTime: 0.3
-    length: 1
-    radius: 0.5
+    length: 2
+    radius: 1
     orientation: {x: 1, y: 0, z: 0}
-    startPoint: {x: 1, y: 0, z: 0}
-    endPoint: {x: 1, y: 0, z: 0}
+    startPoint: {x: 0.5, y: 0, z: 0}
+    endPoint: {x: 0.5, y: 0, z: 0}
   OnStart:
     m_PersistentCalls:
       m_Calls: []
