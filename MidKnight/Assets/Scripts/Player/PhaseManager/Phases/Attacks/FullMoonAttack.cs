@@ -35,6 +35,7 @@ public class FullMoonAttack : PhaseAttack
             if (hits[i].transform.CompareTag("Enemy"))
             {
                 c.movement.VertSpeed = c.PogoForce;
+                c.OnPogo();
                 c.OnLand();
                 continue;
             }

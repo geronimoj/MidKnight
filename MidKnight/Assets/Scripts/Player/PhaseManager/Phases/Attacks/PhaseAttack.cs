@@ -57,6 +57,7 @@ public class PhaseAttack : ScriptableObject
             if (hits[i].transform.CompareTag("Enemy"))
             {
                 c.movement.VertSpeed = c.PogoForce;
+                c.OnPogo();
                 c.OnLand();
             }
         //Has the attack finished?

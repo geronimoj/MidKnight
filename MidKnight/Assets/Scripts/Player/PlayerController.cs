@@ -740,6 +740,13 @@ public class PlayerController : Character
              manager.CallStart(this);
     }
     /// <summary>
+    /// Called when the player performs a pogo
+    /// </summary>
+    public void OnPogo()
+    {
+        manager.CallStart(this);
+    }
+    /// <summary>
     /// Called when the player lands
     /// </summary>
     public void OnLand()
